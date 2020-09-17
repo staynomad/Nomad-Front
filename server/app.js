@@ -6,6 +6,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const { DATABASE_URI, environment } = require("./config");
+const contactRouter = require('./routes/contact');
 const loginRouter = require('./routes/login');
 const usersRouter = require('./routes/users');
 
@@ -20,6 +21,7 @@ app.use(bodyParser.json())
 // app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 app.use(cors({ origin: true }));
+app.use('/contact', contactRouter);
 app.use('/login', loginRouter);
 app.use('/signup', usersRouter);
 
