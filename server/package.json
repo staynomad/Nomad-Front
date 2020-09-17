@@ -7,11 +7,13 @@
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
+<<<<<<< HEAD
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+=======
+>>>>>>> 28a4024424bf13ea7c35ff0315888b946df8f79d
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
-    "jade": "~1.11.0",
-    "morgan": "~1.9.1"
+    "mongoose": "^5.10.5"
   }
 }
