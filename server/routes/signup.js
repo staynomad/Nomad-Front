@@ -7,8 +7,8 @@ const utils = require("../utils");
 // see this doc for more info
 // https://mongoosejs.com/docs/tutorials/findoneandupdate.html
 
-/* GET users listing. */
-router.get("/", async (req, res) => {
+/* POST users listing. */
+router.post("/", async (req, res) => {
   const name = req.query.name;
   const email = req.query.email;
   var password = req.query.password;
