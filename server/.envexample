@@ -1,0 +1,4 @@
+DATABASE_URI=«your mongodb atlas uri»
+JWT_SECRET=«secret key»
+JWT_EXPIRES_IN=604800
+PORT=8080

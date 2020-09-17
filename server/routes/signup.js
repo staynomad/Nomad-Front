@@ -12,31 +12,31 @@ router.get("/", async (req, res) => {
   const name = req.query.name;
   const email = req.query.email;
   var password = req.query.password;
-  if(password === undefined || name === undefined || email === undefined) {
-      res.status("200").json("invalid input");
+  if (password === undefined || name === undefined || email === undefined) {
+    res.status("200").json("invalid input");
   }
-  // hash the password 
+  // hash the password
   password = await utils.passGenService(password);
-  // filtering based on email 
+  // filtering based on email
   const filter = { email };
-  const update = { $setOnInsert: { name, password } } ;
+  const update = { $setOnInsert: { name, password } };
 
   let rawResult = await User.findOneAndUpdate(filter, update, {
-      new: true,
-      upsert: true,
-      rawResult: true
+    new: true,
+    upsert: true,
+    rawResult: true,
   });
-  
+
   // the following flag helps determine if the document was updated
-  if(rawResult.lastErrorObject.updatedExisting) {
-      res.status(200).json({
-          "error": "user already exists"
-      });
+  if (rawResult.lastErrorObject.updatedExisting) {
+    res.status(200).json({
+      error: "user already exists",
+    });
+  } else {
+    res.status(200).json({
+      message: "user signed up",
+    });
   }
-  ///
-  res.status(200).json({
-      "message": "user signed up"
-  });
-})
+});
 
 module.exports = router;

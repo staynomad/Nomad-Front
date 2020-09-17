@@ -1,17 +1,17 @@
 const createError = require("http-errors");
 const express = require("express");
 const mongoose = require("mongoose");
+const { DATABASE_URI, environment } = require("./config/index");
 
 const loginRouter = require("./routes/login");
 const signUpRouter = require("./routes/signup");
 
+
 const app = express();
-const port = process.env.PORT || 3000;
 app.use(express.json());
 
-require("dotenv").config();
 
-mongoose.connect(process.env.URI, {
+mongoose.connect(DATABASE_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false 
@@ -23,11 +23,25 @@ connection.once("open", () => {
   console.log('connected to db');
 });
 
-// app.use("/login", loginRouter);
+app.use("/login", loginRouter);
 app.use("/signup", signUpRouter);
 
-app.listen(port, () => {
-  console.log(`app running on the port ${port}`);
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
 });
+
+// error handler
+app.use((err, req, res, next) => {
+  console.log(err);
+  res.status(err.status || 500);
+  const isProduction = environment === "production";
+  res.json({
+    title: err.title || "Server Error",
+    errors: err.errors,
+    stack: isProduction ? null : err.stack,
+  });
+});
+
 
 module.exports = app;

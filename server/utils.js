@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const csrf = require('csurf');
 const SALT_WORK_FACTOR = 10;
 const asyncHandler = (handler) => (req, res, next) =>
   handler(req, res, next).catch(next);
@@ -17,7 +18,12 @@ const passGenService = (password) => {
   });
 };
 
+const csrfProtection = csrf({ cookie: true });
+
 module.exports = {
   asyncHandler,
-  passGenService
+  passGenService,
+  csrfProtection,
 };
+
+
