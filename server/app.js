@@ -8,7 +8,6 @@ const mongoose = require('mongoose');
 const { DATABASE_URI, environment } = require("./config");
 const loginRouter = require('./routes/login');
 const usersRouter = require('./routes/users');
-const { requireUserAuth } = require('./auth');
 
 const app = express();
 app.use(bodyParser.json())
@@ -29,7 +28,7 @@ mongoose.connect(DATABASE_URI, {
   useUnifiedTopology: true
 });
 
-app.get('/', requireUserAuth, (req, res, next) => {
+app.get('/', (req, res, next) => {
   res.json('App is running...')
 });
 
