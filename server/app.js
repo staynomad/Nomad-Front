@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const { DATABASE_URI, environment } = require("./config");
 const loginRouter = require('./routes/login');
 const usersRouter = require('./routes/users');
-const { csrfProtection } = require('./utils');
+const { requireUserAuth } = require('./auth');
 
 const app = express();
 app.use(bodyParser.json())
@@ -29,9 +29,7 @@ mongoose.connect(DATABASE_URI, {
   useUnifiedTopology: true
 });
 
-app.get('/', csrfProtection, (req, res, next) => {
-  console.log(req.cookies)
-  console.log("_csrf: "+ req.csrfToken());
+app.get('/', requireUserAuth, (req, res, next) => {
   res.json('App is running...')
 });
 

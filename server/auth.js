@@ -1,4 +1,5 @@
 const bearerToken = require('express-bearer-token');
+const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
 
 const { jwtConfig } = require('./config');
@@ -21,14 +22,13 @@ const getUserToken = user => {
 
 const restoreUser = (req, res, next) => {
     const { token } = req;
-    if (!token) {
-        return next();
-    }
 
     return jwt.verify(token, secret, null, async (err, jwtPayload) => {
         if (err) {
-            err.status = 401;
-            return next(err);
+            const customErr = new Error('Failed to verify token: missing or invalid.');
+            customErr.name = 'JWT Error';
+            customErr.status = 401;
+            return next(customErr);
         }
 
         const { id } = jwtPayload.data;
