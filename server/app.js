@@ -1,4 +1,4 @@
-const  bodyParser = require('body-parser')
+const bodyParser = require('body-parser')
 const cors = require('cors');
 const createError = require('http-errors');
 const express = require('express');
@@ -17,6 +17,7 @@ app.use("/login", loginRouter);
 app.use("/signup", signUpRouter);
 
 mongoose.connect(DATABASE_URI, {
+  useCreateIndex: true,
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
@@ -26,7 +27,7 @@ app.get('/', (req, res, next) => {
 });
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 

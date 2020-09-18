@@ -13,7 +13,7 @@ router.post('/', asyncHandler(async (req, res, next) => {
     if (!user || !validatePassword(password, user.password)) {
         const err = new Error('The provided credentials were invalid.');
         err.name = 'Login Error';
-        err.status = 401;
+        err.status = 400;
         return next(err);
     }
 
