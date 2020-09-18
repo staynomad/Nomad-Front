@@ -1,0 +1,119 @@
+/* .container {
+  place-content: center;
+} */
+.contact_1 {
+  height: 170px;
+  width: 100%;
+}
+
+textarea.input {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.radius10 {
+  border-radius: 10px;
+}
+
+.separate {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #000;
+  line-height: 0.1em;
+  margin: 10px 0 20px;
+}
+
+.separate span {
+  padding: 0 10px;
+}
+
+.color-white {
+  color: #ffff;
+}
+
+.input {
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: top;
+  padding: 0 25px;
+  font-size: 18px;
+  font-weight: 500;
+  border-radius: 30px;
+  transition: border-color 0.3s;
+}
+
+input,
+textarea {
+  background: transparent;
+  outline: none;
+  resize: none;
+}
+
+.input.border-transparent-white {
+  border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+#content {
+  background-image: url("../../assets/img/background/arizona.jpg");
+}
+
+@media (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+  .contact_1 {
+    background-image: url(/assets/img/background/arizona.jpg);
+  }
+}
+
+#content {
+  opacity: 0.86;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+}
+
+.justify-content-center {
+  display: flex;
+  justify-content: center;
+}
+
+.color-filter-dark-3:before {
+  background-color: rgba(47, 24, 147, 0.3);
+}
+
+.green {
+  background: #02b188 !important;
+  color: #fff !important;
+}
+
+.btn.action-3 {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.action-3 {
+  color: #4caf50;
+}
+
+.btn {
+  vertical-align: top;
+  height: 50px;
+  line-height: 50px;
+  padding: 0px 30px;
+  border: none;
+  border-radius: 50px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+  background: transparent;
+  transition: all 0.25s;
+}
+
+.mb-40 {
+  margin-bottom: 40px;
+}
+
+.mb-30 {
+  margin-bottom: 30px;
+}
