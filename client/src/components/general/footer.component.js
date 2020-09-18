@@ -8,7 +8,7 @@ export default class Footer extends Component {
       <div>
         <ul className="footer">
           <li>
-            <a href="/AboutUs">Contact Us</a>
+            <a href="/ContactUs">Contact Us</a>
           </li>
           <li>
             <a href="/Team">Join the Team</a>
