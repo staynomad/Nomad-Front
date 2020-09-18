@@ -18,7 +18,8 @@ app.use("/signup", signUpRouter);
 
 mongoose.connect(DATABASE_URI, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useFindAndModify: false // flag needed to enable findOneAndUpdate
 });
 
 app.get('/', (req, res, next) => {
