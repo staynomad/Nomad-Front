@@ -15,7 +15,6 @@
     "express-bearer-token": "^2.4.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.5",
-    "nodemailer": "^6.4.11",
     "per-env": "^1.0.2"
   },
   "devDependencies": {

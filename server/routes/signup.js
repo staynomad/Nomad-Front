@@ -13,7 +13,8 @@ const router = express.Router();
 router.post("/", async (req, res) => {
   let { email, name, password } = req.body;
   if (password === undefined || name === undefined || email === undefined) {
-    res.status("200").json("invalid input");
+    res.status(400).json("invalid input");
+    return;
   }
   // hash the password
   password = await passGenService(password);
@@ -29,12 +30,14 @@ router.post("/", async (req, res) => {
 
   // the following flag helps determine if the document was updated
   if (rawResult.lastErrorObject.updatedExisting) {
-    res.status(200).json({
+    res.status(400).json({
       error: "user already exists",
     });
   } else {
+    const token = getUserToken({ id: rawResult.value._id });
     res.status(200).json({
       message: "user signed up",
+      token: token 
     });
   }
 });

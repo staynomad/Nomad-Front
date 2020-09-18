@@ -4,14 +4,14 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const { DATABASE_URI, environment } = require("./config");
-const contactRouter = require('./routes/contact');
+// const contactRouter = require('./routes/contact');
 const loginRouter = require("./routes/login");
 const signUpRouter = require("./routes/signup");
 
 const app = express();
 app.use(bodyParser.json())
 // app.use(cors({ origin: true }));
-app.use('/contact', contactRouter);
+// app.use('/contact', contactRouter);
 app.use("/login", loginRouter);
 app.use("/signup", signUpRouter);
 
@@ -21,10 +21,6 @@ mongoose.connect(DATABASE_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-
-// app.get('/', (req, res, next) => {
-//   res.json('App is running...')
-// });
 
 // error handler
 app.use((err, req, res, next) => {
