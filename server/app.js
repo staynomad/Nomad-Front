@@ -1,6 +1,5 @@
 const bodyParser = require('body-parser')
-const cors = require('cors');
-const createError = require('http-errors');
+// const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
 
@@ -11,7 +10,7 @@ const signUpRouter = require("./routes/signup");
 
 const app = express();
 app.use(bodyParser.json())
-app.use(cors({ origin: true }));
+// app.use(cors({ origin: true }));
 app.use('/contact', contactRouter);
 app.use("/login", loginRouter);
 app.use("/signup", signUpRouter);
@@ -23,14 +22,9 @@ mongoose.connect(DATABASE_URI, {
   useUnifiedTopology: true,
 });
 
-app.get('/', (req, res, next) => {
-  res.json('App is running...')
-});
-
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
-});
+// app.get('/', (req, res, next) => {
+//   res.json('App is running...')
+// });
 
 // error handler
 app.use((err, req, res, next) => {

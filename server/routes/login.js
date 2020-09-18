@@ -2,8 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const User = require('../models/user.model');
-const { getUserToken, validatePassword } = require('../auth');
-const { asyncHandler } = require('../utils');
+const { asyncHandler, getUserToken, validatePassword } = require('../utils');
 
 /* User Login */
 router.post('/', asyncHandler(async (req, res, next) => {
