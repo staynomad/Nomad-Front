@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
 
 const { jwtConfig } = require('./config');
-const User = require('./models/userModel');
+const User = require('./models/user.model');
 
 const { secret, expiresIn } = jwtConfig;
 

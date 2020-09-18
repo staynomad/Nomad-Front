@@ -8,10 +8,10 @@
     "start:production": "./bin/www"
   },
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
-    "csurf": "^1.11.0",
     "dotenv": "^8.2.0",
     "express": "~4.16.1",
     "express-bearer-token": "^2.4.0",

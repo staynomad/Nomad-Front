@@ -1,5 +1,4 @@
-var bodyParser = require('body-parser')
-const cookieParser = require('cookie-parser');
+const  bodyParser = require('body-parser')
 const cors = require('cors');
 const createError = require('http-errors');
 const express = require('express');
@@ -7,23 +6,15 @@ const mongoose = require('mongoose');
 
 const { DATABASE_URI, environment } = require("./config");
 const contactRouter = require('./routes/contact');
-const loginRouter = require('./routes/login');
-const usersRouter = require('./routes/users');
+const loginRouter = require("./routes/login");
+const signUpRouter = require("./routes/signup");
 
 const app = express();
 app.use(bodyParser.json())
-// view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'jade');
-// app.use(logger('dev'));
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: false }));
-// app.use(express.static(path.join(__dirname, 'public')));
-app.use(cookieParser());
 app.use(cors({ origin: true }));
 app.use('/contact', contactRouter);
-app.use('/login', loginRouter);
-app.use('/signup', usersRouter);
+app.use("/login", loginRouter);
+app.use("/signup", signUpRouter);
 
 mongoose.connect(DATABASE_URI, {
   useNewUrlParser: true,

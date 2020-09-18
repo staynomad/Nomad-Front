@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-const User = require('../models/userModel');
+const User = require('../models/user.model');
 const { getUserToken, validatePassword } = require('../auth');
-const { csrfProtection, asyncHandler } = require('../utils');
+const { asyncHandler } = require('../utils');
 
 /* User Login */
-router.post('/', csrfProtection, asyncHandler(async (req, res, next) => {
+router.post('/', asyncHandler(async (req, res, next) => {
     const { email, password } = req.body;
     const user = await User.findOne({ 'email': email });
 
