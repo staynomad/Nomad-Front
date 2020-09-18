@@ -3,6 +3,7 @@
   margin: 10 0 3em 0;
   padding: 0;
   list-style: none;
+  background-color: #363434;
 }
 
 .footer li {
@@ -11,9 +12,8 @@
 
 .footer li a {
   display: block;
-  padding: 8px 15px;
+  padding: 18px 15px;
   text-decoration: none;
   font-weight: bold;
-  color: #069;
-  border-right: 1px solid #ccc;
+  color: whitesmoke;
 }

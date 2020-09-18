@@ -1,5 +1,9 @@
 import React from "react";
+import Navbar from "./components/general/navbar.component";
+import Footer from "./components/general/footer.component";
 import Home from "./components/homePage/home.component";
+import Login from "./components/authentication/login.component";
+import Signup from "./components/authentication/signup.component";
 import Contact from "./components/subpages/contact.component.js";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
@@ -8,12 +12,15 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Route path="/" exact component={Home} />
-        {/* <Switch>
-          <Route path="/contact"> */}
-        <Contact />
-        {/* </Route> */}
-        {/* </Switch> */}
+        <Navbar />
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/ContactUs" exact component={Contact} />
+          <Route path="/Login" exact component={Login} />
+          <Route path="/SignUp" exact component={Signup} />
+        </Switch>
+
+        <Footer />
       </Router>
     </div>
   );

@@ -14,11 +14,17 @@
   float: right;
 }
 
-.navbar li a {
+.mainlogo {
+  width: 100px;
+  padding: 10px 15px;
+}
+
+.nav-right li a {
   display: block;
-  padding: 8px 15px;
+  padding: 15px 15px;
   text-decoration: none;
-  font-weight: bold;
-  color: #069;
-  border-right: 1px solid #ccc;
+
+  font-size: large;
+  color: whitesmoke;
+  border-right: 1px solid #13111a;
 }
