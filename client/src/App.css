@@ -1,6 +1,19 @@
+html,
+body {
+  height: 100%;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+#root {
+  height: 100%;
+}
+
 .App {
   text-align: center;
-  overflow: hidden;
+  height: 100%;
 }
 
 .App-logo {

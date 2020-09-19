@@ -25,6 +25,9 @@ export default class Navbar extends Component {
               <a href="/AboutUs">About Us</a>
             </li>
             <li>
+              <a href="/ContactUs">Contact Us</a>
+            </li>
+            <li>
               <a href="/Reservations">Reservations</a>
             </li>
             <li>

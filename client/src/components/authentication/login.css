@@ -1,0 +1,29 @@
+.login-content {
+  background-image: url(../../assets/img/background/horseshoe.jpg);
+  background-size: cover;
+  padding-bottom: 8%;
+  text-align: -webkit-center;
+}
+
+@media (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+  .login-content {
+    background-image: url(../../assets/img/background/horseshoe.jpg);
+  }
+}
+
+.login-form {
+  background-color: white;
+  max-width: fit-content;
+  display: inline-flex;
+  border-radius: 10px;
+  padding: 2% 5%;
+}
+
+form.form {
+  padding: 20px;
+}
+
+.login-input {
+  margin: 5% 0;
+  border: 2px solid rgb(210 210 210 / 47%);
+}
