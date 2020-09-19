@@ -4,7 +4,9 @@
   padding: 0;
   list-style: none;
   background-color: #363434;
-  margin: 0;
+  margin: auto;
+  position: fixed;
+  bottom: 0;
 }
 
 .footer li {
