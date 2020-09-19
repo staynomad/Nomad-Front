@@ -58,7 +58,7 @@ textarea.input {
   font-weight: 500;
   border-radius: 30px;
   transition: border-color 0.3s;
-  color: white;
+  color: #919dab;
   padding: 12px;
 }
 
@@ -113,11 +113,16 @@ textarea {
 
 .small {
   color: white;
-  opacity: 0.5;
+  opacity: 0.8;
+  font-size: 2em;
 }
 
 .contact-info {
   padding-bottom: 2%;
   text-align: -webkit-center;
   padding-bottom: 5%;
+}
+
+.inner-forms {
+  display: inline-block;
 }

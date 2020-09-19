@@ -4,9 +4,11 @@ import "./contact.css";
 const Contact = () => {
   return (
     <div className="content">
-      <h2 className="small">questions or concerns?</h2>
       <form action="mailto:michael@vhomesgroup.com">
-        <div>
+        <div className="inner-forms">
+          <div className="header">
+            <h2 className="small">questions or concerns?</h2>
+          </div>
           <div className="input">
             <input
               type="text"
