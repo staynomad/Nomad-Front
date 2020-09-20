@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "start": "per-env",
-    "start:development": "nodemon -r dotenv/config ./bin/www",
-    "start:production": "./bin/www"
+    "start:development": "nodemon -r dotenv/config ./bin/www.js",
+    "start:production": "./bin/www.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

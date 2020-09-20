@@ -1,44 +1,62 @@
-const bcrypt = require('bcryptjs')
 const express = require("express");
-
 const User = require("../models/user.model");
-const { asyncHandler, getUserToken, passGenService } = require("../utils");
-// this is the user model for saving to schema
-// see this doc for more info
-// https://mongoosejs.com/docs/tutorials/findoneandupdate.html
+const { getUserToken, passGenService } = require("../utils");
+const { check, validationResult } = require('express-validator');
 
 const router = express.Router();
 
+// eslint-disable-next-line no-useless-escape
+const REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+
 /* POST users listing. */
-router.post("/", async (req, res) => {
-  let { email, name, password } = req.body;
-  if (password === undefined || name === undefined || email === undefined) {
-    res.status(400).json("invalid input");
-    return;
+router.post("/", 
+[
+  check('email', "the email address is not a valid email address").isEmail(),
+  check('name', "Name should be atleast 3 characters").isLength({ min: 3}),
+  check('password', "Please enter a password of at least 8 characters" + 
+  " At least one uppercase character " +
+  " At least one lowercase character " + 
+  " At least one special character ").matches(REGEX, "i")
+]
+, async (req, res) => {
+  try {
+    // data validation
+    // why 422 status code? - explanation here - 
+    // https://www.bennadel.com/blog/2434-http-status-codes-for-invalid-data-400-vs-422.htm
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+      // map errors
+      const errorMessages = errors.array().map((x) => x.msg);
+      return res.status(422).json({ errors: errorMessages});
+    }
+    const { name, email, password } = req.body;
+    const user = await User.findOne({ email });
+    if(user) {
+      return res.status(422).json({ errors: [`User already exists with email ${email}`]});
+    }
+    // encrypt the password 
+    const encrypted_password = await passGenService(password);
+    // create a new user 
+    const newUser = await new User({
+      name, 
+      email,
+      password: encrypted_password
+    }).save();
+    // now send the token 
+    const token = getUserToken({ id : newUser._id });
+    // we could send the 200 status code 
+    // but 201 indicates the resource is created
+    res.status(201).json({
+      "token": token
+    });
   }
-  // hash the password
-  password = await passGenService(password);
-  // filtering based on email
-  const filter = { email };
-  const update = { $setOnInsert: { name, password } };
-
-  let rawResult = await User.findOneAndUpdate(filter, update, {
-    new: true,
-    upsert: true,
-    rawResult: true,
-  });
-
-  // the following flag helps determine if the document was updated
-  if (rawResult.lastErrorObject.updatedExisting) {
-    res.status(400).json({
-      error: "user already exists",
-    });
-  } else {
-    const token = getUserToken({ id: rawResult.value._id });
-    res.status(200).json({
-      message: "user signed up",
-      token: token 
-    });
+  catch(error) {
+    // explicit error catching
+    console.error(error);
+    res.status(500).json({
+      "errors":
+      ["Error signing up user. Please try again!"]
+    }); 
   }
 });
 
