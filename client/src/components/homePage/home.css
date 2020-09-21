@@ -10,16 +10,16 @@
   padding-top: 12%;
   padding-bottom: 2%;
   font-weight: bolder;
-  font-size: 55px;
+  font-size: 380%;
   color: antiquewhite;
 }
 
 .bottext {
   color: antiquewhite;
   padding-top: 5%;
-  padding-bottom: 7%;
+  padding-bottom: 12%;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 150%;
 }
 
 .booknowbutton {
@@ -29,8 +29,8 @@
   width: 100px;
   font-weight: bolder;
   color: antiquewhite;
-  background-color: #32b877;
-  border-color: #32b877;
+  background-color: #02b188;
+  border-color: #02b188;
 }
 
 .inputtextbox {

@@ -15,18 +15,17 @@ export default class Navbar extends Component {
             </li>
           </div>
           <div className="nav-right">
-            <li>
-              <a href="/Login">Log In</a>
-            </li>
-            <li>
-              <a href="/SignUp">Sign Up</a>
-            </li>
-            <li>
-              <a href="/AboutUs">About Us</a>
-            </li>
-            <li>
-              <a href="/ContactUs">Contact Us</a>
-            </li>
+            <div>
+              <li className="signbut">
+                <a href="/SignUp">Sign Up</a>
+              </li>
+            </div>
+            <div>
+              <li className="loginbut">
+                <a href="/Login">Log In</a>
+              </li>
+            </div>
+
             <li>
               <a href="/Reservations">Reservations</a>
             </li>
