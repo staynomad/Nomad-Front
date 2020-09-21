@@ -1,6 +1,4 @@
 DATABASE_URI=«your mongodb atlas uri»
 JWT_SECRET=«secret key»
 JWT_EXPIRES_IN=604800
-EMAIL_USERNAME=«Email to send and receive contact messages»
-EMAIL_PASSWORD=«Password for Email»
 PORT=8080
