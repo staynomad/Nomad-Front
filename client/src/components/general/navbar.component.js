@@ -30,6 +30,9 @@ export default class Navbar extends Component {
               <a href="/Reservations">Reservations</a>
             </li>
             <li>
+              <a href="/CreateListing">Create Listing</a>
+            </li>
+            <li>
               <a href="/Services">Services</a>
             </li>
           </div>
