@@ -1,5 +1,5 @@
 const bodyParser = require('body-parser')
-// const cors = require('cors');
+const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
 
@@ -10,7 +10,7 @@ const signUpRouter = require("./routes/signup");
 
 const app = express();
 app.use(bodyParser.json())
-// app.use(cors({ origin: true }));
+app.use(cors({ origin: true }));
 // app.use('/contact', contactRouter);
 app.use("/login", loginRouter);
 app.use("/signup", signUpRouter);

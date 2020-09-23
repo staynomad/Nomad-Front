@@ -8,7 +8,7 @@ const { check, validationResult } = require("express-validator");
 /* User Login */
 router.post(
   "/",
-  [check("email", "the email address is not a valid email address").isEmail()],
+  [check("email").isEmail().withMessage('the email address is not valid')],
   async (req, res) => {
     try {
       const errors = validationResult(req);
