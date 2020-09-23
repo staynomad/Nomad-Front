@@ -4,7 +4,10 @@ import DetailsCL from "./detailsCL.component";
 import LocDesc from "./locDescCL.component";
 import PricesCL from "./pricesCL.component";
 import RulesCL from "./rulesCL.component";
-
+//convert details into array
+//convert prices into val
+//convert rules into array
+//convert date into date
 export default class CreateListing extends Component {
   constructor() {
     super();
@@ -13,15 +16,19 @@ export default class CreateListing extends Component {
       maxpages: 5,
       location: "",
       description: "",
+      details: "",
       price: 0,
       rules: "",
       dates: "",
     };
     this.togglePage = this.togglePage.bind(this);
-    this.handler = this.handler.bind(this);
+    this.tester = this.tester.bind(this);
   }
-  handler() {
-    console.log("this");
+  tester(e, name) {
+    this.setState({
+      [name]: e,
+    });
+    console.log(this.state);
   }
 
   render() {
@@ -29,12 +36,20 @@ export default class CreateListing extends Component {
       <div>
         <div>
           <div>
-            {this.state.formval === 0 ? <LocDesc handle={this.handler} /> : ""}
+            {this.state.formval === 0 ? <LocDesc handle={this.tester} /> : ""}
           </div>
-          <div>{this.state.formval === 1 ? <DetailsCL /> : ""}</div>
-          <div>{this.state.formval === 2 ? <PricesCL /> : ""}</div>
-          <div>{this.state.formval === 3 ? <DatesCL /> : ""}</div>
-          <div>{this.state.formval === 4 ? <RulesCL /> : ""}</div>
+          <div>
+            {this.state.formval === 1 ? <DetailsCL handle={this.tester} /> : ""}
+          </div>
+          <div>
+            {this.state.formval === 2 ? <PricesCL handle={this.tester} /> : ""}
+          </div>
+          <div>
+            {this.state.formval === 3 ? <DatesCL handle={this.tester} /> : ""}
+          </div>
+          <div>
+            {this.state.formval === 4 ? <RulesCL handle={this.tester} /> : ""}
+          </div>
         </div>
 
         <div>
@@ -59,6 +74,5 @@ export default class CreateListing extends Component {
     this.setState({
       formval: temp,
     });
-    console.log(this.state);
   }
 }

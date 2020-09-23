@@ -4,15 +4,18 @@ export default class LocDesc extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      location: "tests",
+      location: "",
       description: "",
     };
     this.handleChange = this.handleChange.bind(this);
   }
   handleChange(e) {
-    this.props.setState({
-      location: "aaaa",
+    const { name, value } = e.target;
+
+    this.setState({
+      [name]: value,
     });
+    this.props.handle(value, name);
   }
   render() {
     return (
@@ -22,8 +25,21 @@ export default class LocDesc extends Component {
           <br />
           <input
             type="text"
-            placeholder="Location"
-            onChange={this.props.handler}
+            name="location"
+            value={this.state.location}
+            placeholder="Address"
+            onChange={this.handleChange}
+          />
+        </div>
+        <div>
+          <span>Give a brief description of your property</span>
+          <br />
+          <input
+            type="text"
+            name="description"
+            value={this.state.description}
+            placeholder="Description"
+            onChange={this.handleChange}
           />
         </div>
       </div>
