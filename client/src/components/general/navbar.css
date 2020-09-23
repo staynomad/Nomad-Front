@@ -12,6 +12,8 @@
 
 .nav-right li {
   float: right;
+  margin-top: 0.5%;
+  margin-right: 0.5%;
 }
 
 .mainlogo {
@@ -26,5 +28,18 @@
 
   font-size: large;
   color: whitesmoke;
-  border-right: 1px solid #13111a;
+}
+
+.loginbut {
+  margin-left: 3%;
+  font-weight: bolder;
+  background-color: #02b188;
+  border-radius: 12px;
+}
+
+.signbut {
+  margin-left: 11px;
+  font-weight: bolder;
+  background-color: #02b188;
+  border-radius: 12px;
 }

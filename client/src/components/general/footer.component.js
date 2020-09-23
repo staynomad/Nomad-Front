@@ -11,7 +11,7 @@ export default class Footer extends Component {
             <a href="/ContactUs">Contact Us</a>
           </li>
           <li>
-            <a href="/Team">Join the Team</a>
+            <a href="/AboutUs">About Us</a>
           </li>
           <li>
             <a href="/OurLocations">Our Locations</a>

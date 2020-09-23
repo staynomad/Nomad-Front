@@ -1,11 +1,12 @@
 .footer {
   width: 100%;
-  margin: 10 0 3em 0;
+  margin: 0 0 3em 0;
   padding: 0;
   list-style: none;
-  background-color: #363434;
   margin: auto;
   position: fixed;
+  background-color: #b2d1bd;
+  opacity: 0.55;
   bottom: 0;
 }
 
@@ -15,8 +16,8 @@
 
 .footer li a {
   display: block;
-  padding: 18px 15px;
+  padding: 3px 20px;
   text-decoration: none;
   font-weight: bold;
-  color: whitesmoke;
+  color: black;
 }
