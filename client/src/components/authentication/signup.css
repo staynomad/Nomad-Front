@@ -11,3 +11,9 @@
   flex-direction: column;
   max-width: fit-content;
 }
+
+.signup-title {
+  color: rgb(49, 71, 59);
+  font-size: 2em;
+  margin-bottom: 0%;
+}
