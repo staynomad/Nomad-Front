@@ -11,13 +11,14 @@ const Login = () => {
     e.preventDefault();
     fetch("http://localhost:8080/login", {
       method: "POST",
-      mode: "no-cors",
       headers: {
         "Content-Type": "application/json",
       },
-      body: userLogin,
+      redirect: "follow",
+      body: JSON.stringify(userLogin),
     }).then((res) => {
-      if (res.status === 401) {
+      console.log(res.body.errors);
+      if (res.status === 404) {
         alert("Incorrect email or password");
       }
 

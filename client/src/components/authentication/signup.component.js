@@ -16,7 +16,7 @@ const Signup = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: userSignup,
+      body: JSON.stringify(userSignup),
     }).then((res) => {
       if (res.status === 422) {
         console.log(res.body.errors);
@@ -30,7 +30,7 @@ const Signup = () => {
 
   return (
     <div id="signup-content">
-      <div class="login-form signup-form">
+      <div className="login-form signup-form">
         <h2 className="services-title signup-title">create an account</h2>
         <form className="form signup-form">
           <input
