@@ -1,0 +1,19 @@
+#signup-content {
+  background-image: url("../../assets/img/background/horseshoe.jpg");
+  background-size: cover;
+  text-align: -webkit-center;
+  display: block;
+  padding-bottom: 10%;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  max-width: fit-content;
+}
+
+.signup-title {
+  color: rgb(49, 71, 59);
+  font-size: 2em;
+  margin-bottom: 0%;
+}
