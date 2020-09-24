@@ -12,18 +12,21 @@ const Signup = () => {
     e.preventDefault();
     fetch("http://localhost:8080/login", {
       method: "POST",
-      mode: "no-cors",
       headers: {
         "Content-Type": "application/json",
       },
+      redirect: "follow",
       body: JSON.stringify(userSignup),
     }).then((res) => {
       if (res.status === 422) {
+        alert("User already exists with that email or invalid password.");
         console.log(res.body.errors);
       }
 
       if (res.status === 201) {
         window.sessionStorage.accessToken = res.body.token;
+        // redirect to login?
+        // use state change and ternary operator for conditional loading?
       }
     });
   };

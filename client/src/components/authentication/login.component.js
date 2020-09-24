@@ -17,13 +17,13 @@ const Login = () => {
       redirect: "follow",
       body: JSON.stringify(userLogin),
     }).then((res) => {
-      console.log(res.body.errors);
       if (res.status === 404) {
         alert("Incorrect email or password");
       }
 
       if (res.status === 200) {
         window.sessionStorage.accessToken = res.body.token;
+        // redirect to ????
       }
     });
   };
