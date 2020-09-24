@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
 import "./signup.css";
 
 const Signup = () => {
@@ -8,9 +9,11 @@ const Signup = () => {
     password: "",
   });
 
+  const [signupSuccess, setSignupSuccess] = useState(false);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:8080/login", {
+    fetch("http://localhost:8080/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -24,14 +27,14 @@ const Signup = () => {
       }
 
       if (res.status === 201) {
-        window.sessionStorage.accessToken = res.body.token;
-        // redirect to login?
-        // use state change and ternary operator for conditional loading?
+        setSignupSuccess(true);
       }
     });
   };
 
-  return (
+  return signupSuccess ? (
+    <Redirect to="/login" />
+  ) : (
     <div id="signup-content">
       <div className="login-form signup-form">
         <h2 className="services-title signup-title">create an account</h2>

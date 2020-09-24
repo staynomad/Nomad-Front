@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
+
 import "./login.css";
 
 const Login = () => {
@@ -6,6 +8,8 @@ const Login = () => {
     email: "",
     password: "",
   });
+
+  const [loginSuccess, setLoginSuccess] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -16,19 +20,35 @@ const Login = () => {
       },
       redirect: "follow",
       body: JSON.stringify(userLogin),
-    }).then((res) => {
-      if (res.status === 404) {
-        alert("Incorrect email or password");
-      }
+    })
+      .then((res) => {
+        if (res.status === 404 || res.status === 422) {
+          alert("Incorrect email or password");
+        }
 
-      if (res.status === 200) {
-        window.sessionStorage.accessToken = res.body.token;
-        // redirect to ????
-      }
-    });
+        if (res.status === 200) {
+          // setLoginSuccess(true);
+          // console.log(res);
+          return res.json();
+        }
+      })
+      .then((data) => {
+        window.sessionStorage.accessToken = data.token;
+        setLoginSuccess(true);
+      });
   };
 
-  return (
+  // useEffect(() => {
+  //   if (window.sessionStorage.accessToken) {
+  //     setLoginSuccess(true);
+  //     alert("Welcome back!");
+  //   }
+  //   window.sessionStorage.accesToken = "" // delete token with logout
+  // }, []);
+
+  return loginSuccess ? (
+    <Redirect to="/" />
+  ) : (
     <div className="login-content">
       <div className="login-form">
         <form action="/login" className="form">
