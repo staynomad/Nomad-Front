@@ -1,5 +1,5 @@
 .homepage {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7)),
     url(../../assets/img/background/homebackground.jpg);
 }
 .backgroundimg {
@@ -24,17 +24,16 @@
 
 .booknowbutton {
   margin-left: 1%;
-  border-radius: 5px;
   height: 50px;
   width: 100px;
   font-weight: bolder;
   color: antiquewhite;
   background-color: #02b188;
+  border-radius: 5px;
+
   border-color: #02b188;
 }
-
 .inputtextbox {
-  border-radius: 5px;
   height: 50px;
   width: 250px;
   background-color: beige;
