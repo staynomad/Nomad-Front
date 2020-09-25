@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Filter from "./filter.component";
+import "./matches.css"
 
 export default class Matches extends Component {
   state = {
