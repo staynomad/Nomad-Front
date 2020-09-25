@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import "./createListing.css";
 export default class PricesCL extends Component {
   constructor(props) {
     super(props);
@@ -20,11 +20,12 @@ export default class PricesCL extends Component {
     return (
       <div>
         <div>
-          <span>How much are you listing for?</span>
+          <div className="questionText">How much are you listing for?</div>
           <br />
           <input
             type="text"
             name="price"
+            className="textInputBox"
             value={this.state.price}
             placeholder="price"
             onChange={this.handleChange}

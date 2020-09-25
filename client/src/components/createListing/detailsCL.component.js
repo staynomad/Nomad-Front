@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import "./createListing.css";
 export default class DetailsCL extends Component {
   constructor(props) {
     super(props);
@@ -22,7 +22,23 @@ export default class DetailsCL extends Component {
     return (
       <div>
         <div>
-          <span>Details</span>
+          <div className="questionText">Details</div>
+
+          <br />
+          <input
+            type="text"
+            name="details"
+            className="textInputBox"
+            value={this.state.details}
+            placeholder="Details"
+            onChange={this.handleChange}
+          />
+        </div>
+      </div>
+    );
+  }
+}
+/*
           <br />
           <span>beds: </span>
           <input
@@ -34,16 +50,4 @@ export default class DetailsCL extends Component {
           <br />
           <span>baths: </span>
           <input type="text" name="details" spec="baths" />
-          <br />
-          <input
-            type="text"
-            name="details"
-            value={this.state.details}
-            placeholder="Details"
-            onChange={this.handleChange}
-          />
-        </div>
-      </div>
-    );
-  }
-}
+*/

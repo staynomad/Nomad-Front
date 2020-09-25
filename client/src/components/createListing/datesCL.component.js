@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import "./createListing.css";
 export default class DatesCL extends Component {
   constructor(props) {
     super(props);
@@ -20,10 +20,11 @@ export default class DatesCL extends Component {
     return (
       <div>
         <div>
-          <span>When is it available?</span>
+          <div className="questionText">When is it available?</div>
           <br />
           <input
             type="text"
+            className="textInputBox"
             name="dates"
             value={this.state.dates}
             placeholder="dates"
