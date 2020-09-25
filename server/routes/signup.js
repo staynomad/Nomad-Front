@@ -6,17 +6,18 @@ const { check, validationResult } = require('express-validator');
 const router = express.Router();
 
 // eslint-disable-next-line no-useless-escape
-const REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
 
 /* POST users listing. */
 router.post("/", 
 [
   check('email', "the email address is not a valid email address").isEmail(),
   check('name', "Name should be atleast 3 characters").isLength({ min: 3}),
-  check('password', "Please enter a password of at least 8 characters" + 
-  " At least one uppercase character " +
-  " At least one lowercase character " + 
-  " At least one special character ").matches(REGEX, "i")
+  check('password')
+  .isLength({ min: 8 }).withMessage('Password must be of at least 8 characters')
+  .matches(/\d/).withMessage('Password must atleast contain a number')
+  .matches(/[A-Z]/).withMessage('Password must at least contain an uppercase character')
+  .matches(/[a-z]/).withMessage('Password must at least contain a lowercase character') 
+  .matches(/^[a-zA-Z0-9!@#$%^&*)(+=._-]+$/).withMessage('Password must at least contain one special character')
 ]
 , async (req, res) => {
   try {
