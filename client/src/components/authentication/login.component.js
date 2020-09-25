@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 
@@ -11,6 +12,7 @@ const Login = () => {
 
   const [loginSuccess, setLoginSuccess] = useState(false);
 
+
   const handleLogin = (e) => {
     e.preventDefault();
     fetch("http://localhost:8080/login", {
@@ -20,6 +22,7 @@ const Login = () => {
       },
       redirect: "follow",
       body: JSON.stringify(userLogin),
+
     })
       .then((res) => {
         if (res.status === 404 || res.status === 422) {
@@ -49,6 +52,7 @@ const Login = () => {
   return loginSuccess ? (
     <Redirect to="/" />
   ) : (
+
     <div className="login-content">
       <div className="login-form">
         <form action="/login" className="form">
