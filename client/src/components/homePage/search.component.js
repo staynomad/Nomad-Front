@@ -7,8 +7,8 @@ export default class Search extends Component {
       <div className="overallsearch">
         <div className="toptext">
           <div>
-            The
-            <span style={{ color: "#32b877" }}> future</span>
+            the
+            <span style={{ color: "#02b188" }}> future</span>
           </div>
           <div>of flexible rentals</div>
         </div>
