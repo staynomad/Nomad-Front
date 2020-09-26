@@ -3,7 +3,6 @@ const bcrypt = require('bcryptjs');
 const bearerToken = require('express-bearer-token');
 const jwt = require('jsonwebtoken');
 const { jwtConfig } = require('./config');
-const User = require('./models/user.model');
 
 const { secret, expiresIn } = jwtConfig;
 
@@ -12,6 +11,35 @@ const getUserToken = user => {
     secret,
     { expiresIn: parseInt(expiresIn, 10) }
   );
+};
+
+const restoreUser = (req, res, next) => {
+  const { token } = req;
+
+  return jwt.verify(token, secret, null, async (err, jwtPayload) => {
+      if (err) {
+          const customErr = new Error('Failed to verify token: missing or invalid.');
+          customErr.name = 'JWT Error';
+          customErr.status = 401;
+          return next(customErr);
+      }
+
+      const { id } = jwtPayload.data;
+
+      try {
+          req.user = await User.findById(id);
+      } catch (e) {
+          return next(e);
+      }
+
+      if (!req.user) {
+          return res.set("WWW-Authenticate", "Bearer")
+              .status(401)
+              .end();
+      }
+
+      return next();
+  });
 };
 
 const validatePassword = (password, hashedPassword) => {
@@ -34,8 +62,11 @@ const passGenService = (password) => {
   });
 };
 
+const requireUserAuth = [bearerToken(), restoreUser];
+
 module.exports = {
   getUserToken,
   passGenService,
+  requireUserAuth,
   validatePassword
 };
