@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import "./createListing.css";
 
-export default class LocDesc extends Component {
+export default class Location extends Component {
   constructor(props) {
     super(props);
     this.state = {
       location: "",
-      description: "",
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -20,7 +19,7 @@ export default class LocDesc extends Component {
   }
   render() {
     return (
-      <div className="locDescForm">
+      <div className="LocationForm">
         <div>
           <div className="startText">Get started!</div>
           <br />
@@ -36,19 +35,6 @@ export default class LocDesc extends Component {
           />
         </div>
         <br />
-
-        <div>
-          <div className="questionText">Tell us about your property</div>
-          <br />
-          <input
-            type="text"
-            name="description"
-            className="textInputBox"
-            value={this.state.description}
-            placeholder="Description"
-            onChange={this.handleChange}
-          />
-        </div>
       </div>
     );
   }
