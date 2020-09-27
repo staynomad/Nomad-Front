@@ -13,7 +13,7 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    fetch("http://localhost:8080/login", {
+    fetch("/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -22,17 +22,15 @@ const Login = () => {
       body: JSON.stringify(userLogin),
     })
       .then((res) => {
-        if (res.status === 404 || res.status === 422) {
-          alert("Incorrect email or password");
-        }
-
-        if (res.status === 200) {
-          return res.json();
-        }
+        return res.json();
       })
       .then((data) => {
-        window.sessionStorage.accessToken = data.token;
-        setLoginSuccess(true);
+        if (data.errors) {
+          alert(data.errors[0]);
+        } else {
+          window.sessionStorage.accessToken = data.token;
+          setLoginSuccess(true);
+        }
       });
   };
 

@@ -11,43 +11,34 @@ const Signup = () => {
     password: "",
   });
 
-
   const [signupSuccess, setSignupSuccess] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:8080/signup", {
-
+    fetch("/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       redirect: "follow",
       body: JSON.stringify(userSignup),
-    }).then((res) => {
-      if (res.status === 422) {
-        alert("User already exists with that email or invalid password.");
-        console.log(res.body.errors);
-      }
-
-      if (res.status === 201) {
-
-        setSignupSuccess(true);
-
-        /*window.sessionStorage.accessToken = res.body.token;
-        During the merge it said that you took this out. I am just keeping it in case
-        */
-        // redirect to login?
-        // use state change and ternary operator for conditional loading?
-
-      }
-    });
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        if (data.errors) {
+          alert(data.errors[0]);
+        } else {
+          window.sessionStorage.accessToken = data.token;
+          setSignupSuccess(true);
+        }
+      });
   };
 
   return signupSuccess ? (
     <Redirect to="/login" />
   ) : (
-
     <div id="signup-content">
       <div className="login-form signup-form">
         <h2 className="services-title signup-title">create an account</h2>
