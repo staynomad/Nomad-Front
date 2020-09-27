@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
-
+import handleReq from "../../utils/fetchRequest.js";
 import "./login.css";
 
 const Login = () => {
@@ -8,19 +8,12 @@ const Login = () => {
     email: "",
     password: "",
   });
-
   const [loginSuccess, setLoginSuccess] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
-    fetch("/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      redirect: "follow",
-      body: JSON.stringify(userLogin),
-    })
+    const headers = { "Content-Type": "application/json" };
+    handleReq("/login", "POST", headers, userLogin)
       .then((res) => {
         return res.json();
       })
@@ -33,14 +26,6 @@ const Login = () => {
         }
       });
   };
-
-  // useEffect(() => {
-  //   if (window.sessionStorage.accessToken) {
-  //     setLoginSuccess(true);
-  //     alert("Welcome back!");
-  //   }
-  //   window.sessionStorage.accesToken = "" // delete token with logout
-  // }, []);
 
   return loginSuccess ? (
     <Redirect to="/" />

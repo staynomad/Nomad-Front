@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-
 import { Redirect } from "react-router-dom";
-
+import handleReq from "../../utils/fetchRequest";
 import "./signup.css";
 
 const Signup = () => {
   const [userSignup, setUserSignup] = useState({
     email: "",
-    name: "", // need to change to first and last name at some point
+    name: "",
     password: "",
   });
 
@@ -15,14 +14,8 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      redirect: "follow",
-      body: JSON.stringify(userSignup),
-    })
+    const headers = { "Content-Type": "application/json" };
+    handleReq("/signup", "POST", headers, userSignup)
       .then((res) => {
         return res.json();
       })
