@@ -8,7 +8,6 @@ const { requireUserAuth } = require("../utils");
 /* Add a listing */
 router.post(
     "/",
-    requireUserAuth,
     async (req, res) => {
         try {
             const { 
@@ -35,7 +34,7 @@ router.post(
 
             // Need to talk about return values, validation, etc.
             res.status(201).json({
-
+                newListing
             });
         } catch (e) {
             console.error(error);
