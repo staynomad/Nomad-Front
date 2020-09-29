@@ -1,0 +1,77 @@
+.label-text {
+  margin-left: 2%;
+  font-weight: bold;
+  font-size: 120%;
+}
+
+.gen-subsec {
+  display: flex;
+}
+
+.state-subsec {
+  display: flex;
+}
+
+.country-subsec {
+  display: flex;
+}
+
+.streetInputbox {
+  margin-left: 18%;
+  margin-bottom: 3%;
+  padding-left: 5%;
+  height: 30px;
+  width: 200px;
+  border-radius: 10px;
+  background-color: blanchedalmond;
+}
+
+.cityInputBox {
+  margin-left: 23.2%;
+  margin-bottom: 3%;
+  padding-left: 5%;
+  height: 30px;
+  width: 200px;
+  border-radius: 10px;
+  background-color: blanchedalmond;
+}
+
+.stateInputBox {
+  margin-left: 20%;
+  margin-bottom: 3%;
+  padding-left: 5%;
+  height: 30px;
+  width: 200px;
+  border-radius: 10px;
+  background-color: blanchedalmond;
+}
+
+.countryInputBox {
+  margin-left: 12%;
+  margin-bottom: 3%;
+  padding-left: 5%;
+  height: 30px;
+  width: 200px;
+  border-radius: 10px;
+  background-color: blanchedalmond;
+}
+
+.zipInputBox {
+  margin-left: 13%;
+  margin-bottom: 3%;
+  padding-left: 5%;
+  height: 30px;
+  width: 200px;
+  border-radius: 10px;
+  background-color: blanchedalmond;
+}
+
+.aptnumInputBox {
+  margin-left: 4.7%;
+  margin-bottom: 3%;
+  padding-left: 5%;
+  height: 30px;
+  width: 220px;
+  background-color: blanchedalmond;
+  border-radius: 10px;
+}

@@ -27,7 +27,7 @@ export default class Description extends Component {
           name="description"
           className="textInputBox"
           value={this.state.description}
-          placeholder="Description"
+          placeholder="e.g. This beautiful apartment overlooking a park"
           onChange={this.handleChange}
         />
       </div>

@@ -16,9 +16,9 @@ export default class CreateListing extends Component {
     this.state = {
       formval: 0,
       maxpages: 6,
-      location: "",
+      location: {},
       description: "",
-      details: "",
+      details: {},
       price: 0,
       rules: "",
       dates: "",
