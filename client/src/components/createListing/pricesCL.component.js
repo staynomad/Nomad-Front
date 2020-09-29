@@ -10,11 +10,12 @@ export default class PricesCL extends Component {
   }
   handleChange(e) {
     const { name, value } = e.target;
-
-    this.setState({
-      [name]: value,
-    });
-    this.props.handle(value, name);
+    if (!isNaN(value)) {
+      this.setState({
+        [name]: value,
+      });
+      this.props.handle(value, name);
+    }
   }
   render() {
     return (
@@ -27,7 +28,7 @@ export default class PricesCL extends Component {
             name="price"
             className="textInputBox"
             value={this.state.price}
-            placeholder="price"
+            placeholder="total price per night"
             onChange={this.handleChange}
           />
         </div>

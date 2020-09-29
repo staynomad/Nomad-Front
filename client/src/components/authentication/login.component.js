@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
-
+import handleReq from "../../utils/fetchRequest.js";
 import "./login.css";
 
 const Login = () => {
@@ -8,41 +8,24 @@ const Login = () => {
     email: "",
     password: "",
   });
-
   const [loginSuccess, setLoginSuccess] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
-    fetch("http://localhost:8080/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      redirect: "follow",
-      body: JSON.stringify(userLogin),
-    })
+    const headers = { "Content-Type": "application/json" };
+    handleReq("/login", "POST", headers, userLogin)
       .then((res) => {
-        if (res.status === 404 || res.status === 422) {
-          alert("Incorrect email or password");
-        }
-
-        if (res.status === 200) {
-          return res.json();
-        }
+        return res.json();
       })
       .then((data) => {
-        window.sessionStorage.accessToken = data.token;
-        setLoginSuccess(true);
+        if (data.errors) {
+          alert(data.errors[0]);
+        } else {
+          window.sessionStorage.accessToken = data.token;
+          setLoginSuccess(true);
+        }
       });
   };
-
-  // useEffect(() => {
-  //   if (window.sessionStorage.accessToken) {
-  //     setLoginSuccess(true);
-  //     alert("Welcome back!");
-  //   }
-  //   window.sessionStorage.accesToken = "" // delete token with logout
-  // }, []);
 
   return loginSuccess ? (
     <Redirect to="/" />

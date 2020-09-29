@@ -8,22 +8,22 @@
 
 .overallListingForm {
   margin: auto;
-
+  margin-top: -2%;
   max-width: fit-content;
   background-color: #c9c9c9;
   display: inline-flex;
   padding-right: 5%;
   padding-left: 5%;
-  padding-top: 3%;
+  padding-top: 2%;
   padding-bottom: 2%;
   border-radius: 10%;
 }
 
 .startText {
   color: #02b188;
-  padding-bottom: 7%;
+
   font-weight: 800;
-  font-size: 400%;
+  font-size: 370%;
 }
 
 .questionText {

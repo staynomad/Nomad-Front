@@ -1,53 +1,77 @@
 import React, { Component } from "react";
 import "./createListing.css";
+import "./detailsListing.css";
 export default class DetailsCL extends Component {
   constructor(props) {
     super(props);
     this.state = {
       beds: "",
       baths: "",
-      details: "",
+      maxpeople: "",
     };
     this.handleChange = this.handleChange.bind(this);
   }
   handleChange(e) {
     const { name, value } = e.target;
-    let temp = this.state.details + value;
-    this.setState({
-      [name]: temp,
-    });
-    this.props.handle(value, name);
+    if (!isNaN(value)) {
+      this.setState({
+        invalidInput: false,
+        [name]: value,
+      });
+    }
+
+    this.props.handle(this.state, "details");
   }
   render() {
     return (
       <div>
-        <div>
-          <div className="questionText">Details</div>
+        <div className="questionText">Details</div>
+        <br />
+        <form className="details-wrapper">
+          <div className="overall-details">
+            <div className="beds">
+              <div className="input-label-details">Beds: </div>
+              <input
+                type="text"
+                name="beds"
+                placeholder="e.g. 3"
+                className="input-box-details"
+                value={this.state.beds}
+                onChange={this.handleChange}
+              />
+            </div>
 
-          <br />
-          <input
-            type="text"
-            name="details"
-            className="textInputBox"
-            value={this.state.details}
-            placeholder="Details"
-            onChange={this.handleChange}
-          />
-        </div>
+            <div>
+              <div className="baths">
+                <div className="input-label-details">Baths: </div>
+                <input
+                  type="text"
+                  name="baths"
+                  className="input-box-details"
+                  placeholder="e.g. 2"
+                  value={this.state.baths}
+                  onChange={this.handleChange}
+                />
+              </div>
+
+              <div className="maxppl">
+                <div className="input-label-details">Max people: </div>
+                <input
+                  type="text"
+                  name="maxpeople"
+                  placeholder="e.g. 5"
+                  className="input-box-details"
+                  value={this.state.maxpeople}
+                  onChange={this.handleChange}
+                />
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
     );
   }
 }
 /*
-          <br />
-          <span>beds: </span>
-          <input
-            type="text"
-            name="beds"
-            value={this.state.beds}
-            onChange={this.handleChange}
-          />
-          <br />
-          <span>baths: </span>
-          <input type="text" name="details" spec="baths" />
+          
 */

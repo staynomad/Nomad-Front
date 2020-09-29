@@ -1,0 +1,32 @@
+.overall-details {
+  text-align: center;
+}
+
+.beds {
+  display: flx;
+}
+
+.baths {
+  display: lex;
+}
+
+.maxppl {
+  display: fle;
+}
+
+.input-label-details {
+  font-weight: bold;
+  font-size: 120%;
+  padding: 3%;
+  padding-top: 3%;
+  padding-bottom: 5%;
+}
+
+.input-box-details {
+  width: 70px;
+  background-color: blanchedalmond;
+  border-radius: 5px;
+  height: 40px;
+  padding-left: 2%;
+  font-size: 100%;
+}

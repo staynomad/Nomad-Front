@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import DatesCL from "./datesCL.component";
 import DetailsCL from "./detailsCL.component";
-import LocDesc from "./locDescCL.component";
+import Location from "./locationCL.component";
+import Description from "./descCL.component";
 import PricesCL from "./pricesCL.component";
 import RulesCL from "./rulesCL.component";
 import "./createListing.css";
@@ -14,10 +15,10 @@ export default class CreateListing extends Component {
     super();
     this.state = {
       formval: 0,
-      maxpages: 5,
-      location: "",
+      maxpages: 6,
+      location: {},
       description: "",
-      details: "",
+      details: {},
       price: 0,
       rules: "",
       dates: "",
@@ -46,34 +47,41 @@ export default class CreateListing extends Component {
             <div>
               <div>
                 {this.state.formval === 0 ? (
-                  <LocDesc handle={this.tester} />
+                  <Location handle={this.tester} />
                 ) : (
                   ""
                 )}
               </div>
               <div>
                 {this.state.formval === 1 ? (
-                  <DetailsCL handle={this.tester} />
+                  <Description handle={this.tester} />
                 ) : (
                   ""
                 )}
               </div>
               <div>
                 {this.state.formval === 2 ? (
-                  <PricesCL handle={this.tester} />
+                  <DetailsCL handle={this.tester} />
                 ) : (
                   ""
                 )}
               </div>
               <div>
                 {this.state.formval === 3 ? (
-                  <DatesCL handle={this.tester} />
+                  <PricesCL handle={this.tester} />
                 ) : (
                   ""
                 )}
               </div>
               <div>
                 {this.state.formval === 4 ? (
+                  <DatesCL handle={this.tester} />
+                ) : (
+                  ""
+                )}
+              </div>
+              <div>
+                {this.state.formval === 5 ? (
                   <RulesCL handle={this.tester} />
                 ) : (
                   ""
