@@ -1,19 +1,21 @@
-const bodyParser = require('body-parser')
-const cors = require('cors');
-const express = require('express');
-const mongoose = require('mongoose');
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const express = require("express");
+const mongoose = require("mongoose");
 
 const { DATABASE_URI, environment } = require("./config");
 // const contactRouter = require('./routes/contact');
 const loginRouter = require("./routes/login");
 const signUpRouter = require("./routes/signup");
+const roommateRouter = require("./routes/roommates");
 
 const app = express();
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 app.use(cors({ origin: true }));
 // app.use('/contact', contactRouter);
 app.use("/login", loginRouter);
 app.use("/signup", signUpRouter);
+app.use("/roommates", roommateRouter);
 
 mongoose.connect(DATABASE_URI, {
   useCreateIndex: true,
