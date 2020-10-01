@@ -1,30 +1,21 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import Filter from "./filter.component";
-import "./matches.css"
+import "./matches.css";
 
-export default class Matches extends Component {
-  constructor() {
-    super();
-    this.state = {
-      seen: false
-    }
-    this.toggleFilter = this.toggleFilter.bind(this)
-  }
+const Matches = () => {
 
-  toggleFilter() {
-    this.setState({
-      seen: !this.state.seen
-    })
-  }
+  const [seen, setSeen] = useState(false);
 
-  render() {
-    return (
-     <div>
-      <div className="btn" onClick={this.toggleFilter}>
+  const toggle = () => {setSeen(!seen)};
+
+  return (
+    <div>
+      <div className="btn" onClick={toggle}>
         <button>filter</button>
       </div>
-      {this.state.seen ? <Filter toggle={this.toggleFilter} /> : null}
+      {seen ? <Filter toggle={toggle} /> : null}
      </div>
-    );
-   }
+  )
 }
+
+export default Matches;
