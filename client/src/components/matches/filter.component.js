@@ -4,7 +4,7 @@ import "./matches.css";
 
 // export default class Filter extends Component {
 const Filter = ({ toggle }) => {
-  const [roomOrListing, setRoomOrListing] = useState(null);
+  const [roommateView, setRoommateView] = useState(false);
 
   return (
     <div>
@@ -16,13 +16,13 @@ const Filter = ({ toggle }) => {
           <input
             type="checkbox"
             id="roomates"
-            onClick={() => setRoomOrListing("roommates")}
+            onClick={() => setRoommateView(!roommateView)}
           />{" "}
           roomates <br />
           <input
             type="checkbox"
             id="properties"
-            onClick={() => setRoomOrListing("properties")}
+            // onClick={() => setRoomOrListing("properties")}
           />{" "}
           properties <br />
           <select>
@@ -33,13 +33,7 @@ const Filter = ({ toggle }) => {
           </select>
         </div>
       </div>
-      <div>
-        {roomOrListing === "roommates" ? (
-          <Roommates />
-        ) : (
-          console.log(roomOrListing)
-        )}
-      </div>
+      <div>{roommateView ? <Roommates /> : null}</div>
     </div>
   );
 };
