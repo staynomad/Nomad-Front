@@ -11,8 +11,13 @@ const Roommates = () => {
         return res.json();
       })
       .then((data) => {
-        console.log(data);
-        setRoommates(data.body);
+        if (data.errors) {
+          alert(data.errors[0]);
+        }
+
+        if (data.body) {
+          setRoommates(data.body);
+        }
       });
   }, []);
 
