@@ -7,7 +7,7 @@ import Signup from "./components/authentication/signup.component";
 import Contact from "./components/subpages/contact.component.js";
 import Services from "./components/subpages/services.component.js";
 import Reservation from "./components/reservations/findReservation.component";
-import Matches from "./components/matches/matches.component.js"
+import Matches from "./components/matches/matches.component.js";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import CreateListing from "./components/createListing/createListing.component";
