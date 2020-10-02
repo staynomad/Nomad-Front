@@ -24,11 +24,11 @@
 .booknowbutton {
   font-size: 16px;
   margin-left: 1%;
-  height: 50px;
+  height: 55px;
   width: 100px;
   color: white;
   background-color: #02b188;
-  border-radius: 12px;
+  border-radius: 8px;
   border-color: #02b188;
 }
 
@@ -41,6 +41,6 @@
   width: 350px;
   background-color: white;
   font-size: 16px;
-  border-radius: 12px;
+  border-radius: 8px;
   border-color: white
 }
