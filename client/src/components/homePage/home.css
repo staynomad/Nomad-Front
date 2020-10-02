@@ -7,7 +7,7 @@
 }
 
 .toptext {
-  padding-top: 12%;
+  padding-top: 16.5%;
   padding-bottom: 2%;
   font-weight: bolder;
   font-size: 380%;
@@ -16,9 +16,9 @@
 
 .bottext {
   color: white;
-  padding-top: 5%;
-  padding-bottom: 12%;
-  font-size: 150%;
+  padding-top: 2%;
+  padding-bottom: 16.5%;
+  font-size: 120%;
 }
 
 .booknowbutton {
@@ -38,8 +38,9 @@
 
 .inputtextbox {
   height: 50px;
-  width: 250px;
+  width: 350px;
   background-color: white;
   font-size: 16px;
   border-radius: 12px;
+  border-color: white
 }
