@@ -1,5 +1,5 @@
 .homepage {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7)),
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)),
     url(../../assets/img/background/homebackground.jpg);
 }
 .backgroundimg {
@@ -11,31 +11,35 @@
   padding-bottom: 2%;
   font-weight: bolder;
   font-size: 380%;
-  color: antiquewhite;
+  color: white;
 }
 
 .bottext {
-  color: antiquewhite;
+  color: white;
   padding-top: 5%;
   padding-bottom: 12%;
-  font-weight: bold;
   font-size: 150%;
 }
 
 .booknowbutton {
+  font-size: 16px;
   margin-left: 1%;
   height: 50px;
   width: 100px;
-  font-weight: bolder;
-  color: antiquewhite;
+  color: white;
   background-color: #02b188;
-  border-radius: 5px;
-
+  border-radius: 12px;
   border-color: #02b188;
 }
+
+.booknowbutton:hover {
+  transform: scale(1.05)
+}
+
 .inputtextbox {
   height: 50px;
   width: 250px;
-  background-color: beige;
-  font-size: 20px;
+  background-color: white;
+  font-size: 16px;
+  border-radius: 12px;
 }

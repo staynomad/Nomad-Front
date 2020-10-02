@@ -26,21 +26,32 @@
   display: block;
   padding: 15px 15px;
   text-decoration: none;
-  font-weight: bold;
   font-size: large;
-  color: black;
+  color: white;
 }
 
 .loginbut {
-  margin-left: 3%;
+  height: 50px;
+  width: 100px;
+  margin-left: 1%;
   font-weight: bolder;
   background-color: #02b188;
   border-radius: 12px;
 }
 
+.loginbut:hover {
+  transform: scale(1.05)
+}
+
 .signbut {
-  margin-left: 11px;
+  height: 50px;
+  width: 100px;
+  margin: auto;
   font-weight: bolder;
   background-color: #02b188;
   border-radius: 12px;
+}
+
+.signbut:hover {
+  transform: scale(1.05)
 }
