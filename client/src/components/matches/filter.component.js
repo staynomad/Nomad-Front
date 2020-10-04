@@ -1,28 +1,30 @@
 import React, { useState } from "react";
 import Roommates from "./roommates.component";
+import Listings from "./listings.component";
 import "./matches.css";
 
 // export default class Filter extends Component {
 const Filter = ({ toggle }) => {
   const [roommateView, setRoommateView] = useState(false);
+  const [listingView, setListingView] = useState(false);
 
   return (
     <div>
-      <div className="modal_content filter_container">
-        <span className="close" onClick={toggle}>
+      <div className='modal_content filter_container'>
+        <span className='close' onClick={toggle}>
           &times;{" "}
         </span>
         <div>
           <input
-            type="checkbox"
-            id="roomates"
+            type='checkbox'
+            id='roomates'
             onClick={() => setRoommateView(!roommateView)}
           />{" "}
           roomates <br />
           <input
-            type="checkbox"
-            id="properties"
-            // onClick={() => setRoomOrListing("properties")}
+            type='checkbox'
+            id='properties'
+            onClick={() => setListingView(!listingView)}
           />{" "}
           properties <br />
           <select>
@@ -34,6 +36,7 @@ const Filter = ({ toggle }) => {
         </div>
       </div>
       <div>{roommateView ? <Roommates /> : null}</div>
+      <div>{listingView ? <Listings /> : null}</div>
     </div>
   );
 };
