@@ -1,13 +1,5 @@
-.modal_content {
-  background-color: white;
-  position: static;
-  border: 2px solid black;
-  padding: 2px;
-  text-align: left;
-}
-
-.filter_container {
-  margin: 0 30% 0 30%;
+#matches-page {
+  height: 100%;
 }
 
 .container {

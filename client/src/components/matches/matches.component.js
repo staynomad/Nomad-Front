@@ -10,10 +10,8 @@ const Matches = () => {
   };
 
   return (
-    <div>
-      <div className='btn' onClick={toggle}>
-        <button>filter</button>
-      </div>
+    <div id='matches-page'>
+      <button onClick={toggle}>filter</button>
       {seen ? <Filter toggle={toggle} /> : null}
     </div>
   );

@@ -1,0 +1,12 @@
+#roommates-content {
+  border-radius: 5px;
+  margin: 5% 20%;
+  padding: 20px;
+}
+
+.roommate-information {
+  text-align: left;
+  border-bottom: 1px solid black;
+  margin: 0% 8%;
+  padding: 2.2% 6.4%;
+}

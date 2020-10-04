@@ -1,0 +1,36 @@
+#filter-page {
+  height: 100%;
+}
+
+.modal-content {
+  background-color: white;
+  position: static;
+  border: 2px solid black;
+  padding: 2px;
+  text-align: left;
+  transition: all 0.5s ease-in-out;
+  animation: slide-down 0.5s steps(70, end);
+}
+
+.modal-content:target {
+  height: 40px;
+}
+
+.filter-container {
+  margin: 2% 30% 0 30%;
+}
+
+@keyframes slide-down {
+  0% {
+    height: 0px;
+    opacity: 0;
+  }
+  50% {
+    height: 57px;
+    opacity: 0.5;
+  }
+  100% {
+    height: fit-content;
+    opacity: 1;
+  }
+}
