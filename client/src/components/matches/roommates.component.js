@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./roommate.css";
 import handleReq from "../../utils/fetchRequest";
 
 const Roommates = () => {
@@ -22,10 +23,14 @@ const Roommates = () => {
   }, []);
 
   return (
-    <div>
+    <div id='roommates-content'>
       {roommates.map((roommate) => (
-        <div>
-          <div>Roommate: {roommate.name}</div>
+        <div className='roommate-information'>
+          <div>Name: {roommate.name}</div>
+          <div>Age: ##</div>
+          <div>Location: Tempe, Arizona</div>
+          <div>Hobbies: ----</div>
+          <div>Personality: ----</div>
         </div>
       ))}
     </div>

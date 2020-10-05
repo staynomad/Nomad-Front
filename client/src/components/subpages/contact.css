@@ -2,7 +2,7 @@
   background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
     url("../../assets/img/background/arizona.jpg");
   background-size: cover;
-  margin-bottom: -3%;
+  height: -webkit-fill-available;
 }
 
 @media screen and (max-width: 700px) {
@@ -35,15 +35,7 @@ textarea.input {
   border-radius: 10px;
 }
 
-.separate {
-  width: 95%;
-  text-align: center;
-  border-bottom: 1px solid #000;
-  line-height: 0.1em;
-  margin: 29px 0 25px;
-}
-
-.separate span {
+.call-text {
   padding: 0 10px;
   color: white;
   font-size: 25px;
