@@ -1,7 +1,8 @@
 #roommates-content {
   border-radius: 5px;
-  margin: 0% 20% 0% 20%;
+  margin: 1% 25% 0% 25%;
   padding: 20px;
+  background: #ffffffe6;
 }
 
 .roommate-information {

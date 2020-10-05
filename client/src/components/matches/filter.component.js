@@ -35,8 +35,8 @@ const Filter = ({ toggle }) => {
           </select>
         </div>
       </div>
-      <div>{roommateView ? <Roommates /> : null}</div>
-      <div>{listingView ? <Listings /> : null}</div>
+      {roommateView ? <Roommates /> : null}
+      {listingView ? <Listings /> : null}
     </div>
   );
 };

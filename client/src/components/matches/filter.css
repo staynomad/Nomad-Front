@@ -1,15 +1,17 @@
 #filter-page {
-  height: 100%;
+  height: fit-content;
+  padding: 0px 0px 40px;
 }
 
 .modal-content {
   background-color: white;
   position: static;
-  border: 2px solid black;
-  padding: 2px;
+  /* border: 2px solid black; */
+  padding: 10px;
   text-align: left;
   transition: all 0.5s ease-in-out;
   animation: slide-down 0.5s steps(70, end);
+  border-radius: 5px;
 }
 
 .modal-content:target {

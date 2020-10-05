@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import handleReq from "../../utils/fetchRequest";
+import "./listings.css";
 
 const Listings = () => {
   const [listings, setListings] = useState([]);
@@ -22,21 +23,32 @@ const Listings = () => {
   }, []);
 
   return (
-    <div>
+    <div id='listing-content'>
       {listings.map((listing) => (
         <div className='listing-item'>
           <div className='listing-information'>
-            <div>Listing: {listing.description}</div>
+            <div className='listing-image'>listing image here</div>
             <div>
-              Details: {listing.details.beds} {listing.details.baths}{" "}
+              <b>{listing.description}</b>
+            </div>
+            <div>
+              <b>Details:</b> {listing.details.beds} {listing.details.baths}{" "}
               {listing.details.maxpeople}
             </div>
-            <div>rating: {listing.rating.user}</div>
-            <div>Price: {listing.price}</div>
+            <div>
+              <b>Rating:</b> {listing.rating.user}
+            </div>
+            <div>
+              <b>Price:</b> {listing.price}
+            </div>
           </div>
-          <div>Click to see more!</div>
+          <div>
+            <button>More</button>
+          </div>
         </div>
       ))}
+      {/* can be refactored to another reusable component */}
+      {/* more button directs to the all the listing information */}
     </div>
   );
 };
