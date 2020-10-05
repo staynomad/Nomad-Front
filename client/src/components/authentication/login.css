@@ -1,7 +1,7 @@
 .login-content {
   background-image: url(../../assets/img/background/horseshoe.jpg);
   background-size: cover;
-  padding-bottom: 8%;
+  padding-bottom: 10%;
   text-align: -webkit-center;
   height: 100%;
 }
@@ -25,6 +25,12 @@ form.form {
 }
 
 .login-input {
-  margin: 5% 0;
+  margin: 2% 0;
+  width: 350px;
   border: 2px solid rgb(210 210 210 / 47%);
+}
+
+.btn {
+  margin: 3% 0;
+  width: 100%;
 }

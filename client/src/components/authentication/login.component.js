@@ -34,7 +34,7 @@ const Login = () => {
       <div className="login-form">
         <form action="/login" className="form">
           <div>
-            <h2 style={{ color: "#31473b", fontSize: "2em" }}>welcome back</h2>
+            <h2 style={{ color: "#31473b", fontSize: "48px" }}>welcome back</h2>
           </div>
           <div>
             <input

@@ -34,7 +34,7 @@ const Signup = () => {
   ) : (
     <div id="signup-content">
       <div className="login-form signup-form">
-        <h2 className="services-title signup-title">create an account</h2>
+        <h2 className="services-title signup-title">create an <br />account</h2>
         <form className="form signup-form">
           <input
             type="email"
