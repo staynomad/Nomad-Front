@@ -67,9 +67,9 @@ const Signup = () => {
             onClick={(e) => handleSubmit(e)}
           />
         </form>
-        <div>
+        <div className="botText">
           already have an account?{" "}
-          <a href="/Login" style={{ color: "green", textDecoration: "none" }}>
+          <a href="/Login" style={{ color: "#02b188", textDecoration: "none" }}>
             log in
           </a>
         </div>

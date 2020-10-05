@@ -65,12 +65,11 @@ const Login = () => {
               log in
             </button>
           </div>
-          <div className="separate"></div>
-          <div>
+          <div className="botText">
             <span>don't have an account? </span>
             <a
               href="/SignUp"
-              style={{ color: "green", textDecoration: "none" }}
+              style={{ color: "#02b188", textDecoration: "none" }}
             >
               sign up
             </a>

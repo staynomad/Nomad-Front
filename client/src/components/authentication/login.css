@@ -34,3 +34,9 @@ form.form {
   margin: 3% 0;
   width: 100%;
 }
+
+.botText {
+  font-size: 18px;
+  font-weight: bold;
+  color: #31473b;
+}
