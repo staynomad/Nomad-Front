@@ -11,6 +11,7 @@ import Matches from "./components/matches/matches.component.js";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import CreateListing from "./components/createListing/createListing.component";
+import MyAccount from "./components/myAccount/menu.component"
 //to add more items just copy the format and add the route path. look at navbar component to see where the path is currently set to
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/Reservations" exact component={Reservation} />
           <Route path="/CreateListing" exact component={CreateListing} />
           <Route path="/Matches" exact component={Matches} />
+          <Route path="/MyAccount" exact component={MyAccount} />
         </Switch>
 
         <Footer />
