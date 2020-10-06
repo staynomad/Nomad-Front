@@ -8,6 +8,7 @@ const { DATABASE_URI, environment } = require("./config");
 const loginRouter = require("./routes/login");
 const signUpRouter = require("./routes/signup");
 const roommateRouter = require("./routes/roommates");
+const listingRouter = require("./routes/listing");
 
 const app = express();
 app.use(bodyParser.json());
@@ -16,6 +17,7 @@ app.use(cors({ origin: true }));
 app.use("/login", loginRouter);
 app.use("/signup", signUpRouter);
 app.use("/roommates", roommateRouter);
+app.use("/listings", listingRouter);
 
 mongoose.connect(DATABASE_URI, {
   useCreateIndex: true,
@@ -24,7 +26,7 @@ mongoose.connect(DATABASE_URI, {
   useUnifiedTopology: true,
 });
 
-// error handler
+// error handler\
 app.use((err, req, res, next) => {
   console.log(err);
   res.status(err.status || 500);

@@ -15,8 +15,8 @@ import MyAccount from "./components/myAccount/menu.component"
 //to add more items just copy the format and add the route path. look at navbar component to see where the path is currently set to
 function App() {
   return (
-    <div className="App">
-      <Router>
+    <Router>
+      <div className='App'>
         <Navbar />
         <Switch>
           <Route path="/" exact component={Home} />
@@ -29,10 +29,9 @@ function App() {
           <Route path="/Matches" exact component={Matches} />
           <Route path="/MyAccount" exact component={MyAccount} />
         </Switch>
-
         <Footer />
-      </Router>
-    </div>
+      </div>
+    </Router>
   );
 }
 

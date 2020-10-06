@@ -1,8 +1,10 @@
 .homepage {
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)),
     url(../../assets/img/background/homebackground.jpg);
-    height: 100%;
-    background-size: cover;
+  height: 100%;
+}
+.backgroundimg {
+  background-size: cover;
 }
 
 .toptext {
@@ -32,7 +34,7 @@
 }
 
 .booknowbutton:hover {
-  transform: scale(1.05)
+  transform: scale(1.05);
 }
 
 .inputtextbox {
@@ -41,5 +43,5 @@
   background-color: white;
   font-size: 16px;
   border-radius: 8px;
-  border-color: white
+  border-color: white;
 }
