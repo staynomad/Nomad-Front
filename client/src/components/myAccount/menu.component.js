@@ -7,13 +7,20 @@ export default class LeftMenu extends Component {
   constructor() {
     super()
     this.state = {
-      activeItem: 'profile'
+      activeItem: 'profile',
+      render: ' '
     }
     this.handleItemClick = this.handleItemClick.bind(this)
   }
 
-  handleItemClick(e, { name }) {
-    this.setState({ activeItem: name})
+  handleItemClick(e, { name }, compName) {
+    this.setState({ activeItem: name, render: compName})
+  }
+
+  _renderSubComp() {
+    switch(this.state.render) {
+      case 'matches': return <Matches />
+    }
   }
 
   render() {
@@ -31,7 +38,7 @@ export default class LeftMenu extends Component {
             <Menu.Item
               name='explore'
               active={activeItem === 'explore'}
-              onClick={this.handleItemClick}
+              onClick={this.handleItemClick.bind(this, 'matches')}
             />
             <Menu.Item
               name='my listings'
