@@ -8,7 +8,7 @@ export default class LeftMenu extends Component {
     super()
     this.state = {
       activeItem: 'profile',
-      render: ' '
+      //render: ' '
     }
     this.handleItemClick = this.handleItemClick.bind(this)
   }
@@ -38,7 +38,7 @@ export default class LeftMenu extends Component {
             <Menu.Item
               name='explore'
               active={activeItem === 'explore'}
-              onClick={this.handleItemClick.bind(this, 'matches')}
+              onClick={this.handleItemClick}
             />
             <Menu.Item
               name='my listings'
