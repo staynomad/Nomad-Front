@@ -34,7 +34,7 @@ const Login = () => {
       <div className="login-form">
         <form action="/login" className="form">
           <div>
-            <h2 style={{ color: "#31473b", fontSize: "2em" }}>welcome back</h2>
+            <h2 style={{ color: "#31473b", fontSize: "48px" }}>welcome back</h2>
           </div>
           <div>
             <input
@@ -65,12 +65,11 @@ const Login = () => {
               log in
             </button>
           </div>
-          <div className="separate"></div>
-          <div>
+          <div className="botText">
             <span>don't have an account? </span>
             <a
               href="/SignUp"
-              style={{ color: "green", textDecoration: "none" }}
+              style={{ color: "#02b188", textDecoration: "none" }}
             >
               sign up
             </a>

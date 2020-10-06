@@ -34,7 +34,7 @@ const Signup = () => {
   ) : (
     <div id="signup-content">
       <div className="login-form signup-form">
-        <h2 className="services-title signup-title">create an account</h2>
+        <h2 className="services-title signup-title">create an <br />account</h2>
         <form className="form signup-form">
           <input
             type="email"
@@ -67,9 +67,9 @@ const Signup = () => {
             onClick={(e) => handleSubmit(e)}
           />
         </form>
-        <div>
+        <div className="botText">
           already have an account?{" "}
-          <a href="/Login" style={{ color: "green", textDecoration: "none" }}>
+          <a href="/Login" style={{ color: "#02b188", textDecoration: "none" }}>
             log in
           </a>
         </div>
