@@ -1,18 +1,27 @@
 import React, { Component } from 'react'
 import { Grid, Menu, Segment } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
+import Matches from "../matches/matches.component"
 
 export default class LeftMenu extends Component {
-  state = { activeItem: 'account' }
+  constructor() {
+    super()
+    this.state = {
+      activeItem: 'profile'
+    }
+    this.handleItemClick = this.handleItemClick.bind(this)
+  }
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+  handleItemClick(e, { name }) {
+    this.setState({ activeItem: name})
+  }
 
   render() {
     const { activeItem } = this.state
 
     return (
-      <Grid>
-        <Grid.Column width={4}>
+      <Grid className="container">
+        <Grid.Column width={3}>
           <Menu fluid vertical tabular>
             <Menu.Item
               name='profile'
@@ -25,7 +34,7 @@ export default class LeftMenu extends Component {
               onClick={this.handleItemClick}
             />
             <Menu.Item
-              name='my listings (only visible to renters)'
+              name='my listings'
               active={activeItem === 'my listings'}
               onClick={this.handleItemClick}
             />
@@ -37,9 +46,9 @@ export default class LeftMenu extends Component {
           </Menu>
         </Grid.Column>
 
-        <Grid.Column stretched width={12}>
+        <Grid.Column stretched width={13}>
           <Segment>
-            component here
+            //add conditional render for components
           </Segment>
         </Grid.Column>
       </Grid>
