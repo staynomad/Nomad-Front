@@ -5,19 +5,17 @@ import "./footer.css";
 export default class Footer extends Component {
   render() {
     return (
-      <div>
-        <ul className="footer">
-          <li>
-            <a href="/ContactUs">CONTACT US</a>
-          </li>
-          <li>
-            <a href="/AboutUs">ABOUT US</a>
-          </li>
-          <li>
-            <a href="/OurLocations">OUR LOCATIONS</a>
-          </li>
-        </ul>
-      </div>
+      <ul className='footer'>
+        <li>
+          <a href='/ContactUs'>CONTACT US</a>
+        </li>
+        <li>
+          <a href='/AboutUs'>ABOUT US</a>
+        </li>
+        <li>
+          <a href='/OurLocations'>OUR LOCATIONS</a>
+        </li>
+      </ul>
     );
   }
 }

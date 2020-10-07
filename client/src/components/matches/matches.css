@@ -1,13 +1,8 @@
-.modal_content {
-  background-color: white;
-  position: static;
-  border: 2px solid black;
-  padding: 2px;
-  text-align: left;
-}
-
-.filter_container {
-  margin: 0 30% 0 30%;
+#matches-page {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)),
+    url("../../assets/img/background/homebackground.jpg");
+  /* height: 100%; */
+  min-height: -webkit-fill-available;
 }
 
 .container {

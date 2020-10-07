@@ -13,7 +13,9 @@ export default class Search extends Component {
           <div>of flexible rentals</div>
         </div>
         <input className="inputtextbox" type="text" placeholder="  city" />
-        <input className="booknowbutton" type="button" value="book now" />
+        <a href="/OurLocations">
+          <input className="booknowbutton" type="button" value="book now"/>
+        </a>
 
         <div className="bottext">start now to plan your dream vacation</div>
         <br />

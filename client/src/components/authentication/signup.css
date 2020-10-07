@@ -1,5 +1,5 @@
 #signup-content {
-  background-image: url("../../assets/img/background/horseshoe.jpg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url("../../assets/img/background/horseshoe.jpg");
   background-size: cover;
   text-align: -webkit-center;
   display: block;
@@ -15,6 +15,13 @@
 
 .signup-title {
   color: rgb(49, 71, 59);
-  font-size: 2em;
+  font-size: 48px;
+  margin-top: 0%;
   margin-bottom: 0%;
+}
+
+.botText {
+  font-size: 18px;
+  font-weight: bold;
+  color: #31473b;
 }
