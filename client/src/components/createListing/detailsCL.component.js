@@ -27,7 +27,7 @@ export default class DetailsCL extends Component {
       <div>
         <div className="questionText">Details</div>
         <br />
-        <form className="details-wrapper">
+        <div className="details-wrapper">
           <div className="overall-details">
             <div className="beds">
               <div className="input-label-details">Beds: </div>
@@ -67,7 +67,7 @@ export default class DetailsCL extends Component {
               </div>
             </div>
           </div>
-        </form>
+        </div>
       </div>
     );
   }

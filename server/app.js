@@ -8,6 +8,7 @@ const { DATABASE_URI, environment } = require("./config");
 const loginRouter = require("./routes/login");
 const signUpRouter = require("./routes/signup");
 const roommateRouter = require("./routes/roommates");
+const listingRouter = require("./routes/listing");
 
 const app = express();
 app.use(bodyParser.json());
@@ -16,7 +17,7 @@ app.use(cors({ origin: true }));
 app.use("/login", loginRouter);
 app.use("/signup", signUpRouter);
 app.use("/roommates", roommateRouter);
-
+app.use("/listing", listingRouter);
 mongoose.connect(DATABASE_URI, {
   useCreateIndex: true,
   useFindAndModify: false, // flag needed to enable findOneAndUpdate
