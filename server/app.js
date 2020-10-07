@@ -17,8 +17,8 @@ app.use(cors({ origin: true }));
 app.use("/login", loginRouter);
 app.use("/signup", signUpRouter);
 app.use("/roommates", roommateRouter);
-app.use("/listings", listingRouter);
 
+app.use("/listings", listingRouter);
 mongoose.connect(DATABASE_URI, {
   useCreateIndex: true,
   useFindAndModify: false, // flag needed to enable findOneAndUpdate

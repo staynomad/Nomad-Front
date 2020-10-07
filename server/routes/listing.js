@@ -6,7 +6,9 @@ const { requireUserAuth } = require("../utils");
 // const { check, validationResult } = require("express-validator");
 
 /* Add a listing */
-router.post("/", async (req, res) => {
+
+router.post("/createListing", async (req, res) => {
+
   try {
     const {
       location,
@@ -42,6 +44,7 @@ router.post("/", async (req, res) => {
   }
 });
 
+
 router.get("/", async (req, res) => {
   try {
     const listings = await Listing.find({});
@@ -61,5 +64,6 @@ router.get("/", async (req, res) => {
     });
   }
 });
+
 
 module.exports = router;

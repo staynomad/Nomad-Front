@@ -1,10 +1,12 @@
 import React, { Component } from "react";
+import Axios from "axios";
 import DatesCL from "./datesCL.component";
 import DetailsCL from "./detailsCL.component";
 import Location from "./locationCL.component";
 import Description from "./descCL.component";
 import PricesCL from "./pricesCL.component";
 import RulesCL from "./rulesCL.component";
+import EndingCL from "./endingCL.component";
 import "./createListing.css";
 //convert details into array
 //convert prices into val
@@ -15,7 +17,7 @@ export default class CreateListing extends Component {
     super();
     this.state = {
       formval: 0,
-      maxpages: 6,
+      maxpages: 7,
       location: {},
       description: "",
       details: {},
@@ -24,10 +26,10 @@ export default class CreateListing extends Component {
       dates: "",
     };
     this.togglePage = this.togglePage.bind(this);
-    this.tester = this.tester.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
-  tester(e, name) {
+  handleChange(e, name) {
     this.setState({
       [name]: e,
     });
@@ -35,8 +37,26 @@ export default class CreateListing extends Component {
   }
 
   onSubmit() {
-    //submit the data
-    window.location = "/";
+    const newListing = {
+      location: this.state.location,
+      description: this.state.description,
+      details: this.state.details,
+      price: this.state.price,
+      rules: this.state.rules,
+      available: this.state.dates,
+    };
+    Axios.post("/createListing", newListing)
+      .then(() => console.log("listing created"))
+      .catch((res) => console.log(res));
+    let temp = this.state.formval;
+    temp++;
+    this.setState({
+      formval: temp,
+    });
+    console.log("enters");
+    if (this.state.maxpages - 1 === this.state.formval) {
+      window.location = "/";
+    }
   }
 
   render() {
@@ -47,42 +67,49 @@ export default class CreateListing extends Component {
             <div>
               <div>
                 {this.state.formval === 0 ? (
-                  <Location handle={this.tester} />
+                  <Location handle={this.handleChange} />
                 ) : (
                   ""
                 )}
               </div>
               <div>
                 {this.state.formval === 1 ? (
-                  <Description handle={this.tester} />
+                  <Description handle={this.handleChange} />
                 ) : (
                   ""
                 )}
               </div>
               <div>
                 {this.state.formval === 2 ? (
-                  <DetailsCL handle={this.tester} />
+                  <DetailsCL handle={this.handleChange} />
                 ) : (
                   ""
                 )}
               </div>
               <div>
                 {this.state.formval === 3 ? (
-                  <PricesCL handle={this.tester} />
+                  <PricesCL handle={this.handleChange} />
                 ) : (
                   ""
                 )}
               </div>
               <div>
                 {this.state.formval === 4 ? (
-                  <DatesCL handle={this.tester} />
+                  <DatesCL handle={this.handleChange} />
                 ) : (
                   ""
                 )}
               </div>
               <div>
                 {this.state.formval === 5 ? (
-                  <RulesCL handle={this.tester} />
+                  <RulesCL handle={this.handleChange} />
+                ) : (
+                  ""
+                )}
+              </div>
+              <div>
+                {this.state.formval === 6 ? (
+                  <EndingCL handle={this.handleChange} />
                 ) : (
                   ""
                 )}
@@ -90,7 +117,8 @@ export default class CreateListing extends Component {
             </div>
 
             <div>
-              {this.state.formval > 0 ? (
+              {this.state.formval > 0 &&
+              this.state.formval !== this.state.maxpages - 1 ? (
                 <input
                   className="changebut"
                   type="button"
@@ -100,7 +128,8 @@ export default class CreateListing extends Component {
               ) : (
                 ""
               )}
-              {this.state.formval < this.state.maxpages - 1 ? (
+
+              {this.state.formval < this.state.maxpages - 2 ? (
                 <input
                   className="changebut"
                   type="button"
