@@ -8,7 +8,6 @@ const { requireUserAuth } = require("../utils");
 /* Add a listing */
 
 router.post("/createListing", async (req, res) => {
-
   try {
     const {
       location,
