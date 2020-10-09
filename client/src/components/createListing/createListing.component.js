@@ -45,7 +45,7 @@ export default class CreateListing extends Component {
       rules: this.state.rules,
       available: this.state.dates,
     };
-    Axios.post("/createListing", newListing)
+    Axios.post("http://localhost:8080/listings/createListing", newListing)
       .then(() => console.log("listing created"))
       .catch((res) => console.log(res));
     let temp = this.state.formval;
