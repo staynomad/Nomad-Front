@@ -1,35 +1,49 @@
 import React, { Component } from "react";
+import Calendar from "react-calendar";
 import "./createListing.css";
 export default class DatesCL extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dates: "",
+      start_date: new Date(),
+      end_date: new Date(),
     };
-    this.handleChange = this.handleChange.bind(this);
+    this.onChangeEnd = this.onChangeEnd.bind(this);
+    this.onChangeStart = this.onChangeStart.bind(this);
   }
-  handleChange(e) {
-    const { name, value } = e.target;
-
+  onChangeStart(e) {
     this.setState({
-      [name]: value,
+      start_date: e,
     });
-    this.props.handle(value, name);
+    console.log("start" + this.state.start_date);
   }
+  onChangeEnd(e) {
+    this.setState({
+      end_date: e,
+    });
+    console.log("end" + this.state.end_date);
+  }
+
   render() {
     return (
       <div>
         <div>
           <div className="questionText">When is it available?</div>
-          <br />
-          <input
-            type="text"
-            className="textInputBox"
-            name="dates"
-            value={this.state.dates}
-            placeholder="dates"
-            onChange={this.handleChange}
-          />
+          <div>
+            <div>
+              <Calendar
+                onChange={this.onChangeStart}
+                value={this.state.start_date}
+              />
+            </div>
+            <div>
+              <Calendar
+                name="end"
+                onChange={this.onChangeEnd}
+                value={this.state.end_date}
+              />
+            </div>
+          </div>
         </div>
       </div>
     );
