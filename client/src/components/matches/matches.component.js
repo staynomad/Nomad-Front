@@ -11,7 +11,9 @@ const Matches = () => {
 
   return (
     <div id='matches-page'>
-      <button onClick={toggle}>filter</button>
+      <button className='filter btn green' onClick={toggle}>
+        filter
+      </button>
       {seen ? <Filter toggle={toggle} /> : null}
     </div>
   );

@@ -28,20 +28,20 @@ const Login = () => {
   };
 
   return loginSuccess ? (
-    <Redirect to="/" />
+    <Redirect to='/' />
   ) : (
-    <div className="login-content">
-      <div className="login-form">
-        <form action="/login" className="form">
+    <div className='login-content'>
+      <div className='login-form'>
+        <form action='/login' className='form'>
           <div>
             <h2 style={{ color: "#31473b", fontSize: "48px" }}>welcome back</h2>
           </div>
           <div>
             <input
-              type="email"
-              name="email"
-              placeholder="your email"
-              className="input login-input"
+              type='email'
+              name='email'
+              placeholder='your email'
+              className='input login-input'
               onChange={(e) =>
                 setUserLogin({ ...userLogin, email: e.target.value })
               }
@@ -50,10 +50,10 @@ const Login = () => {
           </div>
           <div>
             <input
-              type="password"
-              name="password"
-              placeholder="your password"
-              className="input login-input"
+              type='password'
+              name='password'
+              placeholder='your password'
+              className='input login-input'
               onChange={(e) =>
                 setUserLogin({ ...userLogin, password: e.target.value })
               }
@@ -61,14 +61,18 @@ const Login = () => {
             />
           </div>
           <div style={{ margin: "2% 0 3%" }}>
-            <button className="btn green" onClick={(e) => handleLogin(e)}>
+            <button
+              className='login btn green'
+              style={{ width: "100%" }}
+              onClick={(e) => handleLogin(e)}
+            >
               log in
             </button>
           </div>
-          <div className="botText">
+          <div className='botText'>
             <span>don't have an account? </span>
             <a
-              href="/SignUp"
+              href='/SignUp'
               style={{ color: "#02b188", textDecoration: "none" }}
             >
               sign up
