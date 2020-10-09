@@ -6,7 +6,7 @@ import Location from "./locationCL.component";
 import Description from "./descCL.component";
 import PricesCL from "./pricesCL.component";
 import RulesCL from "./rulesCL.component";
-import EndingCL from "./endingCL.component";
+//import EndingCL from "./endingCL.component";
 import "./createListing.css";
 //convert details into array
 //convert prices into val
@@ -17,13 +17,13 @@ export default class CreateListing extends Component {
     super();
     this.state = {
       formval: 0,
-      maxpages: 7,
+      maxpages: 6,
       location: {},
       description: "",
       details: {},
       price: 0,
       rules: "",
-      dates: "",
+      dates: {},
     };
     this.togglePage = this.togglePage.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -107,13 +107,6 @@ export default class CreateListing extends Component {
                   ""
                 )}
               </div>
-              <div>
-                {this.state.formval === 6 ? (
-                  <EndingCL handle={this.handleChange} />
-                ) : (
-                  ""
-                )}
-              </div>
             </div>
 
             <div>
@@ -129,7 +122,7 @@ export default class CreateListing extends Component {
                 ""
               )}
 
-              {this.state.formval < this.state.maxpages - 2 ? (
+              {this.state.formval < this.state.maxpages - 1 ? (
                 <input
                   className="changebut"
                   type="button"

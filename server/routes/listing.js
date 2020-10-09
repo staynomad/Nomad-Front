@@ -17,7 +17,7 @@ router.post("/createListing", async (req, res) => {
       price,
       rules,
       ratings,
-      available,
+      dates,
     } = req.body;
 
     const newListing = await new Listing({
@@ -28,7 +28,7 @@ router.post("/createListing", async (req, res) => {
       price,
       rules,
       ratings,
-      available,
+      dates,
     }).save();
 
     // Need to talk about return values, validation, etc.
@@ -42,7 +42,6 @@ router.post("/createListing", async (req, res) => {
     });
   }
 });
-
 
 router.get("/", async (req, res) => {
   try {
@@ -63,6 +62,5 @@ router.get("/", async (req, res) => {
     });
   }
 });
-
 
 module.exports = router;
