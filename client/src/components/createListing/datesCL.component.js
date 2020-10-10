@@ -28,7 +28,7 @@ export default class DatesCL extends Component {
     return (
       <div>
         <div>
-          <div className="questionText">When is it available?</div>
+          <div className="questionText">when is it available?</div>
           <div>
             <div>
               <Calendar

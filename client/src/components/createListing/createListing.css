@@ -1,5 +1,5 @@
 .fullListingBackground {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)),
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)),
     url(../../assets/img/background/forest1.jpg);
   background-size: 100% 100%;
   width: 100%;
@@ -8,28 +8,28 @@
 
 .overallListingForm {
   margin: auto;
-  margin-top: -2%;
   max-width: fit-content;
-  background-color: #c9c9c9;
+  background-color: white;
   display: inline-flex;
   padding-right: 5%;
   padding-left: 5%;
   padding-top: 2%;
   padding-bottom: 2%;
-  border-radius: 10%;
+  border-radius: 2%;
 }
 
 .startText {
-  color: #02b188;
-
+  color: #31473b;
   font-weight: 800;
   font-size: 370%;
+  padding-bottom: 5%;
+  padding-top: 2%;
 }
 
 .questionText {
-  color: #212121;
-  font-weight: bold;
-  font-size: 150%;
+  color: #31473b;
+  font-size: 140%;
+  padding-bottom: 2%;
 }
 
 .textInputBox {
@@ -38,9 +38,10 @@
   width: 70%;
   padding: 5%;
   padding-bottom: 5%;
-  border-radius: 10%;
-  border-color: blanchedalmond;
-  background-color: blanchedalmond;
+  border-radius: 2% 5%;
+  border-color: white;
+  border-color: white;
+  background-color: white;
 }
 
 .changebut {

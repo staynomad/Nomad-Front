@@ -21,7 +21,7 @@ export default class PricesCL extends Component {
     return (
       <div>
         <div>
-          <div className="questionText">How much are you listing for?</div>
+          <div className="questionText">how much are you listing for?</div>
           <br />
           <input
             type="text"

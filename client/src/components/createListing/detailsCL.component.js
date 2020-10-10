@@ -25,12 +25,12 @@ export default class DetailsCL extends Component {
   render() {
     return (
       <div>
-        <div className="questionText">Details</div>
+        <div className="questionText">details</div>
         <br />
         <div className="details-wrapper">
           <div className="overall-details">
             <div className="beds">
-              <div className="input-label-details">Beds: </div>
+              <div className="input-label-details">beds: </div>
               <input
                 type="text"
                 name="beds"
@@ -43,7 +43,7 @@ export default class DetailsCL extends Component {
 
             <div>
               <div className="baths">
-                <div className="input-label-details">Baths: </div>
+                <div className="input-label-details">baths: </div>
                 <input
                   type="text"
                   name="baths"
@@ -55,7 +55,7 @@ export default class DetailsCL extends Component {
               </div>
 
               <div className="maxppl">
-                <div className="input-label-details">Max people: </div>
+                <div className="input-label-details">max people: </div>
                 <input
                   type="text"
                   name="maxpeople"
@@ -73,5 +73,5 @@ export default class DetailsCL extends Component {
   }
 }
 /*
-          
+
 */
