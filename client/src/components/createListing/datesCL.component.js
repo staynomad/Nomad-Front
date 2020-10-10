@@ -28,7 +28,8 @@ export default class DatesCL extends Component {
     return (
       <div>
         <div>
-          <div className="questionText">when is it available?</div>
+          <div className="startText">avilability</div>
+          <div className="questionText">when do you want to list it?</div>
           <div>
             <div>
               <Calendar

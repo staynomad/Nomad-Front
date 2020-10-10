@@ -25,7 +25,9 @@ export default class DetailsCL extends Component {
   render() {
     return (
       <div>
-        <div className="questionText">details</div>
+        <div className="startText">details</div>
+        <br />
+        <div className="questionText">any other important info?</div>
         <br />
         <div className="details-wrapper">
           <div className="overall-details">
