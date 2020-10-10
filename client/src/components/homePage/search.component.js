@@ -6,10 +6,8 @@ export default class Search extends Component {
     return (
       <div className="overallsearch">
         <div className="toptext">
-          <div>
-            the
-            <span style={{ color: "#02b188" }}> future</span>
-          </div>
+          the
+          <span style={{ color: "#02b188" }}> future</span>
           <div>of flexible rentals</div>
         </div>
         <input className="inputtextbox" type="text" placeholder="  city" />
