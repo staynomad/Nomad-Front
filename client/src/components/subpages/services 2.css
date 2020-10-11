@@ -1,0 +1,17 @@
+.services-content {
+  background-image: url(../../assets/img/background/services.jpg);
+  padding-bottom: 8%;
+  text-align: -webkit-center;
+  height: 100%;
+  background-size: cover;
+}
+
+@media (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+  .services-content {
+    background-image: url(../../assets/img/background/services.jpg);
+  }
+}
+
+.services-title {
+  display: inline-block;
+}
