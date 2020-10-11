@@ -1,0 +1,46 @@
+.navbar {
+  float: left;
+  width: 100%;
+  margin: 0 0 3em 0;
+  padding: 0;
+  list-style: none;
+  /*background-color: rgba(200, 200, 200, 0.3);*/
+}
+
+.nav-left li {
+  float: left;
+}
+
+.nav-right li {
+  float: right;
+  margin-top: 1%;
+  margin-right: 0.5%;
+}
+
+.mainlogo {
+  width: 100px;
+  padding: 10px 15px;
+}
+
+.nav-right li a {
+  display: block;
+  padding: 15px 15px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: large;
+  color: black;
+}
+
+.loginbut {
+  margin-left: 3%;
+  font-weight: bolder;
+  background-color: #02b188;
+  border-radius: 12px;
+}
+
+.signbut {
+  margin-left: 11px;
+  font-weight: bolder;
+  background-color: #02b188;
+  border-radius: 12px;
+}

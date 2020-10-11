@@ -1,0 +1,46 @@
+.full-reservation {
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1)),
+    url("../../assets/img/background/img-12rot.jpg");
+  height: 100%;
+  width: 100%;
+}
+.reservation-id-finder {
+  margin: auto;
+  display: inline-table;
+  padding: 2% 2% 2% 2%;
+  margin-bottom: 3%;
+  max-width: fit-content;
+  background-color: rgb(200, 200, 200);
+  border-radius: 5%;
+}
+
+.find-res-title {
+  font-weight: 800;
+  margin-bottom: 4%;
+  font-size: 270%;
+  color: #02b188;
+}
+
+.res-id-input {
+  width: 70%;
+  padding-top: 3%;
+  padding-bottom: 3%;
+  padding-left: 2%;
+  background-color: white;
+  border-radius: 10%;
+}
+
+.res-find-but {
+  height: 50px;
+  width: 150px;
+  margin-top: 5%;
+  font-size: larger;
+  font-weight: 900;
+  background-color: #02b188;
+  border-radius: 10%;
+  border-color: black;
+}
+.previous-res-finder {
+  background-color: rgba(200, 200, 200, 0.5);
+  min-height: 54%;
+}
