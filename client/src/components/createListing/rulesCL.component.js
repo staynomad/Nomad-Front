@@ -20,7 +20,9 @@ export default class RulesCL extends Component {
     return (
       <div>
         <div>
-          <div className="questionText">Any rules?</div>
+          <div className="startText">rules</div>
+          <br />
+          <div className="questionText">you're almost there!</div>
           <br />
           <input
             type="text"

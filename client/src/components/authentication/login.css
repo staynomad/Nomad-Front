@@ -1,5 +1,6 @@
 .login-content {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url("../../assets/img/background/horseshoe.jpg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)),
+    url("../../assets/img/background/horseshoe.jpg");
   background-size: cover;
   padding-bottom: 10%;
   text-align: -webkit-center;
@@ -32,7 +33,6 @@ form.form {
 
 .btn {
   margin: 3% 0;
-  width: 100%;
 }
 
 .botText {

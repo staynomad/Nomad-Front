@@ -20,14 +20,16 @@ export default class Description extends Component {
   render() {
     return (
       <div>
-        <div className="questionText">Tell us about your property</div>
+        <div className="startText">description</div>
+        <br />
+        <div className="questionText">tell us about your property</div>
         <br />
         <input
           type="text"
           name="description"
           className="textInputBox"
           value={this.state.description}
-          placeholder="e.g. This beautiful apartment overlooking a park"
+          placeholder="e.g. this beautiful apartment overlooking a park"
           onChange={this.handleChange}
         />
       </div>

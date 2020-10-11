@@ -30,13 +30,13 @@ export default class Location extends Component {
     return (
       <div className="LocationForm">
         <div>
-          <div className="startText">Get started!</div>
+          <div className="startText">get started!</div>
           <br />
-          <div className="questionText">Where Is Your Home Located?</div>
+          <div className="questionText">where is your home located?</div>
           <br />
           <div className="listing-inputs">
             <div className="gen-subsec">
-              <div className="label-text">Street:</div>
+              <div className="label-text">street:</div>
               <input
                 type="text"
                 name="street"
@@ -47,7 +47,7 @@ export default class Location extends Component {
               />
             </div>
             <div className="gen-subsec">
-              <div className="label-text">City:</div>
+              <div className="label-text">city:</div>
               <input
                 type="text"
                 name="city"
@@ -59,7 +59,7 @@ export default class Location extends Component {
             </div>
             <div className="state-country">
               <div className="state-subsec">
-                <div className="label-text">State:</div>
+                <div className="label-text">state:</div>
                 <input
                   type="text"
                   name="cstate"
@@ -71,7 +71,7 @@ export default class Location extends Component {
               </div>
 
               <div className="country-subsec">
-                <div className="label-text">Country:</div>
+                <div className="label-text">country:</div>
                 <input
                   type="text"
                   name="country"
@@ -96,7 +96,7 @@ export default class Location extends Component {
             </div>
 
             <div className="gen-subsec">
-              <div className="label-text">Apartment:</div>
+              <div className="label-text">apartment:</div>
               <input
                 type="text"
                 name="aptnum"

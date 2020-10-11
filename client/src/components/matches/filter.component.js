@@ -14,19 +14,25 @@ const Filter = ({ toggle }) => {
         <span className='close' onClick={toggle}>
           &times;{" "}
         </span>
-        <div>
-          <input
-            type='checkbox'
-            id='roomates'
-            onClick={() => setRoommateView(!roommateView)}
-          />{" "}
-          roomates <br />
-          <input
-            type='checkbox'
-            id='properties'
-            onClick={() => setListingView(!listingView)}
-          />{" "}
-          properties <br />
+        <div className='filter-choices'>
+          <label>
+            <input
+              className='filter-checkbox'
+              type='checkbox'
+              id='roomates'
+              onClick={() => setRoommateView(!roommateView)}
+            />{" "}
+            roommates
+          </label>
+          <label>
+            <input
+              className='filter-checkbox'
+              type='checkbox'
+              id='properties'
+              onClick={() => setListingView(!listingView)}
+            />{" "}
+            properties
+          </label>
           <select defaultValue={"nights"}>
             <option value='nights'>nights</option>
             <option>1-3</option>

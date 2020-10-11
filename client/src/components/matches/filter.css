@@ -4,9 +4,8 @@
 }
 
 .modal-content {
-  background-color: white;
+  background-color: #ffffffc4;
   position: static;
-  /* border: 2px solid black; */
   padding: 10px;
   text-align: left;
   transition: all 0.5s ease-in-out;
@@ -28,11 +27,21 @@
     opacity: 0;
   }
   50% {
-    height: 57px;
+    height: 89px;
     opacity: 0.5;
+  }
+  75% {
+    height: 117px;
+    opacity: 0.7;
   }
   100% {
     height: fit-content;
     opacity: 1;
   }
+}
+
+.filter-choices {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
 }
