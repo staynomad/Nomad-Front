@@ -1,5 +1,6 @@
 import React from "react";
 import "./services.css";
+import Cal from '../calendar/Calendar'
 
 const Services = () => {
   return (
@@ -22,6 +23,10 @@ const Services = () => {
         <a className="btn" href="/Home" style={{ textDecoration: "none" }}>
           return to home
         </a>
+      </div>
+
+      <div>
+        <Cal/>
       </div>
     </div>
   );
