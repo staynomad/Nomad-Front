@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
 import "./navbar.css";
 import Logo from "../../assets/img/vhomes.png";
 //Calling on this folder from other folders to make the pages
@@ -9,31 +10,31 @@ export default class Navbar extends Component {
         <ul className="navbar">
           <div className="nav-left">
             <li>
-              <a href="/">
+              <NavLink to="/">
                 <img className="mainlogo" src={Logo} alt="VHomes Logo"></img>
-              </a>
+              </NavLink>
             </li>
           </div>
           <div className="nav-right">
             <div>
               <li className="signbut">
-                <a href="/SignUp">sign up</a>
+                <NavLink to="/SignUp">sign up</NavLink>
               </li>
             </div>
             <div>
               <li className="loginbut">
-                <a href="/Login">log In</a>
+                <NavLink to="/Login">log In</NavLink>
               </li>
             </div>
 
             <li>
-              <a href="/Reservations">reservations</a>
+              <NavLink to="/Reservations">reservations</NavLink>
             </li>
             <li>
-              <a href="/CreateListing">create listing</a>
+              <NavLink to="/CreateListing">create listing</NavLink>
             </li>
             <li>
-              <a href="/Services">services</a>
+              <NavLink to="/Services">services</NavLink>
             </li>
           </div>
         </ul>
