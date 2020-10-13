@@ -21,140 +21,73 @@ const HOBBIES = ['Reading', 'Watching TV', 'Spending Time with Family', 'Going t
                  'Writing', 'Boating', 'Horseback Riding', 'Practicing an instrument', 'Dancing'];
 
 export default function Questionnaire () {
-  const [name, setName] = useState (null);
-  const [stateUS, setStateUS] = useState (null);
-  const [numberOfRoommates, setNumberOfRoommates] = useState (null);
-  const [bedtime, setBedtime] = useState (null);
-  const [petPreference, setPetPreference] = useState (false);
-  const [workFromHome, setWorkFromHome] = useState (false);
-  const [workFromHomePreference, setWorkFromHomePreference] = useState (null);
-  const [fridayNight, setFridayNight] = useState (null);
-  const [cleaning, setCleaning] = useState (null);
-  const [cleaningPreference, setCleaningPreference] = useState (null);
-  const [cooking, setCooking] = useState (null);
-  const [cookingPreference, setCookingPreference] = useState (null);
-  const [friends, setFriends] = useState (null);
-  const [friendsPreference, setFriendsPreference] = useState (null);
-  const [smoke, setSmoke] = useState (null);
-  const [personalityType, setPersonalityType] = useState (null);
   const [hobbies, setHobbies] = useState ({});
-  const [selfDescription, setSelfDescription] = useState (null);
-  const [roommateStory, setRoommateStory] = useState (null);
-  const [covidStory, setCovidStory] = useState (null);
+  const [state, setState] = useState ({
+    name: '',
+    stateUS: '',
+    numberOfRoommates: '',
+    bedtime: '',
+    petPreference: '',
+    workFromHome: '',
+    workFromHomePreference: '',
+    fridayNight: '',
+    cleaning: '',
+    cleaningPreference: '',
+    cooking: '',
+    cookingPreference: '',
+    friends: '',
+    friendsPreference: '',
+    smoke: '',
+    personalityType: '',
+    hobbies: '',
+    selfDescription: '',
+    roommateStory: '',
+    covidStory: '',
+  });
 
-  const handleChangeName = event => {
-    setName (event.target.value);
-  };
-
-  const handleChangeStateUS = event => {
-    setStateUS (event.target.value);
-  };
-
-  const handleChangeNumberOfRoommates = event => {
-    setNumberOfRoommates (event.target.value);
-  };
-
-  const handleChangeBedtime = event => {
-    setBedtime (event.target.value);
-  };
-
-  const handleChangePetPreference = event => {
-    setPetPreference (event.target.value);
-  };
-
-  const handleChangeWorkFromHome = event => {
-    setWorkFromHome (event.target);
-  };
-
-  const handleChangeWorkFromHomePreference = event => {
-    setWorkFromHomePreference (event.target.value);
-  };
-
-  const handleChangeFridayNight = event => {
-    setFridayNight (event.target.value);
-  };
-
-  const handleChangeCleaning = event => {
-    setCleaning (event.target.value);
-  };
-
-  const handleChangeCleaningPreference = event => {
-    setCleaningPreference (event.target.value);
-  };
-
-  const handleChangeCooking = event => {
-    setCooking (event.target.value);
-  };
-
-  const handleChangeCookingPreference = event => {
-    setCookingPreference (event.target.value);
-  };
-
-  const handleChangeFriends = event => {
-    setFriends (event.target.value);
-  };
-
-  const handleChangeFriendsPreference = event => {
-    setFriendsPreference (event.target.value);
-  };
-
-  const handleChangeSmoke = event => {
-    setSmoke (event.target.value);
-  };
-
-  const handleChangePersonalityType = event => {
-    setPersonalityType (event.target.value);
+  const handleChange = event => {
+    const value = event.target.value;
+    setState ({
+      ...state,
+      [event.target.name]: value,
+    });
+    console.log (state);
   };
 
   const handleChangeHobbies = event => {
-    console.log (event.target.name);
-    console.log ('Checked value: ', event.target.checked);
     const newHobbies = {...hobbies, [event.target.name]: event.target.checked};
-    console.log ('Your new hobbies list: ', newHobbies);
     setHobbies (newHobbies);
-  };
-
-  const handleChangeSelfDescription = event => {
-    setSelfDescription (event.target.value);
-  };
-
-  const handleChangeRoommateStory = event => {
-    setRoommateStory (event.target.value);
-  };
-
-  const handleChangeCovidStory = event => {
-    setCovidStory (event.target.value);
+    console.log (hobbies);
   };
 
   const handleSubmit = event => {
-  event.preventDefault ();
-  return (
-    {name: name, stateUS: stateUS, numberOfRoommates: numberOfRoommates, bedtime: bedtime, 
-    petPreference: petPreference, workFromHome: workFromHome, workFromHomePreference: workFromHomePreference,
-    fridayNight: fridayNight, cleaning: cleaning, cleaningPreference: cleaningPreference, cooking: cooking,
-    cookingPreference: cookingPreference, friends: friends, friendsPreference: friendsPreference, smoke: smoke,
-    personalityType: personalityType, selfDescription: selfDescription, roommateStory: roommateStory,
-    covidStory: covidStory, hobbies: hobbies}
-  );
-};
+    event.preventDefault ();
+    return state;
+  };
 
   return (
     <div>
       <h1>Roommate Preferences Form</h1>
       <hr />
       <form onSubmit={handleSubmit}>
-        <label id="name">
+        <label id="name" value={state.name}>
           <h3>Write your name here!</h3>
           <input
             type="text"
             id="questionnaireNameInput"
+            name="name"
             placeholder="Your full name"
-            onChange={handleChangeName}
+            onChange={handleChange}
           />
         </label>
         <label id="stateUS">
           <h3>What state are you from?</h3>
-          <select id="questionnaireStateUS" onChange={handleChangeStateUS}>
+          <select
+            id="questionnaireStateUS"
+            name="stateUS"
+            value={state.stateUS}
+            onChange={handleChange}
+          >
             {STATE_ABBREV.map (stateUS => (
               <option value={stateUS} key={stateUS}>{stateUS}</option>
             ))}
@@ -164,7 +97,9 @@ export default function Questionnaire () {
           <h3>How many roommates would you prefer to live with?</h3>
           <select
             id="questionnaireNumberOfRoommates"
-            onChange={handleChangeNumberOfRoommates}
+            name="numberOfRoommates"
+            value={state.numberOfRoommates}
+            onChange={handleChange}
           >
             <option value="_" key="_">Select your roommate preference!</option>
             <option value="0" key="0">0 roommates</option>
@@ -176,7 +111,12 @@ export default function Questionnaire () {
         </label>
         <label id="bedtime">
           <h3>What is your ideal bedtime?</h3>
-          <select id="questionnaireBedtime" onChange={handleChangeBedtime}>
+          <select
+            id="questionnaireBedtime"
+            value={state.bedtime}
+            name="bedtime"
+            onChange={handleChange}
+          >
             <option value="_" key="_">Select your bedtime preference!</option>
             <option value="9" key="9">9 PM - 10 PM</option>
             <option value="10" key="10">10 PM - 11 PM</option>
@@ -189,7 +129,9 @@ export default function Questionnaire () {
           <h3>If applicable, do you plan on bringing a pet?</h3>
           <select
             id="questionnairePetPreference"
-            onChange={handleChangePetPreference}
+            name="petPreference"
+            value={state.petPreference}
+            onChange={handleChange}
           >
             <option value="_" key="_">Select your pet preference!</option>
             <option value={true} key="yes">Yes, of course!</option>
@@ -202,7 +144,9 @@ export default function Questionnaire () {
           <h3>WIll you be working from home?</h3>
           <select
             id="questionnaireWorkFromHome"
-            onChange={handleChangeWorkFromHome}
+            name="workFromHome"
+            value={state.workFromHome}
+            onChange={handleChange}
           >
             <option value="_" key="_">Select your work preference!</option>;
             <option value={true} key="yes">
@@ -219,7 +163,9 @@ export default function Questionnaire () {
           </h3>
           <select
             id="questionnaireWorkFromHomePreference"
-            onChange={handleChangeWorkFromHomePreference}
+            name="workFromHomePreference"
+            value={state.workFromHomePreference}
+            onChange={handleChange}
           >
             <option value="_" key="_">Select your roommate preference!</option>
             <option value="yes" key="yes">Sure!</option>
@@ -231,7 +177,9 @@ export default function Questionnaire () {
           <h3>Would you rather stay home or go out on a Friday night?</h3>
           <select
             id="questionnaireFridayNight"
-            onChange={handleChangeFridayNight}
+            name="fridayNight"
+            value={state.fridayNight}
+            onChange={handleChange}
           >
             <option value="_" key="_">
               Select your Friday night preference!
@@ -242,7 +190,12 @@ export default function Questionnaire () {
         </label>
         <label id="cleaning">
           <h3>How often do you plan to clean your living space?</h3>
-          <select id="questionnaireCleaning" onChange={handleChangeCleaning}>
+          <select
+            id="questionnaireCleaning"
+            value={state.cleaning}
+            name="cleaning"
+            onChange={handleChange}
+          >
             <option value="_" key="_">Select your cleaning preference!</option>
             <option value="mostOften">2-3 times per week</option>
             <option value="mediumOften">About once per week</option>
@@ -257,7 +210,9 @@ export default function Questionnaire () {
           </h3>
           <select
             id="questionnaireCleaningPreference"
-            onChange={handleChangeCleaningPreference}
+            value={state.cleaningPreference}
+            name="cleaningPreference"
+            onChange={handleChange}
           >
             <option value="_" key="_">Select your roommate preference!</option>
             <option value="most">It is extremely important to me!</option>
@@ -269,7 +224,12 @@ export default function Questionnaire () {
         </label>
         <label id="cooking">
           <h3>How often do you plan to cook?</h3>
-          <select id="questionnaireCooking" onChange={handleChangeCooking}>
+          <select
+            id="questionnaireCooking"
+            value={state.cooking}
+            name="cooking"
+            onChange={handleChange}
+          >
             <option value="_" key="_">Select your cooking preference!</option>
             <option value="mostOften">Almost every day!</option>
             <option value="mediumOften">A few times per week.</option>
@@ -280,7 +240,9 @@ export default function Questionnaire () {
           <h3>How important is it to you that your roommate plans to cook?</h3>
           <select
             id="questionnaireCookingPreference"
-            onChange={handleChangeCookingPreference}
+            name="cookingPreference"
+            value={state.cookingPreference}
+            onChange={handleChange}
           >
             <option value="_" key="_">Select your roommate preference!</option>
             <option value="most">It is extremely important to me.</option>
@@ -292,7 +254,12 @@ export default function Questionnaire () {
         </label>
         <label id="friends">
           <h3>How often do you plan to have friends over?</h3>
-          <select id="questionnaireFriends" onChange={handleChangeFriends}>
+          <select
+            id="questionnaireFriends"
+            value={state.friends}
+            name="friends"
+            onChange={handleChange}
+          >
             <option value="_" key="_">Select your social preference!</option>
             <option value="6-7">Nearly every day</option>
             <option value="4-5">About 4-5 times per week</option>
@@ -307,7 +274,9 @@ export default function Questionnaire () {
           </h3>
           <select
             id="questionnaireFriendsPreference"
-            onChange={handleChangeFriendsPreference}
+            name="friendsPreference"
+            value={state.friendsPreference}
+            onChange={handleChange}
           >
             <option value="_" key="_">Select your roommate preference!</option>
             <option value="good">The more, the merrier!</option>
@@ -321,7 +290,12 @@ export default function Questionnaire () {
         </label>
         <label id="smoke">
           <h3>Do you smoke?</h3>
-          <select id="questionnaireSmoke" onChange={handleChangeSmoke}>
+          <select
+            id="questionnaireSmoke"
+            value={state.smoke}
+            name="smoke"
+            onChange={handleChange}
+          >
             <option value="_" key="_">Select your smoking preference!</option>
             <option value="no">
               No, and I would not like to live with someone who smokes.
@@ -342,7 +316,9 @@ export default function Questionnaire () {
           <h3>What is your Myers Briggs personality type?</h3>
           <select
             id="questionnairePersonalityType"
-            onChange={handleChangePersonalityType}
+            name="personalityType"
+            value={state.personalityType}
+            onChange={handleChange}
           >
             {PERSONALITY_TYPES.map (personality => (
               <option value={personality} key={personality}>
@@ -379,7 +355,9 @@ export default function Questionnaire () {
           <br />
           <textarea
             id="questionnaireSelfDescription"
-            onChange={handleChangeSelfDescription}
+            name="selfDescription"
+            value={state.selfDescription}
+            onChange={handleChange}
           />
         </label>
         <label id="roommateStory">
@@ -390,7 +368,9 @@ export default function Questionnaire () {
           <br />
           <textarea
             id="questionnaireRoommateStory"
-            onChange={handleChangeRoommateStory}
+            name="roommateStory"
+            value={state.roommateStory}
+            onChange={handleChange}
           />
         </label>
         <label id="covidStory">
@@ -403,7 +383,9 @@ export default function Questionnaire () {
           <br />
           <textarea
             id="questionnaireCovidStory"
-            onChange={handleChangeCovidStory}
+            name="covidStory"
+            value={state.covidStory}
+            onChange={handleChange}
           />
         </label>
         <hr />
