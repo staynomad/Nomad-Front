@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import handleReq from "../../utils/fetchRequest";
 import "./listings.css";
-import {Modal} from '@material-ui/core/';
+import {Modal, DialogContent} from '@material-ui/core/';
 import ListingsModal from './listingsmodal.component';
 
 const Listings = () => {
@@ -48,8 +48,10 @@ const Listings = () => {
               <b>Starting Price:</b> ${listing.price}
             </div>
           </div>
-          <Modal open={open} onClose={handleOpenClose} className="material-ui-modal">
-            <ListingsModal listing={listing}/>
+          <Modal open={open} onClose={handleOpenClose} >
+            <DialogContent className="material-ui-modal">
+              <ListingsModal listing={listing}/>
+            </DialogContent>
           </Modal>
           <div>
             <button>More</button>

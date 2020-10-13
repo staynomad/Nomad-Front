@@ -1,39 +1,51 @@
 import React from 'react';
 import "./listingsmodal.css";
 
-const ListingsModal = ({listing}) => {
-  return (
-    <div className="listings-modal">
-      <h1>{listing.description}</h1>
-      <div><b>Amenities</b>
-        <div>{listing.amenities.pool ? `Pool` : null}</div>
-        <div>{listing.amenities.gym ? `Gym` : null}</div>
-        <div>{listing.amenities.tv ? `TV` : null}</div>
-        <div>{listing.amenities.cooking_facilities ? `Kitchen` : null}</div>
+class ListingsModal extends React.Component {
+  constructor(props) {
+    super(props);
+    this.listing = props.listing;
+  }
+  render() {
+    return (
+      <div className="listing-modal">
+        <h1>{this.listing.description}</h1>
+        <div className="single-listing-info">
+          <div className="single-listing-details">
+            <div><b>Amenities</b>
+              <div>{this.listing.amenities.pool ? `Pool` : null}</div>
+              <div>{this.listing.amenities.gym ? `Gym` : null}</div>
+              <div>{this.listing.amenities.tv ? `TV` : null}</div>
+              <div>{this.listing.amenities.cooking_facilities ? `Kitchen` : null}</div>
+            </div>
+            <div><b>Details</b>
+            <div>
+              {this.listing.details.beds > 1 ? `${this.listing.details.beds} beds` : `${this.listing.details.beds} bed`}  {this.listing.details.baths > 1 ? `${this.listing.details.baths} baths` : `${this.listing.details.baths} bath`}
+            </div>
+            </div>
+            <div><b>Location</b>
+              <div>{this.listing.location.street}</div>
+              <div>{this.listing.location.city}</div>
+              <div>{this.listing.location.state}</div>
+              <div>{this.listing.location.country}</div>
+              <div>{this.listing.location.zipcode}</div>
+            </div>
+            <div><b>Starting price</b>
+              <div>{this.listing.price}</div>
+            </div>
+            <div><b>Rating</b>
+              <div>{this.listing.rating.user}</div>
+            </div>
+            <div><b>Rules</b>
+              <div>{this.listing.rules}</div>
+            </div>
+          </div>
+          <div className="single-listing-image">
+          </div>
+        </div>
       </div>
-      <div><b>Details</b>
-      <div>
-        {listing.details.beds > 1 ? `${listing.details.beds} beds` : `${listing.details.beds} bed`}  {listing.details.baths > 1 ? `${listing.details.baths} baths` : `${listing.details.baths} bath`}
-      </div>
-      </div>
-      <div><b>Location</b>
-        <div>{listing.location.street}</div>
-        <div>{listing.location.city}</div>
-        <div>{listing.location.state}</div>
-        <div>{listing.location.country}</div>
-        <div>{listing.location.zipcode}</div>
-      </div>
-      <div><b>Starting price</b>
-        <div>{listing.price}</div>
-      </div>
-      <div><b>Rating</b>
-        <div>{listing.rating.user}</div>
-      </div>
-      <div><b>Rules</b>
-        <div>{listing.rules}</div>
-      </div>
-    </div>
-  )
+    )
+  }
 };
 
 export default ListingsModal;

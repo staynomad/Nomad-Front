@@ -1,4 +1,22 @@
-.listings-modal {
+.listing-modal {
   background: white;
   position: absolute;
+  width: 60%;
+  height: 60%;
+  padding: 30px 90px;
+}
+
+.single-listing-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.single-listing-details {
+  width: 50%;
+}
+
+.single-listing-image {
+  width: 50%;
+  background-image: url("../../assets/img/background/homebackground.jpg");
+  background-size: cover;
 }
