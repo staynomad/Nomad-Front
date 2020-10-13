@@ -19,3 +19,9 @@
   border: 1px solid black;
   margin: 20px 0px;
 }
+
+.material-ui-modal {
+  display: flex;
+  place-content: center;
+  align-items: center;
+}
