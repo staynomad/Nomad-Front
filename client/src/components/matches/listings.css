@@ -20,7 +20,7 @@
   margin: 20px 0px;
 }
 
-.material-ui-modal {
+.material-ui-dialogmodal {
   display: flex;
   place-content: center;
   align-items: center;

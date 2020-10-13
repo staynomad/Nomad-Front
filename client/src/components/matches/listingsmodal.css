@@ -4,19 +4,26 @@
   width: 60%;
   height: 60%;
   padding: 30px 90px;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  border-radius: 20px;
 }
 
 .single-listing-info {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 
 .single-listing-details {
-  width: 50%;
+  width: 60%;
+}
+
+.single-listing-details > * {
+  margin: 10px 0px;
 }
 
 .single-listing-image {
-  width: 50%;
+  width: -webkit-fill-available;
   background-image: url("../../assets/img/background/homebackground.jpg");
   background-size: cover;
 }

@@ -48,18 +48,13 @@ const Listings = () => {
               <b>Starting Price:</b> ${listing.price}
             </div>
           </div>
-          <Modal open={open} onClose={handleOpenClose} >
-            <DialogContent className="material-ui-modal">
+          <Modal open={open} onClose={handleOpenClose}>
+            <DialogContent className="material-ui-dialogmodal">
               <ListingsModal listing={listing}/>
             </DialogContent>
           </Modal>
-          <div>
-            <button>More</button>
-          </div>
         </div>
       ))}
-      {/* can be refactored to another reusable component */}
-      {/* more button directs to the all the listing information */}
     </div>
   );
 };
