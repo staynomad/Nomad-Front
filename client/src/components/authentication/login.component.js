@@ -3,12 +3,11 @@ import { Redirect } from "react-router-dom";
 import handleReq from "../../utils/fetchRequest.js";
 import "./login.css";
 
-const Login = () => {
+const Login = (props) => {
   const [userLogin, setUserLogin] = useState({
     email: "",
     password: "",
   });
-  const [loginSuccess, setLoginSuccess] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -22,12 +21,12 @@ const Login = () => {
           alert(data.errors[0]);
         } else {
           window.sessionStorage.accessToken = data.token;
-          setLoginSuccess(true);
+          props.setLoggedIn(true);
         }
       });
   };
 
-  return loginSuccess ? (
+  return props.loggedIn ? (
     <Redirect to='/' />
   ) : (
     <div className='login-content'>
