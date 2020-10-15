@@ -1,7 +1,7 @@
 const express = require("express");
 const User = require("../models/user.model");
 const { getUserToken, passGenService } = require("../utils");
-const { check, validationResult } = require('express-validator');
+const { check, body, validationResult } = require('express-validator');
 
 const router = express.Router();
 
@@ -12,20 +12,21 @@ router.post("/",
 [
   check('email', "the email address is not a valid email address").isEmail(),
   check('name', "Name should be atleast 3 characters").isLength({ min: 3}),
+  body('check')
+  .custom((value, { req }) => {
+    if (value !== req.body.password) {
+      throw new Error('Passwords do not match');
+    }
+    else {
+      return true;
+    }
+  }),
   check('password')
   .isLength({ min: 8 }).withMessage('Password must be of at least 8 characters')
   .matches(/\d/).withMessage('Password must atleast contain a number')
   .matches(/[A-Z]/).withMessage('Password must at least contain an uppercase character')
   .matches(/[a-z]/).withMessage('Password must at least contain a lowercase character')
   .matches(/^[a-zA-Z0-9!@#$%^&*)(+=._-]+$/).withMessage('Password must at least contain one special character')
-  .custom((value, {req, loc, path}) => {
-      if (value !== req.body.confirm) {
-        throw new Error("Passwords do not match");
-      }
-      else {
-        return value;
-      }
-  })
 ]
 , async (req, res) => {
   try {
