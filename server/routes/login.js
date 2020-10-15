@@ -8,7 +8,7 @@ const { check, validationResult } = require("express-validator");
 /* User Login */
 router.post(
   "/",
-  [check("email").isEmail().withMessage('the email address is not valid')],
+  [check("email").isEmail().withMessage('The email address is not valid')],
   async (req, res) => {
     try {
       const errors = validationResult(req);
@@ -25,12 +25,12 @@ router.post(
       // 200 - if everything is ok
       if (!user) {
         return res.status(404).json({
-          errors: ["the user with this email address does not exist"],
+          errors: ["The user with this email address does not exist"],
         });
       }
       if (!validatePassword(password, user.password)) {
         return res.status(401).json({
-          errors: ["the passwords do not match"],
+          errors: ["Incorrect password"],
         });
       }
       const token = getUserToken(user);
