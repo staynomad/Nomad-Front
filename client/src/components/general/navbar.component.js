@@ -61,7 +61,6 @@ export default withRouter(class Navbar extends Component {
                 </li>
               </>
             )}
-
           </div>
         </ul>
       </div>
