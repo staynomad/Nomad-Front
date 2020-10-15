@@ -332,7 +332,7 @@ export default function Questionnaire () {
           <h3>What are your favorite hobbies? Check all that apply!</h3>
           {HOBBIES.map (hobby => (
             <label id={hobby} key={hobby}>
-              {hobby}:
+              {hobby} 
               <input
                 type="checkbox"
                 id={hobby}
