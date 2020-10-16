@@ -4,6 +4,7 @@
   border-radius: 6px;
   background: #ffffffe6;
   box-shadow: 1px 1px 7px 2px #787878;
+  cursor: pointer;
 }
 
 .listing-information {

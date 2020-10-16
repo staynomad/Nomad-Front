@@ -1,0 +1,10 @@
+.roommate-modal {
+  background: white;
+  position: absolute;
+  width: 60%;
+  height: 60%;
+  padding: 30px 90px;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  border-radius: 20px;
+}

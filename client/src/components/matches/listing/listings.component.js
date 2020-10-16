@@ -13,16 +13,15 @@ const Listings = () => {
   };
 
   useEffect(() => {
-    // setListings([{ name: "100 Acre Room" }]);
     handleReq("/listings", "GET")
       .then((data) => {
         return data.json();
       })
       .then((res) => {
         if (res.errors) {
-          alert(res.errors[0]);
+          return alert(res.errors[0]);
         }
-        console.log(res.body);
+
         if (res.body) {
           setListings(res.body);
         }
