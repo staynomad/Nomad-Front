@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./roommate.css";
-import handleReq from "../../utils/fetchRequest";
+import handleReq from "../../../utils/fetchRequest";
 
 const Roommates = () => {
   const [roommates, setRoommates] = useState([]);

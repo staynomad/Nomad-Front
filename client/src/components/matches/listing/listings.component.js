@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import handleReq from "../../utils/fetchRequest";
+import handleReq from "../../../utils/fetchRequest";
 import "./listings.css";
 import {Modal, DialogContent} from '@material-ui/core/';
 import ListingsModal from './listingsmodal.component';

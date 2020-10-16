@@ -24,6 +24,6 @@
 
 .single-listing-image {
   width: -webkit-fill-available;
-  background-image: url("../../assets/img/background/homebackground.jpg");
+  background-image: url("../../../assets/img/background/homebackground.jpg");
   background-size: cover;
 }
