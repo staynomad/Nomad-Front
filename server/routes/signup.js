@@ -39,7 +39,7 @@ router.post("/",
       const errorMessages = errors.array().map((x) => x.msg);
       return res.status(422).json({ errors: errorMessages});
     }
-    const { name, email, password } = req.body;
+    const { name, email, password, isHost } = req.body;
     const user = await User.findOne({ email });
     if(user) {
       return res.status(422).json({ errors: [`User already exists with email ${email}`]});
@@ -50,7 +50,8 @@ router.post("/",
     const newUser = await new User({
       name,
       email,
-      password: encrypted_password
+      password: encrypted_password,
+      isHost
     }).save();
     // now send the token
     const token = getUserToken({ id : newUser._id });

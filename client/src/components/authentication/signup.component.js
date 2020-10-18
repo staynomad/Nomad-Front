@@ -9,6 +9,7 @@ const Signup = () => {
     name: "",
     password: "",
     check: "",
+    isHost: false,
   });
 
   const [signupSuccess, setSignupSuccess] = useState(false);
@@ -68,6 +69,16 @@ const Signup = () => {
             onChange={(e) =>
               setUserSignup({ ...userSignup, check: e.target.value})}
           />
+          <label
+            className="checkbox">
+            <input
+              type="checkbox"
+              name="isHost"
+              checked={userSignup.isChecked}
+              onChange={(e) =>
+                setUserSignup({ ...userSignup, isHost: !e.isHost})}
+            /> are you a host?
+          </label>
           <input
             type="submit"
             value="create your account"
