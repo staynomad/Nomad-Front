@@ -4,8 +4,9 @@ import "./listingsmodal.css";
 class ListingsModal extends React.Component {
   constructor(props) {
     super(props);
-    this.listing = props.listing;
+    this.listing = this.props.listing;
   }
+
   render() {
     return (
       <div className="listing-modal">

@@ -1,19 +1,16 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import "./roommatemodal.css";
 
 class RoommateModal extends React.Component {
   constructor(props) {
     super(props);
-    this.roommate = props.roommate;
+    this.roommate = this.props.roommate;
   }
 
   render() {
     return (
       <div className="roommate-modal">
-        <h1>Name: {this.roommate.name}</h1>
-        <div>
-          {this.roommate.id}
-        </div>
+        <h1>Name: {this.props.roommate.name}</h1>
       </div>
     )
   }
