@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./roommate.css";
 import handleReq from "../../../utils/fetchRequest";
+import RoommateCard from './roommateCard.component'
 
 const Roommates = () => {
   const [roommates, setRoommates] = useState([]);
@@ -13,9 +14,8 @@ const Roommates = () => {
       })
       .then((data) => {
         if (data.errors) {
-          alert(data.errors[0]);
+          return alert(data.errors[0]);
         }
-
         if (data.body) {
           setRoommates(data.body);
         }
@@ -25,13 +25,7 @@ const Roommates = () => {
   return (
     <div id='roommates-content'>
       {roommates.map((roommate) => (
-        <div className='roommate-information'>
-          <div>Name: {roommate.name}</div>
-          <div>Age: ##</div>
-          <div>Location: Tempe, Arizona</div>
-          <div>Hobbies: ----</div>
-          <div>Personality: ----</div>
-        </div>
+        <RoommateCard roommate={roommate}/>
       ))}
     </div>
   );
