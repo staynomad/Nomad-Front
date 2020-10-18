@@ -20,6 +20,7 @@ export default class LeftMenu extends Component {
   _renderSubComp() {
     switch(this.state.render) {
       case 'matches': return <Matches />
+      default: console.log('not matches')
     }
   }
 
