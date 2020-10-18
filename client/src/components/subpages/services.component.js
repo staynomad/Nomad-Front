@@ -1,6 +1,6 @@
 import React from "react";
 import "./services.css";
-import Cal from '../calendar/Calendar'
+import Calendar from '../calendar/cal.component'
 
 const Services = () => {
   return (
@@ -26,7 +26,7 @@ const Services = () => {
       </div>
 
       <div>
-        <Cal/>
+        <Calendar/>
       </div>
     </div>
   );
