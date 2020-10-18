@@ -18,6 +18,9 @@ const UserSchema = new Schema({
     check: {
         type: String,
     },
+    isHost: {
+        type: Boolean,
+    }
 });
 
 const User = mongoose.model("user", UserSchema);

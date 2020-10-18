@@ -22,6 +22,11 @@
 
 .botText {
   font-size: 18px;
-  font-weight: bold;
   color: #31473b;
+}
+
+.checkbox {
+  color: #31473b;
+  margin: 1%;
+  font-size: 16px;
 }
