@@ -8,6 +8,10 @@ const Matches = () => {
   const [seen, setSeen] = useState(false);
   const [roommateView, setRoommateView] = useState(false);
   const [listingView, setListingView] = useState(false);
+  const [roommateFilters, setRoommateFilters] = useState({});
+  const [listingFilters, setListingFilter] = useState({});
+  // pass filter setters to filter component to update filter state
+  // pass filter state to roommate and listing components to allow filtering through roommates/listing components
 
   const toggle = () => {
     if (roommateView || listingView) {
@@ -22,22 +26,26 @@ const Matches = () => {
           setRoommateView(!roommateView);
           setListingView(false)
         }}>
-          People
+          people
         </button>
         <button className="filter btn green" onClick={() => {
           setListingView(!listingView);
           setRoommateView(false);
         }}>
-          Listing
+          listing
         </button>
         <button className='filter btn green' onClick={toggle}>
           filter
         </button>
-        {!seen || !roommateView && !listingView ? null : <Filter toggle={toggle} roommateView={roommateView} listingView={listingView}/>}
       </div>
-      <div>
-        {roommateView ? <Roommates /> : null}
-        {listingView ? <Listings /> : null}
+      <div id="matches-components-filtering">
+        <div id="filtering-inputs">
+          {!seen || (!roommateView && !listingView) ? null : <Filter toggle={toggle} roommateView={roommateView} listingView={listingView}/>}
+        </div>
+        <div id="roommate-listing-content-container">
+          {roommateView ? <Roommates /> : null}
+          {listingView ? <Listings /> : null}
+        </div>
       </div>
     </div>
   );

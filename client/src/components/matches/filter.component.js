@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Roommates from "./roommate/roommates.component";
 import Listings from "./listing/listings.component"
 import "./filter.css";

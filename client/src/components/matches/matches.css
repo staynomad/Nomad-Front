@@ -20,3 +20,14 @@
 .filter.btn {
   margin: 1%;
 }
+
+#roommate-listing-content-container {
+}
+
+#matches-component-filtering {
+  display: block;
+}
+
+#filtering-inputs {
+  float: left;
+}
