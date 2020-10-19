@@ -18,15 +18,15 @@ const Matches = () => {
       <div>
         <button className="filter btn green" onClick={() => setRoommateView(!roommateView)}>People</button>
         <button className="filter btn green" onClick={() => setListingView(!listingView)}>Listing</button>
+        <button className='filter btn green' onClick={toggle}>
+        filter
+      </button>
+        {seen ? <Filter toggle={toggle} roommateView={roommateView} listingView={listingView}/> : null}
       </div>
       <div>
         {roommateView ? <Roommates /> : null}
         {listingView ? <Listings /> : null}
       </div>
-      {/* <button className='filter btn green' onClick={toggle}>
-        filter
-      </button> */}
-      {seen ? <Filter toggle={toggle} /> : null}
     </div>
   );
 };
