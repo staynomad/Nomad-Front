@@ -10,18 +10,30 @@ const Matches = () => {
   const [listingView, setListingView] = useState(false);
 
   const toggle = () => {
-    setSeen(!seen);
+    if (roommateView || listingView) {
+      setSeen(!seen);
+    }
   };
 
   return (
     <div id='matches-page'>
       <div>
-        <button className="filter btn green" onClick={() => setRoommateView(!roommateView)}>People</button>
-        <button className="filter btn green" onClick={() => setListingView(!listingView)}>Listing</button>
+        <button className="filter btn green" onClick={() => {
+          setRoommateView(!roommateView);
+          setListingView(false)
+        }}>
+          People
+        </button>
+        <button className="filter btn green" onClick={() => {
+          setListingView(!listingView);
+          setRoommateView(false);
+        }}>
+          Listing
+        </button>
         <button className='filter btn green' onClick={toggle}>
-        filter
-      </button>
-        {seen ? <Filter toggle={toggle} roommateView={roommateView} listingView={listingView}/> : null}
+          filter
+        </button>
+        {!seen || !roommateView && !listingView ? null : <Filter toggle={toggle} roommateView={roommateView} listingView={listingView}/>}
       </div>
       <div>
         {roommateView ? <Roommates /> : null}

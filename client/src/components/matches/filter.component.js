@@ -54,6 +54,12 @@ const Filter = ({ toggle, roommateView, listingView }) => {
         />
         Listing Checkbox 3
       </label>
+      <select defaultValue={"nights"}>
+            <option value='nights'>nights</option>
+            <option>1-3</option>
+            <option>3-7</option>
+            <option>7+</option>
+          </select>
     </div>
   )
 
@@ -66,12 +72,6 @@ const Filter = ({ toggle, roommateView, listingView }) => {
         <div className='filter-choices'>
           {roommateView ? roommateFilters : null}
           {listingView ? listingFilters : null}
-          <select defaultValue={"nights"}>
-            <option value='nights'>nights</option>
-            <option>1-3</option>
-            <option>3-7</option>
-            <option>7+</option>
-          </select>
         </div>
       </div>
     </div>
