@@ -10,9 +10,10 @@ import Reservation from "./components/reservations/findReservation.component";
 import Matches from "./components/matches/matches.component.js";
 import Questionnaire from "./components/matches/questionnaire.component"
 import { BrowserRouter as Router, Route, Switch, useHistory } from "react-router-dom";
-import "./App.css";
 import CreateListing from "./components/createListing/createListing.component";
 import MyAccount from "./components/myAccount/menu.component"
+import "./App.css";
+
 //to add more items just copy the format and add the route path. look at navbar component to see where the path is currently set to
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
