@@ -1,9 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import Toolbar from '@material-ui/core/Toolbar';
-import "./footer.css";
-//Calling on this folder from other folders to make the pages
 
 /* Material-UI appbar styling */
 const useStyles = makeStyles((theme) => ({
