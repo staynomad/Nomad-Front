@@ -17,6 +17,8 @@ a, a:hover {
 }
 
 .App {
+  display: flex;
+  flex-direction: column;
   text-align: center;
   height: 100%;
 }

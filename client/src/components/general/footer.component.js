@@ -8,6 +8,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     boxShadow: "none",
     color: "black",
+    height: "max-content",
+    marginTop: "auto",
   },
   linkItems: {
     fontSize: "14px",
