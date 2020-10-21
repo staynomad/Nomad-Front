@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
   iconButton: {
     color: "white",
     height: "70px",
+    marginRight: "1%",
     padding: "6px",
     width: "70px",
   },
