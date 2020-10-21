@@ -39,13 +39,13 @@ export default class LeftMenu extends Component {
                 onClick={this.handleItemClick}
               />
               <Menu.Item
-                name='explore'
-                active={activeItem === 'explore'}
+                name='reservations'
+                active={activeItem === 'reservations'}
                 onClick={this.handleItemClick}
               />
               <Menu.Item
-                name='my listings'
-                active={activeItem === 'my listings'}
+                name='listings'
+                active={activeItem === 'listings'}
                 onClick={this.handleItemClick}
               />
               <Menu.Item
@@ -58,7 +58,6 @@ export default class LeftMenu extends Component {
 
           <Grid.Column stretched width={13}>
             <Segment>
-              //add conditional render for components
             </Segment>
           </Grid.Column>
         </Grid>

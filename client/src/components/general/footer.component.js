@@ -7,14 +7,15 @@ import Toolbar from '@material-ui/core/Toolbar';
 const useStyles = makeStyles((theme) => ({
   root: {
     boxShadow: "none",
-    color: "black",
+    color: "#4D4842",
     height: "max-content",
     marginTop: "auto",
   },
   linkItems: {
     fontSize: "14px",
     fontWeight: "bold",
-    margin: "0 12px 0 12px",
+    margin: "0 10px 0 12px",
+    color: "#4D4842",
   },
   spacing: {
     flexGrow: 1,

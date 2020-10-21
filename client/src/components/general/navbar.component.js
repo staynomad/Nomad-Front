@@ -140,6 +140,9 @@ const Navbar = (props) => {
             </>
           ) : (
             <>
+            <CustomButton>
+              <NavLink to='/Matches'>Explore</NavLink>
+            </CustomButton>
               <CustomButton>
                 <NavLink to='/SignUp'>Sign Up</NavLink>
               </CustomButton>
@@ -148,7 +151,7 @@ const Navbar = (props) => {
               </CustomButton>
             </>
           )}
-          
+
         </Toolbar>
       </AppBar>
     </>

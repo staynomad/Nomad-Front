@@ -21,18 +21,18 @@ const Matches = () => {
 
   return (
     <div id='matches-page'>
-      <div>
+      <div className='container'>
         <button className="filter btn green" onClick={() => {
           setRoommateView(!roommateView);
           setListingView(false)
         }}>
-          people
+          roommates
         </button>
-        <button className="filter btn green" onClick={() => {
+        <button className="filter btn green locations" onClick={() => {
           setListingView(!listingView);
           setRoommateView(false);
         }}>
-          listing
+          locations
         </button>
         <button className='filter btn green' onClick={toggle}>
           filter

@@ -3,10 +3,11 @@
     url("../../assets/img/background/homebackground.jpg");
   /* height: 100%; */
   min-height: -webkit-fill-available;
+  background-size: cover;
 }
 
 .container {
-  margin: 10% 10% 10% 10%;
+  padding-top: 3%;
 }
 
 .close {
@@ -19,6 +20,11 @@
 
 .filter.btn {
   margin: 1%;
+}
+
+.locations {
+  padding-left: 2%;
+  padding-right: 2%;
 }
 
 #roommate-listing-content-container {
