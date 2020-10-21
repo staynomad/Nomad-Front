@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { NavLink, withRouter  } from "react-router-dom";
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -121,7 +121,7 @@ const Navbar = (props) => {
       <AppBar className={classes.root} color="transparent" position="fixed">
         <Toolbar>
           <NavLink to='/'>
-            <img className={classes.mainLogo} src={Logo} />
+            <img alt='Home' className={classes.mainLogo} src={Logo} />
           </NavLink>
           <div className={classes.spacing} />
           {loggedIn ? (
