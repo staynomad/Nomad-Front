@@ -23,6 +23,10 @@ a, a:hover {
   height: 100%;
 }
 
+.App div:first-of-type {
+  flex-grow: 1;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

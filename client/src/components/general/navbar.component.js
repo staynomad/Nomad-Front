@@ -41,6 +41,17 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "90px",
     transition: "all 0.15s ease",
   },
+  navLink: {
+    '&:hover': {
+      color: "#2E2E2E",
+    },
+    color: "white",
+    font: "inherit",
+    fontSize: "large",
+    fontWeight: "bolder",
+    margin: "0 1% 0 0",
+    transition: "all 0.25s ease-in-out",
+  },
   spacing: {
     flexGrow: 1,
   }
@@ -140,9 +151,7 @@ const Navbar = (props) => {
             </>
           ) : (
             <>
-            <CustomButton>
-              <NavLink to='/Matches'>Explore</NavLink>
-            </CustomButton>
+              <NavLink to='/Matches' className={classes.navLink}>Explore</NavLink>
               <CustomButton>
                 <NavLink to='/SignUp'>Sign Up</NavLink>
               </CustomButton>
