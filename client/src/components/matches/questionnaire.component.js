@@ -25,6 +25,7 @@ export default function Questionnaire () {
   const [hobbies, setHobbies] = useState ({});
   const [state, setState] = useState ({
     name: '',
+    email: '',
     stateUS: '',
     numberOfRoommates: '',
     bedtime: '',
@@ -78,6 +79,17 @@ export default function Questionnaire () {
             id="questionnaireNameInput"
             name="name"
             placeholder="Your full name"
+            onChange={handleChange}
+          />
+        </label>
+        <label id="email" value={state.email}>
+          <h3>What is your email address?</h3>
+          <input 
+            type="email"
+            id="email"
+            name="email"
+            value={state.email}
+            placeholder="john@example.com"
             onChange={handleChange}
           />
         </label>

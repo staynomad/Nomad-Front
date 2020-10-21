@@ -19,14 +19,21 @@ app.use(cors({ origin: true }));
 app.use("/login", loginRouter);
 app.use("/signup", signUpRouter);
 app.use("/roommates", roommateRouter);
-
 app.use("/listings", listingRouter);
+
 mongoose.connect(DATABASE_URI, {
   useCreateIndex: true,
   useFindAndModify: false, // flag needed to enable findOneAndUpdate
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+
+// test to see if the backend is connected
+
+mongoose.connection.on('connected', () => {
+  console.log('mongoose is connected');
+});
+
 
 app.get("/", async (req, res) => {
   res.json('Server is running!')
