@@ -38,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
     },
     maxHeight: "70px",
     maxWidth: "90px",
-    padding: "6px",
     transition: "all 0.15s ease",
   },
   spacing: {
@@ -57,7 +56,8 @@ const CustomButton = withStyles((theme) => ({
     font: "inherit",
     fontSize: "16px",
     fontWeight: "bolder",
-    marginLeft: "1%",
+    margin: "0 1% 0 0",
+    padding: "12px",
   },
 }))(Button);
 
@@ -119,8 +119,8 @@ const Navbar = (props) => {
   return (
     <>
       <AppBar className={classes.root} color="transparent" position="fixed">
-        <Toolbar>
-          <NavLink to='/'>
+        <Toolbar disableGutters={true}>
+          <NavLink to='/' style={{padding: "1% 0 0 1%",}}>
             <img alt='Home' className={classes.mainLogo} src={Logo} />
           </NavLink>
           <div className={classes.spacing} />
