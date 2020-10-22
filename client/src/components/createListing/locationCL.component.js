@@ -42,7 +42,7 @@ export default class Location extends Component {
                 name="street"
                 className="streetInputbox"
                 value={this.state.street}
-                placeholder="e.g. 5230 Newell Road"
+                placeholder="5230 Newell Road"
                 onChange={this.handleChange}
               />
             </div>
