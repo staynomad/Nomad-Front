@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./home.css";
-
 export default class Search extends Component {
   render() {
     return (
@@ -14,11 +13,13 @@ export default class Search extends Component {
         </div>
         <input className="inputtextbox" type="text" placeholder="  city" />
         <a href="/OurLocations">
+
           <input className="booknowbutton" type="button" value="book now"/>
         </a>
-
+        
         <div className="bottext">start now to plan your dream vacation</div>
         <br />
+        
       </div>
     );
   }

@@ -6,18 +6,15 @@ import Location from "./locationCL.component";
 import Description from "./descCL.component";
 import PricesCL from "./pricesCL.component";
 import RulesCL from "./rulesCL.component";
-//import EndingCL from "./endingCL.component";
 import "./createListing.css";
-//convert details into array
-//convert prices into val
-//convert rules into array
-//convert date into date
+import ConfirmSubmission from "./confirmSubmission.component";
+
 export default class CreateListing extends Component {
   constructor() {
     super();
     this.state = {
       formval: 0,
-      maxpages: 6,
+      maxpages: 7,
       location: {},
       description: "",
       details: {},
@@ -107,11 +104,17 @@ export default class CreateListing extends Component {
                   ""
                 )}
               </div>
+              <div>
+                {this.state.formval === 6 ? (
+                  <ConfirmSubmission handle={this.state} />
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
 
             <div>
-              {this.state.formval > 0 &&
-              this.state.formval !== this.state.maxpages - 1 ? (
+              {this.state.formval > 0  ? (
                 <input
                   className="changebut"
                   type="button"

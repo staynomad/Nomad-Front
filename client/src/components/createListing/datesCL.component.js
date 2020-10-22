@@ -1,49 +1,50 @@
 import React, { Component } from "react";
-import Calendar from "react-calendar";
+import DatePicker from 'react-day-picker'
+import 'react-day-picker/lib/style.css'
 import "./createListing.css";
 export default class DatesCL extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      start_date: new Date(),
-      end_date: new Date(),
+      start_date: null,
+      end_date: null,
+      dates: [null, null]
     };
-    this.onChangeEnd = this.onChangeEnd.bind(this);
-    this.onChangeStart = this.onChangeStart.bind(this);
+    this.handleDayClick = this.handleDayClick.bind(this)
   }
-  onChangeStart(e) {
-    this.setState({
-      start_date: e,
-    });
-    console.log("start" + this.state.start_date);
-  }
-  onChangeEnd(e) {
-    this.setState({
-      end_date: e,
-    });
-    console.log("end" + this.state.end_date);
-  }
+  
+  handleDayClick(day, {selected}) {
+    //work is needed here to make sure the dates selected are valid
+    if (this.state.start_date == null) {
+      let temp = this.state.dates
+      temp[0] = day
+      this.setState({
+        start_date: selected ? undefined : day,
+        dates: temp
+      })
+    }
 
+    else if (this.state.end_date == null) {
+      let temp = this.state.dates
+      temp[1] = day
+      this.setState({
+        end_date: selected ? undefined : day,
+        dates: temp
+      })
+    }
+    this.props.handle(this.state, "dates");
+  }
   render() {
     return (
       <div>
         <div>
-          <div className="startText">avilability</div>
+          <div className="startText">availibility</div> <br/>
           <div className="questionText">when do you want to list it?</div>
           <div>
             <div>
-              <Calendar
-                onChange={this.onChangeStart}
-                value={this.state.start_date}
-              />
+            <DatePicker onDayClick={this.handleDayClick} selectedDays={this.state.dates}/>
             </div>
-            <div>
-              <Calendar
-                name="end"
-                onChange={this.onChangeEnd}
-                value={this.state.end_date}
-              />
-            </div>
+            
           </div>
         </div>
       </div>
