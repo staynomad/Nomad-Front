@@ -20,9 +20,9 @@ export default class Description extends Component {
   render() {
     return (
       <div>
-        <div className="startText">description</div>
+        <div className="startText">Description</div>
         <br />
-        <div className="questionText">tell us about your property</div>
+        <div className="questionText">Tell us about your property.</div>
         <br />
         <input
           type="text"

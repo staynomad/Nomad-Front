@@ -1,17 +1,29 @@
+.details-wrapper {
+  display: flex;
+  width: 200px;
+  margin-left: 19%;
+  align-items: center;
+  align-self: center;
+}
+
 .overall-details {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  align-items: left;
+  margin-bottom: 8%;
 }
 
 .beds {
-  display: flx;
+  display: flex;
 }
 
 .baths {
-  display: lex;
+  display: flex;
 }
 
 .maxppl {
-  display: fle;
+  display: flex;
 }
 
 .input-label-details {
@@ -20,6 +32,7 @@
   padding: 3%;
   padding-top: 3%;
   padding-bottom: 5%;
+  color: #4d4842;
 }
 
 .input-box-details {
@@ -29,4 +42,7 @@
   height: 40px;
   padding-left: 2%;
   font-size: 100%;
+  border-radius: 15px;
+  border: 2px solid rgb(210 210 210 / 47%);
+  color: #4d4842;
 }
