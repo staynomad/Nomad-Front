@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./createListing.css";
 import "./detailsListing.css";
+
 export default class DetailsCL extends Component {
   constructor(props) {
     super(props);

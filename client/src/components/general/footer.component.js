@@ -32,6 +32,7 @@ export default function Footer () {
         <a className={classes.linkItems} href='/ContactUs'>CONTACT US</a>
         <a className={classes.linkItems} href='/AboutUs'>ABOUT US</a>
         <a className={classes.linkItems} href='/OurLocations'>OUR LOCATIONS</a>
+        <a className={classes.linkItems} href='/CreateListing'>Create listing</a>
         <span className={classes.spacing} />
       </Toolbar>
     </BottomNavigation>
