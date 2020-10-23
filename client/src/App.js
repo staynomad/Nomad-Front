@@ -20,8 +20,8 @@ function App() {
   const history = useHistory();
   return (
     <Router>
+      <Navbar history={history} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
       <div className='App'>
-        <Navbar history={history} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/ContactUs" exact component={Contact} />
