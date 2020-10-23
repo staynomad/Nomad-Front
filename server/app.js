@@ -29,7 +29,6 @@ mongoose.connect(DATABASE_URI, {
 });
 
 // test to see if the backend is connected
-
 mongoose.connection.on('connected', () => {
   console.log('mongoose is connected');
 });
