@@ -21,16 +21,16 @@ export default class PricesCL extends Component {
     return (
       <div>
         <div>
-          <div className="startText">price</div>
+          <div className="startText">Price</div>
           <br />
-          <div className="questionText">how much are you listing for?</div>
+          <div className="questionText">How much are you listing for?</div>
           <br />
           <input
             type="text"
             name="price"
             className="textInputBox"
             value={this.state.price}
-            placeholder="total price per night"
+            placeholder="Enter price"
             onChange={this.handleChange}
           />
         </div>

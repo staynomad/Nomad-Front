@@ -30,24 +30,24 @@ export default class Location extends Component {
     return (
       <div className="LocationForm">
         <div>
-          <div className="startText">get started!</div>
+          <div className="startText">Get Started!</div>
           <br />
-          <div className="questionText">where is your home located?</div>
+          <div className="questionText">Where is your home located?</div>
           <br />
           <div className="listing-inputs">
             <div className="gen-subsec">
-              <div className="label-text">street:</div>
+              <div className="label-text">Street:</div>
               <input
                 type="text"
                 name="street"
                 className="streetInputbox"
                 value={this.state.street}
-                placeholder="e.g. 5230 Newell Road"
+                placeholder="5230 Newell Road"
                 onChange={this.handleChange}
               />
             </div>
             <div className="gen-subsec">
-              <div className="label-text">city:</div>
+              <div className="label-text">City:</div>
               <input
                 type="text"
                 name="city"
@@ -57,9 +57,9 @@ export default class Location extends Component {
                 onChange={this.handleChange}
               />
             </div>
-            <div className="state-country">
-              <div className="state-subsec">
-                <div className="label-text">state:</div>
+
+              <div className="gen-subsec">
+                <div className="label-text">State:</div>
                 <input
                   type="text"
                   name="cstate"
@@ -70,8 +70,8 @@ export default class Location extends Component {
                 />
               </div>
 
-              <div className="country-subsec">
-                <div className="label-text">country:</div>
+              <div className="gen-subsec">
+                <div className="label-text">Country:</div>
                 <input
                   type="text"
                   name="country"
@@ -81,10 +81,10 @@ export default class Location extends Component {
                   onChange={this.handleChange}
                 />
               </div>
-            </div>
+
 
             <div className="gen-subsec">
-              <div className="label-text">zipcode:</div>
+              <div className="label-text">Zipcode:</div>
               <input
                 type="text"
                 name="zipcode"
@@ -96,7 +96,7 @@ export default class Location extends Component {
             </div>
 
             <div className="gen-subsec">
-              <div className="label-text">apartment:</div>
+              <div className="label-text">Apartment:</div>
               <input
                 type="text"
                 name="aptnum"
