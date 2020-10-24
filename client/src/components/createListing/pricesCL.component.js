@@ -28,7 +28,7 @@ export default class PricesCL extends Component {
           <input
             type="text"
             name="price"
-            className="textInputBox"
+            className="priceInputBox"
             value={this.state.price}
             placeholder="Enter price"
             onChange={this.handleChange}

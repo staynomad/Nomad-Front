@@ -9,7 +9,7 @@ export default class ConfirmSubmission extends Component {
     render () {
         return (
             <div>
-                <h1>check your info</h1>
+                <h1>Check your information</h1>
                 <div>
                     {this.state.location.street}
                     {this.state.location.city}

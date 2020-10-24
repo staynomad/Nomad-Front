@@ -12,7 +12,7 @@
   max-width: fit-content;
   background-color: white;
   display: inline-flex;
-  padding: 45px;
+  padding: 60px;
   border-radius: 2%;
 }
 
@@ -31,11 +31,29 @@
 }
 
 .textInputBox {
+  width: 98%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 25px;
+  padding-right: 25px;
+  height: 100px;
+  border-radius: 25px;
+  border: 2px solid rgb(210 210 210 / 47%);
+  background-color: white;
+  color: #4d4842;
+  font-size: 15px;
+  background-color: white;
+}
+
+.priceInputBox {
   margin-bottom: 5%;
-  width: 90%;
-  padding: 5%;
-  padding-bottom: 5%;
-  border-radius: 15px;
+  width: 50%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 25px;
+  padding-right: 25px;
+  height: 50px;
+  border-radius: 25px;
   border: 2px solid rgb(210 210 210 / 47%);
   background-color: white;
   color: #4d4842;
@@ -47,6 +65,7 @@
   color: #00b183;
   background: white;
   margin: 5px;
+  margin-top: 15%;
   height: 50px;
   width: 150px;
   border-radius: 25px;

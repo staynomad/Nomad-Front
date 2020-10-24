@@ -1,3 +1,12 @@
+.listing-wrapper {
+  display: flex;
+}
+
+.listing-inputs {
+  display: flex;
+  flex-direction: column;
+}
+
 .label-text {
   margin-top: 4px;
   font-weight: bold;
@@ -7,19 +16,10 @@
 
 .gen-subsec {
   display: flex;
-}
-
-.state-subsec {
-  display: flex;
-}
-
-.country-subsec {
-  display: flex;
+  padding-top: 8px;
 }
 
 .streetInputbox {
-  display: flex;
-  align-items: center;
   margin-left: 18%;
   margin-bottom: 3%;
   padding-left: 5%;

@@ -1,16 +1,10 @@
 .details-wrapper {
-  display: flex;
+  display: inline-block;
   width: 200px;
-  margin-left: 19%;
-  align-items: center;
-  align-self: center;
+  align-content: center;
 }
 
 .overall-details {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  align-items: left;
   margin-bottom: 8%;
 }
 

@@ -34,6 +34,7 @@ export default class Location extends Component {
           <br />
           <div className="questionText">Where is your home located?</div>
           <br />
+          <div className="listing-wrapper">
           <div className="listing-inputs">
             <div className="gen-subsec">
               <div className="label-text">Street:</div>
@@ -106,6 +107,7 @@ export default class Location extends Component {
                 onChange={this.handleChange}
               />
             </div>
+          </div>
           </div>
         </div>
         <br />
