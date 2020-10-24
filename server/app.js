@@ -10,6 +10,7 @@ const loginRouter = require("./routes/login");
 const signUpRouter = require("./routes/signup");
 const roommateRouter = require("./routes/roommates");
 const listingRouter = require("./routes/listing");
+const questionnaireRouter = require("./routes/questionnaire");
 
 const app = express();
 app.use(morgan('dev'));
@@ -20,6 +21,7 @@ app.use("/login", loginRouter);
 app.use("/signup", signUpRouter);
 app.use("/roommates", roommateRouter);
 app.use("/listings", listingRouter);
+app.use("/questionnaire", questionnaireRouter);
 
 mongoose.connect(DATABASE_URI, {
   useCreateIndex: true,
@@ -27,12 +29,6 @@ mongoose.connect(DATABASE_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-
-// test to see if the backend is connected
-mongoose.connection.on('connected', () => {
-  console.log('mongoose is connected');
-});
-
 
 app.get("/", async (req, res) => {
   res.json('Server is running!')

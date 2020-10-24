@@ -61,6 +61,7 @@ router.post('/submit_questionnaire', async(req, res) => {
       newQuestionnaire
     });
   } catch (e) {
+    console.log("there has been an error")
     console.error (error);
     res.status (500).json ({
       errors: ['Error occurred while submitting questionnaire. Please try again!'],

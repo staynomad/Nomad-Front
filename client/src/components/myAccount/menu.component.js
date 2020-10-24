@@ -3,7 +3,7 @@ import { Grid, Menu, Segment } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 import Matches from "../matches/matches.component"
 import Questionnaire from "../matches/questionnaire.component"
-import Listings from "../matches/listings.component"
+// import Listings from "../matches/listings.component"
 import Profile from "./profile.component"
 import Explore from './explore.component'
 import Settings from "./settings.component"
@@ -30,8 +30,8 @@ export default class LeftMenu extends Component {
         return <Profile />;
       case 'explore':
         return <Explore />;
-      case 'my listings':
-        return <Listings />;
+      // case 'my listings':
+      //   return <Listings />;
       case 'settings':
         return <Settings />;
       case 'matches': 
@@ -63,12 +63,12 @@ export default class LeftMenu extends Component {
               compname='explore'
               onClick={this.handleItemClick}
             />
-            <Menu.Item
+            {/* <Menu.Item
               name='my listings'
               active={activeItem === 'my listings'}
               compname='my listings'
               onClick={this.handleItemClick}
-            />
+            /> */}
             <Menu.Item
               name='settings'
               active={activeItem === 'settings'}
