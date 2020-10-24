@@ -31,7 +31,6 @@ export default class LeftMenu extends Component {
       case 'explore':
         return <Explore />;
       case 'my listings':
-        console.log("in my listings")
         return <Listings />;
       case 'settings':
         return <Settings />;

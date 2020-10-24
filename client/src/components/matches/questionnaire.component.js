@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import Axios from 'axios';
 
 var STATE_ABBREV = ['Select your home state!', 'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT',
                     'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IO', 'KS', 'KY', 'LA',
@@ -41,7 +42,7 @@ export default function Questionnaire () {
     friendsPreference: '',
     smoke: '',
     personalityType: '',
-    hobbies: '',
+    // hobbies: '',
     selfDescription: '',
     roommateStory: '',
     covidStory: '',
@@ -64,7 +65,11 @@ export default function Questionnaire () {
 
   const handleSubmit = event => {
     event.preventDefault ();
-    return state;
+    const newQuestionnaire = state;
+    // post request
+    Axios.post ('http://localhost:8080/questionnaires', newQuestionnaire)
+    .then (() => console.log ('listing created'))
+    .catch (res => console.log (res));
   };
 
   return (
@@ -340,7 +345,7 @@ export default function Questionnaire () {
             ))}
           </select>
         </label>
-        <label>
+        {/* <label>
           <h3>What are your favorite hobbies? Check all that apply!</h3>
           {HOBBIES.map (hobby => (
             <label id={hobby} key={hobby}>
@@ -355,7 +360,7 @@ export default function Questionnaire () {
               <br />
             </label>
           ))}
-        </label>
+        </label> */}
         <label id="selfDescription">
           <h3>
             Use this space to tell your future roommate(s) a little about yourself!
