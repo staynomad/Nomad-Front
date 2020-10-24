@@ -41,7 +41,7 @@ export default class Location extends Component {
               <input
                 type="text"
                 name="street"
-                className="streetInputbox"
+                className="inputBox streetInputbox"
                 value={this.state.street}
                 placeholder="5230 Newell Road"
                 onChange={this.handleChange}
@@ -52,7 +52,7 @@ export default class Location extends Component {
               <input
                 type="text"
                 name="city"
-                className="cityInputBox"
+                className="inputBox cityInputBox"
                 value={this.state.city}
                 placeholder="Palo Alto"
                 onChange={this.handleChange}
@@ -64,7 +64,7 @@ export default class Location extends Component {
                 <input
                   type="text"
                   name="cstate"
-                  className="stateInputBox"
+                  className=" inputBox stateInputBox"
                   value={this.state.cstate}
                   placeholder="CA"
                   onChange={this.handleChange}
@@ -76,7 +76,7 @@ export default class Location extends Component {
                 <input
                   type="text"
                   name="country"
-                  className="countryInputBox"
+                  className="inputBox countryInputBox"
                   value={this.state.country}
                   placeholder="USA"
                   onChange={this.handleChange}
@@ -89,7 +89,7 @@ export default class Location extends Component {
               <input
                 type="text"
                 name="zipcode"
-                className="zipInputBox"
+                className="inputBox zipInputBox"
                 value={this.state.zipcode}
                 placeholder="90201"
                 onChange={this.handleChange}
@@ -101,7 +101,7 @@ export default class Location extends Component {
               <input
                 type="text"
                 name="aptnum"
-                className="aptnumInputBox"
+                className="inputBox aptnumInputBox"
                 value={this.state.aptnum}
                 placeholder="aptnum"
                 onChange={this.handleChange}
