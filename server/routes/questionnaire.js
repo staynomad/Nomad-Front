@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
-const Questionnaire = require ('../models/questionnaire.model');
+const Questionnaire = require('../models/questionnaire.model');
 const {requireUserAuth} = require ('../utils');
 // const { check, validationResult } = require("express-validator");
 
 /* Add a questionnaire response */
 
-router.post ('/createListing', async (req, res) => {
+router.post('/submit_questionnaire', async(req, res) => {
   try {
     const {
       name,
@@ -58,7 +58,7 @@ router.post ('/createListing', async (req, res) => {
     // Request is created
     // Need to talk about return values, validation, etc.
     res.status(201).json ({
-      newQuestionnaire,
+      newQuestionnaire
     });
   } catch (e) {
     console.error (error);
