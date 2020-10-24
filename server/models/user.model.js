@@ -14,10 +14,14 @@ const UserSchema = new Schema({
     password: {
         type: String,
         required: true,
-
+    },
+    check: {
+        type: String,
+    },
+    isHost: {
+        type: Boolean,
     }
 });
 
 const User = mongoose.model("user", UserSchema);
 module.exports = User;
-

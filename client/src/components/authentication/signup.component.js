@@ -8,6 +8,8 @@ const Signup = () => {
     email: "",
     name: "",
     password: "",
+    check: "",
+    isHost: false,
   });
 
   const [signupSuccess, setSignupSuccess] = useState(false);
@@ -38,7 +40,7 @@ const Signup = () => {
         <form className="form signup-form">
           <input
             type="email"
-            placeholder="your email"
+            placeholder="email"
             className="input login-input"
             onChange={(e) =>
               setUserSignup({ ...userSignup, email: e.target.value })
@@ -46,7 +48,7 @@ const Signup = () => {
           />
           <input
             type="text"
-            placeholder="your name"
+            placeholder="name"
             className="input login-input"
             onChange={(e) =>
               setUserSignup({ ...userSignup, name: e.target.value })
@@ -54,12 +56,29 @@ const Signup = () => {
           />
           <input
             type="password"
-            placeholder="your password"
+            placeholder="password"
             className="input login-input"
             onChange={(e) =>
               setUserSignup({ ...userSignup, password: e.target.value })
             }
           />
+          <input
+            type="password"
+            placeholder="confirm"
+            className="input login-input"
+            onChange={(e) =>
+              setUserSignup({ ...userSignup, check: e.target.value})}
+          />
+          <label
+            className="checkbox">
+            <input
+              type="checkbox"
+              name="isHost"
+              checked={userSignup.isChecked}
+              onChange={(e) =>
+                setUserSignup({ ...userSignup, isHost: !e.isHost})}
+            /> are you a host?
+          </label>
           <input
             type="submit"
             value="create your account"

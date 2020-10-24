@@ -1,0 +1,29 @@
+.listing-item {
+  margin: 2% 25%;
+  padding: 1% 0%;
+  border-radius: 6px;
+  background: #ffffffe6;
+  box-shadow: 1px 1px 7px 2px #787878;
+  cursor: pointer;
+}
+
+.listing-information {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.listing-image {
+  height: 150px;
+  width: 150px;
+  border: 1px solid black;
+  margin: 20px 0px;
+}
+
+.material-ui-dialogmodal {
+  display: flex;
+  place-content: center;
+  align-items: center;
+  height: -webkit-fill-available;
+}
