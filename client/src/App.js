@@ -11,9 +11,14 @@ import Matches from "./components/matches/matches.component.js";
 import Questionnaire from "./components/matches/questionnaire.component"
 import { BrowserRouter as Router, Route, Switch, useHistory } from "react-router-dom";
 import CreateListing from "./components/createListing/createListing.component";
+<<<<<<< HEAD
 import MyAccount from "./components/myAccount/menu.component"
 import "./App.css";
 
+=======
+import MyAccount from "./components/myAccount/menu.component";
+import Questionnaire from "./components/matches/questionnaire.component";
+>>>>>>> questionnaire
 //to add more items just copy the format and add the route path. look at navbar component to see where the path is currently set to
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -32,7 +37,11 @@ function App() {
           <Route path="/CreateListing" exact component={CreateListing} />
           <Route path="/Matches" exact component={Matches} />
           <Route path="/MyAccount" exact component={MyAccount} />
+<<<<<<< HEAD
           <Route path="/Questionnaire" exact component={Questionnaire} />
+=======
+          <Route path="/Questionnaire" exact component={Questionnaire}/>
+>>>>>>> questionnaire
         </Switch>
         <Footer />
       </div>
