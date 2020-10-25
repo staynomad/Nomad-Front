@@ -9,6 +9,7 @@ import RulesCL from "./rulesCL.component";
 import "./createListing.css";
 import ConfirmSubmission from "./confirmSubmission.component";
 
+
 export default class CreateListing extends Component {
   constructor() {
     super();
@@ -16,6 +17,7 @@ export default class CreateListing extends Component {
       formval: 0,
       maxpages: 7,
       location: {},
+      completeAddress: '',
       description: "",
       details: {},
       price: 0,
