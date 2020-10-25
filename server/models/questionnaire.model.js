@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const {String} = Schema.Types;
+const {String, Object} = Schema.Types;
 
 const QuestionnaireSchema = new Schema({
     name: {
@@ -89,7 +89,6 @@ const QuestionnaireSchema = new Schema({
         required: true,
         default: "",
     },
-    // to add hobbies, you'll need an ObjectID https://mongoosejs.com/docs/schematypes.html#objectids
     selfDescription: {
         type: String,
         required: true,
@@ -102,6 +101,11 @@ const QuestionnaireSchema = new Schema({
     },
     covidStory: {
         type: String,
+        required: true,
+        default: "",
+    },
+    hobbies: {
+        type: Object,
         required: true,
         default: "",
     },

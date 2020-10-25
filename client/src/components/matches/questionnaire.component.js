@@ -42,7 +42,6 @@ export default function Questionnaire () {
     friendsPreference: '',
     smoke: '',
     personalityType: '',
-    // hobbies: '',
     selfDescription: '',
     roommateStory: '',
     covidStory: '',
@@ -59,12 +58,12 @@ export default function Questionnaire () {
   const handleChangeHobbies = event => {
     const newHobbies = {...hobbies, [event.target.name]: event.target.checked};
     setHobbies (newHobbies);
-    console.log (hobbies);
   };
 
   const handleSubmit = event => {
     event.preventDefault ();
-    const newQuestionnaire = totalState;
+    const newQuestionnaire = {...totalState, hobbies: hobbies};
+    console.log("here is my new questionnaire: ", newQuestionnaire);
     // post request
     Axios.post ('http://localhost:8080/questionnaire/submit_questionnaire', newQuestionnaire)
     .then (() => console.log ('questionnaire post request created'))
@@ -344,7 +343,7 @@ export default function Questionnaire () {
             ))}
           </select>
         </label>
-        {/* <label>
+        <label>
           <h3>What are your favorite hobbies? Check all that apply!</h3>
           {HOBBIES.map (hobby => (
             <label id={hobby} key={hobby}>
@@ -359,7 +358,7 @@ export default function Questionnaire () {
               <br />
             </label>
           ))}
-        </label> */}
+        </label>
         <label id="selfDescription">
           <h3>
             Use this space to tell your future roommate(s) a little about yourself!

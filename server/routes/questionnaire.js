@@ -3,7 +3,6 @@ const router = express.Router();
 
 const Questionnaire = require('../models/questionnaire.model');
 const {requireUserAuth} = require ('../utils');
-// const { check, validationResult } = require("express-validator");
 
 /* Add a questionnaire response */
 
@@ -29,7 +28,8 @@ router.post('/submit_questionnaire', async(req, res) => {
       personalityType,
       selfDescription,
       roommateStory,
-      covidStory
+      covidStory,
+      hobbies
     } = req.body;
 
     const newQuestionnaire = await new Questionnaire({
@@ -52,7 +52,8 @@ router.post('/submit_questionnaire', async(req, res) => {
       personalityType,
       selfDescription,
       roommateStory,
-      covidStory
+      covidStory,
+      hobbies
     }).save();
 
     // Request is created
