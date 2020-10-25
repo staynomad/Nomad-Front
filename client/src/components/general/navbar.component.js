@@ -7,11 +7,13 @@ import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
 import IconButton from '@material-ui/core/IconButton';
+import InputBase from '@material-ui/core/InputBase';
 import Logo from "../../assets/img/vhomes.png";
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
+import SearchIcon from '@material-ui/icons/Search';
 import Toolbar from '@material-ui/core/Toolbar';
 
 /* Material-UI appbar styling */
@@ -29,6 +31,19 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     height: "100%",
     width: "100%",
+  },
+  inputRoot: {
+    color: 'inherit',
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '20ch',
+    },
   },
   mainLogo: {
     '&:hover': {
@@ -51,6 +66,39 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bolder",
     margin: "0 1% 0 0",
     transition: "all 0.25s ease-in-out",
+  },
+  search: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    '&:hover': {
+      backgroundColor: "rgba(255, 255, 255, 1.0)",
+    },
+    display: "flex",
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(3),
+      width: 'auto',
+    },
+  },
+  searchButton: {
+    backgroundColor: "#02B188",
+    border: "none",
+    borderTopRightRadius: theme.shape.borderRadius,
+    borderBottomRightRadius: theme.shape.borderRadius,
+    color: "white",
+    cursor: "pointer"
+  },
+  searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   spacing: {
     flexGrow: 1,
@@ -132,10 +180,25 @@ const Navbar = (props) => {
     <>
       <AppBar className={classes.root} color="transparent" position="fixed">
         <Toolbar disableGutters={true}>
-          <NavLink to='/' style={{padding: "1% 0 0 1%",}}>
+          <NavLink to='/' style={{margin: "1% 0 0 1%",}}>
             <img alt='Home' className={classes.mainLogo} src={Logo} />
           </NavLink>
-          <div className={classes.spacing} />
+          <form style={{margin: "auto"}}>
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+              />
+              <button className={classes.searchButton}>Find</button>
+            </div>
+          </form>
           {loggedIn ? (
             <>
               <IconButton

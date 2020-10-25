@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 
 var STATE_ABBREV = ['Select your home state!', 'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT',
-                    'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IO', 'KS', 'KY', 'LA', 'ME',
-                    'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM',
-                    'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX',
-                    'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'];
+                    'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IO', 'KS', 'KY', 'LA',
+                    'ME','MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ',
+                    'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN',
+                    'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'];
 
 var PERSONALITY_TYPES = ['INTJ- The Architect', 'INTP- The Logician', 'ENJT- The Commander',
                          'ENTP- The Debater', 'INFJ- The Advocate', 'INFP- The Mediator',
@@ -17,13 +17,15 @@ const HOBBIES = ['Reading', 'Watching TV', 'Spending Time with Family', 'Going t
                  'Fishing', 'Computer Programming', 'Gardening', 'Walking', 'Exercising',
                  'Listening to Music', 'Hunting', 'Team Sports', 'Shopping', 'Traveling',
                  'Sleeping', 'Socializing', 'Sewing', 'Golf', 'Church', 'Relaxing', 'Watching Sports',
-                 'Biking', 'Playing Cards', 'Hiking', 'Cooking', 'Swimming', 'Camping', 'Ski/Snowboarding',
-                 'Writing', 'Boating', 'Horseback Riding', 'Practicing an instrument', 'Dancing'];
+                 'Biking', 'Playing Cards', 'Hiking', 'Cooking', 'Swimming', 'Camping',
+                 'Ski/Snowboarding', 'Writing', 'Boating', 'Horseback Riding', 
+                 'Practicing an instrument', 'Dancing'];
 
 export default function Questionnaire () {
   const [hobbies, setHobbies] = useState ({});
   const [state, setState] = useState ({
     name: '',
+    email: '',
     stateUS: '',
     numberOfRoommates: '',
     bedtime: '',
@@ -77,6 +79,17 @@ export default function Questionnaire () {
             id="questionnaireNameInput"
             name="name"
             placeholder="Your full name"
+            onChange={handleChange}
+          />
+        </label>
+        <label id="email" value={state.email}>
+          <h3>What is your email address?</h3>
+          <input 
+            type="email"
+            id="email"
+            name="email"
+            value={state.email}
+            placeholder="john@example.com"
             onChange={handleChange}
           />
         </label>
@@ -331,7 +344,7 @@ export default function Questionnaire () {
           <h3>What are your favorite hobbies? Check all that apply!</h3>
           {HOBBIES.map (hobby => (
             <label id={hobby} key={hobby}>
-              {hobby}:
+              {hobby} 
               <input
                 type="checkbox"
                 id={hobby}
