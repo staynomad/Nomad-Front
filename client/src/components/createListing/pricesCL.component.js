@@ -11,28 +11,33 @@ export default class PricesCL extends Component {
   handleChange(e) {
     const { name, value } = e.target;
     if (!isNaN(value)) {
-      this.setState({
-        [name]: value,
-      });
-      this.props.handle(value, name);
+      if (value < 1000) {
+        this.setState({
+          [name]: value,
+        });
+        this.props.handle(value, name);
+      }
+      
     }
   }
   render() {
     return (
       <div>
         <div>
-          <div className="startText">price</div>
+          <div className="startText">Price</div>
           <br />
-          <div className="questionText">how much are you listing for?</div>
+          <div className="questionText">How much are you listing for?</div>
           <br />
           <input
             type="text"
             name="price"
-            className="textInputBox"
+            className="priceInputBox"
             value={this.state.price}
-            placeholder="total price per night"
+            placeholder="$ per night"
             onChange={this.handleChange}
           />
+          {this.state.price ? <p>List Price: ${this.state.price} per night</p>: ''}
+          {this.state.price ? <p>After taxes and fees: ${this.state.price} per night</p>: ''}
         </div>
       </div>
     );

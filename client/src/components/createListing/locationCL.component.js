@@ -7,7 +7,7 @@ export default class Location extends Component {
     this.state = {
       street: "",
       city: "",
-      cstate: "",
+      state: "",
       country: "",
       zipcode: "",
       aptnum: "",
@@ -30,65 +30,66 @@ export default class Location extends Component {
     return (
       <div className="LocationForm">
         <div>
-          <div className="startText">get started!</div>
+          <div className="startText">Get Started!</div>
           <br />
-          <div className="questionText">where is your home located?</div>
+          <div className="questionText">Where is your home located?</div>
           <br />
+          <div className="listing-wrapper">
           <div className="listing-inputs">
             <div className="gen-subsec">
-              <div className="label-text">street:</div>
+              <div className="label-text">Street:</div>
               <input
                 type="text"
                 name="street"
-                className="streetInputbox"
+                className="inputBox streetInputbox"
                 value={this.state.street}
-                placeholder="e.g. 5230 Newell Road"
+                placeholder="5230 Newell Road"
                 onChange={this.handleChange}
               />
             </div>
             <div className="gen-subsec">
-              <div className="label-text">city:</div>
+              <div className="label-text">City:</div>
               <input
                 type="text"
                 name="city"
-                className="cityInputBox"
+                className="inputBox cityInputBox"
                 value={this.state.city}
                 placeholder="Palo Alto"
                 onChange={this.handleChange}
               />
             </div>
-            <div className="state-country">
-              <div className="state-subsec">
-                <div className="label-text">state:</div>
+
+              <div className="gen-subsec">
+                <div className="label-text">State:</div>
                 <input
                   type="text"
-                  name="cstate"
-                  className="stateInputBox"
-                  value={this.state.cstate}
+                  name="state"
+                  className=" inputBox stateInputBox"
+                  value={this.state.state}
                   placeholder="CA"
                   onChange={this.handleChange}
                 />
               </div>
 
-              <div className="country-subsec">
-                <div className="label-text">country:</div>
+              <div className="gen-subsec">
+                <div className="label-text">Country:</div>
                 <input
                   type="text"
                   name="country"
-                  className="countryInputBox"
+                  className="inputBox countryInputBox"
                   value={this.state.country}
                   placeholder="USA"
                   onChange={this.handleChange}
                 />
               </div>
-            </div>
+
 
             <div className="gen-subsec">
-              <div className="label-text">zipcode:</div>
+              <div className="label-text">Zipcode:</div>
               <input
                 type="text"
                 name="zipcode"
-                className="zipInputBox"
+                className="inputBox zipInputBox"
                 value={this.state.zipcode}
                 placeholder="90201"
                 onChange={this.handleChange}
@@ -96,16 +97,17 @@ export default class Location extends Component {
             </div>
 
             <div className="gen-subsec">
-              <div className="label-text">apartment:</div>
+              <div className="label-text">Apartment:</div>
               <input
                 type="text"
                 name="aptnum"
-                className="aptnumInputBox"
+                className="inputBox aptnumInputBox"
                 value={this.state.aptnum}
                 placeholder="aptnum"
                 onChange={this.handleChange}
               />
             </div>
+          </div>
           </div>
         </div>
         <br />
