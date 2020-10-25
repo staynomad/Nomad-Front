@@ -189,14 +189,14 @@ const Navbar = (props) => {
                 <SearchIcon />
               </div>
               <InputBase
-                placeholder="Search…"
+                placeholder="search…"
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,
                 }}
                 inputProps={{ 'aria-label': 'search' }}
               />
-              <button className={classes.searchButton}>Find</button>
+              <button className={classes.searchButton}>find</button>
             </div>
           </form>
           {loggedIn ? (
@@ -214,7 +214,7 @@ const Navbar = (props) => {
             </>
           ) : (
             <>
-              <NavLink to='/Matches' className={classes.navLink}>Explore</NavLink>
+              <NavLink to='/Matches' className={classes.navLink}>explore</NavLink>
               <CustomButton>
                 <NavLink to='/SignUp'>Sign Up</NavLink>
               </CustomButton>

@@ -12,14 +12,14 @@ export default class Search extends Component {
           of flexible rentals
         </div>
         <input className="inputtextbox" type="text" placeholder="  city" />
-        <a href="/OurLocations">
+        <a href="/Matches">
 
           <input className="booknowbutton" type="button" value="book now"/>
         </a>
-        
+
         <div className="bottext">start now to plan your dream vacation</div>
         <br />
-        
+
       </div>
     );
   }
