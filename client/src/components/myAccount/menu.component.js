@@ -3,7 +3,7 @@ import { Grid, Menu, Segment } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 import Matches from "../matches/matches.component"
 import Questionnaire from "../matches/questionnaire.component"
-import Listings from "../matches/listings.component"
+import Listings from "../matches/listing/listings.component"
 import Profile from "./profile.component"
 import Explore from './explore.component'
 import Settings from "./settings.component"
