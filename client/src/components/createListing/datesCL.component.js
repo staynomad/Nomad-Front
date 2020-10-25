@@ -38,8 +38,8 @@ export default class DatesCL extends Component {
     return (
       <div>
         <div>
-          <div className="startText">availibility</div> <br/>
-          <div className="questionText">when do you want to list it?</div>
+          <div className="startText">Availibility</div> <br/>
+          <div className="questionText">When do you want to list it?</div>
           <div>
             <div>
             <DatePicker onDayClick={this.handleDayClick} selectedDays={this.state.dates}/>

@@ -24,14 +24,14 @@ export default class Description extends Component {
         <br />
         <div className="questionText">Tell us about your property.</div>
         <br />
-        <input
+        <textarea
           type="text"
           name="description"
           className="textInputBox"
           value={this.state.description}
           placeholder="e.g. this beautiful apartment overlooking a park"
           onChange={this.handleChange}
-        />
+          ></textarea>
       </div>
     );
   }
