@@ -63,7 +63,6 @@ export default function Questionnaire () {
   const handleSubmit = event => {
     event.preventDefault ();
     const newQuestionnaire = {...totalState, hobbies: hobbies};
-    console.log("here is my new questionnaire: ", newQuestionnaire);
     // post request
     Axios.post ('http://localhost:8080/questionnaire/submit_questionnaire', newQuestionnaire)
     .then (() => console.log ('questionnaire post request created'))
