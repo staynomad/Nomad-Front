@@ -15,10 +15,12 @@ export default class DetailsCL extends Component {
   handleChange(e) {
     const { name, value } = e.target;
     if (!isNaN(value)) {
-      this.setState({
-        invalidInput: false,
-        [name]: value,
-      });
+      if (value < 10) {
+        this.setState({
+          invalidInput: false,
+          [name]: value,
+        })
+      }
     }
 
     this.props.handle(this.state, "details");

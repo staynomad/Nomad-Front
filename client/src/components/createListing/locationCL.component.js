@@ -7,7 +7,7 @@ export default class Location extends Component {
     this.state = {
       street: "",
       city: "",
-      cstate: "",
+      state: "",
       country: "",
       zipcode: "",
       aptnum: "",
@@ -63,9 +63,9 @@ export default class Location extends Component {
                 <div className="label-text">State:</div>
                 <input
                   type="text"
-                  name="cstate"
+                  name="state"
                   className=" inputBox stateInputBox"
-                  value={this.state.cstate}
+                  value={this.state.state}
                   placeholder="CA"
                   onChange={this.handleChange}
                 />

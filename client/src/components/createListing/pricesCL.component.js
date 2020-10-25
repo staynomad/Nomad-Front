@@ -11,10 +11,13 @@ export default class PricesCL extends Component {
   handleChange(e) {
     const { name, value } = e.target;
     if (!isNaN(value)) {
-      this.setState({
-        [name]: value,
-      });
-      this.props.handle(value, name);
+      if (value < 1000) {
+        this.setState({
+          [name]: value,
+        });
+        this.props.handle(value, name);
+      }
+      
     }
   }
   render() {
@@ -30,9 +33,11 @@ export default class PricesCL extends Component {
             name="price"
             className="priceInputBox"
             value={this.state.price}
-            placeholder="Enter price"
+            placeholder="$ per night"
             onChange={this.handleChange}
           />
+          {this.state.price ? <p>List Price: ${this.state.price} per night</p>: ''}
+          {this.state.price ? <p>After taxes and fees: ${this.state.price} per night</p>: ''}
         </div>
       </div>
     );
