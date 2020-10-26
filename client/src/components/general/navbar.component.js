@@ -5,6 +5,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Grid from '@material-ui/core/Grid';
 import Grow from '@material-ui/core/Grow';
 import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
@@ -14,7 +15,6 @@ import MenuList from '@material-ui/core/MenuList';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import SearchIcon from '@material-ui/icons/Search';
-import Toolbar from '@material-ui/core/Toolbar';
 
 /* Material-UI appbar styling */
 const useStyles = makeStyles((theme) => ({
@@ -47,14 +47,27 @@ const useStyles = makeStyles((theme) => ({
   },
   mainLogo: {
     '&:hover': {
-      scale: "1.1",
+      scale: "1.05",
     },
     '&:active': {
-      scale: "0.9",
+      scale: "0.95",
     },
+    marginTop: "1%",
     maxHeight: "70px",
     maxWidth: "90px",
     transition: "all 0.15s ease",
+  },
+  navbarGrid: {
+    alignItems: "center",
+    display: "grid",
+    gridTemplate: "auto / 1fr 1fr 1fr",
+    margin: "0 1% 0 1%",
+  },
+  navbarRight: {
+    alignItems: "center",
+    display: "flex",
+    justifySelf: "end",
+    whiteSpace: "nowrap",
   },
   navLink: {
     '&:hover': {
@@ -64,7 +77,6 @@ const useStyles = makeStyles((theme) => ({
     font: "inherit",
     fontSize: "large",
     fontWeight: "bolder",
-    margin: "0 1% 0 0",
     transition: "all 0.25s ease-in-out",
   },
   search: {
@@ -102,7 +114,7 @@ const useStyles = makeStyles((theme) => ({
   },
   spacing: {
     flexGrow: 1,
-  }
+  },
 }));
 
 /* Material-UI button styling */
@@ -116,7 +128,7 @@ const CustomButton = withStyles((theme) => ({
     font: "inherit",
     fontSize: "16px",
     fontWeight: "bolder",
-    margin: "0 1% 0 0",
+    marginLeft: "5%",
     padding: "12px",
   },
 }))(Button);
@@ -179,8 +191,8 @@ const Navbar = (props) => {
   return (
     <>
       <AppBar className={classes.root} color="transparent" position="fixed">
-        <Toolbar disableGutters={true}>
-          <NavLink to='/' style={{margin: "1% 0 0 1%",}}>
+        <div className={classes.navbarGrid}>
+          <NavLink to='/' className={classes.mainLogo}>
             <img alt='Home' className={classes.mainLogo} src={Logo} />
           </NavLink>
           <form style={{margin: "auto"}}>
@@ -200,7 +212,7 @@ const Navbar = (props) => {
             </div>
           </form>
           {loggedIn ? (
-            <>
+            <div className={classes.navbarRight}>
               <IconButton
                 ref={anchorRef}
                 aria-controls={open ? 'menu-list-grow' : undefined}
@@ -211,9 +223,9 @@ const Navbar = (props) => {
                 <AccountCircle className={classes.icon} />
                 {renderMenu}
               </IconButton>
-            </>
+            </div>
           ) : (
-            <>
+            <div className={classes.navbarRight}>
               <NavLink to='/Matches' className={classes.navLink}>explore</NavLink>
               <CustomButton>
                 <NavLink to='/SignUp'>Sign Up</NavLink>
@@ -221,10 +233,10 @@ const Navbar = (props) => {
               <CustomButton>
                 <NavLink to='/Login'>Login</NavLink>
               </CustomButton>
-            </>
+            </div>
           )}
 
-        </Toolbar>
+        </div>
       </AppBar>
     </>
   );
