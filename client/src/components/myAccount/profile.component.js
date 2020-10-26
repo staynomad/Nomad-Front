@@ -3,7 +3,7 @@ import React from 'react'
 const Profile = () => {
     return (
         <div>
-            <h3> Welcome, [insert userName]!</h3>
+            <h2> Welcome, [insert userName]!</h2>
             <hr />
             <ul>
                 <li>Display profile picture</li>

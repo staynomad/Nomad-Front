@@ -71,7 +71,7 @@ export default function Questionnaire () {
 
   return (
     <div>
-      <h1>Roommate Preferences Form</h1>
+      <h2>Roommate Preferences Form</h2>
       <hr />
       <form onSubmit={handleSubmit}>
         <label id="name" value={totalState.name}>
