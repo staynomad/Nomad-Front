@@ -1,6 +1,5 @@
 import React from "react";
 import "./services.css";
-import Calendar from '../calendar/cal.component'
 
 const Services = () => {
   return (
@@ -25,9 +24,7 @@ const Services = () => {
         </a>
       </div>
 
-      <div>
-        <Calendar/>
-      </div>
+      
     </div>
   );
 };

@@ -20,18 +20,18 @@ export default class RulesCL extends Component {
     return (
       <div>
         <div>
-          <div className="startText">rules</div>
+          <div className="startText">Rules</div>
           <br />
-          <div className="questionText">you're almost there!</div>
+          <div className="questionText">You're almost there!</div>
           <br />
-          <input
+          <textarea
             type="text"
             name="rules"
             className="textInputBox"
             value={this.state.rules}
             placeholder="rules"
             onChange={this.handleChange}
-          />
+          ></textarea>
         </div>
       </div>
     );
