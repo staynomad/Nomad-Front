@@ -153,14 +153,18 @@ const Navbar = (props) => {
       event.preventDefault();
       setOpen(false);
     }
-  }
+  };
 
   const handleLogout = (event) => {
     handleClose(event);
     window.sessionStorage.removeItem('accessToken');
     setLoggedIn(false);
     history.push('/');
-  }
+  };
+
+  const handleSearch = (event) => {
+    event.preventDefault();
+  };
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -208,34 +212,35 @@ const Navbar = (props) => {
                 }}
                 inputProps={{ 'aria-label': 'search' }}
               />
-              <button className={classes.searchButton}>find</button>
+              <button className={classes.searchButton} onClick={handleSearch}>find</button>
             </div>
           </form>
-          {loggedIn ? (
-            <div className={classes.navbarRight}>
-              <IconButton
-                ref={anchorRef}
-                aria-controls={open ? 'menu-list-grow' : undefined}
-                aria-haspopup="true"
-                className={classes.iconButton}
-                onClick={handleToggle}
-              >
-                <AccountCircle className={classes.icon} />
-                {renderMenu}
-              </IconButton>
-            </div>
-          ) : (
-            <div className={classes.navbarRight}>
-              <NavLink to='/Matches' className={classes.navLink}>explore</NavLink>
-              <CustomButton>
-                <NavLink to='/SignUp'>Sign Up</NavLink>
-              </CustomButton>
-              <CustomButton>
-                <NavLink to='/Login'>Login</NavLink>
-              </CustomButton>
-            </div>
-          )}
-
+          <div className={classes.navbarRight}>
+            <NavLink to='/Matches' className={classes.navLink}>explore</NavLink>
+            {loggedIn ? (
+              <>
+                <IconButton
+                  ref={anchorRef}
+                  aria-controls={open ? 'menu-list-grow' : undefined}
+                  aria-haspopup="true"
+                  className={classes.iconButton}
+                  onClick={handleToggle}
+                >
+                  <AccountCircle className={classes.icon} />
+                  {renderMenu}
+                </IconButton>
+              </>
+            ) : (
+              <>
+                <CustomButton>
+                  <NavLink to='/SignUp'>Sign Up</NavLink>
+                </CustomButton>
+                <CustomButton>
+                  <NavLink to='/Login'>Login</NavLink>
+                </CustomButton>
+              </>
+            )}
+          </div>
         </div>
       </AppBar>
     </>
