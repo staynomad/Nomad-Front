@@ -23,7 +23,7 @@ app.use("/roommates", roommateRouter);
 app.use("/listings", listingRouter);
 app.use("/questionnaire", questionnaireRouter);
 
-mongoose.connect(DATABASE_URI, {
+mongoose.connect(process.env.DATABASE_URI, {
   useCreateIndex: true,
   useFindAndModify: false, // flag needed to enable findOneAndUpdate
   useNewUrlParser: true,
