@@ -6,5 +6,8 @@
     "heroku-postbuild": "npm run install-client && npm run build",
     "start": "npm run install-server && node server/app.js",
     "client": "cd client && npm start"
+  },
+  "engines": {
+    "morgan": "^1.10.0"
   }
 }
