@@ -23,12 +23,19 @@ app.use("/roommates", roommateRouter);
 app.use("/listings", listingRouter);
 app.use("/questionnaire", questionnaireRouter);
 
-mongoose.connect(process.env.DATABASE_URI, {
+mongoose.connect(DATABASE_URI, {
   useCreateIndex: true,
   useFindAndModify: false, // flag needed to enable findOneAndUpdate
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+
+if(process.env.NODE_ENV === 'production') {
+  app.use(express.static('../client/build/'));
+  app.get('*', (_, res) => {
+    res.sendFile(path.resolve(__dirname, '..', 'client', 'build', 'index.html'));
+  });
+}
 
 app.get("/", async (req, res) => {
   res.json('Server is running!')
