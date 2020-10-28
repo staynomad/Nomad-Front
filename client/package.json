@@ -19,7 +19,7 @@
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.0.0"
   },
-  "proxy": "http://localhost:8080",
+  "proxy": "https://vhomesback.herokuapp.com",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

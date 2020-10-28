@@ -1,5 +1,5 @@
 export default function handleReq(endpoint, methodType, customHeaders, data) {
-  return fetch(endpoint, {
+  return fetch(`https://vhomesback.herokuapp.com${endpoint}`, {
     method: methodType,
     headers: customHeaders,
     redirect: "follow",
