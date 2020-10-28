@@ -6,6 +6,7 @@ import Location from "./locationCL.component";
 import Description from "./descCL.component";
 import PricesCL from "./pricesCL.component";
 import RulesCL from "./rulesCL.component";
+import PhotoUpload from './photoUpload.component'
 import "./createListing.css";
 import ConfirmSubmission from "./confirmSubmission.component";
 
@@ -14,7 +15,7 @@ export default class CreateListing extends Component {
     super();
     this.state = {
       formval: 0,
-      maxpages: 7,
+      maxpages: 8,
       location: {},
       description: "",
       details: {},
@@ -25,6 +26,7 @@ export default class CreateListing extends Component {
     this.togglePage = this.togglePage.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onUpload = this.onUpload.bind(this);
   }
   handleChange(e, name) {
     this.setState({
@@ -32,7 +34,10 @@ export default class CreateListing extends Component {
     });
     console.log(this.state);
   }
-
+  onUpload (e) {
+    //const pics = Array.from(e.target)
+    console.log(e.images)
+  }
   onSubmit() {
     const newListing = {
       location: this.state.location,
@@ -42,7 +47,7 @@ export default class CreateListing extends Component {
       rules: this.state.rules,
       available: this.state.dates,
     };
-    Axios.post("http://localhost:8080/listings/createListing", newListing)
+    Axios.post("/listings/createListing", newListing)
       .then(() => console.log("listing created"))
       .catch((res) => console.log(res));
     let temp = this.state.formval;
@@ -105,7 +110,14 @@ export default class CreateListing extends Component {
                 )}
               </div>
               <div>
-                {this.state.formval === 6 ? (
+                {this.state.formval === 0 ? (
+                  <PhotoUpload onUpload={this.onUpload} />
+                ) : (
+                  ""
+                )}
+              </div>
+              <div>
+                {this.state.formval === 7 ? (
                   <ConfirmSubmission handle={this.state} />
                 ) : (
                   ""
