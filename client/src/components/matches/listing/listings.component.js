@@ -6,7 +6,6 @@ import ListingCard from './listingCard.component'
 const Listings = () => {
   const [listings, setListings] = useState([]);
 
-
   useEffect(() => {
     handleReq("/listings", "GET")
       .then((data) => {

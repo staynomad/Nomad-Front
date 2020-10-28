@@ -8,7 +8,6 @@ const {check, validationResult} = require ('express-validator');
 /* Post a questionnaire response */
 router.post(
   '/submit_questionnaire', 
-  [check("email").isEmail().withMessage('The email address is not valid')],
   async(req, res) => {
     try {
       const {
@@ -72,6 +71,19 @@ router.post(
     }
 });
 
-// implement a get request
+/* Get a previous questionnaire response */
+/* Will eventually be edit a previous questionnaire response */
+router.get('/get_questionnaire', async (req, res) => {
+  console.log ('IN QUESTIONNAIRE GET REQUEST. HERE IS MY REQUEST BODY: ', req);
+  const questionnaires = await Questionnaire.find({});
+  console.log("IN QUESTIONNAIRE GET REQUEST. HERE ARE QUESTIONNAIRES")
+  // const userQuestionnaire = await Questionnaire.findById(req.params.userId, (err, data) => {
+  //   if (err) {
+  //     console.log("there has been an error!")
+  //   } else {
+  //     console.log("here is the data: ", data);
+  //   }
+  // });
+});
 
 module.exports = router;

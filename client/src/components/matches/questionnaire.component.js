@@ -63,11 +63,18 @@ export default function Questionnaire (props) {
 
   const handleSubmit = event => {
     event.preventDefault();
+    console.log('i have clicked submit')
     const newQuestionnaire = {...totalState, hobbies: hobbies};
     // post request
     Axios.post('http://localhost:8080/questionnaire/submit_questionnaire', newQuestionnaire)
     .then(() => console.log('questionnaire post request created'))
     .catch(res => console.log(res));
+    // get request
+    Axios.get('http://localhost:8080/questionnaire/get_questionnaire')
+    .then((res) => {
+      console.log('get request made')
+      console.log('inside axios get request. here is my res data', res.data)
+    })
   };
 
   return (
