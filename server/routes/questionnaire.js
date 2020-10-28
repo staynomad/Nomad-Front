@@ -5,8 +5,7 @@ const Questionnaire = require('../models/questionnaire.model');
 const {requireUserAuth} = require ('../utils');
 const {check, validationResult} = require ('express-validator');
 
-/* Add a questionnaire response */
-
+/* Post a questionnaire response */
 router.post(
   '/submit_questionnaire', 
   [check("email").isEmail().withMessage('The email address is not valid')],
@@ -60,8 +59,7 @@ router.post(
         hobbies
       }).save();
     
-      // Request is created
-      // Need to talk about return values, validation, etc.
+      // request is created. needs more validation
       res.status(201).json ({
         newQuestionnaire
       });

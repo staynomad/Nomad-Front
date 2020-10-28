@@ -3,12 +3,13 @@ import Search from "./search.component";
 
 import "./home.css";
 
-export default class Home extends Component {
-  render() {
-    return (
-      <div className="homepage backgroundimg">
-        <Search />
-      </div>
-    );
-  }
+const Home = (props) => {
+  props.setUserID(props.location.state.userId) // sets the userId in App.js
+  return (
+    <div className="homepage backgroundimg">
+      <Search />
+    </div>
+  )
 }
+
+export default Home;
