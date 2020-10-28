@@ -58,7 +58,8 @@ router.post("/",
     // we could send the 200 status code
     // but 201 indicates the resource is created
     res.status(201).json({
-      "token": token
+      token,
+      userId: newUser._id,
     });
   }
   catch(error) {

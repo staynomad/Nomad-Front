@@ -13,9 +13,9 @@ const listingRouter = require("./routes/listing");
 const questionnaireRouter = require("./routes/questionnaire");
 
 const app = express();
-app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(cors({ origin: true }));
+app.use(morgan('dev'));
 // app.use('/contact', contactRouter);
 app.use("/login", loginRouter);
 app.use("/signup", signUpRouter);
