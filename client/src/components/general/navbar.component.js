@@ -138,6 +138,7 @@ const Navbar = (props) => {
   const anchorRef = React.useRef(null);
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [itemToSearch, setItemToSearch] = React.useState("");
   const { history, loggedIn, setLoggedIn } = props;
 
   const handleClose = (event) => {
@@ -211,6 +212,7 @@ const Navbar = (props) => {
                   input: classes.inputInput,
                 }}
                 inputProps={{ 'aria-label': 'search' }}
+                onChange={(e) => setItemToSearch(e.target.value)}
               />
               <button className={classes.searchButton} onClick={handleSearch}>find</button>
             </div>
