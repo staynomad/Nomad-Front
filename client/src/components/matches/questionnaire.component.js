@@ -23,7 +23,6 @@ const HOBBIES = ['Reading', 'Watching TV', 'Spending Time with Family', 'Going t
                  'Practicing an instrument', 'Dancing'];
 
 export default function Questionnaire (props) {
-  console.log('I AM IN QUESTIONNAIRE. HERE IS MY USERID: ', props.userId);
   const [hobbies, setHobbies] = useState ({});
   const [totalState, setTotalState] = useState ({
     name: '',
@@ -63,18 +62,14 @@ export default function Questionnaire (props) {
 
   const handleSubmit = event => {
     event.preventDefault();
-    console.log('i have clicked submit')
-    const newQuestionnaire = {...totalState, hobbies: hobbies};
+    const newQuestionnaire = {...totalState, hobbies: hobbies, userId: props.userId};
     // post request
-    Axios.post('http://localhost:8080/questionnaire/submit_questionnaire', newQuestionnaire)
+    Axios.post(`http://localhost:8080/questionnaire/submit_questionnaire/${props.userId}`, newQuestionnaire)
     .then(() => console.log('questionnaire post request created'))
-    .catch(res => console.log(res));
-    // get request
-    Axios.get('http://localhost:8080/questionnaire/get_questionnaire')
-    .then((res) => {
-      console.log('get request made')
-      console.log('inside axios get request. here is my res data', res.data)
-    })
+    .catch(res => {
+      console.log("there has been a problem creating this post request.")
+      console.log(res)
+    });
   };
 
   return (

@@ -109,6 +109,11 @@ const QuestionnaireSchema = new Schema({
         required: true,
         default: "",
     },
+    userId: {
+        type: String,
+        required: true,
+        default: ""
+    }
 });
 
 const Questionnaire = mongoose.model('questionnaire', QuestionnaireSchema);
