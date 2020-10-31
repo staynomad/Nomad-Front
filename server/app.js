@@ -11,6 +11,7 @@ const signUpRouter = require("./routes/signup");
 const roommateRouter = require("./routes/roommates");
 const listingRouter = require("./routes/listing");
 const questionnaireRouter = require("./routes/questionnaire");
+const reservationRouter = require("./routes/reservation");
 
 const app = express();
 app.use(morgan('dev'));
@@ -22,6 +23,7 @@ app.use("/signup", signUpRouter);
 app.use("/roommates", roommateRouter);
 app.use("/listings", listingRouter);
 app.use("/questionnaire", questionnaireRouter);
+app.use("/reservation", reservationRouter);
 
 mongoose.connect(DATABASE_URI, {
   useCreateIndex: true,
