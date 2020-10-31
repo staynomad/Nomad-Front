@@ -11,7 +11,11 @@ const signUpRouter = require("./routes/signup");
 const roommateRouter = require("./routes/roommates");
 const listingRouter = require("./routes/listing");
 const questionnaireRouter = require("./routes/questionnaire");
+<<<<<<< HEAD
+const reservationRouter = require("./routes/reservation");
+=======
 const searchRouter = require("./routes/search");
+>>>>>>> master
 
 const app = express();
 app.use(bodyParser.json());
@@ -23,7 +27,11 @@ app.use("/signup", signUpRouter);
 app.use("/roommates", roommateRouter);
 app.use("/listings", listingRouter);
 app.use("/questionnaire", questionnaireRouter);
+<<<<<<< HEAD
+app.use("/reservation", reservationRouter);
+=======
 app.use("/search", searchRouter);
+>>>>>>> master
 
 mongoose.connect(DATABASE_URI, {
   useCreateIndex: true,
@@ -31,6 +39,13 @@ mongoose.connect(DATABASE_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+
+if(process.env.NODE_ENV === 'production') {
+  app.use(express.static('../client/build/'));
+  app.get('*', (_, res) => {
+    res.sendFile(path.resolve(__dirname, '..', 'client', 'build', 'index.html'));
+  });
+}
 
 app.get("/", async (req, res) => {
   res.json('Server is running!')
