@@ -36,6 +36,7 @@ router.post(
       const token = getUserToken(user);
       return res.status(200).json({
         token,
+        userId: user.id,
       });
     } catch (error) {
       console.error(error);

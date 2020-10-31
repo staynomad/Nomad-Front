@@ -1,5 +1,8 @@
+const production = process.env.NODE_ENV === "production";
+const apiBaseUrl = production ? 'https://vhomesback.herokuapp.com' : 'http://localhost:8080';
+
 export default function handleReq(endpoint, methodType, customHeaders, data) {
-  return fetch(endpoint, {
+  return fetch(`${apiBaseUrl}${endpoint}`, {
     method: methodType,
     headers: customHeaders,
     redirect: "follow",
