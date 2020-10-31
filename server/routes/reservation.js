@@ -60,7 +60,7 @@ router.get(
             if (!reservation) {
                 return res.status(404).json({
                   errors: ["User has not made any reservations"],
-                });
+              });o
             }
             res.status(201).json({
                 "reservations": reservation
@@ -76,4 +76,27 @@ router.get(
     }
 )
 
+router.delete(
+    "/delete/:listing",
+    async (req, res) => {
+        try {
+            const reservation = await Reservation.deleteOne({ listing: req.params.listing });
+            if (!reservation) {
+                return res.status(404).json({
+                  errors: ["Reservation does not exist"],
+              });
+            }
+            res.status(201).json({
+                "message": `Deleted ${req.params.listing}`
+            });
+        }
+        catch(error) {
+            console.log(error);
+            res.status(500).json({
+              "errors":
+              ["Error creating reservation. Please try again!"]
+            });
+        }
+    }
+)
 module.exports = router;
