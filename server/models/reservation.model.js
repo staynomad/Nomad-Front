@@ -10,6 +10,10 @@ const ReservationSchema = new Schema({
         type: String,
         required: true,
     },
+    active: {
+        type: Boolean,
+        required: true,
+    }
 });
 
 const Reservation = mongoose.model("reservation", ReservationSchema);
