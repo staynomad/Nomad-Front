@@ -52,4 +52,28 @@ router.get(
     }
 )
 
+router.get(
+    "/getByListing/:listing",
+    async (req, res) => {
+        try {
+            const reservation = await Reservation.find({ listing: req.params.listing });
+            if (!reservation) {
+                return res.status(404).json({
+                  errors: ["User has not made any reservations"],
+                });
+            }
+            res.status(201).json({
+                "reservations": reservation
+            });
+        }
+        catch(error) {
+            console.log(error);
+            res.status(500).json({
+              "errors":
+              ["Error creating reservation. Please try again!"]
+            });
+        }
+    }
+)
+
 module.exports = router;
