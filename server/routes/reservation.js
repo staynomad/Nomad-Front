@@ -13,9 +13,33 @@ router.post(
             const newReservation = await new Reservation({
                 email,
                 listing
-            }).size();
+            }).save();
             res.status(201).json({
               "message": "Reservation created successfully"
+            });
+        }
+        catch(error) {
+            console.log(error);
+            res.status(500).json({
+              "errors":
+              ["Error creating reservation. Please try again!"]
+            });
+        }
+    }
+)
+
+router.get(
+    "/getByEmail/:email",
+    async (req, res) => {
+        try {
+            const reservation = await Reservation.find({ email: req.params.email });
+            if (!reservation) {
+                return res.status(404).json({
+                  errors: ["User has not made any reservations"],
+                });
+            }
+            res.status(201).json({
+                "reservations": reservation
             });
         }
         catch(error) {
