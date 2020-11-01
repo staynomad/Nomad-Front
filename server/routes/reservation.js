@@ -9,11 +9,12 @@ router.post(
     "/createReservation",
     async (req, res) => {
         try {
-            const {email, listing} = req.body;
+            const {email, listing, days} = req.body;
             const newReservation = await new Reservation({
                 email,
                 listing,
                 active: true,
+                days,
             }).save();
             res.status(201).json({
               "message": "Reservation created successfully"
