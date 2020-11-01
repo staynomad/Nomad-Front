@@ -5,75 +5,86 @@ const Questionnaire = require('../models/questionnaire.model');
 const {requireUserAuth} = require ('../utils');
 const {check, validationResult} = require ('express-validator');
 
-/* Add a questionnaire response */
-
+/* Post a questionnaire response */
 router.post(
-  '/submit_questionnaire', 
-  [check("email").isEmail().withMessage('The email address is not valid')],
+  '/submit_questionnaire/:id', 
   async(req, res) => {
-    try {
-      const {
-        name,
-        email,
-        stateUS,
-        numberOfRoommates,
-        bedtime,
-        petPreference,
-        workFromHome,
-        workFromHomePreference,
-        fridayNight,
-        cleaning,
-        cleaningPreference,
-        cooking,
-        cookingPreference,
-        friends,
-        friendsPreference,
-        smoke,
-        personalityType,
-        selfDescription,
-        roommateStory,
-        covidStory,
-        hobbies
-      } = req.body;
 
-      const newQuestionnaire = await new Questionnaire({
-        name,
-        email,
-        stateUS,
-        numberOfRoommates,
-        bedtime,
-        petPreference,
-        workFromHome,
-        workFromHomePreference,
-        fridayNight,
-        cleaning,
-        cleaningPreference,
-        cooking,
-        cookingPreference,
-        friends,
-        friendsPreference,
-        smoke,
-        personalityType,
-        selfDescription,
-        roommateStory,
-        covidStory,
-        hobbies
-      }).save();
+    // formatting req body
+    const {
+      name,
+      email,
+      stateUS,
+      numberOfRoommates,
+      bedtime,
+      petPreference,
+      workFromHome,
+      workFromHomePreference,
+      fridayNight,
+      cleaning,
+      cleaningPreference,
+      cooking,
+      cookingPreference,
+      friends,
+      friendsPreference,
+      smoke,
+      personalityType,
+      selfDescription,
+      roommateStory,
+      covidStory,
+      hobbies,
+      userId,
+    } = req.body;
+
+    // previous questionnaire-- null if it does not exist
+    const prevQuestionnaire = await Questionnaire.findOne({userId: req.params.id});
+
+    // if user is updating their questionnaire preferences
+    if (prevQuestionnaire) {
+      Questionnaire.findOneAndUpdate({userId: req.params.id}, {$set: req.body})
+        .then(() => console.log('success in updating previous questionnaire response!'))
+        .catch(err => console.log('this is your error: ', err))
+    } 
     
-      // Request is created
-      // Need to talk about return values, validation, etc.
-      res.status(201).json ({
-        newQuestionnaire
-      });
-    } catch (e) {
-      console.log("there has been an error")
-      console.error (error);
-      res.status (500).json ({
-        errors: ['Error occurred while submitting questionnaire. Please try again!'],
-      });
-    }
-});
+    // if user is submitting a questionnaire for the first time
+    else {
+      try {
+        // newQuestionnaire-- based off of what the user filled out in the form
+        const newQuestionnaire = await new Questionnaire({
+          name,
+          email,
+          stateUS,
+          numberOfRoommates,
+          bedtime,
+          petPreference,
+          workFromHome,
+          workFromHomePreference,
+          fridayNight,
+          cleaning,
+          cleaningPreference,
+          cooking,
+          cookingPreference,
+          friends,
+          friendsPreference,
+          smoke,
+          personalityType,
+          selfDescription,
+          roommateStory,
+          covidStory,
+          hobbies,
+          userId
+        }).save();
 
-// implement a get request
+        // request is created. need ui for validation
+        res.status(201).json ({
+          newQuestionnaire
+        });
+      } catch (e) {
+        res.status (500).json ({
+          errors: ['Error occurred while submitting questionnaire. Please try again!'],
+      });
+    };
+  };
+});
 
 module.exports = router;
