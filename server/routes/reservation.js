@@ -127,4 +127,31 @@ router.post(
         }
     }
 )
+
+router.post(
+    "/activate/:listing",
+    async (req, res) => {
+        try {
+            const filter = { listing: req.params.listing }
+            const update = { active: true }
+            const reservation = await Reservation.findOneAndUpdate(filter, update, { new: true });
+            if (!reservation) {
+                return res.status(404).json({
+                  errors: ["Reservation does not exist"],
+              });
+            }
+            res.status(201).json({
+                "message": `Activated ${req.params.listing}`
+            });
+        }
+        catch(error) {
+            console.log(error);
+            res.status(500).json({
+              "errors":
+              ["Error creating reservation. Please try again!"]
+            });
+        }
+    }
+)
+
 module.exports = router;
