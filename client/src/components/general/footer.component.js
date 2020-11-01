@@ -32,11 +32,11 @@ export default function Footer () {
         <a className={classes.linkItems} href='/ContactUs'>CONTACT US</a>
         <a className={classes.linkItems} href='/AboutUs'>ABOUT US</a>
         <a className={classes.linkItems} href='/OurLocations'>OUR LOCATIONS</a>
-        <a className={classes.linkItems} href='/CreateListing'>CREATE LISTING</a>
+        
         <span className={classes.spacing} />
       </Toolbar>
     </BottomNavigation>
   );
 }
 //this is to make it easy to access create listing page. Will be taken off for deployments
-//
+//<a className={classes.linkItems} href='/CreateListing'>CREATE LISTING</a>
