@@ -8,19 +8,25 @@ const { requireUserAuth } = require("../utils");
 router.post("/", async (req, res) => {
     const { itemToSearch } = req.body;
     try {   
+      let decodedItemToSearch = decodeURI(itemToSearch)
       const listings = await Listing.find({})
-      console.log(listings)
-      listings.filter(listing => {
+      const filteredListings = listings.filter(listing => {
         const { street, city, zipcode } = listing.location;
         if (
-            street.toLowerCase().includes(itemToSearch) || 
-            city.toLowerCase().includes(itemToSearch) ||
-            zipcode.includes(itemToSearch)
+            street.toLowerCase().includes(decodedItemToSearch) || 
+            city.toLowerCase().includes(decodedItemToSearch) ||
+            zipcode.includes(decodedItemToSearch)
         ) return true;
-        console.log(listings)
       });
-      res.status(201).json({
-        listings,
+      
+      if (filteredListings.length === 0) {
+        return res.status(404).json({
+          errors: ["There were no listings found with the given search term."],
+        });
+      }
+
+      res.status(200).json({
+        filteredListings,
       });
     } catch (e) {
       console.error(error);

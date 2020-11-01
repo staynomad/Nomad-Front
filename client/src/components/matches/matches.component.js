@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { withRouter  } from "react-router-dom";
 import Filter from "./filter.component";
 import Roommates from "./roommate/roommates.component";
 import Listings from "./listing/listings.component"
 import "./matches.css";
 
-const Matches = () => {
+const Matches = (props) => {
   const [seen, setSeen] = useState(false);
   const [roommateView, setRoommateView] = useState(false);
   const [listingView, setListingView] = useState(false);
@@ -18,6 +19,12 @@ const Matches = () => {
       setSeen(!seen);
     }
   };
+
+  const { location } = props;
+
+  useEffect(() => {
+    if (location.search) setListingView(true);
+  }, [location.search]);
 
   return (
     <div id='matches-page'>
@@ -51,4 +58,4 @@ const Matches = () => {
   );
 };
 
-export default Matches;
+export default withRouter(Matches);

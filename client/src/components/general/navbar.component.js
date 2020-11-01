@@ -5,7 +5,6 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Grid from '@material-ui/core/Grid';
 import Grow from '@material-ui/core/Grow';
 import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
@@ -165,6 +164,7 @@ const Navbar = (props) => {
 
   const handleSearch = (event) => {
     event.preventDefault();
+    history.push(`/matches?${itemToSearch}`);
   };
 
   const handleToggle = () => {
@@ -200,7 +200,7 @@ const Navbar = (props) => {
           <NavLink to='/' className={classes.mainLogo}>
             <img alt='Home' className={classes.mainLogo} src={Logo} />
           </NavLink>
-          <form style={{margin: "auto"}}>
+          <form style={{margin: "auto"}} onSubmit={handleSearch}>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
@@ -249,4 +249,4 @@ const Navbar = (props) => {
   );
 }
 
-export default withRouter(Navbar);
+export default withRouter(Navbar)
