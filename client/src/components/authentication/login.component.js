@@ -8,13 +8,18 @@ const Login = (props) => {
     email: "",
     password: "",
   });
+  const [userId, setUserId] = useState({
+    userId: ""
+  })
 
   const handleLogin = (e) => {
     e.preventDefault();
     const headers = { "Content-Type": "application/json" };
     handleReq("/login", "POST", headers, userLogin)
-      .then((res) => {
-        return res.json();
+      .then(async (res) => {
+        const response = await res.json();
+        setUserId(response.userId)
+        return response;
       })
       .then((data) => {
         if (data.errors) {
@@ -27,7 +32,10 @@ const Login = (props) => {
   };
 
   return props.loggedIn ? (
-    <Redirect to='/' />
+    <Redirect to={{
+            pathname: "/",
+            state: { userId: userId }
+          }} />
   ) : (
     <div className='login-content'>
       <div className='login-form'>
@@ -63,7 +71,9 @@ const Login = (props) => {
             <button
               className='login btn green'
               style={{ width: "100%" }}
-              onClick={(e) => handleLogin(e)}
+              onClick={(e) => {
+                handleLogin(e)
+              }}
             >
               log in
             </button>
