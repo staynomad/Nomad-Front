@@ -110,7 +110,7 @@ export default class CreateListing extends Component {
                 )}
               </div>
               <div>
-                {this.state.formval === 0 ? (
+                {this.state.formval === 6 ? (
                   <PhotoUpload onUpload={this.onUpload} />
                 ) : (
                   ""
