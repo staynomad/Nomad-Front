@@ -19,7 +19,9 @@ import "./App.css";
 //to add more items just copy the format and add the route path. look at navbar component to see where the path is currently set to
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [userID, setUserID] = useState("");
   const history = useHistory();
+
   const store = configureStore({}) 
   return (
     <Provider store={store}>
@@ -42,7 +44,7 @@ function App() {
         </div>
       </Router>
     </Provider>
-    
+  
   );
 }
 

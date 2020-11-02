@@ -6,28 +6,27 @@ import Profile from "./profile.component"
 import Settings from "./settings.component"
 
 export default class LeftMenu extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       activeItem: 'profile',
-      render: 'profile'
+      render: 'profile',
+      userID: props.userID
     }
     this.handleItemClick = this.handleItemClick.bind(this)
   }
 
   handleItemClick(e, { name , compname }) {
     this.setState({ activeItem: name, render: compname})
-    console.log(this.state)
   }
 
   _renderSubComp() {
-    console.log(this.state)
     switch(this.state.render) {
       case 'profile':
         return (
           <div>
             <Profile />
-            <Questionnaire />
+            <Questionnaire userId={this.state.userID}/>
           </div>
         );
       case 'my listings':

@@ -13,6 +13,10 @@ const ReservationSchema = new Schema({
     active: {
         type: Boolean,
         required: true,
+    },
+    days: {
+        type: Number,
+        required: true,
     }
 });
 
