@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import {connect} from 'react-redux'
+import {updateInfo} from '../../redux/actions/createListingActions'
 import Axios from "axios";
 import DatesCL from "./datesCL.component";
 import DetailsCL from "./detailsCL.component";
@@ -10,7 +12,7 @@ import PhotoUpload from './photoUpload.component'
 import "./createListing.css";
 import ConfirmSubmission from "./confirmSubmission.component";
 
-export default class CreateListing extends Component {
+class CreateListing extends Component {
   constructor() {
     super();
     this.state = {
@@ -167,3 +169,4 @@ export default class CreateListing extends Component {
     });
   }
 }
+export default connect(null, {updateInfo})(CreateListing)
