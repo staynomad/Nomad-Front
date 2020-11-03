@@ -2,6 +2,8 @@
 const bcrypt = require('bcryptjs');
 const bearerToken = require('express-bearer-token');
 const jwt = require('jsonwebtoken');
+
+const User = require("./models/user.model");
 const { jwtConfig } = require('./config');
 
 const { secret, expiresIn } = jwtConfig;
