@@ -13,8 +13,6 @@ router.post(
     // formatting req body
     const {
       name,
-      email,
-      stateUS,
       numberOfRoommates,
       bedtime,
       petPreference,
@@ -29,9 +27,6 @@ router.post(
       friendsPreference,
       smoke,
       personalityType,
-      selfDescription,
-      roommateStory,
-      covidStory,
       hobbies,
       userId,
     } = req.body;
@@ -52,8 +47,6 @@ router.post(
         // newQuestionnaire-- based off of what the user filled out in the form
         const newQuestionnaire = await new Questionnaire({
           name,
-          email,
-          stateUS,
           numberOfRoommates,
           bedtime,
           petPreference,
@@ -68,9 +61,6 @@ router.post(
           friendsPreference,
           smoke,
           personalityType,
-          selfDescription,
-          roommateStory,
-          covidStory,
           hobbies,
           userId
         }).save();

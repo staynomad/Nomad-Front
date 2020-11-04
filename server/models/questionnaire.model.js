@@ -9,16 +9,6 @@ const QuestionnaireSchema = new Schema({
         required: true,
         default: "",
     },
-    email: {
-        type: String,
-        required: true,
-        default: "",
-    },
-    stateUS: {
-        type: String,
-        required: true,
-        default: "",
-    },
     numberOfRoommates: {
         type: String,
         required: true,
@@ -85,21 +75,6 @@ const QuestionnaireSchema = new Schema({
         default: "no",
     },
     personalityType: {
-        type: String,
-        required: true,
-        default: "",
-    },
-    selfDescription: {
-        type: String,
-        required: true,
-        default: "",
-    },
-    roommateStory: {
-        type: String,
-        required: true,
-        default: "",
-    },
-    covidStory: {
         type: String,
         required: true,
         default: "",

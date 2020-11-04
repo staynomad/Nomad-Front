@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import configureStore from './redux/configureStore'
 import Navbar from "./components/general/navbar.component";
 import Footer from "./components/general/footer.component";
 import Home from "./components/homePage/home.component";

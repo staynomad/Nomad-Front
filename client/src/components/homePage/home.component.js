@@ -3,10 +3,7 @@ import Search from "./search.component";
 
 import "./home.css";
 
-const Home = (props) => {
-  if (props.location.state) {
-    props.setUserID (props.location.state.userId); // sets the userId in App.js
-  }
+const Home = () => {
   return (
     <div className="homepage backgroundimg">
       <Search />

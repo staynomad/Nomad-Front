@@ -1,12 +1,6 @@
 import React, {useState} from 'react';
 import Axios from 'axios';
 
-var STATE_ABBREV = ['Select your home state!', 'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT',
-                    'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IO', 'KS', 'KY', 'LA',
-                    'ME','MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ',
-                    'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN',
-                    'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'];
-
 var PERSONALITY_TYPES = ['INTJ- The Architect', 'INTP- The Logician', 'ENJT- The Commander',
                          'ENTP- The Debater', 'INFJ- The Advocate', 'INFP- The Mediator',
                          'ENFJ- The Protagonist', 'ENFP- The Campaigner', 'ISTJ- The Logistician',
@@ -24,10 +18,10 @@ const HOBBIES = ['Reading', 'Watching TV', 'Spending Time with Family', 'Going t
 
 export default function Questionnaire (props) {
   const [hobbies, setHobbies] = useState ({});
+  const [successfulPost, setSuccessfulPost] = useState(false);
+  const [notLoggedIn, setNotLoggedIn] = useState(props.userId === "");
   const [totalState, setTotalState] = useState ({
     name: '',
-    email: '',
-    stateUS: '',
     numberOfRoommates: '',
     bedtime: '',
     petPreference: '',
@@ -41,10 +35,7 @@ export default function Questionnaire (props) {
     friends: '',
     friendsPreference: '',
     smoke: '',
-    personalityType: '',
-    selfDescription: '',
-    roommateStory: '',
-    covidStory: '',
+    personalityType: ''
   });
 
   const handleChange = event => {
@@ -62,14 +53,28 @@ export default function Questionnaire (props) {
 
   const handleSubmit = event => {
     event.preventDefault();
+    var noErrors = true;
+    var fieldsFilledOut = true;
     const newQuestionnaire = {...totalState, hobbies: hobbies, userId: props.userId};
     // post request
-    Axios.post(`http://localhost:8080/questionnaire/submit_questionnaire/${props.userId}`, newQuestionnaire)
-    .then(() => console.log('questionnaire post request created'))
-    .catch(res => {
-      console.log("there has been a problem creating this post request.")
-      console.log(res)
-    });
+    if (props.userId) {
+      // checks to make sure all fields are filled out
+      for (var key in totalState) {
+        if (totalState[key] == '') {fieldsFilledOut = false};
+      }
+
+      Axios.post (`http://localhost:8080/questionnaire/submit_questionnaire/${props.userId}`, newQuestionnaire)
+      .catch (res => {
+        console.log ('there has been a problem creating this post request.');
+        noErrors = false;
+        console.log (res);
+      });
+
+      noErrors && fieldsFilledOut && setSuccessfulPost (true);
+    } else {
+      setNotLoggedIn(true);
+    }
+    
   };
 
   return (
@@ -86,30 +91,6 @@ export default function Questionnaire (props) {
             placeholder="Your full name"
             onChange={handleChange}
           />
-        </label>
-        <label id="email" value={totalState.email}>
-          <h3>What is your email address?</h3>
-          <input 
-            type="email"
-            id="email"
-            name="email"
-            value={totalState.email}
-            placeholder="john@example.com"
-            onChange={handleChange}
-          />
-        </label>
-        <label id="stateUS">
-          <h3>What state are you from?</h3>
-          <select
-            id="questionnaireStateUS"
-            name="stateUS"
-            value={totalState.stateUS}
-            onChange={handleChange}
-          >
-            {STATE_ABBREV.map (stateUS => (
-              <option value={stateUS} key={stateUS}>{stateUS}</option>
-            ))}
-          </select>
         </label>
         <label id="numberOfRoommates">
           <h3>How many roommates would you prefer to live with?</h3>
@@ -361,51 +342,6 @@ export default function Questionnaire (props) {
             </label>
           ))}
         </label>
-        <label id="selfDescription">
-          <h3>
-            Use this space to tell your future roommate(s) a little about yourself!
-          </h3>
-          <p>
-            For instance, are you a student? Do you love Game of Thrones as much as the rest of us?
-            {' '}
-            Got any pet peeves?
-          </p>
-          <br />
-          <textarea
-            id="questionnaireSelfDescription"
-            name="selfDescription"
-            value={totalState.selfDescription}
-            onChange={handleChange}
-          />
-        </label>
-        <label id="roommateStory">
-          <h3>Expand a bit on your past roommate experience, if applicable!</h3>
-          <p>
-            Are you still friends with your old roommates? How did you manage living with others?
-          </p>
-          <br />
-          <textarea
-            id="questionnaireRoommateStory"
-            name="roommateStory"
-            value={totalState.roommateStory}
-            onChange={handleChange}
-          />
-        </label>
-        <label id="covidStory">
-          <h3>
-            Tell us about your experience social distancing, if applicable!
-          </h3>
-          <p>
-            What is the size of your social circle? How did you manage the shutdown?
-          </p>
-          <br />
-          <textarea
-            id="questionnaireCovidStory"
-            name="covidStory"
-            value={totalState.covidStory}
-            onChange={handleChange}
-          />
-        </label>
         <hr />
         <input
           type="submit"
@@ -413,6 +349,10 @@ export default function Questionnaire (props) {
           value="Submit your preferences!"
         />
       </form>
+      {successfulPost ? <h3 style={{color: "green"}}>Your responses have been recorded!</h3> :
+      <h3 style={{color: "red"}}>Your responses have not been recorded. Please make sure that 
+      all forms are filled out and press Submit your preferences!</h3>}
+      {notLoggedIn ? <h3>You must be logged in to submit a questionnaire response!</h3> : ''}
     </div>
   );
 }
