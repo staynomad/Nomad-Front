@@ -1,56 +1,77 @@
-import React, { useState, useEffect } from "react";
-import { withRouter  } from "react-router-dom";
-import {connect} from "react-redux";
-import handleReq from "../../../utils/fetchRequest";
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+
 import "./listings.css";
 import ListingCard from './listingCard.component'
+import { searchAllListings, searchListings } from "../../../redux/actions/searchListingActions";
 
-import { searchListings } from "../../../redux/search";
+class Listings extends Component {
+  constructor(props) {
+    super(props);
 
-const Listings = (props) => {
-  const [listings, setListings] = useState([]);
-  const { location, searchListingsRes } = props;
+    this.state = {
+      listings: [],
+    };
 
-  useEffect(() => {
-    if (location.search && !props.searchListingsRes) {
-      const itemToSearch = props.location.search.slice(1);
-      props.searchListings({itemToSearch});
-    } else if (location.search && props.searchListingsRes) {
-      setListings(props.searchListingsRes);
+    this.handleSearch = this.handleSearch.bind(this);
+  };
+
+  handleSearch() {
+    if (this.props.location.search) {
+      /* Get listing using search term */
+      const itemToSearch = this.props.location.search.slice(1);
+      this.props.searchListings({ itemToSearch });
     } else {
-      handleReq("/listings", "GET")
-      .then((data) => {
-        return data.json();
-      })
-      .then((res) => {
-        if (res.errors) {
-          return alert(res.errors[0]);
-        }
+      /* Get all listings */
+      this.props.searchAllListings();
+    };
+  }
 
-        if (res.body) {
-          setListings(res.body);
-        }
-      });
+  componentDidMount() {
+    this.handleSearch();
+  };
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      this.handleSearch();
+    };
+  };
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.searchListingsRes !== prevState.listings) {
+      return {
+        listings: nextProps.searchListingsRes
+      }
     }
-  }, [location.search, searchListingsRes]);
+  }
 
-  return (
-    <div id='listing-content'>
-      {listings.map((listing) => (
-        <ListingCard listing={listing} />
-      ))}
-    </div>
-  );
+  render() {
+    return (
+      <>
+        {this.state.listings ? (
+          <div id='listing-content'>
+            {this.state.listings.map((listing) => (
+              <ListingCard key={listing} listing={listing} />
+            ))}
+          </div>
+        ) : null}
+      </>
+    );
+  }
+
+
 };
 
 const mapStateToProps = state => {
   return {
-    searchListingsRes: state.search.searchListingsRes,
+    searchListingsRes: state.Search.searchListingsRes,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    searchAllListings: () => dispatch(searchAllListings()),
     searchListings: (itemToSearch) => dispatch(searchListings(itemToSearch)),
   };
 };

@@ -1,9 +1,12 @@
-import handleReq from "../utils/fetchRequest.js";
+import handleReq from "../../utils/fetchRequest.js";
 
-const SET_SEARCH_LISTINGS = 'VHomes/search/SEARCH_LISTINGS';
+/* Types */
+export const SET_SEARCH_LISTINGS = 'VHomes/search/SEARCH_LISTINGS';
 
+/* Actions */
 const setSearchListings = listings => ({ type: SET_SEARCH_LISTINGS, listings })
 
+/* Fetch Calls */
 export const searchListings = (itemToSearch) => async dispatch => {
     const headers = { "Content-Type": "application/json" };
     const searchRes = await handleReq("/search", "POST", headers, itemToSearch);
@@ -14,14 +17,11 @@ export const searchListings = (itemToSearch) => async dispatch => {
     };
 }
 
-export default function reducer(state = {}, action) {
-    switch (action.type) {
-        case SET_SEARCH_LISTINGS: {
-            return {
-                ...state,
-                searchListingsRes: action.listings,
-            }
-        }
-        default: return state;
+export const searchAllListings = () => async dispatch => {
+    const searchAllRes = await handleReq("/listings", "GET");
+
+    if (searchAllRes.ok) {
+        const { listings } = await searchAllRes.json();
+        dispatch(setSearchListings(listings))
     }
 }
