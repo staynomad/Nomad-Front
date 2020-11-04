@@ -6,8 +6,7 @@ const { requireUserAuth } = require("../utils");
 // const { check, validationResult } = require("express-validator");
 
 /* Add a listing */
-
-router.post("/createListing", async (req, res) => {
+router.post("/createListing", requireUserAuth, async (req, res) => {
   try {
     const {
       location,
@@ -35,7 +34,7 @@ router.post("/createListing", async (req, res) => {
     res.status(201).json({
       newListing,
     });
-  } catch (e) {
+  } catch (error) {
     console.error(error);
     res.status(500).json({
       errors: ["Error occurred while creating listing. Please try again!"],
@@ -43,6 +42,40 @@ router.post("/createListing", async (req, res) => {
   }
 });
 
+/* Update a listing */
+router.put("/editListing/:listingId", requireUserAuth, async (req, res) => {
+  try {
+    const listing = await Listing.findOne({
+      _id: req.params.listingId,
+      email: req.user.email,
+    });
+
+    if (!listing) {
+      res.status(500).json({
+        errors: ["Listing was not found. Please try again!"],
+      });
+    } else {
+      const updatedKeys = Object.keys(req.body);
+      updatedKeys.forEach(async (key) => {
+        if (key && key !== null) {
+          console.log('changing ' + key)
+          listing[key] = req.body[key];
+        };
+      });
+      await listing.save();
+      res.status(200).json({
+        listing,
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      errors: ["Error occurred while creating listing. Please try again!"],
+    });
+  }
+});
+
+/* Get all listings */
 router.get("/", async (req, res) => {
   try {
     const listings = await Listing.find({});
@@ -50,11 +83,11 @@ router.get("/", async (req, res) => {
       res.status(404).json({
         errors: ["There are currently no listings! Please try again later."],
       });
+    } else {
+      res.status(201).json({
+        listings,
+      });
     }
-
-    res.status(201).json({
-      body: listings,
-    });
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -66,7 +99,7 @@ router.get("/", async (req, res) => {
 /* Get all listings belonging to user */
 router.get("/byEmail", requireUserAuth, async (req, res) => {
   try {
-    const userListings = await Listing.find({email: req.user.email});
+    const userListings = await Listing.find({ email: req.user.email });
     if (!userListings) {
       res.status(404).json({
         errors: ["There are currently no listings! Please try again later."],

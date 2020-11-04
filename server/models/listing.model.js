@@ -11,7 +11,7 @@ const ListingSchema = new Schema({
   },
   pictures: {
     type: Array,
-    default: [],
+    default: null,
   },
   description: {
     type: String,
@@ -26,16 +26,21 @@ const ListingSchema = new Schema({
     required: true,
   },
   rules: {
-    type: String,
-    default: "be nice",
+    type: Array,
+    default: null,
   },
   ratings: {
     type: Number,
+    default: null
   },
-  dates: {
-    type: Mixed,
+  email: {
+    type: String,
     required: true,
-  },
+  }
+  // dates: {
+  //   type: Mixed,
+  //   required: true,
+  // },
 });
 
 const Listing = mongoose.model("listing", ListingSchema);
