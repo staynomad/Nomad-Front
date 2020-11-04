@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Provider } from 'react-redux';
 import configureStore from './redux/configureStore'
 import Navbar from "./components/general/navbar.component";
 import Footer from "./components/general/footer.component";
@@ -22,29 +21,25 @@ function App() {
   const [userID, setUserID] = useState("");
   const history = useHistory();
 
-  const store = configureStore({}) 
   return (
-    <Provider store={store}>
-      <Router>
-        <Navbar history={history} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
-        <div className='App'>
-          <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/ContactUs" exact component={Contact} />
-            <Route path="/Login" exact render={(props) => <Login loggedIn={loggedIn} setLoggedIn={setLoggedIn}/> }/>
-            <Route path="/SignUp" exact component={Signup} />
-            <Route path="/Services" exact component={Services} />
-            <Route path="/Reservations" exact component={Reservation} />
-            <Route path="/CreateListing" exact component={CreateListing} />
-            <Route path="/Matches" exact component={Matches} />
-            <Route path="/MyAccount" exact component={MyAccount} />
-            <Route path="/Questionnaire" exact component={Questionnaire}/>
-          </Switch>
-          <Footer />
-        </div>
-      </Router>
-    </Provider>
-  
+    <Router>
+      <Navbar history={history} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+      <div className='App'>
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/ContactUs" exact component={Contact} />
+          <Route path="/Login" exact render={(props) => <Login loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
+          <Route path="/SignUp" exact component={Signup} />
+          <Route path="/Services" exact component={Services} />
+          <Route path="/Reservations" exact component={Reservation} />
+          <Route path="/CreateListing" exact component={CreateListing} />
+          <Route path="/Matches" exact component={Matches} />
+          <Route path="/MyAccount" exact component={MyAccount} />
+          <Route path="/Questionnaire" exact component={Questionnaire} />
+        </Switch>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 
