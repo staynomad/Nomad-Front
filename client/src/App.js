@@ -21,10 +21,8 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userID, setUserID] = useState("");
   const history = useHistory();
-
-  console.log('APP RE-RENDERED. HERE IS MY USERID: ', userID)
-
   const store = configureStore({}) 
+  
   return (
     <Provider store={store}>
       <Router>

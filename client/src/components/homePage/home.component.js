@@ -3,7 +3,7 @@ import Search from "./search.component";
 
 import "./home.css";
 
-const Home = (props) => {
+const Home = () => {
   return (
     <div className="homepage backgroundimg">
       <Search />
