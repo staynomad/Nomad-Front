@@ -14,11 +14,11 @@ const QuestionnaireSchema = new Schema({
         required: true,
         default: "",
     },
-    stateUS: {
-        type: String,
-        required: true,
-        default: "",
-    },
+    // stateUS: {
+    //     type: String,
+    //     required: true,
+    //     default: "",
+    // },
     numberOfRoommates: {
         type: String,
         required: true,

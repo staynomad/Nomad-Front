@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import Axios from 'axios';
 
-var STATE_ABBREV = ['Select your home state!', 'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT',
-                    'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IO', 'KS', 'KY', 'LA',
-                    'ME','MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ',
-                    'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN',
-                    'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'];
+// var STATE_ABBREV = ['Select your home state!', 'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT',
+//                     'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IO', 'KS', 'KY', 'LA',
+//                     'ME','MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ',
+//                     'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN',
+//                     'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'];
 
 var PERSONALITY_TYPES = ['INTJ- The Architect', 'INTP- The Logician', 'ENJT- The Commander',
                          'ENTP- The Debater', 'INFJ- The Advocate', 'INFP- The Mediator',
@@ -24,10 +24,11 @@ const HOBBIES = ['Reading', 'Watching TV', 'Spending Time with Family', 'Going t
 
 export default function Questionnaire (props) {
   const [hobbies, setHobbies] = useState ({});
+  const [successfulPost, setSuccessfulPost] = useState(false);
   const [totalState, setTotalState] = useState ({
     name: '',
     email: '',
-    stateUS: '',
+    // stateUS: '',
     numberOfRoommates: '',
     bedtime: '',
     petPreference: '',
@@ -47,6 +48,8 @@ export default function Questionnaire (props) {
     covidStory: '',
   });
 
+  console.log('COMPONENET RERENDERD. HERE IS THE ERROR THING: ', successfulPost);
+
   const handleChange = event => {
     const value = event.target.value;
     setTotalState({
@@ -62,14 +65,17 @@ export default function Questionnaire (props) {
 
   const handleSubmit = event => {
     event.preventDefault();
+    var noErrors = true;
     const newQuestionnaire = {...totalState, hobbies: hobbies, userId: props.userId};
     // post request
     Axios.post(`http://localhost:8080/questionnaire/submit_questionnaire/${props.userId}`, newQuestionnaire)
-    .then(() => console.log('questionnaire post request created'))
     .catch(res => {
       console.log("there has been a problem creating this post request.")
+      noErrors = false;
       console.log(res)
-    });
+    })
+    
+    noErrors && setSuccessfulPost(true)
   };
 
   return (
@@ -98,7 +104,7 @@ export default function Questionnaire (props) {
             onChange={handleChange}
           />
         </label>
-        <label id="stateUS">
+        {/* <label id="stateUS">
           <h3>What state are you from?</h3>
           <select
             id="questionnaireStateUS"
@@ -110,7 +116,7 @@ export default function Questionnaire (props) {
               <option value={stateUS} key={stateUS}>{stateUS}</option>
             ))}
           </select>
-        </label>
+        </label> */}
         <label id="numberOfRoommates">
           <h3>How many roommates would you prefer to live with?</h3>
           <select
@@ -413,6 +419,9 @@ export default function Questionnaire (props) {
           value="Submit your preferences!"
         />
       </form>
+      {successfulPost ? <h3 style={{color: "green"}}>Your responses have been recorded!</h3> :
+      <h3 style={{color: "red"}}>Your responses have not been recorded. Please make sure that 
+      all forms are filled out and press Submit your preferences!</h3>}
     </div>
   );
 }

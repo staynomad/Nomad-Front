@@ -14,7 +14,7 @@ router.post(
     const {
       name,
       email,
-      stateUS,
+      // stateUS,
       numberOfRoommates,
       bedtime,
       petPreference,
@@ -53,7 +53,7 @@ router.post(
         const newQuestionnaire = await new Questionnaire({
           name,
           email,
-          stateUS,
+          // stateUS,
           numberOfRoommates,
           bedtime,
           petPreference,
