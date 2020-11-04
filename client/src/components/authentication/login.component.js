@@ -8,9 +8,6 @@ const Login = (props) => {
     email: "",
     password: "",
   });
-  const [userId, setUserId] = useState({
-    userId: ""
-  })
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -18,7 +15,7 @@ const Login = (props) => {
     handleReq("/login", "POST", headers, userLogin)
       .then(async (res) => {
         const response = await res.json();
-        setUserId(response.userId)
+        props.setUserID(response.userId)
         return response;
       })
       .then((data) => {
@@ -32,10 +29,7 @@ const Login = (props) => {
   };
 
   return props.loggedIn ? (
-    <Redirect to={{
-            pathname: "/",
-            state: { userId: userId }
-          }} />
+    <Redirect to={{pathname: "/"}} />
   ) : (
     <div className='login-content'>
       <div className='login-form'>
