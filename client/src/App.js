@@ -22,6 +22,8 @@ function App() {
   const [userID, setUserID] = useState("");
   const history = useHistory();
 
+  console.log('APP RE-RENDERED. HERE IS MY USERID: ', userID)
+
   const store = configureStore({}) 
   return (
     <Provider store={store}>
@@ -31,13 +33,13 @@ function App() {
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/ContactUs" exact component={Contact} />
-            <Route path="/Login" exact render={(props) => <Login loggedIn={loggedIn} setLoggedIn={setLoggedIn}/> }/>
+            <Route path="/Login" exact render={(props) => <Login loggedIn={loggedIn} setLoggedIn={setLoggedIn} setUserID={setUserID}/> }/>
             <Route path="/SignUp" exact component={Signup} />
             <Route path="/Services" exact component={Services} />
             <Route path="/Reservations" exact component={Reservation} />
             <Route path="/CreateListing" exact component={CreateListing} />
             <Route path="/Matches" exact component={Matches} />
-            <Route path="/MyAccount" exact component={MyAccount} />
+            <Route path="/MyAccount" exact render={(props) => <MyAccount userID={userID} />} />
             <Route path="/Questionnaire" exact component={Questionnaire}/>
           </Switch>
           <Footer />
