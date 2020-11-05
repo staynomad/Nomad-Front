@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, withRouter  } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import AppBar from '@material-ui/core/AppBar';
@@ -165,6 +165,7 @@ const Navbar = (props) => {
   const handleSearch = (event) => {
     event.preventDefault();
     history.push(`/matches?${itemToSearch}`);
+    setItemToSearch("")
   };
 
   const handleToggle = () => {
@@ -200,7 +201,7 @@ const Navbar = (props) => {
           <NavLink to='/' className={classes.mainLogo}>
             <img alt='Home' className={classes.mainLogo} src={Logo} />
           </NavLink>
-          <form style={{margin: "auto"}} onSubmit={handleSearch}>
+          <form style={{ margin: "auto" }} onSubmit={handleSearch}>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
@@ -213,6 +214,7 @@ const Navbar = (props) => {
                 }}
                 inputProps={{ 'aria-label': 'search' }}
                 onChange={(e) => setItemToSearch(e.target.value)}
+                value={itemToSearch}
               />
               <button className={classes.searchButton} onClick={handleSearch}>find</button>
             </div>
@@ -233,15 +235,15 @@ const Navbar = (props) => {
                 </IconButton>
               </>
             ) : (
-              <>
-                <CustomButton>
-                  <NavLink to='/SignUp'>Sign Up</NavLink>
-                </CustomButton>
-                <CustomButton>
-                  <NavLink to='/Login'>Login</NavLink>
-                </CustomButton>
-              </>
-            )}
+                <>
+                  <CustomButton>
+                    <NavLink to='/SignUp'>Sign Up</NavLink>
+                  </CustomButton>
+                  <CustomButton>
+                    <NavLink to='/Login'>Login</NavLink>
+                  </CustomButton>
+                </>
+              )}
           </div>
         </div>
       </AppBar>
