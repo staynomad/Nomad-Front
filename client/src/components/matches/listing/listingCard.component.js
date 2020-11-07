@@ -28,7 +28,7 @@ const ListingCard = ({listing}) => {
           </div>
           <Modal open={open} onClose={handleOpenClose}>
             <DialogContent className="material-ui-dialogmodal">
-              <ListingsModal listing={listing}/>
+              <ListingsModal listing={listing} disableBackdropClick/>
             </DialogContent>
           </Modal>
         </div>

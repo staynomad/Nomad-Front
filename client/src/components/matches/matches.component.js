@@ -39,7 +39,7 @@ const Matches = (props) => {
           setListingView(!listingView);
           setRoommateView(false);
         }}>
-          locations
+          listings
         </button>
         <button className='filter btn green' onClick={toggle}>
           filter
