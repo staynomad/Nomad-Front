@@ -12,7 +12,6 @@ const roommateRouter = require("./routes/roommates");
 const listingRouter = require("./routes/listing");
 const questionnaireRouter = require("./routes/questionnaire");
 const reservationRouter = require("./routes/reservation");
-const searchRouter = require("./routes/search");
 
 const app = express();
 app.use(bodyParser.json());
@@ -25,7 +24,6 @@ app.use("/roommates", roommateRouter);
 app.use("/listings", listingRouter);
 app.use("/questionnaire", questionnaireRouter);
 app.use("/reservation", reservationRouter);
-app.use("/search", searchRouter);
 
 mongoose.connect(DATABASE_URI, {
   useCreateIndex: true,
@@ -34,7 +32,7 @@ mongoose.connect(DATABASE_URI, {
   useUnifiedTopology: true,
 });
 
-if(process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   app.use(express.static('../client/build/'));
   app.get('*', (_, res) => {
     res.sendFile(path.resolve(__dirname, '..', 'client', 'build', 'index.html'));

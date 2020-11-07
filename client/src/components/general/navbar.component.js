@@ -1,5 +1,7 @@
 import React from "react";
 import { NavLink, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import AppBar from '@material-ui/core/AppBar';
@@ -221,7 +223,7 @@ const Navbar = (props) => {
           </form>
           <div className={classes.navbarRight}>
             <NavLink to='/Matches' className={classes.navLink}>explore</NavLink>
-            {loggedIn ? (
+            {props.userSession ? (
               <>
                 <IconButton
                   ref={anchorRef}
@@ -251,4 +253,20 @@ const Navbar = (props) => {
   );
 }
 
-export default withRouter(Navbar)
+const mapStateToProps = state => {
+  if (state.Login.userInfo) return {
+    userSession: state.Login.userInfo.session,
+  }
+  return {};
+};
+
+const mapDispatchToProps = dispatch => {
+  return {};
+};
+
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(
+  Navbar
+));
