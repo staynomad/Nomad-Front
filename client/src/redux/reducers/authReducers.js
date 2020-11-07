@@ -1,8 +1,8 @@
-import { SET_USER_ID } from '../actions/authActions';
+import { SET_USER_SESSION, REMOVE_USER_SESSION } from '../actions/authActions';
 
 export default function reducer(state = {}, action) {
     switch (action.type) {
-        case SET_USER_ID: {
+        case SET_USER_SESSION: {
             return {
                 ...state,
                 userInfo: {
@@ -12,6 +12,12 @@ export default function reducer(state = {}, action) {
                         userId: action.userId,
                     },
                 }
+            }
+        }
+        case REMOVE_USER_SESSION: {
+            return {
+                ...state,
+                userInfo: {}
             }
         }
         default: return state;

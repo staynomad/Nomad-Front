@@ -1,10 +1,12 @@
 import handleReq from "../../utils/fetchRequest.js";
 
 /* Types */
-export const SET_USER_ID = 'VHomes/search/SET_USER_ID';
+export const SET_USER_SESSION = 'VHomes/search/SET_USER_SESSION';
+export const REMOVE_USER_SESSION = 'VHomes/search/REMOVE_USER_SESSION';
 
 /* Actions */
-const setUserId = (token, userId) => ({ type: SET_USER_ID, token, userId });
+const setUserSession = (token, userId) => ({ type: SET_USER_SESSION, token, userId });
+export const removeUserSession = () => ({ type: REMOVE_USER_SESSION })
 
 /* Fetch Calls */
 export const submitLogin = (userLogin) => async dispatch => {
@@ -13,6 +15,6 @@ export const submitLogin = (userLogin) => async dispatch => {
 
     if (loginRes.ok) {
         const { token, userId } = await loginRes.json();
-        dispatch(setUserId(token, userId));
+        dispatch(setUserSession(token, userId));
     };
 };
