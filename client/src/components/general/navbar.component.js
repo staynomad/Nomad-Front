@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
+import { removeUserSession } from '../../redux/actions/authActions';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import AppBar from '@material-ui/core/AppBar';
@@ -140,7 +141,7 @@ const Navbar = (props) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [itemToSearch, setItemToSearch] = React.useState("");
-  const { history, loggedIn, setLoggedIn } = props;
+  const { history } = props;
 
   const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
@@ -160,7 +161,7 @@ const Navbar = (props) => {
   const handleLogout = (event) => {
     handleClose(event);
     window.sessionStorage.removeItem('accessToken');
-    setLoggedIn(false);
+    props.removeUserSession();
     history.push('/');
   };
 
@@ -261,7 +262,9 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    removeUserSession: () => (dispatch(removeUserSession()))
+  };
 };
 
 export default withRouter(connect(
