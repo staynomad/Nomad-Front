@@ -15,7 +15,6 @@ class LeftMenu extends Component {
     this.state = {
       activeItem: 'profile',
       render: 'profile',
-      userID: props.userSession.userId
     }
     this.handleItemClick = this.handleItemClick.bind(this)
   }
@@ -27,12 +26,14 @@ class LeftMenu extends Component {
   _renderSubComp() {
     switch (this.state.render) {
       case 'profile':
-        return (
-          <div>
-            <Profile />
-            <Questionnaire userId={this.state.userID} />
-          </div>
-        );
+        if (this.props.userSession) {
+          return (
+            <div>
+              <Profile />
+              <Questionnaire userId={this.props.userSession.userId} />
+            </div>
+          )
+        } else return null;
       case 'my listings':
         return;
       case 'settings':
