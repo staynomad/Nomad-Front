@@ -16,24 +16,22 @@ import "./App.css";
 
 //to add more items just copy the format and add the route path. look at navbar component to see where the path is currently set to
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [userID, setUserID] = useState("");
   const history = useHistory();
 
   return (
     <Router>
-      <Navbar history={history} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+      <Navbar history={history} />
       <div className='App'>
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/ContactUs" exact component={Contact} />
-          <Route path="/Login" exact render={(props) => <Login loggedIn={loggedIn} setLoggedIn={setLoggedIn} setUserID={setUserID}/> }/>
+          <Route path="/Login" exact component={Login} />
           <Route path="/SignUp" exact component={Signup} />
           <Route path="/Services" exact component={Services} />
           <Route path="/Reservations" exact component={Reservation} />
           <Route path="/CreateListing" exact component={CreateListing} />
           <Route path="/Matches" exact component={Matches} />
-          <Route path="/MyAccount" exact render={(props) => <MyAccount userID={userID} />} />
+          <Route path="/MyAccount" exact component={MyAccount} />
           <Route path="/Questionnaire" exact component={Questionnaire} />
         </Switch>
         <Footer />
