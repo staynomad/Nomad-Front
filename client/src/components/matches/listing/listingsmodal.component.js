@@ -1,4 +1,5 @@
 import React from 'react';
+import Reservation from "./reservation/reservation.component"
 import "./listingsmodal.css";
 
 class ListingsModal extends React.Component {
@@ -24,14 +25,10 @@ class ListingsModal extends React.Component {
               {this.listing.details.beds > 1 ? `${this.listing.details.beds} beds` : `${this.listing.details.beds} bed`}  {this.listing.details.baths > 1 ? `${this.listing.details.baths} baths` : `${this.listing.details.baths} bath`}
             </div>
             </div>
-            <div><b>Location</b>
-              <div>{this.listing.location.street}</div>
-              <div>{this.listing.location.city}</div>
-              <div>{this.listing.location.state}</div>
-              <div>{this.listing.location.country}</div>
-              <div>{this.listing.location.zipcode}</div>
+            <div><b>Address</b>
+              <div>{this.listing.location.street} {this.listing.location.city}, {this.listing.location.state}</div>
             </div>
-            <div><b>Starting price</b>
+            <div><b>Price</b>
               <div>{this.listing.price}</div>
             </div>
             <div><b>Rating</b>
@@ -40,6 +37,7 @@ class ListingsModal extends React.Component {
             <div><b>Rules</b>
               <div>{this.listing.rules}</div>
             </div>
+            <Reservation />
           </div>
           <div className="single-listing-image">
           </div>
