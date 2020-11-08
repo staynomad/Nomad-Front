@@ -1,5 +1,8 @@
 import React from "react";
-import { NavLink, withRouter  } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+
+import { removeUserSession } from '../../redux/actions/authActions';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import AppBar from '@material-ui/core/AppBar';
@@ -138,7 +141,7 @@ const Navbar = (props) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [itemToSearch, setItemToSearch] = React.useState("");
-  const { history, loggedIn, setLoggedIn } = props;
+  const { history } = props;
 
   const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
@@ -158,13 +161,14 @@ const Navbar = (props) => {
   const handleLogout = (event) => {
     handleClose(event);
     window.sessionStorage.removeItem('accessToken');
-    setLoggedIn(false);
+    props.removeUserSession();
     history.push('/');
   };
 
   const handleSearch = (event) => {
     event.preventDefault();
     history.push(`/matches?${itemToSearch}`);
+    setItemToSearch("")
   };
 
   const handleToggle = () => {
@@ -200,7 +204,7 @@ const Navbar = (props) => {
           <NavLink to='/' className={classes.mainLogo}>
             <img alt='Home' className={classes.mainLogo} src={Logo} />
           </NavLink>
-          <form style={{margin: "auto"}} onSubmit={handleSearch}>
+          <form style={{ margin: "auto" }} onSubmit={handleSearch}>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
@@ -213,13 +217,14 @@ const Navbar = (props) => {
                 }}
                 inputProps={{ 'aria-label': 'search' }}
                 onChange={(e) => setItemToSearch(e.target.value)}
+                value={itemToSearch}
               />
               <button className={classes.searchButton} onClick={handleSearch}>find</button>
             </div>
           </form>
           <div className={classes.navbarRight}>
             <NavLink to='/Matches' className={classes.navLink}>explore</NavLink>
-            {loggedIn ? (
+            {props.userSession ? (
               <>
                 <IconButton
                   ref={anchorRef}
@@ -233,15 +238,15 @@ const Navbar = (props) => {
                 </IconButton>
               </>
             ) : (
-              <>
-                <CustomButton>
-                  <NavLink to='/SignUp'>Sign Up</NavLink>
-                </CustomButton>
-                <CustomButton>
-                  <NavLink to='/Login'>Login</NavLink>
-                </CustomButton>
-              </>
-            )}
+                <>
+                  <CustomButton>
+                    <NavLink to='/SignUp'>Sign Up</NavLink>
+                  </CustomButton>
+                  <CustomButton>
+                    <NavLink to='/Login'>Login</NavLink>
+                  </CustomButton>
+                </>
+              )}
           </div>
         </div>
       </AppBar>
@@ -249,4 +254,22 @@ const Navbar = (props) => {
   );
 }
 
-export default withRouter(Navbar)
+const mapStateToProps = state => {
+  if (state.Login.userInfo) return {
+    userSession: state.Login.userInfo.session,
+  }
+  return {};
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    removeUserSession: () => (dispatch(removeUserSession()))
+  };
+};
+
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(
+  Navbar
+));

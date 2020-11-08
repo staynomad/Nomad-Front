@@ -97,15 +97,15 @@ router.get("/", async (req, res) => {
 });
 
 /* Get all listings belonging to user */
-router.get("/byEmail", requireUserAuth, async (req, res) => {
+router.get("/byUserId", requireUserAuth, async (req, res) => {
   try {
-    const userListings = await Listing.find({ email: req.user.email });
+    const userListings = await Listing.find({ userId: req.user._id });
     if (!userListings) {
       res.status(404).json({
         errors: ["There are currently no listings! Please try again later."],
       });
     } else {
-      res.status(201).json({
+      res.status(200).json({
         userListings,
       });
     }
@@ -126,7 +126,7 @@ router.get("/byId/:id", async (req, res) => {
         errors: ["Listing does not exist."],
       });
     } else {
-      res.status(201).json({
+      res.status(200).json({
         listing,
       });
     }
@@ -175,7 +175,7 @@ router.delete("/remove/:listingId", requireUserAuth, async (req, res) => {
   try {
     const listing = await Listing.findOne({
       _id: req.params.listingId,
-      email: req.user.email,
+      userId: req.user._id,
     });
 
     if (!listing) {

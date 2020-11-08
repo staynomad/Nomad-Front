@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
+const User = require("./user.model");
 const Schema = mongoose.Schema;
 
-const { Array, Mixed, Number, String } = Schema.Types;
+const { Array, Mixed, Number, ObjectId, String } = Schema.Types;
 
 const ListingSchema = new Schema({
   location: {
@@ -35,6 +36,10 @@ const ListingSchema = new Schema({
   },
   email: {
     type: String,
+  },
+  userId: {
+    type: ObjectId,
+    ref: User,
     required: true,
   }
   // dates: {
