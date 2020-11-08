@@ -11,6 +11,7 @@ const ListingCard = ({listing}) => {
 
   return (
     <div className='listing-item' onClick={handleOpenClose}>
+      <a href={'/listing/' + listing._id}>
           <div className='listing-information'>
             <div className='listing-image'>listing image here</div>
             <div>
@@ -26,12 +27,8 @@ const ListingCard = ({listing}) => {
               <b>Starting Price:</b> ${listing.price}
             </div>
           </div>
-          <Modal open={open} onClose={handleOpenClose}>
-            <DialogContent className="material-ui-dialogmodal">
-              <ListingsModal listing={listing} disableBackdropClick/>
-            </DialogContent>
-          </Modal>
-        </div>
+        </a>
+    </div>
   )
 };
 
