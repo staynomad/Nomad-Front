@@ -78,14 +78,14 @@ router.put("/editListing/:listingId", requireUserAuth, async (req, res) => {
 /* Get all listings */
 router.get("/", async (req, res) => {
   try {
-    const listings = await Listing.find({});
-    if (!listings) {
+    const listing = await Listing.find({});
+    if (!listing) {
       res.status(404).json({
         errors: ["There are currently no listings! Please try again later."],
       });
     } else {
       res.status(201).json({
-        listings,
+        listing,
       });
     }
   } catch (error) {
@@ -107,6 +107,27 @@ router.get("/byEmail", requireUserAuth, async (req, res) => {
     } else {
       res.status(201).json({
         userListings,
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      errors: ["Error occurred while getting listings. Please try again!"],
+    });
+  }
+});
+
+/* Get listing by listingID (MongoDB Object ID) */
+router.get("/byId/:id", async (req, res) => {
+  try {
+    const listing = await Listing.findById(req.params.id);
+    if (!listing) {
+      res.status(404).json({
+        errors: ["Listing does not exist."],
+      });
+    } else {
+      res.status(201).json({
+        listing,
       });
     }
   } catch (error) {

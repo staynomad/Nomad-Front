@@ -12,6 +12,7 @@ import Questionnaire from "./components/matches/questionnaire.component"
 import { BrowserRouter as Router, Route, Switch, useHistory } from "react-router-dom";
 import CreateListing from "./components/createListing/createListing.component";
 import MyAccount from "./components/myAccount/menu.component";
+import ListingPage from "./components/listingPage/listingPage.component";
 import "./App.css";
 
 //to add more items just copy the format and add the route path. look at navbar component to see where the path is currently set to
@@ -35,6 +36,7 @@ function App() {
           <Route path="/Matches" exact component={Matches} />
           <Route path="/MyAccount" exact render={(props) => <MyAccount userID={userID} />} />
           <Route path="/Questionnaire" exact component={Questionnaire} />
+          <Route path="/Listing/:id" exact component={ListingPage} />
         </Switch>
         <Footer />
       </div>
