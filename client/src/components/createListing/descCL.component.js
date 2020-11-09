@@ -1,15 +1,26 @@
 import React, { Component } from "react";
+import {connect} from 'react-redux'
+import { withRouter } from "react-router-dom";
+
 import "./createListing.css";
 
-export default class Description extends Component {
+class Description extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      description: "",
+      description: '',
       maxchars: 40,
       charleft: 40
     };
     this.handleChange = this.handleChange.bind(this);
+  }
+  componentDidMount() {
+    const newDesc = this.props.listingData.CreateListing.state.description
+    const dif = this.state.maxchars - newDesc.length
+    this.setState({
+      description: newDesc,
+      charleft: dif
+    })
   }
   handleChange(e) {
     const { name, value } = e.target;
@@ -43,3 +54,10 @@ export default class Description extends Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    listingData: state
+  }
+}
+
+export default withRouter(connect(mapStateToProps, null)(Description))
