@@ -1,12 +1,21 @@
 import React, { Component } from "react";
 import "./createListing.css";
-export default class PricesCL extends Component {
+import {connect} from 'react-redux'
+import { withRouter } from "react-router-dom";
+
+class PricesCL extends Component {
   constructor(props) {
     super(props);
     this.state = {
       price: "",
     };
     this.handleChange = this.handleChange.bind(this);
+  }
+  componentDidMount() {
+    const oldPrice = this.props.listingData.CreateListing.state.price
+    this.setState ({
+      price: oldPrice
+    })
   }
   handleChange(e) {
     const { name, value } = e.target;
@@ -43,3 +52,10 @@ export default class PricesCL extends Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    listingData: state
+  }
+}
+
+export default withRouter(connect(mapStateToProps, null)(PricesCL))

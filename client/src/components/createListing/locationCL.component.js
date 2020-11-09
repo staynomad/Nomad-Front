@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import "./createListing.css";
 import "./locationListing.css";
-export default class Location extends Component {
+import {connect} from 'react-redux'
+import { withRouter } from "react-router-dom";
+
+class Location extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,6 +17,10 @@ export default class Location extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
   }
+  componentDidMount() {
+    console.log(this.props.listingData.CreateListing)
+}
+  // this.props.listingData.CreateListing.state.location
   handleChange(e) {
     const { name, value } = e.target;
     if (isNaN(value) && name === "zipcode") {
@@ -115,3 +122,10 @@ export default class Location extends Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    listingData: state
+  }
+}
+
+export default withRouter(connect(mapStateToProps, null)(Location))

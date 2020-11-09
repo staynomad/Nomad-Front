@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {connect} from 'react-redux'
+import { withRouter } from "react-router-dom";
 import {updateInfo} from '../../redux/actions/createListingActions'
 import Axios from "axios";
 import DatesCL from "./datesCL.component";
@@ -13,15 +14,26 @@ import "./createListing.css";
 import ConfirmSubmission from "./confirmSubmission.component";
 
 class CreateListing extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       formval: 0,
       maxpages: 8,
-      location: {},
+      location: {
+        street: "",
+        city: "",
+        state: "",
+        country: "",
+        zipcode: "",
+        aptnum: "",
+      },
       description: "",
-      details: {},
-      price: 0,
+      details: {
+        beds: '',
+        baths: '',
+        maxpeople: '',
+      },
+      price: null,
       rules: "",
       dates: {},
     };
@@ -29,6 +41,9 @@ class CreateListing extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onUpload = this.onUpload.bind(this);
+  }
+  componentDidMount() {
+    this.props.updateInfo(this.state)
   }
   handleChange(e, name) {
     this.setState({
@@ -160,13 +175,36 @@ class CreateListing extends Component {
       </div>
     );
   }
-
+  
   togglePage(e) {
     let temp = this.state.formval;
     e.target.value === "Next" ? temp++ : temp--;
     this.setState({
       formval: temp,
     });
+    const updatedData = {
+      
+      location: this.state.location,
+      description: this.state.description,
+      details: this.state.details,
+      price: this.state.price,
+      rules: this.state.rules,
+      dates: this.state.dates,
+    }
+    this.props.updateInfo(updatedData)
+    //console.log(this.props)
   }
 }
-export default connect(null, {updateInfo})(CreateListing)
+const mapStateToProps = state => {
+  //console.log(state)
+  return {
+    listingData: state
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updateInfo: (toUpdate) => dispatch(updateInfo(toUpdate))
+  }
+}
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateListing))

@@ -1,15 +1,11 @@
 import {UPDATE_INFO, FETCH_CURRENT} from './createListingTypes'
-
-const initialState = {
-    createListing: {}
-}
-
-export default function(state=initialState, action) {
+///location: {street: "",city: "",state: "",country: "",zipcode: "",aptnum: ""}
+export default function(state={}, action) {
     switch(action.type) {
         case UPDATE_INFO:
             return {
                 ...state,
-                createListing: action.payload
+                state: action.payload
             }
         case FETCH_CURRENT:
             return {

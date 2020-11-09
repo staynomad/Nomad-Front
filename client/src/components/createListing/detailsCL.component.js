@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import "./createListing.css";
 import "./detailsListing.css";
+import {connect} from 'react-redux'
+import { withRouter } from "react-router-dom";
 
-export default class DetailsCL extends Component {
+class DetailsCL extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,6 +13,18 @@ export default class DetailsCL extends Component {
       maxpeople: "",
     };
     this.handleChange = this.handleChange.bind(this);
+  }
+  
+  componentDidMount() {
+    console.log(this.props.listingData)
+    /*const oldLoc = this.props.listingData.CreateListing.state.location
+    const oldBed = oldLoc.beds
+    console.log('enter')
+    this.setState({
+      beds: oldBed,
+      baths: oldLoc.baths,
+      maxpeople: oldLoc.maxpeople
+    })*/
   }
   handleChange(e) {
     const { name, value } = e.target;
@@ -80,3 +94,10 @@ export default class DetailsCL extends Component {
 /*
 
 */
+const mapStateToProps = state => {
+  return {
+    listingData: state
+  }
+}
+
+export default withRouter(connect(mapStateToProps, null)(DetailsCL))
