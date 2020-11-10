@@ -1,4 +1,4 @@
-import handleReq from "../../utils/fetchRequest.js";
+import handleReq from "../../utils/listingsFetchRequest.js";
 
 /* Types */
 export const SET_SEARCH_LISTINGS = 'VHomes/listings/SET_SEARCH_LISTINGS';
@@ -19,7 +19,8 @@ export const searchListings = (itemToSearch) => async dispatch => {
     };
 };
 
-export const searchAllListings = () => async dispatch => {
+export const searchAllListings = (filterState) => async dispatch => {
+    console.log("in searchAllListings. filterState: ", filterState);
     const searchAllRes = await handleReq("/listings", "GET");
 
     if (searchAllRes.ok) {

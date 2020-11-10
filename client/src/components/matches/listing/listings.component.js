@@ -21,15 +21,18 @@ class Listings extends Component {
     if (this.props.location.search) {
       /* Get listing using search term */
       const itemToSearch = this.props.location.search.slice(1);
-      this.props.searchListings({ itemToSearch });
+      this.props.searchListings(itemToSearch);
     } else {
       /* Get all listings */
-      this.props.searchAllListings();
+      const filterState = this.props.listingFilterState;
+      console.log ('filter state should be: ', filterState);
+      this.props.searchAllListings(filterState);
     };
   }
 
   componentDidMount() {
     this.handleSearch();
+    console.log("in listings component. props: ", this.props)
   };
 
   componentDidUpdate(prevProps) {
@@ -71,7 +74,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    searchAllListings: () => dispatch(searchAllListings()),
+    searchAllListings: (filterState) => dispatch(searchAllListings(filterState)),
     searchListings: (itemToSearch) => dispatch(searchListings(itemToSearch)),
   };
 };
