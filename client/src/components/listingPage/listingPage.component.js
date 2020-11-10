@@ -6,15 +6,16 @@ class ListingPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      listingID: this.props.match.params.id,
+      listingId: this.props.match.params.id,
       listingDetails: {},
-      resDays: 0
+      resDays: null
     }
-    this.handleReserve = this.handleReserve.bind(this)
+    this.handlePayment = this.handlePayment.bind(this)
+    this.changeDays = this.changeDays.bind(this)
   }
 
   componentDidMount() {
-    axios.get('http://localhost:8080/listings/byId/' + this.state.listingID)
+    axios.get('http://localhost:8080/listings/byId/' + this.state.listingId)
     .then((res) => {
       this.setState({
         listingDetails: res.data.listing
@@ -25,23 +26,28 @@ class ListingPage extends Component {
     })
   }
 
-  handleReserve() {
-
+  handlePayment() {
+    const data = {
+      // make sure the names of the keys match what you have set in the api request
+      listingId: this.state.listingId,
+      days: this.state.resDays
+    }
+    axios.post('http://localhost:8080/listings/byId/')
   }
 
   changeDays(e) {
     this.setState({
       resDays: e.target.value
-    }
+    })
   }
 
   render() {
     return (
       <div className="container">
         {this.state.listingDetails.description}
-        <form onSubmit={this.handleReserve}>
+        <form onSubmit={this.handlePayment}>
+          <input type="text" placeholder="days" onChange={this.changeDays} value={this.state.resDays} />
           <input type="submit" value="reserve now" />
-          <input type="text" placeholder="days" onChange={changeDays} value={this.state.resDays} />
         </form>
       </div>
     )
