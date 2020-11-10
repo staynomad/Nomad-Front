@@ -1,3 +1,5 @@
+// https://stripe.com/docs/checkout/integration-builder
+
 import React, { Component } from 'react'
 import axios from 'axios'
 import { loadStripe } from "@stripe/stripe-js"
