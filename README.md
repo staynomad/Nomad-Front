@@ -13,5 +13,5 @@
     npm install
     ```
 
-**To start the server**, run ```nodemon -r dotenv/config ./bin/www.js``` in the server folder.
+**To start the server**, run ```nodemon -r dotenv/config ./bin/www.js``` in the server folder.  
 **To start the client**, run ```npm start``` in the client folder.
