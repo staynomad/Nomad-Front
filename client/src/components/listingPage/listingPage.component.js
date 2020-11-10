@@ -32,7 +32,7 @@ class ListingPage extends Component {
       listingId: this.state.listingId,
       days: this.state.resDays
     }
-    axios.post('http://localhost:8080/payment/byId/', data) // format is
+    axios.post('http://localhost:8080/payment/byId/', data) // format is (url, data)
   }
 
   changeDays(e) {
