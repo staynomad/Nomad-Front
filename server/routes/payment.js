@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
-//const Reservation = require('../models/reservation.model');
 const Listing = require('../models/listing.model');
 const port = process.env.PORT
 const YOUR_DOMAIN = 'http://localhost:' + port;
 
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY
-const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
+const stripeSecretKey = 'sk_test_51HDNtOE7SomQuJWLab4Tsc4pg6lt1iMiPQ5uXvzUXfEarXMSLHtZfaSNdKJTM7juLVU54Uv7iKznpsT2iYIlmjzJ00y947kUde'
+const stripePublicKey = 'pk_test_51HDNtOE7SomQuJWLTiEqzbIriLpsErElVGi9Qwjg7xzSKHsYgnNflvxLdpN4LdFte2O0h2Y2cdDxP0gvXAmXjdsu00TuwlmhAT'
 
 const stripe = require('stripe')(stripeSecretKey);
 
@@ -14,12 +13,8 @@ const stripe = require('stripe')(stripeSecretKey);
 router.post('/create-session', async (req, res) => {
     try{
       const { listingId, days } = req.body
-    // put after url
-    // /:listingId
       const listingDetails = await Listing.findOne({
-        // id of the listing
-        // currently hard coded for this specific listing
-        _id: listingId //req.params.listingId
+        _id: listingId
       })
       .catch((err) => {
         return res.status(404).json({
@@ -28,28 +23,15 @@ router.post('/create-session', async (req, res) => {
 
       })
 
-
-      // const reservation = await Reservation.findOne({
-      //   'listing': "5f6cd7a14720742685b3eedb"
-      // }).catch((err) => {
-      //   return res.status(404).json({
-      //     'error': 'Reservation not Found'
-      //   });
-      // })
-
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
-
-        // change here
         line_items: [
           {
             price_data: {
               currency: 'usd',
               product_data: {
-                // hardcoded in at the moment
                 name: listingDetails.description + '\n' + listingDetails.location.city,
                 images: ['https://i.imgur.com/EHyR2nP.png'],
-
               },
               unit_amount: listingDetails.price * days * 100,
             },
@@ -57,10 +39,6 @@ router.post('/create-session', async (req, res) => {
           },
         ],
 
-
-        // to here
-
-        // redirects
         mode: 'payment',
         success_url: `${YOUR_DOMAIN}/success.html`,
         cancel_url: `${YOUR_DOMAIN}/canceled.html`,
