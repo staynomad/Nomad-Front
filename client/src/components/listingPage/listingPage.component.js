@@ -9,6 +9,7 @@ class ListingPage extends Component {
       listingID: this.props.match.params.id,
       listingDetails: {}
     }
+    this.handleReserve = this.handleReserve.bind(this)
   }
 
   componentDidMount() {
@@ -23,10 +24,17 @@ class ListingPage extends Component {
     })
   }
 
+  handleReserve() {
+    
+  }
+
   render() {
     return (
       <div className="container">
         {this.state.listingDetails.description}
+        <form onSubmit={this.handleReserve}>
+          <input type="submit" value="reserve now /">
+        </form>
       </div>
     )
   }
