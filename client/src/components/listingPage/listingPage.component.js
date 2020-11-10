@@ -7,7 +7,8 @@ class ListingPage extends Component {
     super(props)
     this.state = {
       listingID: this.props.match.params.id,
-      listingDetails: {}
+      listingDetails: {},
+      resDays: 0
     }
     this.handleReserve = this.handleReserve.bind(this)
   }
@@ -25,7 +26,13 @@ class ListingPage extends Component {
   }
 
   handleReserve() {
-    
+
+  }
+
+  changeDays(e) {
+    this.setState({
+      resDays: e.target.value
+    }
   }
 
   render() {
@@ -33,7 +40,8 @@ class ListingPage extends Component {
       <div className="container">
         {this.state.listingDetails.description}
         <form onSubmit={this.handleReserve}>
-          <input type="submit" value="reserve now /">
+          <input type="submit" value="reserve now" />
+          <input type="text" placeholder="days" onChange={changeDays} value={this.state.resDays} />
         </form>
       </div>
     )
