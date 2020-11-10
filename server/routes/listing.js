@@ -78,14 +78,14 @@ router.put("/editListing/:listingId", requireUserAuth, async (req, res) => {
 /* Get all listings */
 router.get("/", async (req, res) => {
   try {
-    const listing = await Listing.find({});
-    if (!listing) {
+    const listings = await Listing.find({});
+    if (!listings) {
       res.status(404).json({
         errors: ["There are currently no listings! Please try again later."],
       });
     } else {
       res.status(201).json({
-        listing,
+        listings,
       });
     }
   } catch (error) {

@@ -24,6 +24,7 @@ export const searchAllListings = () => async dispatch => {
 
     if (searchAllRes.ok) {
         const { listings } = await searchAllRes.json();
+        console.log(listings)
         dispatch(setSearchListings(listings))
     };
 };
