@@ -143,7 +143,6 @@ class ListingPage extends Component {
         </div>
 
         <form onSubmit={this.handlePayment}>
-          // <input type="text" placeholder="days" onChange={this.changeDays} value={this.state.resDays} />
           <input type="submit" value="reserve now" />
         </form>
       </div>
