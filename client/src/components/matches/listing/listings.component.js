@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 import "./listings.css";
-import ListingCard from './listingCard.component'
+import ListingCard from './listingCard.component';
 import { searchAllListings, searchListings } from "../../../redux/actions/searchListingActions";
 
 class Listings extends Component {

@@ -10,11 +10,13 @@ export const removeUserSession = () => ({ type: REMOVE_USER_SESSION })
 
 /* Fetch Calls */
 export const submitLogin = (userLogin) => async dispatch => {
-    const headers = { "Content-Type": "application/json" };
+    const headers = {
+        "Content-Type": "application/json",
+    };
     const loginRes = await handleReq("/login", "POST", headers, userLogin);
 
-    if (loginRes.ok) {
-        const { token, userId } = await loginRes.json();
+    if (loginRes.statusText === 'OK') {
+        const { token, userId } = loginRes.data;
         dispatch(setUserSession(token, userId));
     };
 };

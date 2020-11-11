@@ -8,6 +8,7 @@ import Questionnaire from "../matches/questionnaire.component"
 import Profile from "./profile.component"
 import Settings from "./settings.component"
 import { searchUserListings } from '../../redux/actions/searchListingActions';
+import ListingCard from '../matches/listing/listingCard.component';
 
 class LeftMenu extends Component {
   constructor(props) {
@@ -21,9 +22,11 @@ class LeftMenu extends Component {
 
   handleItemClick(e, { name, compname }) {
     this.setState({ activeItem: name, render: compname })
+    console.log(this.state)
   }
 
   _renderSubComp() {
+    console.log(this.state)
     switch (this.state.render) {
       case 'profile':
         if (this.props.userSession) {
@@ -35,7 +38,17 @@ class LeftMenu extends Component {
           )
         } else return null;
       case 'my listings':
-        return;
+        return (
+          <>
+            {this.props.userListings ? (
+              <div id='listing-content'>
+                {this.props.userListings.map((listing) => (
+                  <ListingCard key={listing} listing={listing} />
+                ))}
+              </div>
+            ) : null}
+          </>
+        );
       case 'settings':
         return <Settings />;
       default:
@@ -62,10 +75,7 @@ class LeftMenu extends Component {
                 name='my listings'
                 active={activeItem === 'my listings'}
                 compname='my listings'
-                onClick={(e, { name, compname }) => {
-                  this.handleItemClick(e, { name, compname });
-                  this.props.searchUserListings(this.props.userSession.token);
-                }}
+                onClick={this.handleItemClick}
               />
               <Menu.Item
                 name="renter dashboard"
@@ -94,6 +104,7 @@ class LeftMenu extends Component {
 
 const mapStateToProps = state => {
   if (state.Login.userInfo) return {
+    userListings: state.Listing.userListings,
     userSession: state.Login.userInfo.session,
   }
   return {
