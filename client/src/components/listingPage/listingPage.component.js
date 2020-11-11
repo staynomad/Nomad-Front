@@ -102,6 +102,9 @@ class ListingPage extends Component {
   render() {
     const { from, to } = this.state
     const modifiers = { start: from, end: to }
+    let startDate = new Date(this.state.listingStartDate)
+    let endDate = new Date(this.state.listingEndDate)
+    endDate.setDate(endDate.getDate() + 1) // react-day-picker includes "after" date in disabled days
     return (
       <div className="container">
         {this.state.listingDescription} <br />
@@ -132,8 +135,8 @@ class ListingPage extends Component {
             onDayClick={this.handleDayClick}
             disabledDays={[
               {
-                after: new Date(2020, 10, 30), // Update these with listing availability
-                before: new Date(2020, 10, 21)
+                after: endDate,
+                before: startDate
               },
             ]}
           />
