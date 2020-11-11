@@ -15,7 +15,7 @@ const ReservationSchema = new Schema({
         required: true,
     },
     days: {
-        type: Number,
+        type: Array,
         required: true,
     }
 });
