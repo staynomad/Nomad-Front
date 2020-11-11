@@ -71,35 +71,19 @@ const Filter = ({ toggle, roommateView, listingView, listingFilterState, setList
         <input
           className="filter-choices"
           type="checkbox"
-          onClick={() => setListingFilterState({...listingFilterState, maxGuestsClicked: !listingFilterState.maxGuestsClicked})}
+          onClick={() => setListingFilterState({...listingFilterState, minGuestsClicked: !listingFilterState.minGuestsClicked})}
         />
-        Maximum Guests
+        Minimum Guests
       </label>
       <br />
       <NumericInput
         min={1}
         max={10}
-        value={listingFilterState.maxGuests}
+        value={listingFilterState.minGuests}
         step={1} 
-        onChange={valueAsNumber => setListingFilterState({...listingFilterState, maxGuests: valueAsNumber})}
+        onChange={valueAsNumber => setListingFilterState({...listingFilterState, minGuests: valueAsNumber})}
       />
-      <label>
-        <input 
-          className="filter-choices"
-          type="checkbox" 
-          onClick={() => setListingFilterState({...listingFilterState, minStayClicked: !listingFilterState.minStayClicked})}
-        />
-        Minimum stay
-      </label>
       <br />
-      <NumericInput
-        min={1}
-        max={31}
-        value={listingFilterState.minStay}
-        step={1}
-        onChange={valueAsNumber =>
-          setListingFilterState ({...listingFilterState, minStay: valueAsNumber})}
-      />
     </div>
   )
 

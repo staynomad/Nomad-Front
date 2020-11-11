@@ -15,10 +15,8 @@ const Matches = (props) => {
     minRatingClicked: false,
     startingPrice: 0,
     startingPriceClicked: false,
-    maxGuests: 1,
-    maxGuestsClicked: false,
-    minStay: 1,
-    minStayClicked: false
+    minGuests: 1,
+    minGuestsClicked: false
   });
   // pass filter setters to filter component to update filter state
   // pass filter state to roommate and listing components to allow filtering through roommates/listing components

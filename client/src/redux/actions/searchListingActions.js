@@ -1,4 +1,4 @@
-import handleReq from "../../utils/listingsFetchRequest.js";
+import handleReq from "../../utils/fetchRequest.js"; // you can probably just use regular fetch request
 
 /* Types */
 export const SET_SEARCH_LISTINGS = 'VHomes/listings/SET_SEARCH_LISTINGS';
@@ -19,8 +19,7 @@ export const searchListings = (itemToSearch) => async dispatch => {
     };
 };
 
-export const searchAllListings = (filterState) => async dispatch => {
-    console.log("in searchAllListings. filterState: ", filterState);
+export const searchAllListings = () => async dispatch => {
     const searchAllRes = await handleReq("/listings", "GET");
 
     if (searchAllRes.ok) {
@@ -29,6 +28,17 @@ export const searchAllListings = (filterState) => async dispatch => {
         dispatch(setSearchListings(listings))
     };
 };
+
+export const searchFilteredListings = (filterState) => async dispatch => {
+    const headers = {'Content-Type': 'application/json'};
+    const searchAllRes = await handleReq("/listings/filteredListings", "POST", headers, filterState);
+
+    if (searchAllRes.ok) {
+        const { listings } = await searchAllRes.json();
+        console.log(listings)
+        dispatch(setSearchListings(listings))
+    };
+}
 
 export const searchUserListings = (token) => async dispatch => {
     const headers = { "Authorization": `Bearer ${token}` }

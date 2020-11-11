@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import "./listings.css";
 import ListingCard from './listingCard.component'
-import { searchAllListings, searchListings } from "../../../redux/actions/searchListingActions";
+import { searchAllListings, searchListings, searchFilteredListings } from "../../../redux/actions/searchListingActions";
 
 class Listings extends Component {
   constructor(props) {
@@ -18,25 +18,28 @@ class Listings extends Component {
   };
 
   handleSearch() {
+    const filter = this.props.listingFilterState;
+    var filterClicked = filter.minGuestsClicked || filter.minRatingClicked || filter.startingPriceClicked;
+
     if (this.props.location.search) {
       /* Get listing using search term */
       const itemToSearch = this.props.location.search.slice(1);
       this.props.searchListings(itemToSearch);
+    } else if (filterClicked) {
+      /* Get listing using listing filter */
+      this.props.searchFilteredListings(filter);
     } else {
       /* Get all listings */
-      const filterState = this.props.listingFilterState;
-      console.log ('filter state should be: ', filterState);
-      this.props.searchAllListings(filterState);
+      this.props.searchAllListings();
     };
   }
 
   componentDidMount() {
     this.handleSearch();
-    console.log("in listings component. props: ", this.props)
   };
 
   componentDidUpdate(prevProps) {
-    if (this.props.location !== prevProps.location) {
+    if (this.props.location !== prevProps.location || this.props.listingFilterState !== prevProps.listingFilterState) {
       this.handleSearch();
     };
   };
@@ -74,8 +77,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    searchAllListings: (filterState) => dispatch(searchAllListings(filterState)),
+    searchAllListings: () => dispatch(searchAllListings()),
     searchListings: (itemToSearch) => dispatch(searchListings(itemToSearch)),
+    searchFilteredListings: (filter) => dispatch(searchFilteredListings(filter))
   };
 };
 
