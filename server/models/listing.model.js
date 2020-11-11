@@ -41,11 +41,15 @@ const ListingSchema = new Schema({
     type: ObjectId,
     ref: User,
     required: true,
+  },
+  available: {
+    type: Array,
+    required: true,
+  },
+  booked: {
+    type: Array,
+    defualt: null,
   }
-  // dates: {
-  //   type: Mixed,
-  //   required: true,
-  // },
 });
 
 const Listing = mongoose.model("listing", ListingSchema);

@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const Reservation = require("../models/reservation.model");
+const Listing = require("../models/listing.model")
 const { requireUserAuth } = require("../utils");
 
 
@@ -10,6 +11,18 @@ router.post(
     async (req, res) => {
         try {
             const {email, listing, days} = req.body;
+            const listingInfo = await Listing.findOne({
+                _id: listing
+            })
+            const availableStart = new Date(listingInfo.available[0])
+            const availableEnd = new Date(listingInfo.available[1])
+            const reservationStart = new Date(days[0])
+            const reservationEnd = new Date(days[1])
+            if (reservationStart.getTime() < availableStart.getTime() || reservationEnd.getTime() > availableEnd.getTime()) {
+                return res.status(400).json({
+                    "errors": "Selected days are invalid. Please try again."
+                })
+            }
             const newReservation = await new Reservation({
                 email,
                 listing,
