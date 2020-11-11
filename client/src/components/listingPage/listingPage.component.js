@@ -31,7 +31,6 @@ class ListingPage extends Component {
         listingStartDate: res.data.listing.available[0],
         listingEndDate: res.data.listing.available[1]
       })
-      console.log(res.data.listing)
     })
     .catch((err) => {
       console.log(err.response)
@@ -39,53 +38,19 @@ class ListingPage extends Component {
   }
 
   handlePayment() {
-
-  }
-
-  /*handlePayment() {
-    const data = {
-      listingId: this.state.listingId,
-      days: parseInt(this.state.resDays)
-    }
-    axios.post('http://localhost:8080/payment/create-session', data)
-    .then((res) => {
-      console.log(res)
-    })
-    .then((session) => {
-      return stripePromise.redirectToCheckout({ sessionId: session.id })
-    })
-    .catch((err) => {
-      console.log(err.response)
-    })
-  }*/
-
-  /* async handlePayment() {
-    const stripe = await stripePromise;
-    const data = {
-      listingId: this.state.listingId,
-      days: parseInt(this.state.resDays) // fix this (pass dates in as array with start and end date of reservation)
-    }
-    const response = await fetch("payment/create-session", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    });
-    const session = await response.json();
-    const result = await stripe.redirectToCheckout({
-      sessionId: session.id,
-    });
-    if (result.error) {
-      alert("Could not reach store. Please try again.")
-    }
-  }; */
-
-  /*changeDays(e) {
     this.setState({
-      resDays: e.target.value
+      reserved: true
     })
-  }*/
+    const data = {
+      email: "user2@gmail.com",
+      listing: this.props.match.params.id,
+      days: [this.state.from, this.state.to]
+    }
+    axios.post('http://localhost:8080/reservation/createReservation', data)
+    .then((res) => {
+      console.log(res.data)
+    })
+  }
 
   getInitialState() {
     return {
@@ -146,12 +111,56 @@ class ListingPage extends Component {
           />
         </div>
 
-        <form onSubmit={this.handlePayment}>
-          <input type="submit" value="reserve now" />
-        </form>
+      <input type="button" value="reserve now" onClick={this.handlePayment} /> <br />
+      { this.state.reserved ? <h2> reserved! </h2> : ""}
       </div>
     )
   }
 }
 
 export default ListingPage
+
+/*handlePayment() {
+  const data = {
+    listingId: this.state.listingId,
+    days: parseInt(this.state.resDays)
+  }
+  axios.post('http://localhost:8080/payment/create-session', data)
+  .then((res) => {
+    console.log(res)
+  })
+  .then((session) => {
+    return stripePromise.redirectToCheckout({ sessionId: session.id })
+  })
+  .catch((err) => {
+    console.log(err.response)
+  })
+}*/
+
+/* async handlePayment() {
+  const stripe = await stripePromise;
+  const data = {
+    listingId: this.state.listingId,
+    days: parseInt(this.state.resDays) // fix this (pass dates in as array with start and end date of reservation)
+  }
+  const response = await fetch("payment/create-session", {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  });
+  const session = await response.json();
+  const result = await stripe.redirectToCheckout({
+    sessionId: session.id,
+  });
+  if (result.error) {
+    alert("Could not reach store. Please try again.")
+  }
+}; */
+
+/*changeDays(e) {
+  this.setState({
+    resDays: e.target.value
+  })
+}*/
