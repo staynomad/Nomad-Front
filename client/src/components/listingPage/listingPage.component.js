@@ -38,9 +38,6 @@ class ListingPage extends Component {
   }
 
   handlePayment() {
-    this.setState({
-      reserved: true
-    })
     const data = {
       email: "user2@gmail.com",
       listing: this.props.match.params.id,
@@ -48,7 +45,12 @@ class ListingPage extends Component {
     }
     axios.post('http://localhost:8080/reservation/createReservation', data)
     .then((res) => {
-      console.log(res.data)
+      this.setState({
+        reserved: true
+      })
+    })
+    .catch((err) => {
+      alert(err.response.data.errors)
     })
   }
 
