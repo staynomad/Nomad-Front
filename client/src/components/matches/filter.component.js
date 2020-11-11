@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import Roommates from "./roommate/roommates.component";
 import Listings from "./listing/listings.component"
+import NumericInput from 'react-numeric-input';
 import "./filter.css";
 
 // export default class Filter extends Component {
-const Filter = ({ toggle, roommateView, listingView }) => {
+const Filter = ({ toggle, roommateView, listingView, listingFilterState, setListingFilterState }) => {
+
   const roommateFilters = (
     <div>
       <label>
@@ -37,29 +39,51 @@ const Filter = ({ toggle, roommateView, listingView }) => {
         <input
           className="filter-choices"
           type="checkbox"
+          onClick={() => setListingFilterState({...listingFilterState, minRatingClicked: !listingFilterState.minRatingClicked})}
         />
-        Listing Checkbox 1
+        Minimum Rating
       </label>
+      <br />
+      <NumericInput
+        min={0}
+        max={5}
+        value={listingFilterState.minRating}
+        step={0.1}
+        onChange={valueAsNumber => setListingFilterState({...listingFilterState, minRating: valueAsNumber})}
+      />
       <label>
         <input
           className="filter-choices"
           type="checkbox"
+          onClick={() => setListingFilterState({...listingFilterState, startingPriceClicked: !listingFilterState.startingPriceClicked})}
         />
-        Listing Checkbox 2
+        Starting Price
       </label>
+      <br />
+      <NumericInput
+        min={0}
+        max={100}
+        value={listingFilterState.startingPrice}
+        step={5}
+        onChange={valueAsNumber => setListingFilterState({...listingFilterState, startingPrice: valueAsNumber})}
+      />
       <label>
         <input
           className="filter-choices"
           type="checkbox"
+          onClick={() => setListingFilterState({...listingFilterState, minGuestsClicked: !listingFilterState.minGuestsClicked})}
         />
-        Listing Checkbox 3
+        Minimum Guests
       </label>
-      <select defaultValue={"nights"}>
-            <option value='nights'>nights</option>
-            <option>1-3</option>
-            <option>3-7</option>
-            <option>7+</option>
-          </select>
+      <br />
+      <NumericInput
+        min={1}
+        max={10}
+        value={listingFilterState.minGuests}
+        step={1} 
+        onChange={valueAsNumber => setListingFilterState({...listingFilterState, minGuests: valueAsNumber})}
+      />
+      <br />
     </div>
   )
 

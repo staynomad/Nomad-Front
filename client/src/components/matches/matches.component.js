@@ -10,7 +10,14 @@ const Matches = (props) => {
   const [roommateView, setRoommateView] = useState(false);
   const [listingView, setListingView] = useState(false);
   const [roommateFilters, setRoommateFilters] = useState({});
-  const [listingFilters, setListingFilter] = useState({});
+  const [listingFilterState, setListingFilterState] = useState({
+    minRating: 0,
+    minRatingClicked: false,
+    startingPrice: 0,
+    startingPriceClicked: false,
+    minGuests: 1,
+    minGuestsClicked: false
+  });
   // pass filter setters to filter component to update filter state
   // pass filter state to roommate and listing components to allow filtering through roommates/listing components
 
@@ -47,11 +54,18 @@ const Matches = (props) => {
       </div>
       <div id="matches-components-filtering">
         <div id="filtering-inputs">
-          {!seen || (!roommateView && !listingView) ? null : <Filter toggle={toggle} roommateView={roommateView} listingView={listingView}/>}
+          {!seen || (!roommateView && !listingView) ? null : 
+          <Filter
+            toggle={toggle}
+            roommateView={roommateView}
+            listingView={listingView}
+            listingFilterState={listingFilterState}
+            setListingFilterState={setListingFilterState}
+          />}
         </div>
         <div id="roommate-listing-content-container">
           {roommateView ? <Roommates /> : null}
-          {listingView ? <Listings /> : null}
+          {listingView ? <Listings listingFilterState={listingFilterState}/> : null}
         </div>
       </div>
     </div>
