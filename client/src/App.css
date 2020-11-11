@@ -61,3 +61,7 @@ a, a:hover {
     transform: rotate(360deg);
   }
 }
+
+* {
+  font-family: "Playfair Display", serif;
+}

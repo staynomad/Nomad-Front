@@ -1,13 +1,29 @@
 import React, { Component } from 'react'
-import { Grid, Menu, Segment } from 'semantic-ui-react'
-import { withRouter } from "react-router-dom";
+import Button from '@material-ui/core/Button';
 import { connect } from "react-redux";
+import { Grid, Menu, Segment } from 'semantic-ui-react'
+import { NavLink, withRouter } from "react-router-dom";
+import { withStyles } from '@material-ui/core/styles';
 
-import 'semantic-ui-css/semantic.min.css'
-import Questionnaire from "../matches/questionnaire.component"
+import ListingCard from '../matches/listing/listingCard.component';
 import Profile from "./profile.component"
+import Questionnaire from "../matches/questionnaire.component"
 import Settings from "./settings.component"
 import { searchUserListings } from '../../redux/actions/searchListingActions';
+import 'semantic-ui-css/semantic.min.css'
+import './menu.css';
+
+const CustomButton = withStyles((theme) => ({
+  root: {
+    color: "#00B183",
+    backgroundColor: "transparent",
+    border: "2px solid #00B183",
+    borderRadius: "8px",
+    font: "inherit",
+    fontSize: "16px",
+    fontWeight: "normal",
+  },
+}))(Button);
 
 class LeftMenu extends Component {
   constructor(props) {
@@ -21,9 +37,11 @@ class LeftMenu extends Component {
 
   handleItemClick(e, { name, compname }) {
     this.setState({ activeItem: name, render: compname })
+    console.log(this.state)
   }
 
   _renderSubComp() {
+    console.log(this.state)
     switch (this.state.render) {
       case 'profile':
         if (this.props.userSession) {
@@ -35,7 +53,28 @@ class LeftMenu extends Component {
           )
         } else return null;
       case 'my listings':
-        return;
+        return (
+          <>
+            <div className='create-listing-container'>
+              <CustomButton>
+                <NavLink to='/CreateListing'>Create Listing</NavLink>
+              </CustomButton>
+            </div>
+            <div id='listing-content'>
+              {this.props.userListings && this.props.userListings.length > 0 ? (
+                <>
+                  {this.props.userListings.map((listing) => (
+                    <ListingCard key={listing} listing={listing} />
+                  ))}
+                </>
+              ) :
+                <>
+                  <div>No Listings!</div>
+                </>
+              }
+            </div>
+          </>
+        );
       case 'settings':
         return <Settings />;
       default:
@@ -94,6 +133,7 @@ class LeftMenu extends Component {
 
 const mapStateToProps = state => {
   if (state.Login.userInfo) return {
+    userListings: state.Listing.userListings,
     userSession: state.Login.userInfo.session,
   }
   return {

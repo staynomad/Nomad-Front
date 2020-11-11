@@ -13,8 +13,8 @@ export const searchListings = (itemToSearch) => async dispatch => {
     const headers = { "Content-Type": "application/json" };
     const searchRes = await handleReq("/listings/search", "POST", headers, itemToSearch);
 
-    if (searchRes.ok) {
-        const { filteredListings } = await searchRes.json();
+    if (searchRes.statusText === 'OK') {
+        const { filteredListings } = await searchRes.data;
         dispatch(setSearchListings(filteredListings));
     };
 };
@@ -22,9 +22,8 @@ export const searchListings = (itemToSearch) => async dispatch => {
 export const searchAllListings = () => async dispatch => {
     const searchAllRes = await handleReq("/listings", "GET");
 
-    if (searchAllRes.ok) {
-        const { listings } = await searchAllRes.json();
-        console.log(listings)
+    if (searchAllRes.statusText === 'OK') {
+        const { listings } = await searchAllRes.data;
         dispatch(setSearchListings(listings))
     };
 };
@@ -33,8 +32,8 @@ export const searchUserListings = (token) => async dispatch => {
     const headers = { "Authorization": `Bearer ${token}` }
     const searchUserRes = await handleReq("/listings/byUserId", "GET", headers)
 
-    if (searchUserRes.ok) {
-        const { userListings } = await searchUserRes.json();
+    if (searchUserRes.statusText === 'OK') {
+        const { userListings } = await searchUserRes.data;
         dispatch(setUserListings(userListings));
     };
 };

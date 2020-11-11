@@ -1,8 +1,7 @@
 import React from "react";
 import { NavLink, withRouter } from "react-router-dom";
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
-import { removeUserSession } from '../../redux/actions/authActions';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import AppBar from '@material-ui/core/AppBar';
@@ -18,10 +17,15 @@ import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import SearchIcon from '@material-ui/icons/Search';
 
+import { removeUserSession } from '../../redux/actions/authActions';
+
 /* Material-UI appbar styling */
 const useStyles = makeStyles((theme) => ({
   root: {
+    background: "rgba(0, 177, 131, 0.1)",
     boxShadow: "none",
+    mixBlendMode: "normal",
+    opacity: "0.9",
   },
   iconButton: {
     color: "white",
@@ -75,10 +79,10 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       color: "#2E2E2E",
     },
-    color: "white",
+    color: "#270C25",
     font: "inherit",
-    fontSize: "large",
-    fontWeight: "bolder",
+    fontSize: "20px",
+    fontWeight: "normal",
     transition: "all 0.25s ease-in-out",
   },
   search: {
@@ -88,6 +92,7 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       backgroundColor: "rgba(255, 255, 255, 1.0)",
     },
+    color: "black",
     display: "flex",
     marginRight: theme.spacing(2),
     marginLeft: 0,
@@ -98,11 +103,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   searchButton: {
-    backgroundColor: "#02B188",
-    border: "none",
+    backgroundColor: "transparent",
+    border: "2px solid #00B183",
     borderTopRightRadius: theme.shape.borderRadius,
     borderBottomRightRadius: theme.shape.borderRadius,
-    color: "white",
+    color: "#00B183",
     cursor: "pointer"
   },
   searchIcon: {
@@ -122,14 +127,13 @@ const useStyles = makeStyles((theme) => ({
 /* Material-UI button styling */
 const CustomButton = withStyles((theme) => ({
   root: {
-    color: "white",
-    backgroundColor: "#02b188",
-    '&:hover': {
-      backgroundColor: "#008868",
-    },
+    color: "#00B183",
+    backgroundColor: "transparent",
+    border: "2px solid #00B183",
+    borderRadius: "8px",
     font: "inherit",
     fontSize: "16px",
-    fontWeight: "bolder",
+    fontWeight: "normal",
     marginLeft: "5%",
     padding: "12px",
   },
@@ -199,12 +203,12 @@ const Navbar = (props) => {
 
   return (
     <>
-      <AppBar className={classes.root} color="transparent" position="fixed">
+      <AppBar className={classes.root} position="fixed">
         <div className={classes.navbarGrid}>
           <NavLink to='/' className={classes.mainLogo}>
             <img alt='Home' className={classes.mainLogo} src={Logo} />
           </NavLink>
-          <form style={{ margin: "auto" }} onSubmit={handleSearch}>
+          <form style={{ margin: "auto" }}>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
@@ -223,7 +227,7 @@ const Navbar = (props) => {
             </div>
           </form>
           <div className={classes.navbarRight}>
-            <NavLink to='/Matches' className={classes.navLink}>explore</NavLink>
+            <NavLink to='/Matches' className={classes.navLink}>Explore</NavLink>
             {props.userSession ? (
               <>
                 <IconButton
