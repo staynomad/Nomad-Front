@@ -39,7 +39,7 @@ class ListingPage extends Component {
 
   handlePayment() {
     const data = {
-      email: "user2@gmail.com",
+      email: "user2@gmail.com", // get user email from redux store
       listing: this.props.match.params.id,
       days: [this.state.from, this.state.to]
     }

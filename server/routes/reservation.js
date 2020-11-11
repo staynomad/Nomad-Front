@@ -29,6 +29,11 @@ router.post(
                 active: true,
                 days,
             }).save();
+            const bookedDays = {
+              start: days[0],
+              end: days[1]
+            }
+            const bookedListing = await Listing.findOneAndUpdate({ _id: listing }, { $push: { booked: bookedDays } })
             res.status(201).json({
               "message": "Reservation created successfully"
             });
