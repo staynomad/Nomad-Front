@@ -3,6 +3,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { loadStripe } from "@stripe/stripe-js"
+import DayPicker, { DateUtils } from 'react-day-picker'
+import 'react-day-picker/lib/style.css'
 import './listingPage.css'
 
 const stripePromise = loadStripe('pk_test_51HDNtOE7SomQuJWLTiEqzbIriLpsErElVGi9Qwjg7xzSKHsYgnNflvxLdpN4LdFte2O0h2Y2cdDxP0gvXAmXjdsu00TuwlmhAT')
@@ -10,16 +12,14 @@ const stripePromise = loadStripe('pk_test_51HDNtOE7SomQuJWLTiEqzbIriLpsErElVGi9Q
 class ListingPage extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      listingId: this.props.match.params.id,
-      resDays: ''
-    }
     this.handlePayment = this.handlePayment.bind(this)
-    this.changeDays = this.changeDays.bind(this)
+    this.handleDayClick = this.handleDayClick.bind(this);
+    this.handleResetClick = this.handleResetClick.bind(this);
+    this.state = this.getInitialState();
   }
 
-  componentDidMount() {
-    axios.get('http://localhost:8080/listings/byId/' + this.state.listingId)
+  async componentDidMount() {
+    await axios.get('http://localhost:8080/listings/byId/' + this.props.match.params.id)
     .then((res) => {
       this.setState({
         listingDescription: res.data.listing.description,
@@ -27,7 +27,9 @@ class ListingPage extends Component {
         listingImages: ['image1', 'image2', 'image3'],
         listingBaths: parseInt(res.data.listing.details.baths),
         listingBeds: parseInt(res.data.listing.details.beds),
-        listingMaxPeople: parseInt(res.data.listing.details.maxpeople)
+        listingMaxPeople: parseInt(res.data.listing.details.maxpeople),
+        listingStartDate: res.data.listing.available[0],
+        listingEndDate: res.data.listing.available[1]
       })
       console.log(res.data.listing)
     })
@@ -57,7 +59,7 @@ class ListingPage extends Component {
     const stripe = await stripePromise;
     const data = {
       listingId: this.state.listingId,
-      days: parseInt(this.state.resDays)
+      days: parseInt(this.state.resDays) // fix this (pass dates in as array with start and end date of reservation)
     }
     const response = await fetch("payment/create-session", {
       method: "POST",
@@ -75,13 +77,31 @@ class ListingPage extends Component {
     }
   };
 
-  changeDays(e) {
+  /*changeDays(e) {
     this.setState({
       resDays: e.target.value
     })
+  }*/
+
+  getInitialState() {
+    return {
+      from: undefined,
+      to: undefined,
+    }
+  }
+
+  handleDayClick(day) {
+    const range = DateUtils.addDayToRange(day, this.state)
+    this.setState(range)
+  }
+
+  handleResetClick() {
+    this.setState(this.getInitialState())
   }
 
   render() {
+    const { from, to } = this.state
+    const modifiers = { start: from, end: to }
     return (
       <div className="container">
         {this.state.listingDescription} <br />
@@ -90,8 +110,37 @@ class ListingPage extends Component {
         {this.state.listingBeds} beds <br />
         {this.state.listingBaths} baths <br />
         {this.state.listingMaxPeople} people max <br />
+
+        <div>
+          <p>
+            {!from && !to && 'Please select the first day.'}
+            {from && !to && 'Please select the last day.'}
+            {from &&
+              to &&
+              `Selected from ${from.toLocaleDateString()} to
+                  ${to.toLocaleDateString()}`}{' '}
+            {from && to && (
+              <button className="link" onClick={this.handleResetClick}>
+                Reset
+              </button>
+            )}
+          </p>
+          <DayPicker
+            className="Selectable"
+            selectedDays={[from, { from, to }]}
+            modifiers={modifiers}
+            onDayClick={this.handleDayClick}
+            disabledDays={[
+              {
+                after: new Date(2020, 10, 30), // Update these with listing availability
+                before: new Date(2020, 10, 21)
+              },
+            ]}
+          />
+        </div>
+
         <form onSubmit={this.handlePayment}>
-          <input type="text" placeholder="days" onChange={this.changeDays} value={this.state.resDays} />
+          // <input type="text" placeholder="days" onChange={this.changeDays} value={this.state.resDays} />
           <input type="submit" value="reserve now" />
         </form>
       </div>
