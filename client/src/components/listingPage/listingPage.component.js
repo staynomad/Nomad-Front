@@ -38,6 +38,10 @@ class ListingPage extends Component {
     })
   }
 
+  handlePayment() {
+
+  }
+
   /*handlePayment() {
     const data = {
       listingId: this.state.listingId,
@@ -55,7 +59,7 @@ class ListingPage extends Component {
     })
   }*/
 
-  async handlePayment() {
+  /* async handlePayment() {
     const stripe = await stripePromise;
     const data = {
       listingId: this.state.listingId,
@@ -75,7 +79,7 @@ class ListingPage extends Component {
     if (result.error) {
       alert("Could not reach store. Please try again.")
     }
-  };
+  }; */
 
   /*changeDays(e) {
     this.setState({
@@ -137,7 +141,7 @@ class ListingPage extends Component {
               {
                 after: endDate,
                 before: startDate
-              },
+              }
             ]}
           />
         </div>
