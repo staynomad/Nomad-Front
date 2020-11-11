@@ -1,5 +1,7 @@
 import React from "react";
 import { NavLink, withRouter } from "react-router-dom";
+import { connect } from 'react-redux';
+
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import AppBar from '@material-ui/core/AppBar';
@@ -14,6 +16,8 @@ import MenuList from '@material-ui/core/MenuList';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import SearchIcon from '@material-ui/icons/Search';
+
+import { removeUserSession } from '../../redux/actions/authActions';
 
 /* Material-UI appbar styling */
 const useStyles = makeStyles((theme) => ({

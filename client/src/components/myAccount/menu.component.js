@@ -75,7 +75,10 @@ class LeftMenu extends Component {
                 name='my listings'
                 active={activeItem === 'my listings'}
                 compname='my listings'
-                onClick={this.handleItemClick}
+                onClick={(e, { name, compname }) => {
+                  this.handleItemClick(e, { name, compname });
+                  this.props.searchUserListings(this.props.userSession.token);
+                }}
               />
               <Menu.Item
                 name="renter dashboard"
