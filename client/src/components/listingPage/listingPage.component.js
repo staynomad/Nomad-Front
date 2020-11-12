@@ -81,7 +81,7 @@ class ListingPage extends Component {
     const modifiers = { start: from, end: to }
     let startDate = new Date(this.state.listingStartDate)
     let endDate = new Date(this.state.listingEndDate)
-    endDate.setDate(endDate.getDate())
+    endDate.setDate(endDate.getDate() + 1)
     return (
       <div className="container">
         {this.state.listingDescription} <br />
