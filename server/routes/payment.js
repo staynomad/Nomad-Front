@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const Listing = require('../models/listing.model');
+
 const port = process.env.PORT
 const YOUR_DOMAIN = 'http://localhost:' + port;
 
-const stripeSecretKey = 'sk_test_51HDNtOE7SomQuJWLab4Tsc4pg6lt1iMiPQ5uXvzUXfEarXMSLHtZfaSNdKJTM7juLVU54Uv7iKznpsT2iYIlmjzJ00y947kUde'
-const stripePublicKey = 'pk_test_51HDNtOE7SomQuJWLTiEqzbIriLpsErElVGi9Qwjg7xzSKHsYgnNflvxLdpN4LdFte2O0h2Y2cdDxP0gvXAmXjdsu00TuwlmhAT'
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY
+const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
 
 const stripe = require('stripe')(stripeSecretKey);
 
@@ -13,8 +14,9 @@ const stripe = require('stripe')(stripeSecretKey);
 router.post('/create-session', async (req, res) => {
     try{
       const { listingId, days } = req.body
+
       const listingDetails = await Listing.findOne({
-        _id: listingId
+        '_id': listingId
       })
       .catch((err) => {
         return res.status(404).json({
@@ -31,7 +33,7 @@ router.post('/create-session', async (req, res) => {
               currency: 'usd',
               product_data: {
                 name: listingDetails.description + '\n' + listingDetails.location.city,
-                images: ['https://i.imgur.com/EHyR2nP.png'],
+                images: [listingDetails.pictures[0]],
               },
               unit_amount: listingDetails.price * days * 100,
             },
