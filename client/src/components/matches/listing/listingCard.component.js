@@ -1,14 +1,35 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-
+import Button from '@material-ui/core/Button';
+import { NavLink, withRouter } from 'react-router-dom';
+import { connect } from "react-redux";
+import { withStyles } from '@material-ui/core/styles';
 import { Modal, DialogContent } from '@material-ui/core/';
-import ListingsModal from './listingsmodal.component';
 
-const ListingCard = ({ listing }) => {
+import ListingsModal from './listingsmodal.component';
+import { deleteListingById } from '../../../redux/actions/searchListingActions';
+
+const DeleteButton = withStyles((theme) => ({
+  root: {
+    color: "#00B183",
+    backgroundColor: "transparent",
+    border: "2px solid #00B183",
+    borderRadius: "8px",
+    font: "inherit",
+    fontSize: "16px",
+    fontWeight: "normal",
+  },
+}))(Button);
+
+const ListingCard = (props) => {
   const [open, setOpen] = useState(false);
+  const { listing } = props;
 
   const handleOpenClose = () => {
     setOpen(!open);
+  };
+
+  const handleDeleteListing = () => {
+    props.deleteListingById(props.userSession.token, listing._id)
   };
 
   return (
@@ -30,8 +51,29 @@ const ListingCard = ({ listing }) => {
           </div>
         </div>
       </NavLink>
+      {props.userSession && props.userSession.userId === listing.userId ? (
+        <DeleteButton onClick={handleDeleteListing}>Delete</DeleteButton>
+      ) : null}
     </div>
   )
 };
 
-export default ListingCard;
+const mapStateToProps = state => {
+  const stateToReturn = {};
+  if (state.Login.userInfo) stateToReturn['userSession'] = state.Login.userInfo.session;
+  if (state.Listing.userListings) stateToReturn['userListings'] = state.Listing.userListings;
+  return stateToReturn;
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    deleteListingById: (token, listingId) => dispatch(deleteListingById(token, listingId)),
+  };
+};
+
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(
+  ListingCard
+));

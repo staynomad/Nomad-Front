@@ -3,15 +3,17 @@ import handleReq from "../../utils/fetchRequest.js"; // you can probably just us
 /* Types */
 export const SET_SEARCH_LISTINGS = 'VHomes/listings/SET_SEARCH_LISTINGS';
 export const SET_USER_LISTINGS = 'VHomes/listings/SET_USER_LISTINGS';
+export const DELETE_LISTING = 'VHomes/listings/DELETE_LISTING';
 
 /* Actions */
 const setSearchListings = listings => ({ type: SET_SEARCH_LISTINGS, listings });
 const setUserListings = listings => ({ type: SET_USER_LISTINGS, listings });
+const deleteListing = listingId => ({ type: DELETE_LISTING, listingId })
 
 /* Fetch Calls */
-export const searchListings = (itemToSearch) => async dispatch => {
+export const searchForListings = (itemToSearch) => async dispatch => {
     const headers = { "Content-Type": "application/json" };
-    const searchRes = await handleReq("/listings/search", "POST", headers, itemToSearch);
+    const searchRes = await handleReq("/listings/search", "POST", headers, { itemToSearch });
 
     if (searchRes.statusText === 'OK') {
         const { filteredListings } = await searchRes.data;
@@ -29,22 +31,31 @@ export const searchAllListings = () => async dispatch => {
 };
 
 export const searchFilteredListings = (filterState) => async dispatch => {
-    const headers = {'Content-Type': 'application/json'};
+    const headers = { 'Content-Type': 'application/json' };
     const searchAllRes = await handleReq("/listings/filteredListings", "POST", headers, filterState);
 
     if (searchAllRes.ok) {
         const { listings } = await searchAllRes.json();
-        console.log(listings)
         dispatch(setSearchListings(listings))
     };
 }
 
 export const searchUserListings = (token) => async dispatch => {
-    const headers = { "Authorization": `Bearer ${token}` }
+    const headers = { "Authorization": `Bearer ${token}` };
     const searchUserRes = await handleReq("/listings/byUserId", "GET", headers)
 
     if (searchUserRes.statusText === 'OK') {
         const { userListings } = await searchUserRes.data;
+        console.log(userListings)
         dispatch(setUserListings(userListings));
+    };
+};
+
+export const deleteListingById = (token, listingId) => async dispatch => {
+    const headers = { "Authorization": `Bearer ${token}` };
+    const deleteListingRes = await handleReq(`/listings/delete/${listingId}`, "DELETE", headers);
+
+    if (deleteListingRes.statusText === 'OK') {
+        dispatch(deleteListing(listingId));
     };
 };
