@@ -33,7 +33,7 @@ router.post('/create-session', async (req, res) => {
               currency: 'usd',
               product_data: {
                 name: listingDetails.description + '\n' + listingDetails.location.city,
-                images: ['https://i.imgur.com/EHyR2nP.png'],
+                images: [listingDetails.pictures[0]],
               },
               unit_amount: listingDetails.price * days * 100,
             },

@@ -11,8 +11,7 @@ const ListingSchema = new Schema({
     required: true,
   },
   pictures: {
-    type: Array,
-    default: null,
+    type: Array
   },
   description: {
     type: String,
