@@ -19,6 +19,9 @@ class ListingPage extends Component {
   }
 
   async componentDidMount() {
+    this.setState({
+        reserved: false
+    })
     await axios.get('http://localhost:8080/listings/byId/' + this.props.match.params.id)
     .then((res) => {
       this.setState({
@@ -59,6 +62,9 @@ class ListingPage extends Component {
       from: undefined,
       to: undefined,
     }
+    this.setState({
+      reserved: false
+    })
   }
 
   handleDayClick(day) {
@@ -75,7 +81,7 @@ class ListingPage extends Component {
     const modifiers = { start: from, end: to }
     let startDate = new Date(this.state.listingStartDate)
     let endDate = new Date(this.state.listingEndDate)
-    endDate.setDate(endDate.getDate() + 1) // react-day-picker includes "after" date in disabled days
+    endDate.setDate(endDate.getDate())
     return (
       <div className="container">
         {this.state.listingDescription} <br />
