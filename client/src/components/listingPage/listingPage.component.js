@@ -7,7 +7,9 @@ import DayPicker, { DateUtils } from 'react-day-picker'
 import 'react-day-picker/lib/style.css'
 import './listingPage.css'
 
-const stripePromise = loadStripe('pk_test_51HDNtOE7SomQuJWLTiEqzbIriLpsErElVGi9Qwjg7xzSKHsYgnNflvxLdpN4LdFte2O0h2Y2cdDxP0gvXAmXjdsu00TuwlmhAT')
+const stripePublicKey = "pk_test_51HDNtOE7SomQuJWLTiEqzbIriLpsErElVGi9Qwjg7xzSKHsYgnNflvxLdpN4LdFte2O0h2Y2cdDxP0gvXAmXjdsu00TuwlmhAT"
+
+const stripePromise = loadStripe(stripePublicKey);
 
 class ListingPage extends Component {
   constructor(props) {
@@ -28,6 +30,7 @@ class ListingPage extends Component {
         listingBaths: parseInt(res.data.listing.details.baths),
         listingBeds: parseInt(res.data.listing.details.beds),
         listingMaxPeople: parseInt(res.data.listing.details.maxpeople),
+        listingPrice: res.data.listing.price,
         listingStartDate: res.data.listing.available[0],
         listingEndDate: res.data.listing.available[1]
       })
@@ -37,12 +40,13 @@ class ListingPage extends Component {
     })
   }
 
-  handlePayment() {
+  async handlePayment() {
     const data = {
       email: "user2@gmail.com", // get user email from redux store
       listing: this.props.match.params.id,
       days: [this.state.from, this.state.to]
     }
+
     axios.post('http://localhost:8080/reservation/createReservation', data)
     .then((res) => {
       this.setState({
@@ -52,6 +56,43 @@ class ListingPage extends Component {
     .catch((err) => {
       alert(err.response.data.errors)
     })
+
+
+    // Create Stripe Checkout Session
+    const stripe = await stripePromise;
+
+    const resDays = parseInt((this.state.to - this.state.from) / (1000 * 3600 * 24)) + 1;
+
+    console.log(data.days)
+
+    const listingId = data.listing;
+
+    const body = {
+      listingId: listingId,
+      days: resDays
+    }
+
+    console.log(listingId);
+    console.log(resDays);
+    //console.log(body);
+    const response = await fetch('http://localhost:8080/payment/create-session', {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+
+    const session = await response.json();
+    console.log(session.id);
+    // When the customer clicks on the button, redirect them to Checkout.
+    const result = await stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
+
+    if (result.error) {
+      console.log(result.error.message);
+    }
   }
 
   getInitialState() {
@@ -76,6 +117,7 @@ class ListingPage extends Component {
     let startDate = new Date(this.state.listingStartDate)
     let endDate = new Date(this.state.listingEndDate)
     endDate.setDate(endDate.getDate() + 1) // react-day-picker includes "after" date in disabled days
+    startDate.setDate(startDate.getDate() + 1)
     return (
       <div className="container">
         {this.state.listingDescription} <br />
@@ -84,6 +126,7 @@ class ListingPage extends Component {
         {this.state.listingBeds} beds <br />
         {this.state.listingBaths} baths <br />
         {this.state.listingMaxPeople} people max <br />
+        ${this.state.listingPrice} per night <br />
 
         <div>
           <p>
@@ -121,48 +164,3 @@ class ListingPage extends Component {
 }
 
 export default ListingPage
-
-/*handlePayment() {
-  const data = {
-    listingId: this.state.listingId,
-    days: parseInt(this.state.resDays)
-  }
-  axios.post('http://localhost:8080/payment/create-session', data)
-  .then((res) => {
-    console.log(res)
-  })
-  .then((session) => {
-    return stripePromise.redirectToCheckout({ sessionId: session.id })
-  })
-  .catch((err) => {
-    console.log(err.response)
-  })
-}*/
-
-/* async handlePayment() {
-  const stripe = await stripePromise;
-  const data = {
-    listingId: this.state.listingId,
-    days: parseInt(this.state.resDays) // fix this (pass dates in as array with start and end date of reservation)
-  }
-  const response = await fetch("payment/create-session", {
-    method: "POST",
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  });
-  const session = await response.json();
-  const result = await stripe.redirectToCheckout({
-    sessionId: session.id,
-  });
-  if (result.error) {
-    alert("Could not reach store. Please try again.")
-  }
-}; */
-
-/*changeDays(e) {
-  this.setState({
-    resDays: e.target.value
-  })
-}*/
