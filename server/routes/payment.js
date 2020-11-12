@@ -15,9 +15,6 @@ router.post('/create-session', async (req, res) => {
     try{
       const { listingId, days } = req.body
 
-      console.log(listingId);
-      console.log(days);
-
       const listingDetails = await Listing.findOne({
         '_id': listingId
       })

@@ -57,24 +57,15 @@ class ListingPage extends Component {
       alert(err.response.data.errors)
     })
 
-
     // Create Stripe Checkout Session
     const stripe = await stripePromise;
-
     const resDays = parseInt((this.state.to - this.state.from) / (1000 * 3600 * 24)) + 1;
-
-    console.log(data.days)
-
     const listingId = data.listing;
-
     const body = {
       listingId: listingId,
       days: resDays
     }
 
-    console.log(listingId);
-    console.log(resDays);
-    //console.log(body);
     const response = await fetch('http://localhost:8080/payment/create-session', {
       method: "POST",
       headers: {
@@ -84,7 +75,6 @@ class ListingPage extends Component {
     });
 
     const session = await response.json();
-    console.log(session.id);
     // When the customer clicks on the button, redirect them to Checkout.
     const result = await stripe.redirectToCheckout({
       sessionId: session.id,
