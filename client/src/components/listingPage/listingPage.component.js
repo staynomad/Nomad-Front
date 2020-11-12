@@ -44,12 +44,13 @@ class ListingPage extends Component {
   }
 
   async handlePayment() {
+    const selectedStartDay = JSON.stringify(this.state.from).substring(1, JSON.stringify(this.state.from).indexOf("T"))
+    const selectedEndDay = JSON.stringify(this.state.to).substring(1, JSON.stringify(this.state.to).indexOf("T"))
     const data = {
       email: "user2@gmail.com", // get user email from redux store
       listing: this.props.match.params.id,
-      days: [this.state.from, this.state.to]
+      days: [selectedStartDay, selectedEndDay]
     }
-
     axios.post('http://localhost:8080/reservation/createReservation', data)
     .then((res) => {
       this.setState({
@@ -68,7 +69,6 @@ class ListingPage extends Component {
       listingId: listingId,
       days: resDays
     }
-
     const response = await fetch('http://localhost:8080/payment/create-session', {
       method: "POST",
       headers: {
@@ -76,13 +76,11 @@ class ListingPage extends Component {
       },
       body: JSON.stringify(body)
     });
-
     const session = await response.json();
     // When the customer clicks on the button, redirect them to Checkout.
     const result = await stripe.redirectToCheckout({
       sessionId: session.id,
     });
-
     if (result.error) {
       console.log(result.error.message);
     }
@@ -114,7 +112,7 @@ class ListingPage extends Component {
     let endDate = new Date(this.state.listingEndDate)
     endDate.setDate(endDate.getDate() + 1) // react-day-picker includes "after" date in disabled days
     startDate.setDate(startDate.getDate() + 1)
-    
+
     return (
       <div className="container">
         {this.state.listingDescription} <br />
