@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { withRouter  } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import Filter from "./filter.component";
 import Roommates from "./roommate/roommates.component";
 import Listings from "./listing/listings.component"
@@ -54,18 +54,18 @@ const Matches = (props) => {
       </div>
       <div id="matches-components-filtering">
         <div id="filtering-inputs">
-          {!seen || (!roommateView && !listingView) ? null : 
-          <Filter
-            toggle={toggle}
-            roommateView={roommateView}
-            listingView={listingView}
-            listingFilterState={listingFilterState}
-            setListingFilterState={setListingFilterState}
-          />}
+          {!seen || (!roommateView && !listingView) ? null :
+            <Filter
+              toggle={toggle}
+              roommateView={roommateView}
+              listingView={listingView}
+              listingFilterState={listingFilterState}
+              setListingFilterState={setListingFilterState}
+            />}
         </div>
         <div id="roommate-listing-content-container">
           {roommateView ? <Roommates /> : null}
-          {listingView ? <Listings listingFilterState={listingFilterState}/> : null}
+          {listingView ? <Listings listingFilterState={listingFilterState} /> : null}
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import "./listings.css";
 import ListingCard from './listingCard.component'
-import { searchAllListings, searchListings, searchFilteredListings } from "../../../redux/actions/searchListingActions";
+import { searchAllListings, searchForListings, searchFilteredListings } from "../../../redux/actions/searchListingActions";
 
 class Listings extends Component {
   constructor(props) {
@@ -24,7 +24,7 @@ class Listings extends Component {
     if (this.props.location.search) {
       /* Get listing using search term */
       const itemToSearch = this.props.location.search.slice(1);
-      this.props.searchListings(itemToSearch);
+      this.props.searchForListings(itemToSearch);
     } else if (filterClicked) {
       /* Get listing using listing filter */
       this.props.searchFilteredListings(filter);
@@ -45,9 +45,9 @@ class Listings extends Component {
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.searchListingsRes !== prevState.listings) {
+    if (nextProps.searchListings !== prevState.listings) {
       return {
-        listings: nextProps.searchListingsRes
+        listings: nextProps.searchListings
       }
     }
   }
@@ -71,14 +71,14 @@ class Listings extends Component {
 
 const mapStateToProps = state => {
   return {
-    searchListingsRes: state.Listing.searchListingsRes,
+    searchListings: state.Listing.searchListings,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     searchAllListings: () => dispatch(searchAllListings()),
-    searchListings: (itemToSearch) => dispatch(searchListings(itemToSearch)),
+    searchForListings: (itemToSearch) => dispatch(searchForListings(itemToSearch)),
     searchFilteredListings: (filter) => dispatch(searchFilteredListings(filter))
   };
 };

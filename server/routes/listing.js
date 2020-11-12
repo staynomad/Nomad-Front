@@ -97,38 +97,38 @@ router.get("/", async (req, res) => {
 });
 
 /* Get all listings by filter */
-router.post ('/filteredListings', async (req, res) => {
-  const {minRatingClicked, startingPriceClicked, minGuestsClicked} = req.body;
+router.post('/filteredListings', async (req, res) => {
+  const { minRatingClicked, startingPriceClicked, minGuestsClicked } = req.body;
   try {
     var listings;
     var filterClicked = minRatingClicked || startingPriceClicked // or minGuestsClicked
     if (filterClicked) {
       listings = await Listing.find({
-        'rating.user': {$gte: req.body.minRating},
-        price: {$gte: req.body.startingPrice}
+        'rating.user': { $gte: req.body.minRating },
+        price: { $gte: req.body.startingPrice }
       });
     } else if (minGuestsClicked) { // ideally want to get rid of this part
       listings = await Listing.find({
-        'rating.user': {$gte: req.body.minRating},
-        price: {$gte: req.body.startingPrice},
-        'details.maxpeople': {$gte: req.body.minGuests} // doesn't work since this field is a String
+        'rating.user': { $gte: req.body.minRating },
+        price: { $gte: req.body.startingPrice },
+        'details.maxpeople': { $gte: req.body.minGuests } // doesn't work since this field is a String
       })
     } else {
       console.log("no listings have been specified")
-      listings = await Listing.find ({});
+      listings = await Listing.find({});
     }
     if (!listings) {
-      res.status (404).json ({
+      res.status(404).json({
         errors: ['There are currently no listings! Please try again later.'],
       });
     } else {
-      res.status (201).json ({
+      res.status(201).json({
         listings,
       });
     }
   } catch (error) {
-    console.error (error);
-    res.status (500).json ({
+    console.error(error);
+    res.status(500).json({
       errors: ['Error occurred while getting listings. Please try again!'],
     });
   }
@@ -209,7 +209,7 @@ router.post("/search", async (req, res) => {
 });
 
 /* Delete listing by id */
-router.delete("/remove/:listingId", requireUserAuth, async (req, res) => {
+router.delete("/delete/:listingId", requireUserAuth, async (req, res) => {
   try {
     const listing = await Listing.findOne({
       _id: req.params.listingId,
