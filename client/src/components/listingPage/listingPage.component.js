@@ -112,12 +112,9 @@ class ListingPage extends Component {
     const modifiers = { start: from, end: to }
     let startDate = new Date(this.state.listingStartDate)
     let endDate = new Date(this.state.listingEndDate)
-<<<<<<< HEAD
     endDate.setDate(endDate.getDate() + 1) // react-day-picker includes "after" date in disabled days
     startDate.setDate(startDate.getDate() + 1)
-=======
-    endDate.setDate(endDate.getDate() + 1)
->>>>>>> reservation-verification
+    
     return (
       <div className="container">
         {this.state.listingDescription} <br />
