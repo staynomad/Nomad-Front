@@ -1,5 +1,7 @@
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
+import { persistReducer } from 'redux-persist'
 import thunk from 'redux-thunk';
+import storage from 'redux-persist/lib/storage';
 
 /* Import Reducers */
 import CreateListing from './reducers/createListingReducer';
@@ -14,9 +16,17 @@ const reducer = combineReducers({
     Listing,
 });
 
+const persistConfig = {
+    key: 'root',
+    storage,
+    whitelist: ['Login']
+}
+
+const persistedReducer = persistReducer(persistConfig, reducer)
+
 const configureStore = initialState => {
     return createStore(
-        reducer,
+        persistedReducer,
         initialState,
         composeEnhancers(applyMiddleware(thunk)),
     );
