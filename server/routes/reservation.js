@@ -114,12 +114,12 @@ router.get(
     }
 )
 
-// Delete a specific reservation by reservationId
-router.delete(
-    "/delete/:listing",
+// Replace this with a soft delete so that users can revert if they accidentally delete
+/* router.delete(
+    "/delete/:reservationId",
     async (req, res) => {
         try {
-            const reservation = await Reservation.deleteOne({ listing: req.params.listing });
+            const reservation = await Reservation.findByIdandDelete(req.params.reservationId);
             if (!reservation) {
                 return res.status(404).json({
                   errors: ["Reservation does not exist"],
@@ -137,23 +137,22 @@ router.delete(
             });
         }
     }
-)
+) */
 
-// Change this to deactivate by reservationId
+// Use this when the user checks out of their stay
 router.post(
-    "/deactivate/:listing",
+    "/deactivate/:reservationId",
     async (req, res) => {
         try {
-            const filter = { listing: req.params.listing }
             const update = { active: false }
-            const reservation = await Reservation.findOneAndUpdate(filter, update, { new: true });
+            const reservation = await Reservation.findByIdAndUpdate(req.params.reservationId, update);
             if (!reservation) {
                 return res.status(404).json({
                   errors: ["Reservation does not exist"],
               });
             }
             res.status(201).json({
-                "message": `Deactivated ${req.params.listing}`
+                "message": `Deactivated ${req.params.reservationId}`
             });
         }
         catch(error) {
@@ -167,19 +166,18 @@ router.post(
 )
 
 router.post(
-    "/activate/:listing",
+    "/activate/:reservationId",
     async (req, res) => {
         try {
-            const filter = { listing: req.params.listing }
             const update = { active: true }
-            const reservation = await Reservation.findOneAndUpdate(filter, update, { new: true });
+            const reservation = await Reservation.findByIdAndUpdate(req.params.reservationId, update);
             if (!reservation) {
                 return res.status(404).json({
                   errors: ["Reservation does not exist"],
               });
             }
             res.status(201).json({
-                "message": `Activated ${req.params.listing}`
+                "message": `Activated ${req.params.reservationId}`
             });
         }
         catch(error) {
