@@ -5,35 +5,52 @@ const Reservation = require("../models/reservation.model");
 const Listing = require("../models/listing.model")
 const { requireUserAuth } = require("../utils");
 
-
+// Create a reservation
 router.post(
     "/createReservation",
     async (req, res) => {
         try {
-            const {email, listing, days} = req.body;
+            const {user, listing, days} = req.body;
             const listingInfo = await Listing.findOne({
                 _id: listing
             })
+
             const availableStart = new Date(listingInfo.available[0])
             const availableEnd = new Date(listingInfo.available[1])
             const reservationStart = new Date(days[0])
             const reservationEnd = new Date(days[1])
+
             if (reservationStart.getTime() < availableStart.getTime() || reservationEnd.getTime() > availableEnd.getTime()) {
                 return res.status(400).json({
                     "errors": "Selected days are invalid. Please try again."
                 })
             }
+
+            for (let i = 0; i < listingInfo.booked.length; i++) {
+              const bookedStart = new Date(listingInfo.booked[i].start)
+              const bookedEnd = new Date(listingInfo.booked[i].end)
+              if ((reservationStart.getTime() >= bookedStart.getTime() && reservationStart.getTime() <= bookedEnd.getTime()) || (reservationEnd.getTime() >= bookedStart.getTime() && reservationEnd.getTime() <= bookedEnd.getTime())) {
+                  return res.status(400).json({
+                      "errors": "Selected days are invalid. Please try again."
+                  })
+              }
+            }
+
             const newReservation = await new Reservation({
-                email,
+                user,
                 listing,
                 active: true,
                 days,
             }).save();
-            const bookedDays = {
+
+            const bookedInfo = {
               start: days[0],
-              end: days[1]
+              end: days[1],
+              reservationId: newReservation._id
             }
-            const bookedListing = await Listing.findOneAndUpdate({ _id: listing }, { $push: { booked: bookedDays } })
+
+            const bookedListing = await Listing.findOneAndUpdate({ _id: listing }, { $push: { booked: bookedInfo } })
+
             res.status(201).json({
               "message": "Reservation created successfully"
             });
@@ -48,11 +65,12 @@ router.post(
     }
 )
 
+// Get all reservations by userId
 router.get(
-    "/getByEmail/:email",
+    "/getByUser/:userId",
     async (req, res) => {
         try {
-            const reservation = await Reservation.find({ email: req.params.email });
+            const reservation = await Reservation.find({ user: req.params.userId });
             if (!reservation) {
                 return res.status(404).json({
                   errors: ["User has not made any reservations"],
@@ -72,6 +90,7 @@ router.get(
     }
 )
 
+// Get reservations corresponding to listingId
 router.get(
     "/getByListing/:listing",
     async (req, res) => {
@@ -96,11 +115,12 @@ router.get(
     }
 )
 
-router.delete(
-    "/delete/:listing",
+// Replace this with a soft delete so that users can revert if they accidentally delete
+/* router.delete(
+    "/delete/:reservationId",
     async (req, res) => {
         try {
-            const reservation = await Reservation.deleteOne({ listing: req.params.listing });
+            const reservation = await Reservation.findByIdandDelete(req.params.reservationId);
             if (!reservation) {
                 return res.status(404).json({
                   errors: ["Reservation does not exist"],
@@ -118,22 +138,22 @@ router.delete(
             });
         }
     }
-)
+) */
 
+// Use this when the user checks out of their stay
 router.post(
-    "/deactivate/:listing",
+    "/deactivate/:reservationId",
     async (req, res) => {
         try {
-            const filter = { listing: req.params.listing }
             const update = { active: false }
-            const reservation = await Reservation.findOneAndUpdate(filter, update, { new: true });
+            const reservation = await Reservation.findByIdAndUpdate(req.params.reservationId, update);
             if (!reservation) {
                 return res.status(404).json({
                   errors: ["Reservation does not exist"],
               });
             }
             res.status(201).json({
-                "message": `Deactivated ${req.params.listing}`
+                "message": `Deactivated ${req.params.reservationId}`
             });
         }
         catch(error) {
@@ -147,19 +167,18 @@ router.post(
 )
 
 router.post(
-    "/activate/:listing",
+    "/activate/:reservationId",
     async (req, res) => {
         try {
-            const filter = { listing: req.params.listing }
             const update = { active: true }
-            const reservation = await Reservation.findOneAndUpdate(filter, update, { new: true });
+            const reservation = await Reservation.findByIdAndUpdate(req.params.reservationId, update);
             if (!reservation) {
                 return res.status(404).json({
                   errors: ["Reservation does not exist"],
               });
             }
             res.status(201).json({
-                "message": `Activated ${req.params.listing}`
+                "message": `Activated ${req.params.reservationId}`
             });
         }
         catch(error) {

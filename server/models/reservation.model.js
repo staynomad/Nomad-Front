@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ReservationSchema = new Schema({
-    email: {
+    user: {
         type: String,
         required: true,
     },
@@ -13,6 +13,7 @@ const ReservationSchema = new Schema({
     active: {
         type: Boolean,
         required: true,
+        default: false
     },
     days: {
         type: Array,

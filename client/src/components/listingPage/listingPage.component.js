@@ -35,7 +35,30 @@ class ListingPage extends Component {
         listingMaxPeople: parseInt(res.data.listing.details.maxpeople),
         listingPrice: res.data.listing.price,
         listingStartDate: res.data.listing.available[0],
-        listingEndDate: res.data.listing.available[1]
+        listingEndDate: res.data.listing.available[1],
+      })
+      // Set default disabled days based on booked days in listing object
+      let startDate = new Date(this.state.listingStartDate)
+      let endDate = new Date(this.state.listingEndDate)
+      endDate.setDate(endDate.getDate() + 1)
+      startDate.setDate(startDate.getDate() + 1)
+      let bookedDays = [{
+        after: endDate,
+        before: startDate
+      }]
+      // Append days from booked field in listing object
+      for (let i = 0; i < res.data.listing.booked.length; i++) {
+        let reserveStart = new Date(res.data.listing.booked[i].start)
+        let reserveEnd = new Date(res.data.listing.booked[i].end)
+        reserveStart.setDate(reserveStart.getDate())
+        reserveEnd.setDate(reserveEnd.getDate() + 2)
+        bookedDays.push({
+          after: reserveStart,
+          before: reserveEnd
+        })
+      }
+      this.setState({
+        listingBookedDays: bookedDays
       })
     })
     .catch((err) => {
@@ -43,47 +66,47 @@ class ListingPage extends Component {
     })
   }
 
-  async handlePayment() {
+  handlePayment() {
     const selectedStartDay = JSON.stringify(this.state.from).substring(1, JSON.stringify(this.state.from).indexOf("T"))
     const selectedEndDay = JSON.stringify(this.state.to).substring(1, JSON.stringify(this.state.to).indexOf("T"))
     const data = {
-      email: "user2@gmail.com", // get user email from redux store
+      user: "5f8e287c44c48ccf9f9c90cb", // get user email from redux store
       listing: this.props.match.params.id,
       days: [selectedStartDay, selectedEndDay]
     }
     axios.post('http://localhost:8080/reservation/createReservation', data)
-    .then((res) => {
+    .then(async (res) => {
       this.setState({
         reserved: true
       })
+      // Create Stripe Checkout Session
+      const stripe = await stripePromise;
+      const resDays = parseInt((this.state.to - this.state.from) / (1000 * 3600 * 24)) + 1;
+      const listingId = data.listing;
+      const body = {
+        listingId: listingId,
+        days: resDays
+      }
+      const response = await fetch('http://localhost:8080/payment/create-session', {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      });
+      const session = await response.json();
+      // When the customer clicks on the button, redirect them to Checkout.
+      const result = await stripe.redirectToCheckout({
+        sessionId: session.id,
+      });
+      if (result.error) {
+        console.log(result.error.message);
+      }
     })
     .catch((err) => {
       alert(err.response.data.errors)
+      window.location.reload()
     })
-
-    // Create Stripe Checkout Session
-    const stripe = await stripePromise;
-    const resDays = parseInt((this.state.to - this.state.from) / (1000 * 3600 * 24)) + 1;
-    const listingId = data.listing;
-    const body = {
-      listingId: listingId,
-      days: resDays
-    }
-    const response = await fetch('http://localhost:8080/payment/create-session', {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    });
-    const session = await response.json();
-    // When the customer clicks on the button, redirect them to Checkout.
-    const result = await stripe.redirectToCheckout({
-      sessionId: session.id,
-    });
-    if (result.error) {
-      console.log(result.error.message);
-    }
   }
 
   getInitialState() {
@@ -108,10 +131,6 @@ class ListingPage extends Component {
   render() {
     const { from, to } = this.state
     const modifiers = { start: from, end: to }
-    let startDate = new Date(this.state.listingStartDate)
-    let endDate = new Date(this.state.listingEndDate)
-    endDate.setDate(endDate.getDate() + 1) // react-day-picker includes "after" date in disabled days
-    startDate.setDate(startDate.getDate() + 1)
 
     return (
       <div className="container">
@@ -142,12 +161,7 @@ class ListingPage extends Component {
             selectedDays={[from, { from, to }]}
             modifiers={modifiers}
             onDayClick={this.handleDayClick}
-            disabledDays={[
-              {
-                after: endDate,
-                before: startDate
-              }
-            ]}
+            disabledDays={this.state.listingBookedDays}
           />
         </div>
 
