@@ -35,8 +35,11 @@ class ListingPage extends Component {
         listingMaxPeople: parseInt(res.data.listing.details.maxpeople),
         listingPrice: res.data.listing.price,
         listingStartDate: res.data.listing.available[0],
-        listingEndDate: res.data.listing.available[1]
+        listingEndDate: res.data.listing.available[1],
+        listingBookedDays: res.data.listing.booked
       })
+      console.log(res.data.listing.booked)
+      console.log(this.state.listingBookedDays)
     })
     .catch((err) => {
       console.log(err.response)
@@ -47,7 +50,7 @@ class ListingPage extends Component {
     const selectedStartDay = JSON.stringify(this.state.from).substring(1, JSON.stringify(this.state.from).indexOf("T"))
     const selectedEndDay = JSON.stringify(this.state.to).substring(1, JSON.stringify(this.state.to).indexOf("T"))
     const data = {
-      email: "user2@gmail.com", // get user email from redux store
+      user: "5f8e287c44c48ccf9f9c90cb", // get user email from redux store
       listing: this.props.match.params.id,
       days: [selectedStartDay, selectedEndDay]
     }
