@@ -122,8 +122,6 @@ router.post('/filteredListings', async (req, res) => {
         errors: ['There are currently no listings! Please try again later.'],
       });
     } else {
-      console.log("listings: ", listings)
-      console.log("length of listings: ", listings.length)
       res.status(200).json({
         listings,
       });

@@ -46,7 +46,6 @@ export const searchUserListings = (token) => async dispatch => {
 
     if (searchUserRes.statusText === 'OK') {
         const { userListings } = await searchUserRes.data;
-        console.log(userListings)
         dispatch(setUserListings(userListings));
     };
 };
