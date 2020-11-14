@@ -34,8 +34,8 @@ export const searchFilteredListings = (filterState) => async dispatch => {
     const headers = { 'Content-Type': 'application/json' };
     const searchAllRes = await handleReq("/listings/filteredListings", "POST", headers, filterState);
 
-    if (searchAllRes.ok) {
-        const { listings } = await searchAllRes.json();
+    if (searchAllRes.statusText === 'OK') {
+        const { listings } = await searchAllRes.data;
         dispatch(setSearchListings(listings))
     };
 }
