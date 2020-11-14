@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import Roommates from "./roommate/roommates.component";
-import Listings from "./listing/listings.component"
+import React from "react";
 import NumericInput from 'react-numeric-input';
 import "./filter.css";
 

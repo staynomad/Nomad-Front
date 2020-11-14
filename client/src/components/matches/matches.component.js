@@ -9,7 +9,7 @@ const Matches = (props) => {
   const [seen, setSeen] = useState(false);
   const [roommateView, setRoommateView] = useState(false);
   const [listingView, setListingView] = useState(false);
-  const [roommateFilters, setRoommateFilters] = useState({});
+  // const [roommateFilters, setRoommateFilters] = useState({});
   const [listingFilterState, setListingFilterState] = useState({
     minRating: 0,
     minRatingClicked: false,
