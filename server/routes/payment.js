@@ -43,7 +43,7 @@ router.post('/create-session', async (req, res) => {
 
         mode: 'payment',
         success_url: `http://localhost:3000`,
-        cancel_url: `http://localhost:3000/Matches`,
+        cancel_url: `http://localhost:3000/listing/${listingId}`,
       });
       console.log("checkout session creation")
       res.status(200).json({
