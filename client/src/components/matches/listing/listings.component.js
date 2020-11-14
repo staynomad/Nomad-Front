@@ -70,6 +70,7 @@ class Listings extends Component {
 };
 
 const mapStateToProps = state => {
+  console.log("this is my state: ", state)
   return {
     searchListings: state.Listing.searchListings,
   };
