@@ -94,83 +94,23 @@ class CreateListing extends Component {
   }
 
   render() {
+    const pages = [
+      <LandingPageCL />,
+      <TitleCL />,
+      <Location />,
+      <Description />,
+      <DetailsCL />,
+      <PricesCL />,
+      <DatesCL />,
+      <RulesCL />,
+      <PhotoUpload />,
+      <ConfirmSubmission />,
+    ];
     return (
       <div className="fullListingBackground">
         <div className="overallListingForm">
           <form>
-            <div>
-              <div>
-                {this.state.formval === 0 ? (
-                  <LandingPageCL handle={this.handleChange} />
-                ) : (
-                  ""
-                )}
-              </div>
-              <div>
-                {this.state.formval === 1 ? (
-                  <TitleCL handle={this.handleChange} />
-                ) : (
-                  ""
-                )}
-              </div>
-              <div>
-                {this.state.formval === 2 ? (
-                  <Location handle={this.handleChange} />
-                ) : (
-                  ""
-                )}
-              </div>
-              <div>
-                {this.state.formval === 3 ? (
-                  <Description handle={this.handleChange} />
-                ) : (
-                  ""
-                )}
-              </div>
-              <div>
-                {this.state.formval === 4 ? (
-                  <DetailsCL handle={this.handleChange} />
-                ) : (
-                  ""
-                )}
-              </div>
-              <div>
-                {this.state.formval === 5 ? (
-                  <PricesCL handle={this.handleChange} />
-                ) : (
-                  ""
-                )}
-              </div>
-              <div>
-                {this.state.formval === 6 ? (
-                  <DatesCL handle={this.handleChange} />
-                ) : (
-                  ""
-                )}
-              </div>
-              <div>
-                {this.state.formval === 7 ? (
-                  <RulesCL handle={this.handleChange} />
-                ) : (
-                  ""
-                )}
-              </div>
-              <div>
-                {this.state.formval === 8 ? (
-                  <PhotoUpload onUpload={this.onUpload} />
-                ) : (
-                  ""
-                )}
-              </div>
-              <div>
-                {this.state.formval === 9 ? (
-                  <ConfirmSubmission handle={this.state} />
-                ) : (
-                  ""
-                )}
-              </div>
-            </div>
-
+            <div handle={this.handleChange}>{pages[this.state.formval]}</div>
             <div>
               {this.state.formval > 0 ? (
                 <input
@@ -182,7 +122,6 @@ class CreateListing extends Component {
               ) : (
                 ""
               )}
-
               {this.state.formval < this.state.maxpages - 1 ? (
                 <input
                   className="changebut"
