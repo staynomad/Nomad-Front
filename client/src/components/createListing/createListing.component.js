@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import {connect} from 'react-redux'
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import {updateInfo} from '../../redux/actions/createListingActions'
+import { updateInfo } from "../../redux/actions/createListingActions";
 import Axios from "axios";
 import DatesCL from "./datesCL.component";
 import DetailsCL from "./detailsCL.component";
@@ -9,7 +9,9 @@ import Location from "./locationCL.component";
 import Description from "./descCL.component";
 import PricesCL from "./pricesCL.component";
 import RulesCL from "./rulesCL.component";
-import PhotoUpload from './photoUpload.component'
+import TitleCL from "./titleCL.component";
+import LandingPageCL from "./landingPageCL.component";
+import PhotoUpload from "./photoUpload.component";
 import "./createListing.css";
 import ConfirmSubmission from "./confirmSubmission.component";
 
@@ -18,7 +20,8 @@ class CreateListing extends Component {
     super(props);
     this.state = {
       formval: 0,
-      maxpages: 8,
+      maxpages: 10,
+      title: "",
       location: {
         street: "",
         city: "",
@@ -29,10 +32,12 @@ class CreateListing extends Component {
       },
       description: "",
       details: {
-        beds: '',
-        baths: '',
-        maxpeople: '',
+        beds: "",
+        baths: "",
+        maxpeople: "",
       },
+      photos:
+        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ffiles.lafm.com.co%2Fassets%2Fpublic%2F2019-08%2Fmeme__0.jpg&f=1&nofb=1",
       price: null,
       rules: "",
       dates: {},
@@ -43,17 +48,27 @@ class CreateListing extends Component {
     this.onUpload = this.onUpload.bind(this);
   }
   componentDidMount() {
-    this.props.updateInfo(this.state)
+    this.props.updateInfo(this.state);
   }
   handleChange(e, name) {
     this.setState({
       [name]: e,
     });
+    const updatedData = {
+      title: this.state.title,
+      location: this.state.location,
+      description: this.state.description,
+      details: this.state.details,
+      price: this.state.price,
+      rules: this.state.rules,
+      dates: this.state.dates,
+    };
+    this.props.updateInfo(updatedData);
     console.log(this.state);
   }
-  onUpload (e) {
+  onUpload(e) {
     //const pics = Array.from(e.target)
-    console.log(e.images)
+    console.log(e.images);
   }
   onSubmit() {
     const newListing = {
@@ -86,55 +101,69 @@ class CreateListing extends Component {
             <div>
               <div>
                 {this.state.formval === 0 ? (
-                  <Location handle={this.handleChange} />
+                  <LandingPageCL handle={this.handleChange} />
                 ) : (
                   ""
                 )}
               </div>
               <div>
                 {this.state.formval === 1 ? (
-                  <Description handle={this.handleChange} />
+                  <TitleCL handle={this.handleChange} />
                 ) : (
                   ""
                 )}
               </div>
               <div>
                 {this.state.formval === 2 ? (
-                  <DetailsCL handle={this.handleChange} />
+                  <Location handle={this.handleChange} />
                 ) : (
                   ""
                 )}
               </div>
               <div>
                 {this.state.formval === 3 ? (
-                  <PricesCL handle={this.handleChange} />
+                  <Description handle={this.handleChange} />
                 ) : (
                   ""
                 )}
               </div>
               <div>
                 {this.state.formval === 4 ? (
-                  <DatesCL handle={this.handleChange} />
+                  <DetailsCL handle={this.handleChange} />
                 ) : (
                   ""
                 )}
               </div>
               <div>
                 {this.state.formval === 5 ? (
-                  <RulesCL handle={this.handleChange} />
+                  <PricesCL handle={this.handleChange} />
                 ) : (
                   ""
                 )}
               </div>
               <div>
                 {this.state.formval === 6 ? (
-                  <PhotoUpload onUpload={this.onUpload} />
+                  <DatesCL handle={this.handleChange} />
                 ) : (
                   ""
                 )}
               </div>
               <div>
                 {this.state.formval === 7 ? (
+                  <RulesCL handle={this.handleChange} />
+                ) : (
+                  ""
+                )}
+              </div>
+              <div>
+                {this.state.formval === 8 ? (
+                  <PhotoUpload onUpload={this.onUpload} />
+                ) : (
+                  ""
+                )}
+              </div>
+              <div>
+                {this.state.formval === 9 ? (
                   <ConfirmSubmission handle={this.state} />
                 ) : (
                   ""
@@ -143,7 +172,7 @@ class CreateListing extends Component {
             </div>
 
             <div>
-              {this.state.formval > 0  ? (
+              {this.state.formval > 0 ? (
                 <input
                   className="changebut"
                   type="button"
@@ -175,36 +204,28 @@ class CreateListing extends Component {
       </div>
     );
   }
-  
+
   togglePage(e) {
     let temp = this.state.formval;
     e.target.value === "Next" ? temp++ : temp--;
     this.setState({
       formval: temp,
     });
-    const updatedData = {
-      
-      location: this.state.location,
-      description: this.state.description,
-      details: this.state.details,
-      price: this.state.price,
-      rules: this.state.rules,
-      dates: this.state.dates,
-    }
-    this.props.updateInfo(updatedData)
     //console.log(this.props)
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   //console.log(state)
   return {
-    listingData: state
-  }
-}
+    listingData: state,
+  };
+};
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    updateInfo: (toUpdate) => dispatch(updateInfo(toUpdate))
-  }
-}
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateListing))
+    updateInfo: (toUpdate) => dispatch(updateInfo(toUpdate)),
+  };
+};
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(CreateListing)
+);

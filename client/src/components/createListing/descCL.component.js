@@ -9,8 +9,8 @@ class Description extends Component {
     super(props);
     this.state = {
       description: '',
-      maxchars: 40,
-      charleft: 40
+      maxchars: 500,
+      charleft: 500
     };
     this.handleChange = this.handleChange.bind(this);
   }
