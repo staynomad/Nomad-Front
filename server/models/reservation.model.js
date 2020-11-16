@@ -1,13 +1,15 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const { Array, Mixed, Number, ObjectId, String } = Schema.Types;
+
 const ReservationSchema = new Schema({
     user: {
-        type: String,
+        type: ObjectId,
         required: true,
     },
     listing: {
-        type: String,
+        type: ObjectId,
         required: true,
     },
     active: {
