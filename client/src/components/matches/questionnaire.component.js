@@ -13,7 +13,7 @@ const HOBBIES = ['Reading', 'Watching TV', 'Spending Time with Family', 'Going t
                  'Listening to Music', 'Hunting', 'Team Sports', 'Shopping', 'Traveling',
                  'Sleeping', 'Socializing', 'Sewing', 'Golf', 'Church', 'Relaxing', 'Watching Sports',
                  'Biking', 'Playing Cards', 'Hiking', 'Cooking', 'Swimming', 'Camping',
-                 'Ski/Snowboarding', 'Writing', 'Boating', 'Horseback Riding', 
+                 'Ski/Snowboarding', 'Writing', 'Boating', 'Horseback Riding',
                  'Practicing an instrument', 'Dancing'];
 
 export default function Questionnaire (props) {
@@ -60,7 +60,7 @@ export default function Questionnaire (props) {
     if (props.userId) {
       // checks to make sure all fields are filled out
       for (var key in totalState) {
-        if (totalState[key] == '') {fieldsFilledOut = false};
+        if (totalState[key] === '') {fieldsFilledOut = false};
       }
 
       Axios.post (`http://localhost:8080/questionnaire/submit_questionnaire/${props.userId}`, newQuestionnaire)
@@ -74,7 +74,7 @@ export default function Questionnaire (props) {
     } else {
       setNotLoggedIn(true);
     }
-    
+
   };
 
   return (
@@ -330,7 +330,7 @@ export default function Questionnaire (props) {
           <h3>What are your favorite hobbies? Check all that apply!</h3>
           {HOBBIES.map (hobby => (
             <label id={hobby} key={hobby}>
-              {hobby} 
+              {hobby}
               <input
                 type="checkbox"
                 id={hobby}
@@ -350,7 +350,7 @@ export default function Questionnaire (props) {
         />
       </form>
       {successfulPost ? <h3 style={{color: "green"}}>Your responses have been recorded!</h3> :
-      <h3 style={{color: "red"}}>Your responses have not been recorded. Please make sure that 
+      <h3 style={{color: "red"}}>Your responses have not been recorded. Please make sure that
       all forms are filled out and press Submit your preferences!</h3>}
       {notLoggedIn ? <h3>You must be logged in to submit a questionnaire response!</h3> : ''}
     </div>
