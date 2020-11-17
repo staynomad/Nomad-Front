@@ -41,7 +41,7 @@ router.post(
                 user,
                 listing,
                 active: true,
-                days,
+                days
             }).save();
 
             const bookedInfo = {
