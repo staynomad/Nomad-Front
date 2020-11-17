@@ -6,6 +6,7 @@ const Listing = require("../models/listing.model")
 const { requireUserAuth } = require("../utils");
 
 // Create a reservation
+// TODO: send email to host and user to confirm
 router.post(
     "/createReservation",
     async (req, res) => {
