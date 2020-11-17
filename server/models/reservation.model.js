@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const { Array, Mixed, Number, ObjectId, String } = Schema.Types;
+const { Array, Mixed, Number, ObjectId, String, Date } = Schema.Types;
 
 const ReservationSchema = new Schema({
     user: {
@@ -20,6 +20,10 @@ const ReservationSchema = new Schema({
     days: {
         type: Array,
         required: true,
+    },
+    timestamp: {
+        type: Date,
+        default: Date.now
     }
 });
 

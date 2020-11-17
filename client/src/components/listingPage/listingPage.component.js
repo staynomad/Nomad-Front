@@ -70,7 +70,7 @@ class ListingPage extends Component {
     const selectedStartDay = JSON.stringify(this.state.from).substring(1, JSON.stringify(this.state.from).indexOf("T"))
     const selectedEndDay = JSON.stringify(this.state.to).substring(1, JSON.stringify(this.state.to).indexOf("T"))
     const data = {
-      user: "5f8e287c44c48ccf9f9c90cb", // get user email from redux store
+      user: "5f8cb84c59224a4c409c16e3", // get userId from redux store
       listing: this.props.match.params.id,
       days: [selectedStartDay, selectedEndDay]
     }
