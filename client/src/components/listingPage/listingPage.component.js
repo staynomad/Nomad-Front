@@ -36,6 +36,7 @@ class ListingPage extends Component {
         listingPrice: res.data.listing.price,
         listingStartDate: res.data.listing.available[0],
         listingEndDate: res.data.listing.available[1],
+        listingUser: res.data.listing.userId
       })
       // Set default disabled days based on booked days in listing object
       let startDate = new Date(this.state.listingStartDate)
@@ -60,6 +61,13 @@ class ListingPage extends Component {
       this.setState({
         listingBookedDays: bookedDays
       })
+      // Get host's email from their userId
+      axios.get(`http://localhost:8080/user/getEmail/${this.state.listingUser}`)
+      .then((res) =>
+        this.setState({
+          hostEmail: res.data.email
+        })
+      )
     })
     .catch((err) => {
       console.log(err.response)
@@ -114,9 +122,6 @@ class ListingPage extends Component {
       from: undefined,
       to: undefined,
     }
-    this.setState({
-      reserved: false
-    })
   }
 
   handleDayClick(day) {
@@ -134,13 +139,16 @@ class ListingPage extends Component {
 
     return (
       <div className="container">
-        {this.state.listingDescription} <br />
+        <h1>{this.state.listingDescription}</h1> <br />
         {this.state.listingLocation} <br />
         {this.state.listingImages} <br />
-        {this.state.listingBeds} beds <br />
-        {this.state.listingBaths} baths <br />
+        beds: {this.state.listingBeds} <br />
+        baths: {this.state.listingBaths} <br />
         {this.state.listingMaxPeople} people max <br />
         ${this.state.listingPrice} per night <br />
+        <a href={`mailto:${this.state.hostEmail}`}>
+          <button type="button"> Contact Host </button>
+        </a> <br /><br />
 
         <div>
           <p>
