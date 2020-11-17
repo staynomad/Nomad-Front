@@ -107,12 +107,6 @@ class LeftMenu extends Component {
                 }}
               />
               <Menu.Item
-                name="renter dashboard"
-                active={activeItem === 'renter dashboard'}
-                compname="renter dashboard"
-                onClick={this.handleItemClick}
-              />
-              <Menu.Item
                 name='settings'
                 active={activeItem === 'settings'}
                 compname='settings'
