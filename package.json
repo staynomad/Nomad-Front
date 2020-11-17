@@ -6,7 +6,7 @@
     "install-fullstack": "concurrently \"npm run install-client\" \"npm run install-server\"",
     "heroku-postbuild": "npm run install-client && npm run build",
     "client": "cd client && npm start",
-    "start": "concurrently \"cd server && npm start\" \"cd client && npm start\""
+    "start": "concurrently \"cd server && nodemon -r dotenv/config ./bin/www.js\" \"cd client && npm start\""
   },
   "engines": {
     "morgan": "1.10.0"
