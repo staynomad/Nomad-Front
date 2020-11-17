@@ -1,31 +1,19 @@
 import React, { Component } from "react";
 import "./createListing.css";
 import "./detailsListing.css";
-import {connect} from 'react-redux'
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 class DetailsCL extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      beds: "",
-      baths: "",
-      maxpeople: "",
-    };
+    this.state = this.oldData();
     this.handleChange = this.handleChange.bind(this);
   }
-  
-  componentDidMount() {
-    console.log(this.props.listingData)
-    /*const oldLoc = this.props.listingData.CreateListing.state.location
-    const oldBed = oldLoc.beds
-    console.log('enter')
-    this.setState({
-      beds: oldBed,
-      baths: oldLoc.baths,
-      maxpeople: oldLoc.maxpeople
-    })*/
-  }
+  oldData = () => {
+    return this.props.listingData.CreateListing.state.details;
+  };
+
   handleChange(e) {
     const { name, value } = e.target;
     if (!isNaN(value)) {
@@ -33,11 +21,14 @@ class DetailsCL extends Component {
         this.setState({
           invalidInput: false,
           [name]: value,
-        })
+        });
       }
     }
-
-    this.props.handle(this.state, "details");
+    const updatedData = {
+      ...this.state,
+      [name]: value,
+    };
+    this.props.handle(updatedData, "details");
   }
   render() {
     return (
@@ -94,10 +85,10 @@ class DetailsCL extends Component {
 /*
 
 */
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    listingData: state
-  }
-}
+    listingData: state,
+  };
+};
 
-export default withRouter(connect(mapStateToProps, null)(DetailsCL))
+export default withRouter(connect(mapStateToProps, null)(DetailsCL));

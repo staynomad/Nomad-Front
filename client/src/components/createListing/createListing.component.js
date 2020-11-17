@@ -38,9 +38,14 @@ class CreateListing extends Component {
       },
       photos:
         "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ffiles.lafm.com.co%2Fassets%2Fpublic%2F2019-08%2Fmeme__0.jpg&f=1&nofb=1",
-      price: null,
+      price: "",
       rules: "",
-      dates: {},
+      dates: {
+        start_date: null,
+        end_date: null,
+        booked: [null, null],
+        today: new Date(),
+      },
     };
     this.togglePage = this.togglePage.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -54,16 +59,7 @@ class CreateListing extends Component {
     this.setState({
       [name]: e,
     });
-    const updatedData = {
-      title: this.state.title,
-      location: this.state.location,
-      description: this.state.description,
-      details: this.state.details,
-      price: this.state.price,
-      rules: this.state.rules,
-      dates: this.state.dates,
-    };
-    this.props.updateInfo(updatedData);
+
     console.log(this.state);
   }
   onUpload(e) {
@@ -96,21 +92,21 @@ class CreateListing extends Component {
   render() {
     const pages = [
       <LandingPageCL />,
-      <TitleCL />,
-      <Location />,
-      <Description />,
-      <DetailsCL />,
-      <PricesCL />,
-      <DatesCL />,
-      <RulesCL />,
-      <PhotoUpload />,
-      <ConfirmSubmission />,
+      <TitleCL handle={this.handleChange} />,
+      <Location handle={this.handleChange} />,
+      <Description handle={this.handleChange} />,
+      <DetailsCL handle={this.handleChange} />,
+      <PricesCL handle={this.handleChange} />,
+      <DatesCL handle={this.handleChange} />,
+      <RulesCL handle={this.handleChange} />,
+      <PhotoUpload onUpload={this.onUpload} />,
+      <ConfirmSubmission handle={this.state} />,
     ];
     return (
       <div className="fullListingBackground">
         <div className="overallListingForm">
           <form>
-            <div handle={this.handleChange}>{pages[this.state.formval]}</div>
+            <div>{pages[this.state.formval]}</div>
             <div>
               {this.state.formval > 0 ? (
                 <input
@@ -150,6 +146,16 @@ class CreateListing extends Component {
     this.setState({
       formval: temp,
     });
+    const updatedData = {
+      title: this.state.title,
+      location: this.state.location,
+      description: this.state.description,
+      details: this.state.details,
+      price: this.state.price,
+      rules: this.state.rules,
+      dates: this.state.dates,
+    };
+    this.props.updateInfo(updatedData);
     //console.log(this.props)
   }
 }

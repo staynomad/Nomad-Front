@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Navbar from "./components/general/navbar.component";
 import Footer from "./components/general/footer.component";
 import Home from "./components/homePage/home.component";
@@ -8,8 +8,13 @@ import Contact from "./components/subpages/contact.component.js";
 import Services from "./components/subpages/services.component.js";
 import Reservation from "./components/reservations/findReservation.component";
 import Matches from "./components/matches/matches.component.js";
-import Questionnaire from "./components/matches/questionnaire.component"
-import { BrowserRouter as Router, Route, Switch, useHistory } from "react-router-dom";
+import Questionnaire from "./components/matches/questionnaire.component";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useHistory,
+} from "react-router-dom";
 import CreateListing from "./components/createListing/createListing.component";
 import MyAccount from "./components/myAccount/menu.component";
 import ListingPage from "./components/listingPage/listingPage.component";
@@ -22,7 +27,7 @@ function App() {
   return (
     <Router>
       <Navbar history={history} />
-      <div className='App'>
+      <div className="App">
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/ContactUs" exact component={Contact} />

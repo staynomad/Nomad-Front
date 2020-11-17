@@ -1,25 +1,19 @@
 import React, { Component } from "react";
 import "./createListing.css";
 import "./locationListing.css";
-import {connect} from 'react-redux'
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 class Location extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      street: "",
-      city: "",
-      state: "",
-      country: "",
-      zipcode: "",
-      aptnum: "",
-    };
+    this.state = this.oldData();
     this.handleChange = this.handleChange.bind(this);
   }
-  componentDidMount() {
-    console.log(this.props.listingData.CreateListing)
-}
+  oldData = () => {
+    return this.props.listingData.CreateListing.state.location;
+  };
+
   // this.props.listingData.CreateListing.state.location
   handleChange(e) {
     const { name, value } = e.target;
@@ -30,8 +24,11 @@ class Location extends Component {
         [name]: value,
       });
     }
-
-    this.props.handle(this.state, "location");
+    const updatedData = {
+      ...this.state,
+      [name]: value,
+    };
+    this.props.handle(updatedData, "location");
   }
   render() {
     return (
@@ -42,29 +39,29 @@ class Location extends Component {
           <div className="questionText">Where is your home located?</div>
           <br />
           <div className="listing-wrapper">
-          <div className="listing-inputs">
-            <div className="gen-subsec">
-              <div className="label-text">Street:</div>
-              <input
-                type="text"
-                name="street"
-                className="inputBox streetInputbox"
-                value={this.state.street}
-                placeholder="5230 Newell Road"
-                onChange={this.handleChange}
-              />
-            </div>
-            <div className="gen-subsec">
-              <div className="label-text">City:</div>
-              <input
-                type="text"
-                name="city"
-                className="inputBox cityInputBox"
-                value={this.state.city}
-                placeholder="Palo Alto"
-                onChange={this.handleChange}
-              />
-            </div>
+            <div className="listing-inputs">
+              <div className="gen-subsec">
+                <div className="label-text">Street:</div>
+                <input
+                  type="text"
+                  name="street"
+                  className="inputBox streetInputbox"
+                  value={this.state.street}
+                  placeholder="5230 Newell Road"
+                  onChange={this.handleChange}
+                />
+              </div>
+              <div className="gen-subsec">
+                <div className="label-text">City:</div>
+                <input
+                  type="text"
+                  name="city"
+                  className="inputBox cityInputBox"
+                  value={this.state.city}
+                  placeholder="Palo Alto"
+                  onChange={this.handleChange}
+                />
+              </div>
 
               <div className="gen-subsec">
                 <div className="label-text">State:</div>
@@ -90,31 +87,30 @@ class Location extends Component {
                 />
               </div>
 
+              <div className="gen-subsec">
+                <div className="label-text">Zipcode:</div>
+                <input
+                  type="text"
+                  name="zipcode"
+                  className="inputBox zipInputBox"
+                  value={this.state.zipcode}
+                  placeholder="90201"
+                  onChange={this.handleChange}
+                />
+              </div>
 
-            <div className="gen-subsec">
-              <div className="label-text">Zipcode:</div>
-              <input
-                type="text"
-                name="zipcode"
-                className="inputBox zipInputBox"
-                value={this.state.zipcode}
-                placeholder="90201"
-                onChange={this.handleChange}
-              />
+              <div className="gen-subsec">
+                <div className="label-text">Apartment:</div>
+                <input
+                  type="text"
+                  name="aptnum"
+                  className="inputBox aptnumInputBox"
+                  value={this.state.aptnum}
+                  placeholder="aptnum"
+                  onChange={this.handleChange}
+                />
+              </div>
             </div>
-
-            <div className="gen-subsec">
-              <div className="label-text">Apartment:</div>
-              <input
-                type="text"
-                name="aptnum"
-                className="inputBox aptnumInputBox"
-                value={this.state.aptnum}
-                placeholder="aptnum"
-                onChange={this.handleChange}
-              />
-            </div>
-          </div>
           </div>
         </div>
         <br />
@@ -122,10 +118,10 @@ class Location extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    listingData: state
-  }
-}
+    listingData: state,
+  };
+};
 
-export default withRouter(connect(mapStateToProps, null)(Location))
+export default withRouter(connect(mapStateToProps, null)(Location));

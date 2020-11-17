@@ -1,4 +1,3 @@
-import { common } from "@material-ui/core/colors";
 import React from "react";
 
 export default class LandingPageCL extends React.Component {

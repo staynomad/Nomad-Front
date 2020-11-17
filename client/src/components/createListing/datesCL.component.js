@@ -9,30 +9,22 @@ import "./createListing.css";
 class DatesCL extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      date_range: {
-        from: null,
-        to: null,
-      },
-      invalid_date: false,
-    };
+    this.state = this.getInitialState();
     this.handleDayClick = this.handleDayClick.bind(this);
     this.handleResetClick = this.handleResetClick.bind(this);
   }
-  componentDidMount() {
-    const dates = this.props.listingData.CreateListing.state.dates;
-    this.setState({
-      date_range: { from: dates.start_date, to: dates.end_date },
-      today: new Date(),
-    });
-  }
+
   getInitialState = () => {
-    this.setState({
+    const oldData = this.props.listingData.CreateListing.state.dates;
+    const initData = {
       date_range: {
-        from: null,
-        to: null,
+        from: oldData.start_date,
+        to: oldData.end_date,
       },
-    });
+      invalid_date: false,
+      today: oldData.today,
+    };
+    return initData;
   };
   handleDayClick(day) {
     let range = {};

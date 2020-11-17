@@ -1,22 +1,21 @@
 import React, { Component } from "react";
 import "./createListing.css";
-import {connect} from 'react-redux'
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 class PricesCL extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      price: "",
+      price: this.oldData(),
     };
     this.handleChange = this.handleChange.bind(this);
   }
-  componentDidMount() {
-    const oldPrice = this.props.listingData.CreateListing.state.price
-    this.setState ({
-      price: oldPrice
-    })
-  }
+
+  oldData = () => {
+    return this.props.listingData.CreateListing.state.price;
+  };
+
   handleChange(e) {
     const { name, value } = e.target;
     if (!isNaN(value)) {
@@ -26,7 +25,6 @@ class PricesCL extends Component {
         });
         this.props.handle(value, name);
       }
-      
     }
   }
   render() {
@@ -45,17 +43,25 @@ class PricesCL extends Component {
             placeholder="$ per night"
             onChange={this.handleChange}
           />
-          {this.state.price ? <p>List Price: ${this.state.price} per night</p>: ''}
-          {this.state.price ? <p>After taxes and fees: ${this.state.price} per night</p>: ''}
+          {this.state.price ? (
+            <p>List Price: ${this.state.price} per night</p>
+          ) : (
+            ""
+          )}
+          {this.state.price ? (
+            <p>After taxes and fees: ${this.state.price} per night</p>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    listingData: state
-  }
-}
+    listingData: state,
+  };
+};
 
-export default withRouter(connect(mapStateToProps, null)(PricesCL))
+export default withRouter(connect(mapStateToProps, null)(PricesCL));
