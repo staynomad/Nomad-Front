@@ -21,10 +21,9 @@ const ReservationSchema = new Schema({
         type: Array,
         required: true,
     },
-    timestamp: {
-        type: Date,
-        default: Date.now
-    }
+},
+{
+  timestamps: true
 });
 
 const Reservation = mongoose.model("reservation", ReservationSchema);
