@@ -10,6 +10,7 @@ import Profile from "./profile.component"
 import Questionnaire from "../matches/questionnaire.component"
 import Settings from "./settings.component"
 import { searchUserListings } from '../../redux/actions/searchListingActions';
+import { searchUserReservations } from '../../redux/actions/reservationActions';
 import 'semantic-ui-css/semantic.min.css'
 import './menu.css';
 
@@ -81,6 +82,11 @@ class LeftMenu extends Component {
             </div>
           </>
         );
+      case 'my reservations':
+        return (
+          <>
+          </>
+        );
       case 'settings':
         return <Settings />;
       default:
@@ -103,13 +109,26 @@ class LeftMenu extends Component {
                 compname='profile'
                 onClick={this.handleItemClick}
               />
+              {this.props.userSession.isHost ?
+                (
+                  <Menu.Item
+                    name='my listings'
+                    active={activeItem === 'my listings'}
+                    compname='my listings'
+                    onClick={(e, { name, compname }) => {
+                      this.handleItemClick(e, { name, compname });
+                      this.props.searchUserListings(this.props.userSession.token);
+                    }}
+                  />
+                ) : null
+              }
               <Menu.Item
-                name='my listings'
-                active={activeItem === 'my listings'}
-                compname='my listings'
+                name='my reservations'
+                active={activeItem === 'my reservations'}
+                compname='my reservations'
                 onClick={(e, { name, compname }) => {
                   this.handleItemClick(e, { name, compname });
-                  this.props.searchUserListings(this.props.userSession.token);
+                  this.props.searchUserReservations(this.props.userSession.token);
                 }}
               />
               <Menu.Item
@@ -134,16 +153,19 @@ class LeftMenu extends Component {
 const mapStateToProps = state => {
   if (state.Login.userInfo) return {
     userListings: state.Listing.userListings,
+    userReservations: state.Reservations.reservations,
     userSession: state.Login.userInfo.session,
   }
   return {
     userListings: state.Listing.userListings,
+    userReservations: state.Reservations.reservations,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     searchUserListings: (token) => dispatch(searchUserListings(token)),
+    searchUserReservations: (token) => dispatch(searchUserReservations(token))
   };
 };
 

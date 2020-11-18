@@ -11,7 +11,7 @@ router.post(
     "/createReservation",
     async (req, res) => {
         try {
-            const {user, listing, days} = req.body;
+            const { user, listing, days } = req.body;
             const listingInfo = await Listing.findOne({
                 _id: listing
             })
@@ -28,13 +28,13 @@ router.post(
             }
 
             for (let i = 0; i < listingInfo.booked.length; i++) {
-              const bookedStart = new Date(listingInfo.booked[i].start)
-              const bookedEnd = new Date(listingInfo.booked[i].end)
-              if ((reservationStart.getTime() >= bookedStart.getTime() && reservationStart.getTime() <= bookedEnd.getTime()) || (reservationEnd.getTime() >= bookedStart.getTime() && reservationEnd.getTime() <= bookedEnd.getTime())) {
-                  return res.status(400).json({
-                      "errors": "Selected days are invalid. Please try again."
-                  })
-              }
+                const bookedStart = new Date(listingInfo.booked[i].start)
+                const bookedEnd = new Date(listingInfo.booked[i].end)
+                if ((reservationStart.getTime() >= bookedStart.getTime() && reservationStart.getTime() <= bookedEnd.getTime()) || (reservationEnd.getTime() >= bookedStart.getTime() && reservationEnd.getTime() <= bookedEnd.getTime())) {
+                    return res.status(400).json({
+                        "errors": "Selected days are invalid. Please try again."
+                    })
+                }
             }
 
             const newReservation = await new Reservation({
@@ -45,22 +45,22 @@ router.post(
             }).save();
 
             const bookedInfo = {
-              start: days[0],
-              end: days[1],
-              reservationId: newReservation._id
+                start: days[0],
+                end: days[1],
+                reservationId: newReservation._id
             }
 
             const bookedListing = await Listing.findOneAndUpdate({ _id: listing }, { $push: { booked: bookedInfo } })
 
             res.status(201).json({
-              "message": "Reservation created successfully"
+                "message": "Reservation created successfully"
             });
         }
-        catch(error) {
+        catch (error) {
             console.log(error);
             res.status(500).json({
-              "errors":
-              ["Error creating reservation. Please try again!"]
+                "errors":
+                    ["Error creating reservation. Please try again!"]
             });
         }
     }
@@ -68,24 +68,25 @@ router.post(
 
 // Get all reservations by userId
 router.get(
-    "/getByUser/:userId",
+    "/getByUser",
+    requireUserAuth,
     async (req, res) => {
         try {
-            const reservation = await Reservation.find({ user: req.params.userId });
+            const reservation = await Reservation.find({ user: req.user._id });
             if (!reservation) {
                 return res.status(404).json({
-                  errors: ["User has not made any reservations"],
+                    errors: ["User has not made any reservations"],
                 });
             }
-            res.status(201).json({
+            res.status(200).json({
                 "reservations": reservation
             });
         }
-        catch(error) {
+        catch (error) {
             console.log(error);
             res.status(500).json({
-              "errors":
-              ["Error creating reservation. Please try again!"]
+                "errors":
+                    ["Error creating reservation. Please try again!"]
             });
         }
     }
@@ -99,18 +100,18 @@ router.get(
             const reservation = await Reservation.find({ listing: req.params.listing });
             if (!reservation) {
                 return res.status(404).json({
-                  errors: ["User has not made any reservations"],
-              });
+                    errors: ["User has not made any reservations"],
+                });
             }
             res.status(201).json({
                 "reservations": reservation
             });
         }
-        catch(error) {
+        catch (error) {
             console.log(error);
             res.status(500).json({
-              "errors":
-              ["Error creating reservation. Please try again!"]
+                "errors":
+                    ["Error creating reservation. Please try again!"]
             });
         }
     }
@@ -150,18 +151,18 @@ router.post(
             const reservation = await Reservation.findByIdAndUpdate(req.params.reservationId, update);
             if (!reservation) {
                 return res.status(404).json({
-                  errors: ["Reservation does not exist"],
-              });
+                    errors: ["Reservation does not exist"],
+                });
             }
             res.status(201).json({
                 "message": `Deactivated ${req.params.reservationId}`
             });
         }
-        catch(error) {
+        catch (error) {
             console.log(error);
             res.status(500).json({
-              "errors":
-              ["Error creating reservation. Please try again!"]
+                "errors":
+                    ["Error creating reservation. Please try again!"]
             });
         }
     }
@@ -175,18 +176,18 @@ router.post(
             const reservation = await Reservation.findByIdAndUpdate(req.params.reservationId, update);
             if (!reservation) {
                 return res.status(404).json({
-                  errors: ["Reservation does not exist"],
-              });
+                    errors: ["Reservation does not exist"],
+                });
             }
             res.status(201).json({
                 "message": `Activated ${req.params.reservationId}`
             });
         }
-        catch(error) {
+        catch (error) {
             console.log(error);
             res.status(500).json({
-              "errors":
-              ["Error creating reservation. Please try again!"]
+                "errors":
+                    ["Error creating reservation. Please try again!"]
             });
         }
     }

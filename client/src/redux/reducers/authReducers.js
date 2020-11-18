@@ -8,6 +8,7 @@ export default function reducer(state = {}, action) {
                 userInfo: {
                     ...state.userInfo,
                     session: {
+                        isHost: action.isHost,
                         token: action.token,
                         userId: action.userId,
                     },
