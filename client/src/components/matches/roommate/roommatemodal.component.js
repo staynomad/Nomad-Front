@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import "./roommatemodal.css";
 
 class RoommateModal extends React.Component {

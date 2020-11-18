@@ -2,6 +2,8 @@
 
 import React, { Component } from 'react'
 import axios from 'axios'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import { loadStripe } from "@stripe/stripe-js"
 import DayPicker, { DateUtils } from 'react-day-picker'
 import 'react-day-picker/lib/style.css'
@@ -75,10 +77,14 @@ class ListingPage extends Component {
   }
 
   handlePayment() {
+    if (!this.props.userSession) {
+      alert("Please log in to create a reservation.")
+      return this.props.history.push('/login')
+    }
     const selectedStartDay = JSON.stringify(this.state.from).substring(1, JSON.stringify(this.state.from).indexOf("T"))
     const selectedEndDay = JSON.stringify(this.state.to).substring(1, JSON.stringify(this.state.to).indexOf("T"))
     const data = {
-      user: "5f8cb84c59224a4c409c16e3", // get userId from redux store
+      user: this.props.userSession.userId, // get userId from redux store
       listing: this.props.match.params.id,
       days: [selectedStartDay, selectedEndDay]
     }
@@ -108,7 +114,7 @@ class ListingPage extends Component {
         sessionId: session.id,
       });
       if (result.error) {
-        console.log(result.error.message);
+        alert(result.error.message);
       }
     })
     .catch((err) => {
@@ -180,4 +186,15 @@ class ListingPage extends Component {
   }
 }
 
-export default ListingPage
+const mapStateToProps = state => {
+  if (state.Login.userInfo) return {
+    userSession: state.Login.userInfo.session,
+  }
+  return {}
+}
+
+export default withRouter(connect(
+  mapStateToProps,
+)(
+  ListingPage
+))
