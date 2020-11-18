@@ -35,6 +35,12 @@ class LeftMenu extends Component {
     this.handleItemClick = this.handleItemClick.bind(this)
   }
 
+  componentDidMount() {
+    if (!this.props.userSession) {
+      return this.props.history.push('/login')
+    }
+  }
+
   handleItemClick(e, { name, compname }) {
     this.setState({ activeItem: name, render: compname })
     console.log(this.state)
