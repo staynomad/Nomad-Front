@@ -4,9 +4,9 @@ const router = express.Router();
 const Reservation = require("../models/reservation.model");
 const Listing = require("../models/listing.model")
 const { requireUserAuth } = require("../utils");
+const nodemailer = require('nodemailer');
 
 // Create a reservation
-// TODO: send email to host and user to confirm
 router.post(
     "/createReservation",
     async (req, res) => {
@@ -15,18 +15,17 @@ router.post(
             const listingInfo = await Listing.findOne({
                 _id: listing
             })
-
+            // Parse string dates to new date objects
             const availableStart = new Date(listingInfo.available[0])
             const availableEnd = new Date(listingInfo.available[1])
             const reservationStart = new Date(days[0])
             const reservationEnd = new Date(days[1])
-
+            // Verify that the booked dates and available dates do not conflict with reservation
             if (reservationStart.getTime() < availableStart.getTime() || reservationEnd.getTime() > availableEnd.getTime()) {
                 return res.status(400).json({
                     "errors": "Selected days are invalid. Please try again."
                 })
             }
-
             for (let i = 0; i < listingInfo.booked.length; i++) {
                 const bookedStart = new Date(listingInfo.booked[i].start)
                 const bookedEnd = new Date(listingInfo.booked[i].end)
@@ -36,21 +35,44 @@ router.post(
                     })
                 }
             }
-
+            // Create a new object in reservations collection and update 'booked' field in listing
             const newReservation = await new Reservation({
                 user,
                 listing,
                 active: true,
                 days
             }).save();
-
             const bookedInfo = {
                 start: days[0],
                 end: days[1],
                 reservationId: newReservation._id
             }
-
             const bookedListing = await Listing.findOneAndUpdate({ _id: listing }, { $push: { booked: bookedInfo } })
+
+            const transporter = nodemailer.createTransport({
+              service: 'gmail',
+              auth: {
+                user: 'vhomesgroup@gmail.com',
+                pass: 'Aiden2020'
+              }
+            })
+            const userMailOptions = {
+              from: 'reservations@vhomesgroup.com',
+              to: 'aszeto35@gmail.com',
+              subject: 'Your Reservation Confirmation',
+              text: `Thank you for booking with VHomes!`
+            }
+            const hostMailOptions = {
+              from: 'reservations@vhomesgroup.com',
+              to: 'aszeto35@gmail.com',
+              subject: 'Your listing has been booked!',
+              text: `Thank you for listing on VHomes!`
+            }
+            transporter.sendMail(userMailOptions, (error, info) => {
+              if (error) {
+                console.log(error)
+              }
+            })
 
             res.status(201).json({
                 "message": "Reservation created successfully"
