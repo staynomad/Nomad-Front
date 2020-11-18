@@ -37,6 +37,7 @@ router.post(
       return res.status(200).json({
         token,
         userId: user.id,
+        isHost: user.isHost,
       });
     } catch (error) {
       console.error(error);
