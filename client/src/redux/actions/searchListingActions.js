@@ -1,4 +1,4 @@
-import handleReq from "../../utils/fetchRequest.js"; // you can probably just use regular fetch request
+import handleReq from "../../utils/fetchRequest.js";
 
 /* Types */
 export const SET_SEARCH_LISTINGS = 'VHomes/listings/SET_SEARCH_LISTINGS';

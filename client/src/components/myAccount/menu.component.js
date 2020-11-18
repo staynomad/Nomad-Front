@@ -55,7 +55,9 @@ class LeftMenu extends Component {
           return (
             <div>
               <Profile />
-              <Questionnaire userId={this.props.userSession.userId} />
+              <CustomButton>
+                <NavLink to="/Questionnaire">Roommate Preference Form</NavLink>
+              </CustomButton>
             </div>
           )
         } else return null;
