@@ -24,14 +24,14 @@ class Description extends Component {
   }
   handleChange(e) {
     const { name, value } = e.target;
-    const dif = this.state.maxchars - value.length; 
+    const dif = this.state.maxchars - value.length;
     if (value.length <= this.state.maxchars ){
       this.setState({
         [name]: value,
         charleft: dif
       });
     }
-    
+
     this.props.handle(value, name);
   }
   render() {
@@ -39,14 +39,14 @@ class Description extends Component {
       <div>
         <div className="startText">Description</div>
         <br />
-        <div className="questionText">Tell us about your property.</div>
+        <div className="questionText">Tell us the details about your property.</div>
         <br />
         <textarea
           type="text"
           name="description"
-          className="textInputBox"
+          className="descriptionTextInputBox"
           value={this.state.description}
-          placeholder="e.g. this beautiful apartment overlooking a park"
+          placeholder="Be detailed! The more information you include the greater the chance your property gets booked."
           onChange={this.handleChange}
           ></textarea>
           <h3>{this.state.charleft} characters are left</h3>
