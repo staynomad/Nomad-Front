@@ -8,6 +8,7 @@
     "start:production": "./bin/www.js"
   },
   "dependencies": {
+    "axios": "^0.21.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -17,6 +18,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.13",
     "morgan": "^1.10.0",
+    "nodemailer": "^6.4.16",
     "per-env": "^1.0.2",
     "stripe": "^8.121.0"
   },
