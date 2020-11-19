@@ -1,5 +1,9 @@
 import React, {useState} from 'react';
 import Axios from 'axios';
+import {withStyles} from '@material-ui/core/styles';
+import {NavLink, withRouter} from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+
 
 var PERSONALITY_TYPES = ['INTJ- The Architect', 'INTP- The Logician', 'ENJT- The Commander',
                          'ENTP- The Debater', 'INFJ- The Advocate', 'INFP- The Mediator',
@@ -15,6 +19,18 @@ const HOBBIES = ['Reading', 'Watching TV', 'Spending Time with Family', 'Going t
                  'Biking', 'Playing Cards', 'Hiking', 'Cooking', 'Swimming', 'Camping',
                  'Ski/Snowboarding', 'Writing', 'Boating', 'Horseback Riding',
                  'Practicing an instrument', 'Dancing'];
+
+const CustomButton = withStyles (theme => ({
+  root: {
+    color: '#00B183',
+    backgroundColor: 'transparent',
+    border: '2px solid #00B183',
+    borderRadius: '8px',
+    font: 'inherit',
+    fontSize: '16px',
+    fontWeight: 'normal',
+  },
+})) (Button);
 
 export default function Questionnaire (props) {
   const [hobbies, setHobbies] = useState ({});
@@ -79,6 +95,10 @@ export default function Questionnaire (props) {
 
   return (
     <div>
+      <br /><br /><br /><br />
+      <CustomButton>
+        <NavLink to="/MyAccount">Back to MyAccount</NavLink>
+      </CustomButton>
       <h2>Roommate Preferences Form</h2>
       <hr />
       <form onSubmit={handleSubmit}>
@@ -353,6 +373,9 @@ export default function Questionnaire (props) {
       <h3 style={{color: "red"}}>Your responses have not been recorded. Please make sure that
       all forms are filled out and press Submit your preferences!</h3>}
       {notLoggedIn ? <h3>You must be logged in to submit a questionnaire response!</h3> : ''}
+      <CustomButton>
+        <NavLink to="/MyAccount">Back to MyAccount</NavLink>
+      </CustomButton>
     </div>
   );
 }
