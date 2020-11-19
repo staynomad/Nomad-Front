@@ -48,6 +48,7 @@ class DetailsCL extends Component {
                 className="input-box-details"
                 value={this.state.beds}
                 onChange={this.handleChange}
+                required
               />
             </div>
 
@@ -61,6 +62,7 @@ class DetailsCL extends Component {
                   placeholder="e.g. 2"
                   value={this.state.baths}
                   onChange={this.handleChange}
+                  required
                 />
               </div>
 
@@ -73,6 +75,7 @@ class DetailsCL extends Component {
                   className="input-box-details"
                   value={this.state.maxpeople}
                   onChange={this.handleChange}
+                  required
                 />
               </div>
             </div>

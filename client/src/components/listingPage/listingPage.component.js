@@ -23,9 +23,6 @@ class ListingPage extends Component {
   }
 
   async componentDidMount() {
-    this.setState({
-        reserved: false
-    })
     await axios.get('http://localhost:8080/listings/byId/' + this.props.match.params.id)
     .then((res) => {
       this.setState({
@@ -88,11 +85,12 @@ class ListingPage extends Component {
       listing: this.props.match.params.id,
       days: [selectedStartDay, selectedEndDay]
     }
-    axios.post('http://localhost:8080/reservation/createReservation', data)
+    axios.post('http://localhost:8080/reservation/createReservation', data, {
+      headers: {
+        "Authorization": `Bearer ${this.props.userSession.token}`
+      }
+    })
     .then(async (res) => {
-      this.setState({
-        reserved: true
-      })
       // Create Stripe Checkout Session
       const stripe = await stripePromise;
       const resDays = parseInt((this.state.to - this.state.from) / (1000 * 3600 * 24)) + 1;
@@ -176,12 +174,17 @@ class ListingPage extends Component {
             modifiers={modifiers}
             onDayClick={this.handleDayClick}
             disabledDays={this.state.listingBookedDays}
+            inputProps={
+              { required: true }
+            }
           />
-        </div>
-
-      <input type="button" value="reserve now" onClick={this.handlePayment} /> <br />
-      { this.state.reserved ? <h2> reserved! </h2> : ""}
       </div>
+      {
+        this.state.from && this.state.to ?
+        <input type="button" value="reserve now" onClick={this.handlePayment} /> :
+        null
+      }
+    </div>
     )
   }
 }

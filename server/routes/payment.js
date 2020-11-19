@@ -42,7 +42,7 @@ router.post('/create-session', async (req, res) => {
         ],
 
         mode: 'payment',
-        success_url: `http://localhost:3000`,
+        success_url: `http://localhost:3000/PaymentSuccess`,
         cancel_url: `http://localhost:3000/listing/${listingId}`,
       });
       res.status(200).json({

@@ -11,6 +11,7 @@ const nodemailer = require('nodemailer');
 // Create a reservation
 router.post(
     "/createReservation",
+    requireUserAuth,
     async (req, res) => {
         try {
             const { user, listing, days } = req.body;
@@ -84,7 +85,7 @@ router.post(
                   console.log(error)
                 }
                 else {
-                  console.log(`Email sent to guest`)
+                  console.log(`Reservation confirmation email sent to guest ${res.data.email}`)
                 }
               })
             })
@@ -117,7 +118,7 @@ router.post(
                   console.log(error)
                 }
                 else {
-                  console.log(`Email sent to host`)
+                  console.log(`Reservation confirmation email sent to host ${res.data.email}`)
                 }
               })
             })
@@ -245,7 +246,8 @@ router.post(
 
 // This will be called when the user checks in
 router.post(
-    "/activate/:reservationId"
+    "/activate/:reservationId",
+    requireUserAuth,
     async (req, res) => {
         try {
             const update = { active: true }
@@ -255,7 +257,7 @@ router.post(
                     errors: ["Reservation does not exist"],
                 });
             }
-            
+
             // Send confirmation email to guest
             axios.get(`http://localhost:8080/user/getUserInfo/${req.user._id}`) // Not sure if this is right
             .then((res) => {
@@ -279,7 +281,7 @@ router.post(
                   console.log(error)
                 }
                 else {
-                  console.log(`Email sent to guest`)
+                  console.log(`Checkin confirmation email sent to guest ${res.data.email}`)
                 }
               })
             })
@@ -312,7 +314,7 @@ router.post(
                   console.log(error)
                 }
                 else {
-                  console.log(`Email sent to host`)
+                  console.log(`Checkin confirmation email sent to host ${res.data.email}`)
                 }
               })
             })

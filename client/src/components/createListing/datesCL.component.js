@@ -79,6 +79,9 @@ class DatesCL extends Component {
           selectedDays={[from, { from, to }]}
           modifiers={modifiers}
           onDayClick={this.handleDayClick}
+          inputProps={
+            { required: true }
+          }
         />
         <Helmet>
           <style>{`
