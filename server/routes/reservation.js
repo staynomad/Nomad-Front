@@ -67,7 +67,7 @@ router.post(
               const userMailOptions = {
                 from: '"VHomes" <reservations@vhomesgroup.com>',
                 to: res.data.email,
-                subject: 'Your Reservation has been Confirmed',
+                subject: `Your Reservation has been Confirmed: ${bookedListing.description}`,
                 text:
                   `Thank you for booking with VHomes! Here's your reservation information:
 
@@ -77,7 +77,7 @@ router.post(
                   Days: ${newReservation.days[0]} to ${newReservation.days[1]}
                   Host name: ${res.data.name}
 
-                  If you have any questions or concerns, please reach out to the host at ${res.data.email}. Hope you enjoy your stay!`
+                  When you arrive at the property, make sure to checkin via the VHomes website in order to alert the host that you have arrived. If you have any questions or concerns, please reach out to the host at ${res.data.email}. Hope you enjoy your stay!`
               }
               transporter.sendMail(userMailOptions, (error, info) => {
                 if (error) {
@@ -100,7 +100,7 @@ router.post(
               const hostMailOptions = {
                 from: '"VHomes" <reservations@vhomesgroup.com>',
                 to: res.data.email,
-                subject: 'Your listing has been booked',
+                subject: `Your listing has been booked: ${bookedListing.description}`,
                 text:
                 `Thank you for listing on VHomes! Here's the information regarding your listing reservation:
 
@@ -110,7 +110,7 @@ router.post(
                 Days: ${newReservation.days[0]} to ${newReservation.days[1]}
                 Guest name: ${res.data.name}
 
-                If you have any questions or concerns, please reach out to the guest at ${res.data.email}. Thank you for choosing VHomes!`
+                We'll send you another email once the guest has checked in. If you have any questions or concerns, please reach out to the guest at ${res.data.email}. Thank you for choosing VHomes!`
               }
               transporter.sendMail(hostMailOptions, (error, info) => {
                 if (error) {
@@ -123,7 +123,7 @@ router.post(
             })
             .catch((err) => {
               return res.status(500).json({
-                  "errors": "Error sending confirmation email to guest."
+                  "errors": "Error sending confirmation email to host."
               })
             })
 
@@ -243,8 +243,9 @@ router.post(
     }
 )
 
+// This will be called when the user checks in
 router.post(
-    "/activate/:reservationId",
+    "/activate/:reservationId"
     async (req, res) => {
         try {
             const update = { active: true }
@@ -254,6 +255,73 @@ router.post(
                     errors: ["Reservation does not exist"],
                 });
             }
+            
+            // Send confirmation email to guest
+            axios.get(`http://localhost:8080/user/getUserInfo/${req.user._id}`) // Not sure if this is right
+            .then((res) => {
+              const userMailOptions = {
+                from: '"VHomes" <reservations@vhomesgroup.com>',
+                to: res.data.email,
+                subject: `Thanks for checking in to ${bookedListing.description}!`,
+                text:
+                  `You have successfully checked in to your stay! The host has been notified and will let you in soon. If you have any questions or concerns, please reach out to the host at ${res.data.email}.
+
+                  ${bookedListing.description}
+                  Address: ${bookedListing.location.street}, ${bookedListing.location.city}, ${bookedListing.location.state}, ${bookedListing.location.zipcode}
+                  Total cost: $${bookedListing.price * totalDays}
+                  Days: ${newReservation.days[0]} to ${newReservation.days[1]}
+                  Host name: ${res.data.name}
+
+                  Hope you enjoy your stay!`
+              }
+              transporter.sendMail(userMailOptions, (error, info) => {
+                if (error) {
+                  console.log(error)
+                }
+                else {
+                  console.log(`Email sent to guest`)
+                }
+              })
+            })
+            .catch((err) => {
+              return res.status(500).json({
+                  "errors": "Error sending confirmation email to guest."
+              })
+            })
+
+            // Send confirmation email to host
+            axios.get(`http://localhost:8080/user/getUserInfo/${req.user._id}`) // Not sure if this is right
+            .then((res) => {
+              const hostMailOptions = {
+                from: '"VHomes" <reservations@vhomesgroup.com>',
+                to: res.data.email,
+                subject: `Your guest has checked in to ${bookedListing.description}!`,
+                text:
+                `Your guest has just checked in! Please provide them with the next steps to begin their stay. If you have any questions or concerns, please reach out to the guest at ${res.data.email}.
+
+                ${bookedListing.description}
+                Address: ${bookedListing.location.street}, ${bookedListing.location.city}, ${bookedListing.location.state}, ${bookedListing.location.zipcode}
+                Total cost: $${bookedListing.price * totalDays}
+                Days: ${newReservation.days[0]} to ${newReservation.days[1]}
+                Guest name: ${res.data.name}
+
+                Thank you for choosing VHomes!`
+              }
+              transporter.sendMail(hostMailOptions, (error, info) => {
+                if (error) {
+                  console.log(error)
+                }
+                else {
+                  console.log(`Email sent to host`)
+                }
+              })
+            })
+            .catch((err) => {
+              return res.status(500).json({
+                  "errors": "Error sending confirmation email to guest."
+              })
+            })
+
             res.status(201).json({
                 "message": `Activated ${req.params.reservationId}`
             });
