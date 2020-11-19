@@ -77,9 +77,9 @@ router.post(
                   Address: ${bookedListing.location.street}, ${bookedListing.location.city}, ${bookedListing.location.state}, ${bookedListing.location.zipcode}
                   Total cost: $${bookedListing.price * totalDays}
                   Days: ${newReservation.days[0]} to ${newReservation.days[1]}
-                  Host name:
+                  Host name: ${res.data.name}
 
-                  If you have any questions or concerns, please reach out to the host at [add host email]. Hope you enjoy your stay!`
+                  If you have any questions or concerns, please reach out to the host at ${res.data.email}. Hope you enjoy your stay!`
               }
               transporter.sendMail(userMailOptions, (error, info) => {
                 if (error) {
@@ -110,9 +110,9 @@ router.post(
                 Address: ${bookedListing.location.street}, ${bookedListing.location.city}, ${bookedListing.location.state}, ${bookedListing.location.zipcode}
                 Total cost: $${bookedListing.price * totalDays}
                 Days: ${newReservation.days[0]} to ${newReservation.days[1]}
-                Guest name:
+                Guest name: ${res.data.name}
 
-                If you have any questions or concerns, please reach out to the guest at [add guest email]. Thank you for choosing VHomes!`
+                If you have any questions or concerns, please reach out to the guest at ${res.data.email}. Thank you for choosing VHomes!`
               }
               transporter.sendMail(hostMailOptions, (error, info) => {
                 if (error) {
