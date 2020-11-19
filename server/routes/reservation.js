@@ -44,15 +44,13 @@ router.post(
                 listing,
                 active: true,
                 days
-            })
-            // .save();
+            }).save();
             const bookedInfo = {
                 start: days[0],
                 end: days[1],
                 reservationId: newReservation._id
             }
-            // const bookedListing = await Listing.findOneAndUpdate({ _id: listing }, { $push: { booked: bookedInfo } })
-            const bookedListing = await Listing.findOne({ _id: listing })
+            const bookedListing = await Listing.findOneAndUpdate({ _id: listing }, { $push: { booked: bookedInfo } })
 
             // Create nodemailer transport to send reservation confirmation emails
             const transporter = nodemailer.createTransport({
