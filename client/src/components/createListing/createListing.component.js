@@ -54,6 +54,14 @@ class CreateListing extends Component {
   }
   componentDidMount() {
     this.props.updateInfo(this.state);
+    if (!this.props.userSession) {
+      alert("Please log in to create a listing.")
+      return this.props.history.push('/login')
+    }
+    if (this.props.userSession.isHost == false) {
+      alert("Please create a host account to create a listing.")
+      return this.props.history.push('/signup')
+    }
   }
   handleChange(e, name) {
     this.setState({
@@ -160,10 +168,13 @@ class CreateListing extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  //console.log(state)
+  if (state.Login.userInfo) return {
+    listingData: state,
+    userSession: state.Login.userInfo.session,
+  }
   return {
     listingData: state,
-  };
+  }
 };
 
 const mapDispatchToProps = (dispatch) => {
