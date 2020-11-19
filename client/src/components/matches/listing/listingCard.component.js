@@ -7,7 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 // import ListingsModal from './listingsmodal.component';
 import { deleteListingById } from '../../../redux/actions/searchListingActions';
 
-const DeleteButton = withStyles((theme) => ({
+const CustomButton = withStyles((theme) => ({
   root: {
     color: "#00B183",
     backgroundColor: "transparent",
@@ -51,7 +51,10 @@ const ListingCard = (props) => {
         </div>
       </NavLink>
       {props.userSession && props.userSession.userId === listing.userId ? (
-        <DeleteButton onClick={handleDeleteListing}>Delete</DeleteButton>
+        <CustomButton onClick={() => props.history.push(`/editListing/${listing._id}`)}>Edit</CustomButton>
+      ) : null}
+      {props.userSession && props.userSession.userId === listing.userId ? (
+        <CustomButton onClick={handleDeleteListing}>Delete</CustomButton>
       ) : null}
     </div>
   )
