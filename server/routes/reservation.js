@@ -52,6 +52,7 @@ router.post(
                 reservationId: newReservation._id
             }
             // const bookedListing = await Listing.findOneAndUpdate({ _id: listing }, { $push: { booked: bookedInfo } })
+<<<<<<< HEAD
             const bookedListing = await Listing.findOne({ _id: listing })
 
             // Get user email from user collection
@@ -77,6 +78,10 @@ router.post(
             })
             console.log(userEmail)
             console.log(hostEmail)
+=======
+            const bookedListing = await Listing.findOne({ _id: listing });
+
+>>>>>>> 66fec491a1b2db4006ac10b4230be00d07b450ed
             const transporter = nodemailer.createTransport({
               service: 'gmail',
               auth: {
@@ -86,11 +91,16 @@ router.post(
             })
             const userMailOptions = {
               from: '"VHomes" <reservations@vhomesgroup.com>',
+<<<<<<< HEAD
               to: userEmail,
+=======
+              to: 'aszeto35@gmail.com',
+>>>>>>> 66fec491a1b2db4006ac10b4230be00d07b450ed
               subject: 'Your Reservation has been Confirmed',
               text:
                 `
                 Thank you for booking with VHomes! Here's your reservation information:
+<<<<<<< HEAD
 
                 ${bookedListing.description}
                 Address: ${bookedListing.location.street}, ${bookedListing.location.city}, ${bookedListing.location.state}, ${bookedListing.location.zipcode}
@@ -114,6 +124,31 @@ router.post(
                 Days: ${newReservation.days[0]} to ${newReservation.days[1]}
                 Guest name:
 
+=======
+
+                ${bookedListing.description}
+                Address: ${bookedListing.location.street}, ${bookedListing.location.city}, ${bookedListing.location.state}, ${bookedListing.location.zipcode}
+                Total cost: $${bookedListing.price * totalDays}
+                Days: ${newReservation.days[0]} to ${newReservation.days[1]}
+                Host name:
+
+                If you have any questions or concerns, please reach out to the host at [add host email]. Hope you enjoy your stay!
+                `
+            }
+            const hostMailOptions = {
+              from: '"VHomes" <reservations@vhomesgroup.com>',
+              to: 'aszeto35@gmail.com',
+              subject: 'Your listing has been booked',
+              text:
+                `Thank you for listing on VHomes! Here's the information regarding your listing reservation:
+
+                ${bookedListing.description}
+                Address: ${bookedListing.location.street}, ${bookedListing.location.city}, ${bookedListing.location.state}, ${bookedListing.location.zipcode}
+                Total cost: $${bookedListing.price * totalDays}
+                Days: ${newReservation.days[0]} to ${newReservation.days[1]}
+                Guest name:
+
+>>>>>>> 66fec491a1b2db4006ac10b4230be00d07b450ed
                 If you have any questions or concerns, please reach out to the guest at [add guest email]. Thank you for choosing VHomes!
                 `
             }
@@ -122,7 +157,11 @@ router.post(
                 console.log(error)
               }
               else {
+<<<<<<< HEAD
                 console.log(`Email sent to guest`)
+=======
+                console.log(info)
+>>>>>>> 66fec491a1b2db4006ac10b4230be00d07b450ed
               }
             })
             transporter.sendMail(hostMailOptions, (error, info) => {
@@ -130,7 +169,11 @@ router.post(
                 console.log(error)
               }
               else {
+<<<<<<< HEAD
                 console.log(`Email sent to host`)
+=======
+                console.log(info)
+>>>>>>> 66fec491a1b2db4006ac10b4230be00d07b450ed
               }
             })
 
