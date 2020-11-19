@@ -44,14 +44,39 @@ router.post(
                 listing,
                 active: true,
                 days
-            }).save();
+            })
+            // .save();
             const bookedInfo = {
                 start: days[0],
                 end: days[1],
                 reservationId: newReservation._id
             }
-            const bookedListing = await Listing.findOneAndUpdate({ _id: listing }, { $push: { booked: bookedInfo } })
+            // const bookedListing = await Listing.findOneAndUpdate({ _id: listing }, { $push: { booked: bookedInfo } })
+            const bookedListing = await Listing.findOne({ _id: listing })
 
+            // Get user email from user collection
+            var userEmail = '', hostEmail = ''
+            axios.get(`http://localhost:8080/user/getUserInfo/${req.body.user}`)
+            .then((res) => {
+              userEmail = res.data.email
+            })
+            .catch((err) => {
+              return res.status(400).json({
+                  "errors": "Error sending confirmation email."
+              })
+            })
+            // Get host email from user collection
+            axios.get(`http://localhost:8080/user/getUserInfo/${bookedListing.userId}`)
+            .then((res) => {
+              hostEmail = res.data.email
+            })
+            .catch((err) => {
+              return res.status(400).json({
+                  "errors": "Error sending confirmation email."
+              })
+            })
+            console.log(userEmail)
+            console.log(hostEmail)
             const transporter = nodemailer.createTransport({
               service: 'gmail',
               auth: {
@@ -61,7 +86,7 @@ router.post(
             })
             const userMailOptions = {
               from: '"VHomes" <reservations@vhomesgroup.com>',
-              to: 'aszeto35@gmail.com',
+              to: userEmail,
               subject: 'Your Reservation has been Confirmed',
               text:
                 `
@@ -78,7 +103,7 @@ router.post(
             }
             const hostMailOptions = {
               from: '"VHomes" <reservations@vhomesgroup.com>',
-              to: 'aszeto35@gmail.com',
+              to: hostEmail,
               subject: 'Your listing has been booked',
               text:
                 `Thank you for listing on VHomes! Here's the information regarding your listing reservation:
@@ -97,7 +122,7 @@ router.post(
                 console.log(error)
               }
               else {
-                console.log(info)
+                console.log(`Email sent to guest`)
               }
             })
             transporter.sendMail(hostMailOptions, (error, info) => {
@@ -105,7 +130,7 @@ router.post(
                 console.log(error)
               }
               else {
-                console.log(info)
+                console.log(`Email sent to host`)
               }
             })
 
