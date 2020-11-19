@@ -48,6 +48,7 @@ class Description extends Component {
           value={this.state.description}
           placeholder="Be detailed! The more information you include the greater the chance your property gets booked."
           onChange={this.handleChange}
+          required
           ></textarea>
           <h3>{this.state.charleft} characters are left</h3>
       </div>

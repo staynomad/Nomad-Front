@@ -49,6 +49,7 @@ class Location extends Component {
                   value={this.state.street}
                   placeholder="5230 Newell Road"
                   onChange={this.handleChange}
+                  required
                 />
               </div>
               <div className="gen-subsec">
@@ -60,6 +61,7 @@ class Location extends Component {
                   value={this.state.city}
                   placeholder="Palo Alto"
                   onChange={this.handleChange}
+                  required
                 />
               </div>
 
@@ -72,6 +74,7 @@ class Location extends Component {
                   value={this.state.state}
                   placeholder="CA"
                   onChange={this.handleChange}
+                  required
                 />
               </div>
 
@@ -84,6 +87,7 @@ class Location extends Component {
                   value={this.state.country}
                   placeholder="USA"
                   onChange={this.handleChange}
+                  required
                 />
               </div>
 
@@ -94,8 +98,9 @@ class Location extends Component {
                   name="zipcode"
                   className="inputBox zipInputBox"
                   value={this.state.zipcode}
-                  placeholder="90201"
+                  placeholder="90210"
                   onChange={this.handleChange}
+                  required
                 />
               </div>
 
@@ -103,7 +108,7 @@ class Location extends Component {
                 <div className="label-text">Apartment:</div>
                 <input
                   type="text"
-                  name="aptnum"
+                  name="(optional)"
                   className="inputBox aptnumInputBox"
                   value={this.state.aptnum}
                   placeholder="aptnum"

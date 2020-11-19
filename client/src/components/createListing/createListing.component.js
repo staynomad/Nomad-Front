@@ -60,7 +60,7 @@ class CreateListing extends Component {
     }
     if (this.props.userSession.isHost == false) {
       alert("Please create a host account to create a listing.")
-      return this.props.history.push('/signup')
+      return this.props.history.push('/')
     }
   }
   handleChange(e, name) {

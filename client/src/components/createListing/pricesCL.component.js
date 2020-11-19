@@ -42,6 +42,7 @@ class PricesCL extends Component {
             value={this.state.price}
             placeholder="$ per night"
             onChange={this.handleChange}
+            required
           />
           {this.state.price ? (
             <p>List Price: ${this.state.price} per night</p>

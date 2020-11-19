@@ -35,7 +35,7 @@ class TitleCL extends Component {
   render() {
     return (
       <div>
-        <div className="startText">Name</div>
+        <div className="startText">Title</div>
         <br />
         <div className="questionText">What do you want to call this listing?</div>
         <br />
@@ -46,6 +46,7 @@ class TitleCL extends Component {
           value={this.state.title}
           placeholder="e.g. Beautiful apartment overlooking Central Park"
           onChange={this.handleChange}
+          required
         ></textarea>
         <h3>{this.state.charleft} Characters Left</h3>
       </div>
