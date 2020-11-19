@@ -45,6 +45,21 @@
   background-color: white;
 }
 
+.descriptionTextInputBox {
+  width: 98%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 25px;
+  padding-right: 25px;
+  height: 300px;
+  border-radius: 25px;
+  border: 2px solid rgb(210 210 210 / 47%);
+  background-color: white;
+  color: #4d4842;
+  font-size: 15px;
+  background-color: white;
+}
+
 .priceInputBox {
   margin-bottom: 5%;
   width: 50%;

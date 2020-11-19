@@ -22,7 +22,7 @@ export default class RulesCL extends Component {
         <div>
           <div className="startText">Rules</div>
           <br />
-          <div className="questionText">You're almost there!</div>
+          <div className="questionText">Add any rules here! (optional)</div>
           <br />
           <textarea
             type="text"

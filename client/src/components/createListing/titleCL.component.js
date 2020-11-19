@@ -35,16 +35,16 @@ class TitleCL extends Component {
   render() {
     return (
       <div>
-        <div className="startText">Title</div>
+        <div className="startText">Name</div>
         <br />
-        <div className="questionText">Give a Brief Title</div>
+        <div className="questionText">What do you want to call this listing?</div>
         <br />
         <textarea
           type="text"
           name="title"
           className="textInputBox"
           value={this.state.title}
-          placeholder="e.g. this beautiful apartment overlooking a park"
+          placeholder="e.g. Beautiful apartment overlooking Central Park"
           onChange={this.handleChange}
         ></textarea>
         <h3>{this.state.charleft} Characters Left</h3>

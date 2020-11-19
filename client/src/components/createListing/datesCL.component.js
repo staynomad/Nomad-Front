@@ -52,7 +52,7 @@ class DatesCL extends Component {
     return (
       <div>
         <div className="startText">Availibility</div> <br />
-        <h1 className="questionText">When do you want to list it?</h1>
+        <h1 className="questionText">When is your property available?</h1>
         <p>
           {this.state.invalid_date ? (
             <h3 style={{ color: "red" }}>
@@ -126,5 +126,5 @@ export default withRouter(connect(mapStateToProps, null)(DatesCL));
             selectedDays={this.state.end_date}
           />
         </div>
-  
+
 */
