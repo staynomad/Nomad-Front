@@ -1,3 +1,5 @@
+const axios = require('axios')
+
 const express = require("express");
 const router = express.Router();
 
@@ -42,15 +44,13 @@ router.post(
                 listing,
                 active: true,
                 days
-            })
-            // .save();
+            }).save();
             const bookedInfo = {
                 start: days[0],
                 end: days[1],
                 reservationId: newReservation._id
             }
-            // const bookedListing = await Listing.findOneAndUpdate({ _id: listing }, { $push: { booked: bookedInfo } })
-            const bookedListing = await Listing.findOne({ _id: listing });
+            const bookedListing = await Listing.findOneAndUpdate({ _id: listing }, { $push: { booked: bookedInfo } })
 
             const transporter = nodemailer.createTransport({
               service: 'gmail',

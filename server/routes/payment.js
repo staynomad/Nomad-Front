@@ -45,7 +45,6 @@ router.post('/create-session', async (req, res) => {
         success_url: `http://localhost:3000`,
         cancel_url: `http://localhost:3000/listing/${listingId}`,
       });
-      console.log("checkout session creation")
       res.status(200).json({
         id: session.id ,
         'output': listingDetails.price * days * 100
