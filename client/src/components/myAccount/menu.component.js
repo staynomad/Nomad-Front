@@ -38,6 +38,7 @@ class LeftMenu extends Component {
 
   componentDidMount() {
     if (!this.props.userSession) {
+      alert("Please log in to view your profile.")
       return this.props.history.push('/login')
     }
   }
@@ -111,18 +112,20 @@ class LeftMenu extends Component {
                 compname='profile'
                 onClick={this.handleItemClick}
               />
-              {this.props.userSession.isHost ?
-                (
-                  <Menu.Item
-                    name='my listings'
-                    active={activeItem === 'my listings'}
-                    compname='my listings'
-                    onClick={(e, { name, compname }) => {
-                      this.handleItemClick(e, { name, compname });
-                      this.props.searchUserListings(this.props.userSession.token);
-                    }}
-                  />
-                ) : null
+              { this.props.userSession ?
+                  this.props.userSession.isHost ?
+                  (
+                    <Menu.Item
+                      name='my listings'
+                      active={activeItem === 'my listings'}
+                      compname='my listings'
+                      onClick={(e, { name, compname }) => {
+                        this.handleItemClick(e, { name, compname });
+                        this.props.searchUserListings(this.props.userSession.token);
+                      }}
+                    />
+                  ) : null
+                  : null
               }
               <Menu.Item
                 name='my reservations'
