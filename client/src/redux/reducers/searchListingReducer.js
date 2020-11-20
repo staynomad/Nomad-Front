@@ -1,7 +1,8 @@
 import {
     DELETE_LISTING,
     SET_SEARCH_LISTINGS,
-    SET_USER_LISTINGS
+    SET_USER_LISTINGS,
+    SET_EDIT_LISTING
 } from '../actions/searchListingActions';
 
 export default function reducer(state = {}, action) {
@@ -23,6 +24,12 @@ export default function reducer(state = {}, action) {
             if (state.searchListings) stateToReturn['searchListings'] = state.searchListings.filter(listing => listing._id !== action.listingId);
             if (state.userListings) stateToReturn['userListings'] = state.userListings.filter(listing => listing._id !== action.listingId);
             return stateToReturn;
+        }
+        case SET_EDIT_LISTING: {
+            return {
+                ...state,
+                editListing: action.listing,
+            }
         }
         default: return state;
     }
