@@ -42,7 +42,7 @@ function App() {
           <Route path="/MyAccount" exact component={MyAccount} />
           <Route path="/Questionnaire" exact component={Questionnaire} />
           <Route path="/Listing/:id" exact component={ListingPage} />
-          <Route path="/EditListing/:id" exact component={EditListing} />
+          <Route path="/EditListing/:listingId" exact component={EditListing} />
           <Route path="/PaymentSuccess" exact component={PaymentSuccess} />
         </Switch>
         <Footer />
