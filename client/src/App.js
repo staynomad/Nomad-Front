@@ -9,6 +9,7 @@ import Services from "./components/subpages/services.component.js";
 import Reservation from "./components/reservations/findReservation.component";
 import Matches from "./components/matches/matches.component.js";
 import Questionnaire from "./components/matches/questionnaire.component";
+import EditProfileInfo from "./components/myAccount/editProfileInfo.component";
 import {
   BrowserRouter as Router,
   Route,
@@ -40,6 +41,7 @@ function App() {
           <Route path="/MyAccount" exact component={MyAccount} />
           <Route path="/Questionnaire" exact component={Questionnaire} />
           <Route path="/Listing/:id" exact component={ListingPage} />
+          <Route path="/EditProfileInfo" exact component={EditProfileInfo} />
         </Switch>
         <Footer />
       </div>
