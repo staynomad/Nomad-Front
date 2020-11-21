@@ -19,6 +19,7 @@ import MyAccount from "./components/myAccount/menu.component";
 import ListingPage from "./components/listingPage/listingPage.component";
 import EditListing from "./components/editListing/editListing";
 import PaymentSuccess from "./components/listingPage/paymentSuccess.component"
+import AccountVerification from "./components/authentication/verifyAccount.component"
 import "./App.css";
 
 //to add more items just copy the format and add the route path. look at navbar component to see where the path is currently set to
@@ -43,6 +44,7 @@ function App() {
           <Route path="/Listing/:id" exact component={ListingPage} />
           <Route path="/EditListing/:listingId" exact component={EditListing} />
           <Route path="/PaymentSuccess" exact component={PaymentSuccess} />
+          <Route path="/AccountVerification/:userId" exact component={AccountVerification} />
         </Switch>
         <Footer />
       </div>

@@ -14,6 +14,8 @@ export default class PaymentSuccess extends Component {
         <h1>Thanks for reserving with VHomes!</h1>
         <br />
         You will be redirected shortly.
+        <br /><br /><br />
+        <div id="spinner"></div>
       </div>
     )
   }

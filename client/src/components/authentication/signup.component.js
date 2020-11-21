@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
-import handleReq from "../../utils/fetchRequest";
+import axios from "axios"
 import "./signup.css";
 
 const Signup = () => {
@@ -16,19 +16,16 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const headers = { "Content-Type": "application/json" };
-    handleReq("/signup", "POST", headers, userSignup)
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        if (data.errors) {
-          alert(data.errors[0]);
-        } else {
-          window.sessionStorage.accessToken = data.token;
-          setSignupSuccess(true);
-        }
-      });
+    axios.post("http://localhost:8080/signup", userSignup)
+    .then((res) => {
+      window.sessionStorage.accessToken = res.token;
+      setSignupSuccess(true)
+      console.log(res)
+    })
+    .catch((err) => {
+      alert(err.response.data.errors[0])
+      window.location.reload()
+    })
   };
 
   return signupSuccess ? (
