@@ -20,6 +20,10 @@ const UserSchema = new Schema({
     },
     isHost: {
         type: Boolean,
+    },
+    // Only required for hosts
+    isVerified: {
+        type: Boolean,
     }
 });
 

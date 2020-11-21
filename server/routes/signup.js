@@ -2,6 +2,7 @@ const express = require("express");
 const User = require("../models/user.model");
 const { getUserToken, passGenService } = require("../utils");
 const { check, body, validationResult } = require('express-validator');
+const nodemailer = require('nodemailer');
 
 const router = express.Router();
 
@@ -47,12 +48,16 @@ router.post("/",
     // encrypt the password
     const encrypted_password = await passGenService(password);
     // create a new user
-    const newUser = await new User({
+    var data = {
       name,
       email,
       password: encrypted_password,
       isHost
-    }).save();
+    }
+    if (isHost) {
+      data.isVerified = false
+    }
+    const newUser = await new User(data).save();
     // now send the token
     const token = getUserToken({ id : newUser._id });
     // we could send the 200 status code
