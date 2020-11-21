@@ -34,10 +34,10 @@ const ReservationCard = (props) => {
         </div>
       </NavLink>
       {props.userSession && props.userSession.userId === reservation.userId ? (
-        <CustomButton>Change</CustomButton>
+        <CustomButton>Check-in</CustomButton>
       ) : null}
       {props.userSession && props.userSession.userId === reservation.userId ? (
-        <CustomButton>Cancel</CustomButton>
+        <CustomButton>Check-out</CustomButton>
       ) : null}
     </div>
   )
