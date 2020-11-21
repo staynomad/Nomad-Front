@@ -6,6 +6,7 @@ import { NavLink, withRouter } from "react-router-dom";
 import { withStyles } from '@material-ui/core/styles';
 
 import ListingCard from '../matches/listing/listingCard.component';
+import ReservationCard from '../reservations/reservationCard.component';
 import Profile from "./profile.component"
 import Questionnaire from "../matches/questionnaire.component"
 import Settings from "./settings.component"
@@ -88,6 +89,14 @@ class LeftMenu extends Component {
       case 'my reservations':
         return (
           <>
+            {this.props.userReservations ?
+              this.props.userReservations.sort(function(a, b) {
+              if (a.days[0] < b.days[0]) return -1;
+              if (a.days[0] > b.days[0]) return 1;
+              return 0;
+            }).map((reservation) => (
+              <ReservationCard key={reservation} reservation={reservation} />
+            )) : null}
           </>
         );
       case 'settings':
