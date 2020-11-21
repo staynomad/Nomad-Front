@@ -45,19 +45,25 @@ router.post("/createListing", requireUserAuth, async (req, res) => {
 /* Update a listing */
 router.put("/editListing/:listingId", requireUserAuth, async (req, res) => {
   try {
+    console.log(req.user)
     const listing = await Listing.findOne({
       _id: req.params.listingId,
-      email: req.user.email,
+      userId: req.user._id,
     });
 
     if (!listing) {
-      res.status(500).json({
+      res.status(404).json({
         errors: ["Listing was not found. Please try again!"],
       });
     } else {
       const updatedKeys = Object.keys(req.body);
       updatedKeys.forEach(async (key) => {
-        if (key && key !== null) {
+        if (
+          key &&
+          key !== null &&
+          listing[key] !== req.body[key] &&
+          key !== "listingId"
+        ) {
           console.log('changing ' + key)
           listing[key] = req.body[key];
         };

@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
+import { CustomButton } from "../matches/listing/listingCard.component";
 import { getListingById } from "../../redux/actions/searchListingActions";
+import { submitEditListing } from "../../redux/actions/editListingActions";
 import "../createListing/createListing.css";
 import "../createListing/detailsListing.css";
 import "../createListing/locationListing.css";
@@ -13,6 +15,7 @@ class EditListing extends Component {
         super(props);
 
         this.state = {
+            listingId: this.props.match.params.listingId,
             charleft: {
                 title: 40,
                 description: 500,
@@ -151,6 +154,11 @@ class EditListing extends Component {
         });
     };
 
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.props.submitEditListing(this.props.userSession.token, this.state);
+    };
+
     render() {
         return (
             <>
@@ -158,7 +166,7 @@ class EditListing extends Component {
                     <br /><br /><br /><br /><br />
                 </div>
 
-                { this.props.editListing ? (
+                { !this.props.loading ? (
                     <form>
                         {/* Title */}
                         <textarea
@@ -328,6 +336,7 @@ class EditListing extends Component {
                             placeholder="rules"
                             onChange={this.handleRulesChange}
                         ></textarea>
+                        <CustomButton onClick={this.handleSubmit}>Submit</CustomButton>
                     </form>
                 ) : (
                         <div className="spinner-container">
@@ -341,7 +350,10 @@ class EditListing extends Component {
 }
 
 const mapStateToProps = state => {
-    const stateToReturn = { ...state };
+    const stateToReturn = {
+        ...state,
+        loading: state.Loading.loading,
+    };
     if (state.Login.userInfo) stateToReturn.userSession = state.Login.userInfo.session;
     if (state.Listing.editListing) stateToReturn.editListing = state.Listing.editListing;
     return stateToReturn;
@@ -350,6 +362,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         getListingById: (listingId) => dispatch(getListingById(listingId)),
+        submitEditListing: (token, editedListing) => dispatch(submitEditListing(token, editedListing))
     };
 };
 

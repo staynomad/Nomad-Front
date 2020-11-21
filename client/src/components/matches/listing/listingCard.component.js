@@ -7,7 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 // import ListingsModal from './listingsmodal.component';
 import { deleteListingById } from '../../../redux/actions/searchListingActions';
 
-const CustomButton = withStyles((theme) => ({
+export const CustomButton = withStyles((theme) => ({
   root: {
     color: "#00B183",
     backgroundColor: "transparent",

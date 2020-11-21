@@ -33,9 +33,6 @@ const ListingSchema = new Schema({
     type: Number,
     default: null
   },
-  email: {
-    type: String,
-  },
   userId: {
     type: ObjectId,
     ref: User,
