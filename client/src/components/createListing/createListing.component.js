@@ -62,6 +62,10 @@ class CreateListing extends Component {
       alert("Please create a host account to create a listing.")
       return this.props.history.push('/')
     }
+    if (this.props.userSession.isVerified == false) {
+      alert("Please verify your account before creating a listing.")
+      return this.props.history.push('/accountVerification/send')
+    }
   }
   handleChange(e, name) {
     this.setState({

@@ -3,6 +3,7 @@ const User = require("../models/user.model");
 const { getUserToken, passGenService } = require("../utils");
 const { check, body, validationResult } = require('express-validator');
 const nodemailer = require('nodemailer');
+const axios = require('axios');
 
 const router = express.Router();
 
@@ -54,12 +55,25 @@ router.post("/",
       password: encrypted_password,
       isHost
     }
+    // Set isVerified to false only if user is a host
     if (isHost) {
       data.isVerified = false
     }
     const newUser = await new User(data).save();
     // now send the token
     const token = getUserToken({ id : newUser._id });
+    // Send account verification email if user is host
+    const emailData = {
+      email: email,
+      userId: newUser._id
+    }
+    if (isHost) {
+      axios.post("http://localhost:8080/accountVerification/sendVerificationEmail", emailData, {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      })
+    }
     // we could send the 200 status code
     // but 201 indicates the resource is created
     res.status(201).json({

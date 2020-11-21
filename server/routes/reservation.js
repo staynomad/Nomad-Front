@@ -257,9 +257,16 @@ router.post(
                     errors: ["Reservation does not exist"],
                 });
             }
-
+            // Crete nodemailer transport to send emails from
+            const transporter = nodemailer.createTransport({
+              service: 'gmail',
+              auth: {
+                user: 'vhomesgroup@gmail.com',
+                pass: 'yowguokryuzjmbhj'
+              }
+            })
             // Send confirmation email to guest
-            axios.get(`http://localhost:8080/user/getUserInfo/${req.user._id}`) // Not sure if this is right
+            axios.get(`http://localhost:8080/user/getUserInfo/${req.user._id}`)
             .then((res) => {
               const userMailOptions = {
                 from: '"VHomes" <reservations@vhomesgroup.com>',
@@ -292,7 +299,7 @@ router.post(
             })
 
             // Send confirmation email to host
-            axios.get(`http://localhost:8080/user/getUserInfo/${req.user._id}`) // Not sure if this is right
+            axios.get(`http://localhost:8080/user/getUserInfo/${req.user._id}`)
             .then((res) => {
               const hostMailOptions = {
                 from: '"VHomes" <reservations@vhomesgroup.com>',
@@ -332,7 +339,7 @@ router.post(
             console.log(error);
             res.status(500).json({
                 "errors":
-                    ["Error creating reservation. Please try again!"]
+                    ["Error checking in. Please try again!"]
             });
         }
     }

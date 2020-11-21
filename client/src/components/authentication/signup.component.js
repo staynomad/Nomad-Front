@@ -16,7 +16,6 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(userSignup)
     axios.post("http://localhost:8080/signup", userSignup)
     .then((res) => {
       window.sessionStorage.accessToken = res.token;

@@ -44,7 +44,7 @@ function App() {
           <Route path="/Listing/:id" exact component={ListingPage} />
           <Route path="/EditListing/:listingId" exact component={EditListing} />
           <Route path="/PaymentSuccess" exact component={PaymentSuccess} />
-          <Route path="/accountVerification/:userId" exact component={AccountVerification} />
+          <Route path="/AccountVerification/:userId" exact component={AccountVerification} />
         </Switch>
         <Footer />
       </div>
