@@ -10,7 +10,6 @@ import Reservation from "./components/reservations/findReservation.component";
 import Matches from "./components/matches/matches.component.js";
 import Questionnaire from "./components/matches/questionnaire.component";
 import {
-  BrowserRouter as Router,
   Route,
   Switch,
   useHistory,
@@ -27,7 +26,7 @@ function App() {
   const history = useHistory();
 
   return (
-    <Router>
+    <>
       <Navbar history={history} />
       <div className="App">
         <Switch>
@@ -47,7 +46,7 @@ function App() {
         </Switch>
         <Footer />
       </div>
-    </Router>
+    </>
   );
 }
 

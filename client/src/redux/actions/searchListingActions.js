@@ -1,4 +1,5 @@
 import handleReq from "../../utils/fetchRequest.js";
+import { setLoadingTrue, setLoadingFalse } from "./loadingActions";
 
 /* Types */
 export const SET_SEARCH_LISTINGS = 'VHomes/listings/SET_SEARCH_LISTINGS';
@@ -53,10 +54,12 @@ export const searchUserListings = (token) => async dispatch => {
 };
 
 export const getListingById = (listingId) => async dispatch => {
+    dispatch(setLoadingTrue());
     const searchListingRes = await handleReq(`/listings/byId/${listingId}`, "GET")
 
     if (searchListingRes.statusText === 'OK') {
         const { listing } = await searchListingRes.data;
+        dispatch(setLoadingFalse());
         dispatch(setEditListing(listing));
     };
 }
