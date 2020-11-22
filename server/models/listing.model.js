@@ -29,8 +29,8 @@ const ListingSchema = new Schema({
     type: Array,
     default: null,
   },
-  ratings: {
-    type: Array,
+  rating: {
+    type: Object,
     default: null
   },
   userId: {

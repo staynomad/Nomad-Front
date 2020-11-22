@@ -20,11 +20,21 @@ router.post(
       const userIdAsObjectId = mongoose.Types.objectId(req.user._id)
       const ratingData = {
         userIdAsObjectId: {
-          rating: parseInt(rating),
+          stars: parseInt(rating),
           review: review
         }
       }
-      const listing = await Listing.findOneAndUpdate({ _id: listingId }, { $push: { ratings: ratingData } })
+      // Check here to see if user has already submitted review for specific listing
+      const listingCheck = await Listing.findOne({ _id: listingId })
+      const reviewUsers = Object.keys(listingCheck.rating)
+      for (let i = 0; i < reviewUsers.length; i++) {
+        if (String(req.user._id) === String(reviewUsers[i])) {
+          return res.status(400).json({
+              "errors": "You have already reviewed this listing."
+          })
+        }
+      }
+      const listing = await Listing.findOneAndUpdate({ _id: listingId }, { $set: { rating: ratingData } }, { new: true })
       if (!listing) {
         return res.status(400).json({
             "errors": "Listing does not exist. Please try again."
