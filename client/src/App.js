@@ -46,7 +46,7 @@ function App() {
           <Route path="/EditListing/:listingId" exact component={EditListing} />
           <Route path="/PaymentSuccess" exact component={PaymentSuccess} />
           <Route path="/AccountVerification/:userId" exact component={AccountVerification} />
-          <Route path="/EditProfileInfo" exact component={EditProfileInfo} />;
+          <Route path="/EditProfileInfo" exact component={EditProfileInfo} />
         </Switch>
         <Footer />
       </div>

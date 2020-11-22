@@ -34,10 +34,12 @@ const Profile = () => {
 
     const Information = () => {
         if (!isEmpty) {
+            console.log("description: ", user.userInfo.description)
             return (
                 <div>
                     <t>Email: { user.userInfo.email }</t>
-                    {user.userInfo.description !== "" ? <t>Description: {user.userInfo.description}</t> : <t>Add your description to get started!</t>}
+                    <br />
+                    {user.userInfo.description ? <p>Description: {user.userInfo.description}</p> : <t>Add your description to get started!</t>}
                 </div>
             )
         } else {

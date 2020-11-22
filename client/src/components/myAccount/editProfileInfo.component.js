@@ -49,7 +49,7 @@ const EditProfileInfo = (props) => {
         axios.post (`http://localhost:8080/user/setUserInfo/${userId}`, profileState)
             .then (res => {
                 // updates redux store
-                dispatch(setUserInfo (res.data));
+                dispatch(setUserInfo(res.data));
             })
             .catch (err => {
             console.log ('handleSubmit error: ', err.response);
