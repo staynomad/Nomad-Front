@@ -35,10 +35,15 @@ const Profile = () => {
     const Information = () => {
         if (!isEmpty) {
             return (
-                <t>Email: { user.userInfo.email }</t>
+                <div>
+                    <t>Email: { user.userInfo.email }</t>
+                    {user.userInfo.description || <t>Add your description to get started!</t>}
+                </div>
             )
         } else {
-            return null
+            return (
+                <t>Add your description to get started!</t>
+            )
         }
     }
 
