@@ -54,13 +54,6 @@ class DatesCL extends Component {
         <div className="startText">Availibility</div> <br />
         <h1 className="questionText">When is your property available?</h1>
         <p>
-          {this.state.invalid_date ? (
-            <h3 style={{ color: "red" }}>
-              First selection must be after today
-            </h3>
-          ) : (
-            ""
-          )}
           {!from && !to && "Please select the first day."}
           {from && !to && "Please select the last day."}
           {from &&
@@ -73,15 +66,18 @@ class DatesCL extends Component {
             </button>
           )}
         </p>
+        {this.state.invalid_date ? (
+          <h3 style={{ color: "red" }}>First selection must be after today</h3>
+        ) : (
+          ""
+        )}
         <DatePicker
           className="Selectable"
           numberOfMonths={2}
           selectedDays={[from, { from, to }]}
           modifiers={modifiers}
           onDayClick={this.handleDayClick}
-          inputProps={
-            { required: true }
-          }
+          inputProps={{ required: true }}
         />
         <Helmet>
           <style>{`
