@@ -12,11 +12,21 @@ router.get ('/getUserInfo/:userId', async (req, res) => {
         error: 'User not found. Please try again.',
       });
     }
-    res.status (200).json ({
-      name: userFound.name,
-      email: userFound.email,
-      password: userFound.password
-    });
+    if (userFound['description']) {
+      console.log ('description identified: ', userFound.description);
+      res.status (200).json ({
+        name: userFound.name,
+        email: userFound.email,
+        password: userFound.password,
+        description: userFound.description,
+      });
+    } else {
+      res.status (200).json ({
+        name: userFound.name,
+        email: userFound.email,
+        password: userFound.password,
+      });
+    }
   } catch (error) {
     console.log (error);
     res.status (500).json ({
