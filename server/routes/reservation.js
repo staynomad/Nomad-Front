@@ -18,6 +18,11 @@ router.post(
             const listingInfo = await Listing.findOne({
                 _id: listing
             })
+            if (!listingInfo) {
+              return res.status(400).json({
+                  "errors": "Listing does not exist. Please try again."
+              })
+            }
             // Parse string dates to new date objects
             const availableStart = new Date(listingInfo.available[0])
             const availableEnd = new Date(listingInfo.available[1])
