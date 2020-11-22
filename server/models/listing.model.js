@@ -30,7 +30,7 @@ const ListingSchema = new Schema({
     default: null,
   },
   ratings: {
-    type: Number,
+    type: Array,
     default: null
   },
   userId: {

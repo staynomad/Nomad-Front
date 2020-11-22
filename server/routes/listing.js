@@ -15,7 +15,6 @@ router.post("/createListing", requireUserAuth, async (req, res) => {
       details,
       price,
       rules,
-      ratings,
       dates,
     } = req.body;
 
@@ -26,7 +25,6 @@ router.post("/createListing", requireUserAuth, async (req, res) => {
       details,
       price,
       rules,
-      ratings,
       dates,
     }).save();
 
