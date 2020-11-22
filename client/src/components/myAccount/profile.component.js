@@ -23,7 +23,7 @@ const Profile = () => {
     const Greeting = () => {
         if (!isEmpty) {
             return (
-                <h2>Welcome, {user.userInfo.name}!</h2>
+                <h2 style={{ color: "#02b188", textDecoration: "none" }}>Welcome, {user.userInfo.name}!</h2>
             )
 
         } else {
@@ -35,10 +35,15 @@ const Profile = () => {
     const Information = () => {
         if (!isEmpty) {
             return (
-                <t>Email: { user.userInfo.email }</t>
+                <div>
+                    <t>Email: { user.userInfo.email }</t>
+                    {user.userInfo.description !== "" ? <t>Description: {user.userInfo.description}</t> : <t>Add your description to get started!</t>}
+                </div>
             )
         } else {
-            return null
+            return (
+                <t>Add your description to get started!</t>
+            )
         }
     }
 
@@ -47,12 +52,10 @@ const Profile = () => {
             <Greeting />
             <hr />
             <Information />
-            <ul>
-                <li>Display profile picture</li>
-                <li>Give them an option to write a summary of themselves</li>
-                <li>Where are they interested in staying / their past stays?</li>
-                <li>Display questionnaire preferences</li>
-            </ul>
+            <hr />
+            <form action="/EditProfileInfo">
+                <button className="login btn green" style={{width: '30%'}}> EDIT PROFILE </button>
+            </form>
         </div>
     )
 }

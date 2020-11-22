@@ -51,4 +51,16 @@ router.post (
   }
 )
 
+router.post ('/setUserInfo/:userId', async (req, res) => {
+  try {
+    await User.findOneAndUpdate (
+      {_id: req.params.userId},
+      {$set: req.body},
+      {strict: false}
+    );
+  } catch (e) {
+    console.log ('there was an error in your post request...');
+  }
+});
+
 module.exports = router
