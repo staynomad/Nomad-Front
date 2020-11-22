@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
@@ -21,7 +21,12 @@ export const CustomButton = withStyles((theme) => ({
 
 const ListingCard = (props) => {
   const [open, setOpen] = useState(false);
+  const [rating, setRating] = useState("")
   const { listing } = props;
+
+  useEffect(() => {
+    getAverageRating()
+  })
 
   const handleOpenClose = () => {
     setOpen(!open);
@@ -30,6 +35,21 @@ const ListingCard = (props) => {
   const handleDeleteListing = () => {
     props.deleteListingById(props.userSession.token, listing._id)
   };
+
+  const getAverageRating = () => {
+    console.log(listing.rating)
+    if (listing.rating) {
+        let total, count = 0
+        for (const item in listing.rating) {
+          total += item.rating
+          count++
+        }
+        setRating(String(parseFloat(total / count).toFixed(2)))
+    }
+    else {
+      setRating('ratings yet!')
+    }
+  }
 
   return (
     <div className='listing-item' onClick={handleOpenClose}>
@@ -43,7 +63,7 @@ const ListingCard = (props) => {
             <b>Details:</b> {listing.details.beds > 1 ? `${listing.details.beds} beds` : `${listing.details.beds} bed`}  {listing.details.baths > 1 ? `${listing.details.baths} baths` : `${listing.details.baths} bath`}
           </div>
           <div>
-            <b>Rating:</b> {listing.rating.user} / 5
+            <b>Rating:</b> {rating} / 5
             </div>
           <div>
             <b>Price:</b> ${listing.price}/night
