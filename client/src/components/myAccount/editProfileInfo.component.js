@@ -42,11 +42,20 @@ const EditProfileInfo = (props) => {
     }, []);
 
     const handleSubmit = event => {
-        event.preventDefault();
-        setSubmitted(!submitted);
-        console.log("FORM SUBMITTED")
-        console.log(profileState);
-    }
+        event.preventDefault ();
+        setSubmitted (!submitted);
+        const userId = loginInfo.userInfo.session.userId;
+        // route to update user information
+        axios.post (`http://localhost:8080/user/setUserInfo/${userId}`, profileState)
+            .then (res => {
+                // updates redux store
+                dispatch(setUserInfo (res.data));
+            })
+            .catch (err => {
+            console.log ('handleSubmit error: ', err.response);
+        });
+    };
+
 
     const handleChange = event => {
         const value = event.target.value;
