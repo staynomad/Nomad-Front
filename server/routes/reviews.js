@@ -20,7 +20,7 @@ router.post(
       const userIdAsObjectId = mongoose.Types.objectId(req.user._id)
       const ratingData = {
         userIdAsObjectId: {
-          rating: parseInt(rating),
+          stars: parseInt(rating),
           review: review
         }
       }
