@@ -15,8 +15,7 @@ router.post("/createListing", requireUserAuth, async (req, res) => {
       details,
       price,
       rules,
-      ratings,
-      dates,
+      available,
     } = req.body;
 
     const newListing = await new Listing({
@@ -26,8 +25,8 @@ router.post("/createListing", requireUserAuth, async (req, res) => {
       details,
       price,
       rules,
-      ratings,
-      dates,
+      available,
+      userId: req.user._id,
     }).save();
 
     // Need to talk about return values, validation, etc.
@@ -45,7 +44,7 @@ router.post("/createListing", requireUserAuth, async (req, res) => {
 /* Update a listing */
 router.put("/editListing/:listingId", requireUserAuth, async (req, res) => {
   try {
-    console.log(req.user)
+    console.log(req.user);
     const listing = await Listing.findOne({
       _id: req.params.listingId,
       userId: req.user._id,
@@ -64,9 +63,9 @@ router.put("/editListing/:listingId", requireUserAuth, async (req, res) => {
           listing[key] !== req.body[key] &&
           key !== "listingId"
         ) {
-          console.log('changing ' + key)
+          console.log("changing " + key);
           listing[key] = req.body[key];
-        };
+        }
       });
       await listing.save();
       res.status(200).json({
@@ -103,29 +102,30 @@ router.get("/", async (req, res) => {
 });
 
 /* Get all listings by filter */
-router.post('/filteredListings', async (req, res) => {
+router.post("/filteredListings", async (req, res) => {
   const { minRatingClicked, startingPriceClicked, minGuestsClicked } = req.body;
   try {
     var listings;
-    var filterClicked = minRatingClicked || startingPriceClicked // or minGuestsClicked
+    var filterClicked = minRatingClicked || startingPriceClicked; // or minGuestsClicked
     if (filterClicked) {
       listings = await Listing.find({
-        'rating.user': { $gte: req.body.minRating },
-        price: { $gte: req.body.startingPrice }
-      });
-    } else if (minGuestsClicked) { // ideally want to get rid of this part
-      listings = await Listing.find({
-        'rating.user': { $gte: req.body.minRating },
+        "rating.user": { $gte: req.body.minRating },
         price: { $gte: req.body.startingPrice },
-        'details.maxpeople': { $gte: req.body.minGuests } // doesn't work since this field is a String
-      })
+      });
+    } else if (minGuestsClicked) {
+      // ideally want to get rid of this part
+      listings = await Listing.find({
+        "rating.user": { $gte: req.body.minRating },
+        price: { $gte: req.body.startingPrice },
+        "details.maxpeople": { $gte: req.body.minGuests }, // doesn't work since this field is a String
+      });
     } else {
-      console.log("no listings have been specified")
+      console.log("no listings have been specified");
       listings = await Listing.find({});
     }
     if (!listings) {
       res.status(404).json({
-        errors: ['There are currently no listings! Please try again later.'],
+        errors: ["There are currently no listings! Please try again later."],
       });
     } else {
       res.status(200).json({
@@ -135,7 +135,7 @@ router.post('/filteredListings', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({
-      errors: ['Error occurred while getting listings. Please try again!'],
+      errors: ["Error occurred while getting listings. Please try again!"],
     });
   }
 });
@@ -186,15 +186,16 @@ router.get("/byId/:id", async (req, res) => {
 router.post("/search", async (req, res) => {
   const { itemToSearch } = req.body;
   try {
-    let decodedItemToSearch = decodeURI(itemToSearch)
-    const listings = await Listing.find({})
-    const filteredListings = listings.filter(listing => {
+    let decodedItemToSearch = decodeURI(itemToSearch);
+    const listings = await Listing.find({});
+    const filteredListings = listings.filter((listing) => {
       const { street, city, zipcode } = listing.location;
       if (
         street.toLowerCase().includes(decodedItemToSearch) ||
         city.toLowerCase().includes(decodedItemToSearch) ||
         zipcode.includes(decodedItemToSearch)
-      ) return true;
+      )
+        return true;
     });
 
     if (filteredListings.length === 0) {
@@ -209,7 +210,9 @@ router.post("/search", async (req, res) => {
   } catch (e) {
     console.error(error);
     res.status(500).json({
-      errors: ["Error occurred while searching for listings. Please try again!"],
+      errors: [
+        "Error occurred while searching for listings. Please try again!",
+      ],
     });
   }
 });
@@ -227,7 +230,7 @@ router.delete("/delete/:listingId", requireUserAuth, async (req, res) => {
         errors: ["Listing was not found. Please try again!"],
       });
     } else {
-      listing.remove()
+      listing.remove();
       res.status(200).json({
         message: ["Listing was removed."],
       });
@@ -235,7 +238,9 @@ router.delete("/delete/:listingId", requireUserAuth, async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({
-      errors: ["Error occurred while attempting to remove listing. Please try again!"],
+      errors: [
+        "Error occurred while attempting to remove listing. Please try again!",
+      ],
     });
   }
 });

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
-import axios from "axios"
+import axios from "axios";
 import "./signup.css";
 
 const Signup = () => {
@@ -16,16 +16,18 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:8080/signup", userSignup)
-    .then((res) => {
-      window.sessionStorage.accessToken = res.token;
-      setSignupSuccess(true)
-      console.log(res)
-    })
-    .catch((err) => {
-      alert(err.response.data.errors[0])
-      window.location.reload()
-    })
+    axios
+      .post("http://localhost:8080/signup", userSignup)
+      .then((res) => {
+        window.sessionStorage.accessToken = res.token;
+        setSignupSuccess(true);
+        console.log(res);
+      })
+      .catch((err) => {
+        alert(err.response.data.errors[0]);
+        this.setState({ password: "" });
+        //window.location.reload() I (Prateek) commented this out bc its super annoying to have to reinput all your data if its not properly filled out the password
+      });
   };
 
   return signupSuccess ? (
@@ -33,7 +35,10 @@ const Signup = () => {
   ) : (
     <div id="signup-content">
       <div className="login-form signup-form">
-        <h2 className="services-title signup-title">create an <br />account</h2>
+        <h2 className="services-title signup-title">
+          create an <br />
+          account
+        </h2>
         <form className="form signup-form">
           <input
             type="email"
@@ -64,17 +69,19 @@ const Signup = () => {
             placeholder="confirm"
             className="input login-input"
             onChange={(e) =>
-              setUserSignup({ ...userSignup, check: e.target.value})}
+              setUserSignup({ ...userSignup, check: e.target.value })
+            }
           />
-          <label
-            className="checkbox">
+          <label className="checkbox">
             <input
               type="checkbox"
               name="isHost"
               checked={userSignup.isChecked}
               onChange={(e) =>
-                setUserSignup({ ...userSignup, isHost: !e.isHost})}
-            /> are you a host?
+                setUserSignup({ ...userSignup, isHost: !e.isHost })
+              }
+            />{" "}
+            are you a host?
           </label>
           <input
             type="submit"

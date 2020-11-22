@@ -34,7 +34,7 @@ export default class ConfirmSubmission extends Component {
           <p>{this.state.details.beds} bed/s</p>
           <p>you will receive {this.state.price} per night</p>
           <h2>your listing will be within these dates</h2>
-          <p>{this.state.dates.start_date.toLocaleDateString()}</p>
+
           <h2>these are the rules you have detailed</h2>
           <p>{this.state.rules}</p>
         </div>
@@ -50,4 +50,5 @@ location: {},
       price: 0,
       rules: "",
       dates: {},
+      <p>{this.state.dates.start_date.toLocaleDateString()}</p>
 */

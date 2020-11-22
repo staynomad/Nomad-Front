@@ -14,12 +14,13 @@ const questionnaireRouter = require("./routes/questionnaire");
 const reservationRouter = require("./routes/reservation");
 const paymentRouter = require("./routes/payment");
 const userRouter = require("./routes/user");
-const accountVerificationRouter = require("./routes/accountVerification")
+const accountVerificationRouter = require("./routes/accountVerification");
+const photosRouter = require("./routes/photos");
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors({ origin: true }));
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 // app.use('/contact', contactRouter);
 app.use("/login", loginRouter);
 app.use("/signup", signUpRouter);
@@ -30,7 +31,7 @@ app.use("/reservation", reservationRouter);
 app.use("/payment", paymentRouter);
 app.use("/user", userRouter);
 app.use("/accountVerification", accountVerificationRouter);
-
+app.use("/photos", photosRouter);
 mongoose.connect(DATABASE_URI, {
   useCreateIndex: true,
   useFindAndModify: false, // flag needed to enable findOneAndUpdate
@@ -38,15 +39,17 @@ mongoose.connect(DATABASE_URI, {
   useUnifiedTopology: true,
 });
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('../client/build/'));
-  app.get('*', (_, res) => {
-    res.sendFile(path.resolve(__dirname, '..', 'client', 'build', 'index.html'));
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("../client/build/"));
+  app.get("*", (_, res) => {
+    res.sendFile(
+      path.resolve(__dirname, "..", "client", "build", "index.html")
+    );
   });
 }
 
 app.get("/", async (req, res) => {
-  res.json('Server is running!')
+  res.json("Server is running!");
 });
 
 // error handler\
