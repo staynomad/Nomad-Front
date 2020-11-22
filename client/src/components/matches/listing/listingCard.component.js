@@ -46,7 +46,7 @@ const ListingCard = (props) => {
             <b>Rating:</b> {listing.rating.user} / 5
             </div>
           <div>
-            <b>Starting Price:</b> ${listing.price}
+            <b>Price:</b> ${listing.price}/night
           </div>
         </div>
       </NavLink>
