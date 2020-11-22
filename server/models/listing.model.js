@@ -26,10 +26,10 @@ const ListingSchema = new Schema({
     required: true,
   },
   rules: {
-    type: Object,
+    type: Array,
     default: null,
   },
-  ratings: {
+  rating: {
     type: Object,
     default: null
   },
