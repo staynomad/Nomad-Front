@@ -37,7 +37,7 @@ const Profile = () => {
             return (
                 <div>
                     <t>Email: { user.userInfo.email }</t>
-                    {user.userInfo.description || <t>Add your description to get started!</t>}
+                    {user.userInfo.description !== "" ? <t>Description: {user.userInfo.description}</t> : <t>Add your description to get started!</t>}
                 </div>
             )
         } else {
