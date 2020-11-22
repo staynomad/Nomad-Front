@@ -26,11 +26,11 @@ const ListingSchema = new Schema({
     required: true,
   },
   rules: {
-    type: Array,
+    type: Object,
     default: null,
   },
   ratings: {
-    type: Array,
+    type: Object,
     default: null
   },
   userId: {
