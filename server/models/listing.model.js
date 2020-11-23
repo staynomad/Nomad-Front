@@ -27,7 +27,7 @@ const ListingSchema = new Schema({
     required: true,
   },
   available: {
-    type: Mixed,
+    type: Array,
     required: false,
   },
   pictures: {
