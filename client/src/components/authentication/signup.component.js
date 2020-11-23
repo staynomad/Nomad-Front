@@ -25,7 +25,7 @@ const Signup = () => {
       })
       .catch((err) => {
         alert(err.response.data.errors[0]);
-        this.setState({ password: "" });
+        //this.setState({ password: "" });
         //window.location.reload() I (Prateek) commented this out bc its super annoying to have to reinput all your data if its not properly filled out the password
       });
   };
