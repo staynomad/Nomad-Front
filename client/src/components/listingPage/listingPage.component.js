@@ -61,7 +61,7 @@ class ListingPage extends Component {
         listingBookedDays: bookedDays
       })
       // Get host's email from their userId
-      axios.get(`http://localhost:8080/user/getEmail/${this.state.listingUser}`)
+      axios.get(`http://localhost:8080/user/getUserInfo/${this.state.listingUser}`)
       .then((res) =>
         this.setState({
           hostEmail: res.data.email
