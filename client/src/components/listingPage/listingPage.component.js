@@ -26,6 +26,7 @@ class ListingPage extends Component {
     await axios.get('http://localhost:8080/listings/byId/' + this.props.match.params.id)
     .then((res) => {
       this.setState({
+        listingTitle: res.data.listing.title,
         listingDescription: res.data.listing.description,
         listingLocation: `${res.data.listing.location.city}, ${res.data.listing.location.state}, ${res.data.listing.location.country}`,
         listingImages: ['image1', 'image2', 'image3'],
@@ -143,7 +144,8 @@ class ListingPage extends Component {
 
     return (
       <div className="container">
-        <h1>{this.state.listingDescription}</h1> <br />
+        <h1>{this.state.listingTitle}</h1> <br />
+        {this.state.listingDescription} <br />
         {this.state.listingLocation} <br />
         {this.state.listingImages} <br />
         beds: {this.state.listingBeds} <br />
