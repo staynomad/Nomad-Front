@@ -78,6 +78,7 @@ router.post(
                   `Thank you for booking with VHomes! Here's your reservation information:
 
                   ${bookedListing.description}
+                  Reservation number: ${newReservation._id}
                   Address: ${bookedListing.location.street}, ${bookedListing.location.city}, ${bookedListing.location.state}, ${bookedListing.location.zipcode}
                   Total cost: $${bookedListing.price * totalDays}
                   Days: ${newReservation.days[0]} to ${newReservation.days[1]}
@@ -111,6 +112,7 @@ router.post(
                 `Thank you for listing on VHomes! Here's the information regarding your listing reservation:
 
                 ${bookedListing.description}
+                Reservation number: ${newReservation._id}
                 Address: ${bookedListing.location.street}, ${bookedListing.location.city}, ${bookedListing.location.state}, ${bookedListing.location.zipcode}
                 Total cost: $${bookedListing.price * totalDays}
                 Days: ${newReservation.days[0]} to ${newReservation.days[1]}
@@ -281,6 +283,7 @@ router.post(
                   `You have successfully checked in to your stay! The host has been notified and will let you in soon. If you have any questions or concerns, please reach out to the host at ${res.data.email}.
 
                   ${bookedListing.description}
+                  Reservation number: ${reservation._id}
                   Address: ${bookedListing.location.street}, ${bookedListing.location.city}, ${bookedListing.location.state}, ${bookedListing.location.zipcode}
                   Total cost: $${bookedListing.price * totalDays}
                   Days: ${newReservation.days[0]} to ${newReservation.days[1]}
