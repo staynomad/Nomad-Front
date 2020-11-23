@@ -11,15 +11,16 @@ const Login = (props) => {
     password: "",
   });
 
-  this.setState({
-    loading: false
-  });
+  const [loading, loadingSpinner] = useState(false);
+  // this.setState({
+  //   loading: false
+  // });
 
   const handleLogin = (e) => {
     e.preventDefault();
     props.submitLogin(userLogin)
-    this.setState({ loading: true })
-  };
+    const loader = () => loadingSpinner(true);
+  };  
 
   return props.userSession ? (
     <Redirect to={{ pathname: "/" }} />

@@ -109,13 +109,16 @@ class ListingPage extends Component {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(body)
-      });
+      })
+
+      .then(() => this.setState({ loading: true }))
+
       const session = await response.json();
       // When the customer clicks on the button, redirect them to Checkout.
       const result = await stripe.redirectToCheckout({
         sessionId: session.id,
       })
-      .then(() => this.setState({ loading: true }))
+
 
       if (result.error) {
         alert(result.error.message);
