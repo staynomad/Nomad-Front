@@ -1,9 +1,12 @@
+const axios = require('axios')
 const express = require("express");
 const router = express.Router();
 
 const Listing = require("../models/listing.model");
 const { requireUserAuth } = require("../utils");
 // const { check, validationResult } = require("express-validator");
+
+const nodemailer = require('nodemailer');
 
 /* Add a listing */
 router.post("/createListing", requireUserAuth, async (req, res) => {
@@ -30,6 +33,45 @@ router.post("/createListing", requireUserAuth, async (req, res) => {
       available,
       userId: req.user._id,
     }).save();
+
+    // Send confirmation email to host
+    axios.get(`http://localhost:8080/user/getUserInfo/${req.user._id}`)
+    .then((res) => {
+      const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'vhomesgroup@gmail.com',
+        pass: 'yowguokryuzjmbhj'
+      }
+    })
+    const userMailOptions = {
+      from: '"VHomes" <reservations@vhomesgroup.com>',
+      to: res.data.email,
+      subject: `Thank you for listing on VHomes!`,
+      text:
+        `Your listing is live! Click the following link to view your listing page.
+
+         http://localhost:3000/listing/${newListing._id}`,
+      html:
+        `<p>
+          Your listing is live! Click the following link to view your listing page.
+          <a href="http://localhost:3000/listing/${newListing._id}">http://localhost:3000/listing/${newListing._id}</a>
+         </p>`
+      }
+      transporter.sendMail(userMailOptions, (error, info) => {
+        if (error) {
+          console.log(error)
+        }
+        else {
+          console.log(`Create listing confirmation email sent to ${res.data.email}`)
+        }
+      })
+    })
+    .catch((err) => {
+      return res.status(500).json({
+          "errors": "Error sending confirmation email to host."
+      })
+    })
 
     // Need to talk about return values, validation, etc.
     res.status(201).json({
