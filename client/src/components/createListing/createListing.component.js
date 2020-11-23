@@ -53,7 +53,6 @@ class CreateListing extends Component {
   }
   componentDidMount() {
     this.props.updateInfo(this.state);
-    /*
     if (!this.props.userSession) {
       alert("Please log in to create a listing.");
       return this.props.history.push("/login");
@@ -65,7 +64,7 @@ class CreateListing extends Component {
     if (this.props.userSession.isVerified === false) {
       alert("Please verify your account before creating a listing.");
       return this.props.history.push("/accountVerification/send");
-    }*/
+    }
   }
   handleChange(e, name) {
     this.setState({

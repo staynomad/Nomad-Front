@@ -9,6 +9,7 @@ const { requireUserAuth } = require("../utils");
 router.post("/createListing", requireUserAuth, async (req, res) => {
   try {
     const {
+      title,
       location,
       pictures,
       description,
@@ -19,6 +20,7 @@ router.post("/createListing", requireUserAuth, async (req, res) => {
     } = req.body;
 
     const newListing = await new Listing({
+      title,
       location,
       pictures,
       description,

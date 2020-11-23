@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const User = require("./user.model");
 const Schema = mongoose.Schema;
 
-const { Array, Mixed, Number, String } = Schema.Types;
+const { Array, Mixed, Number, String, ObjectId } = Schema.Types;
 
 const ListingSchema = new Schema({
   title: {
@@ -35,17 +35,16 @@ const ListingSchema = new Schema({
     default: null,
   },
   userId: {
-    type: String,
+    type: ObjectId,
     ref: User,
     required: false,
   },
 
   booked: {
     type: Array,
-    default: [null, null],
   },
   rating: {
-    type: Number,
+    type: Object,
     default: null,
   },
   rules: {

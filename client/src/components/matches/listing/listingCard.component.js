@@ -37,6 +37,7 @@ const ListingCard = (props) => {
   };
 
   const getAverageRating = () => {
+    console.log(listing)
     if (listing.rating) {
         let total = 0
         let count = 0
@@ -58,7 +59,7 @@ const ListingCard = (props) => {
         <div className='listing-information'>
           <div className='listing-image'>listing image here</div>
           <div>
-            <b>{listing.description}</b>
+            <b>{listing.title}</b>
           </div>
           <div>
             <b>Details:</b> {listing.details.beds > 1 ? `${listing.details.beds} beds` : `${listing.details.beds} bed`}  {listing.details.baths > 1 ? `${listing.details.baths} baths` : `${listing.details.baths} bath`}
