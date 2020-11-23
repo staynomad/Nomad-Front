@@ -7,9 +7,9 @@ class PhotoUpload extends Component {
     super(props);
     this.state = {
       images: [],
+      image_url: [],
     };
     this.onClick = this.onClick.bind(this);
-    this.onUpload = this.onUpload.bind(this);
   }
 
   onClick(e) {
@@ -22,14 +22,14 @@ class PhotoUpload extends Component {
       this.setState({
         images: e.target.files,
       });
-      console.log(e.target.files[0]);
-      uploadPhoto(currentImage, this.props.userSession.token);
-    }
 
-    //
-  }
-  onUpload() {
-    console.log("enter");
+      const saved_picture = uploadPhoto(
+        currentImage,
+        this.props.userSession.token
+      );
+
+      //this.props.handle(saved_picture.url, "pictures");
+    }
   }
   render() {
     return (
@@ -37,9 +37,6 @@ class PhotoUpload extends Component {
         <h1>upload some pictures</h1>
         <div>
           <input type="file" onChange={this.onClick} />
-        </div>
-        <div>
-          <input type="button" value="upload" onClick={this.state.onUpload} />
         </div>
       </div>
     );
