@@ -1,5 +1,6 @@
 const uploadPhoto = (file, token) => {
   const fileName = encodeURIComponent(file.name);
+  let response = null;
   const xhr = new XMLHttpRequest();
   const production = process.env.NODE_ENV === "production";
   const apiBaseUrl = production
@@ -12,7 +13,7 @@ const uploadPhoto = (file, token) => {
   xhr.onreadystatechange = () => {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-        const response = JSON.parse(xhr.responseText);
+        response = JSON.parse(xhr.responseText);
         uploadFile(file, response.signedReq, response.url, response, file.name);
       } else {
         alert("could not get signed url");
@@ -20,6 +21,7 @@ const uploadPhoto = (file, token) => {
     }
   };
   xhr.send();
+  return response;
 };
 
 const uploadFile = (file, signedRequest, url, fileName) => {

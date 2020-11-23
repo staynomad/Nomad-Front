@@ -36,8 +36,7 @@ class CreateListing extends Component {
         baths: "",
         maxpeople: "",
       },
-      photos:
-        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ffiles.lafm.com.co%2Fassets%2Fpublic%2F2019-08%2Fmeme__0.jpg&f=1&nofb=1",
+      pictures: "",
       price: "",
       rules: "",
       dates: {
@@ -82,6 +81,7 @@ class CreateListing extends Component {
       details: this.state.details,
       price: this.state.price,
       available: this.state.dates,
+      pictures: this.state.pictures,
     };
 
     const production = process.env.NODE_ENV === "production";
@@ -103,7 +103,7 @@ class CreateListing extends Component {
   render() {
     const pages = [
       <LandingPageCL />,
-      <PhotoUpload onUpload={this.onUpload} />,
+      <PhotoUpload onUpload={this.handleChange} />,
       <TitleCL handle={this.handleChange} />,
       <Location handle={this.handleChange} />,
       <Description handle={this.handleChange} />,
@@ -169,6 +169,7 @@ class CreateListing extends Component {
       price: this.state.price,
       rules: this.state.rules,
       dates: this.state.dates,
+      pictures: this.state.pictures,
     };
     this.props.updateInfo(updatedData);
     //console.log(this.props)
