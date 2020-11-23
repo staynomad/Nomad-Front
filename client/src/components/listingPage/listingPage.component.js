@@ -22,6 +22,8 @@ class ListingPage extends Component {
     this.state = this.getInitialState();
   }
 
+
+
   async componentDidMount() {
     await axios.get('http://localhost:8080/listings/byId/' + this.props.match.params.id)
     .then((res) => {
@@ -36,7 +38,8 @@ class ListingPage extends Component {
         listingPrice: res.data.listing.price,
         listingStartDate: res.data.listing.available[0],
         listingEndDate: res.data.listing.available[1],
-        listingUser: res.data.listing.userId
+        listingUser: res.data.listing.userId,
+        loading: false
       })
       // Set default disabled days based on booked days in listing object
       let startDate = new Date(this.state.listingStartDate)
@@ -111,7 +114,9 @@ class ListingPage extends Component {
       // When the customer clicks on the button, redirect them to Checkout.
       const result = await stripe.redirectToCheckout({
         sessionId: session.id,
-      });
+      })
+      .then(() => this.setState({ loading: true }))
+
       if (result.error) {
         alert(result.error.message);
       }
@@ -181,11 +186,17 @@ class ListingPage extends Component {
             }
           />
       </div>
-      {
+      {this.state.loading ? (
+        <div id="spinner" />
+      ) : (
+        <div>
+        {
         this.state.from && this.state.to ?
         <input type="button" value="reserve now" onClick={this.handlePayment} /> :
         null
       }
+      </div>)
+    }
     </div>
     )
   }
