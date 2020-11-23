@@ -20,7 +20,7 @@ const Login = (props) => {
     e.preventDefault();
     props.submitLogin(userLogin)
     const loader = () => loadingSpinner(true);
-  };  
+  };
 
   return props.userSession ? (
     <Redirect to={{ pathname: "/" }} />
@@ -57,7 +57,7 @@ const Login = (props) => {
             </div>
             <div style={{ margin: "2% 0 3%" }}>
 
-            {this.state.loading ? (
+            {loading ? (
               <div id="spinner" />
             ) : (
               <button
