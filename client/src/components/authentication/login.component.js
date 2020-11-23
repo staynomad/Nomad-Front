@@ -11,9 +11,14 @@ const Login = (props) => {
     password: "",
   });
 
+  this.setState({
+    loading: false
+  });
+
   const handleLogin = (e) => {
     e.preventDefault();
     props.submitLogin(userLogin)
+    this.setState({ loading: true })
   };
 
   return props.userSession ? (
@@ -50,6 +55,10 @@ const Login = (props) => {
               />
             </div>
             <div style={{ margin: "2% 0 3%" }}>
+
+            {this.state.loading ? (
+              <div id="spinner" />
+            ) : (
               <button
                 className='login btn green'
                 style={{ width: "100%" }}
@@ -59,6 +68,7 @@ const Login = (props) => {
               >
                 log in
             </button>
+          )}
             </div>
             <div className='botText'>
               <span>don't have an account? </span>

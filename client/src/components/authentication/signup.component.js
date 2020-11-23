@@ -12,6 +12,10 @@ const Signup = () => {
     isHost: false,
   });
 
+  this.setState({
+    loading: false
+  });
+
   const [signupSuccess, setSignupSuccess] = useState(false);
 
   const handleSubmit = (e) => {
@@ -23,6 +27,7 @@ const Signup = () => {
         setSignupSuccess(true);
         console.log(res);
       })
+      .then(() => this.setState({ loading: true }))
       .catch((err) => {
         alert(err.response.data.errors[0]);
         //this.setState({ password: "" });
@@ -83,12 +88,16 @@ const Signup = () => {
             />{" "}
             are you a host?
           </label>
+
+          {this.state.loading ? (
+            <div id="spinner" />
+          ) : (
           <input
             type="submit"
             value="create your account"
             className="btn green"
             onClick={(e) => handleSubmit(e)}
-          />
+          />) }
         </form>
         <div className="botText">
           already have an account?{" "}
