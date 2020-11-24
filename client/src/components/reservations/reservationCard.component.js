@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
-import { NavLink, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { withStyles } from '@material-ui/core/styles';
 
@@ -26,14 +26,12 @@ const ReservationCard = (props) => {
 
   return (
     <div className='reservation-item' onClick={handleOpenClose}>
-      <NavLink to={'/reservation/' + reservation._id}>
-        <div className='reservation-information'>
-          <div className='reservation-image'>reservation image here</div>
-          <div>
-            <b>Reservation Date:</b> {reservation.days[0]} - {reservation.days[1]}
-          </div>
+      <div className='reservation-information'>
+        <div className='reservation-image'>reservation image here</div>
+        <div>
+          <b>Reservation Date:</b> {reservation.days[0]} - {reservation.days[1]}
         </div>
-      </NavLink>
+      </div>
       {props.userSession && props.userSession.userId === reservation.user ? (
         <CustomButton>Check-in</CustomButton>
       ) : null}

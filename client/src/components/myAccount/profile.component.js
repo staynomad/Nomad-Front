@@ -11,13 +11,13 @@ const Profile = () => {
 
     useEffect(() => {
         const userId = loginInfo.userInfo.session.userId;
-        axios.get (`http://localhost:8080/user/getUserInfo/${userId}`)
-        .then (res => {
-            dispatch(setUserInfo(res.data))
-        })
-        .catch (err => {
-            console.log ('error: ', err.response);
-        })
+        axios.get(`http://localhost:8080/user/getUserInfo/${userId}`)
+            .then(res => {
+                dispatch(setUserInfo(res.data))
+            })
+            .catch(err => {
+                console.log('error: ', err.response);
+            })
     }, []);
 
     const Greeting = () => {
@@ -35,7 +35,7 @@ const Profile = () => {
     const Information = () => {
         if (!isEmpty) {
             return (
-                <t>Email: { user.userInfo.email }</t>
+                <p>Email: { user.userInfo.email}</p>
             )
         } else {
             return null
