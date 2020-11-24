@@ -48,7 +48,7 @@ router.post(
       const newReservation = await new Reservation({
         user,
         listing,
-        active: true,
+        active: false,
         days
       }).save();
       const bookedInfo = {
@@ -260,6 +260,7 @@ router.post(
     try {
       const update = { active: true }
       const reservation = await Reservation.findByIdAndUpdate(req.params.reservationId, update);
+      const bookedListing = await Listing.findById(reservation.listing)
       if (!reservation) {
         return res.status(404).json({
           errors: ["Reservation does not exist"],
@@ -273,7 +274,7 @@ router.post(
           pass: 'yowguokryuzjmbhj'
         }
       })
-      // Send confirmation email to guest
+      // Send checkin confirmation email to guest
       axios.get(`http://localhost:8080/user/getUserInfo/${req.user._id}`)
         .then((res) => {
           const userMailOptions = {
@@ -286,11 +287,10 @@ router.post(
                   ${bookedListing.description}
                   Reservation number: ${reservation._id}
                   Address: ${bookedListing.location.street}, ${bookedListing.location.city}, ${bookedListing.location.state}, ${bookedListing.location.zipcode}
-                  Total cost: $${bookedListing.price * totalDays}
-                  Days: ${newReservation.days[0]} to ${newReservation.days[1]}
+                  Days: ${reservation.days[0]} to ${reservation.days[1]}
                   Host name: ${res.data.name}
 
-                  Hope you enjoy your stay!`
+              Hope you enjoy your stay!`
           }
           transporter.sendMail(userMailOptions, (error, info) => {
             if (error) {
@@ -302,13 +302,11 @@ router.post(
           })
         })
         .catch((err) => {
-          return res.status(500).json({
-            "errors": "Error sending confirmation email to guest."
-          })
+          console.log(err)
         })
 
-      // Send confirmation email to host
-      axios.get(`http://localhost:8080/user/getUserInfo/${req.user._id}`)
+      // Send checkin confirmation email to host
+      axios.get(`http://localhost:8080/user/getUserInfo/${bookedListing.userId}`)
         .then((res) => {
           const hostMailOptions = {
             from: '"VHomes" <reservations@vhomesgroup.com>',
@@ -319,11 +317,10 @@ router.post(
 
                 ${bookedListing.description}
                 Address: ${bookedListing.location.street}, ${bookedListing.location.city}, ${bookedListing.location.state}, ${bookedListing.location.zipcode}
-                Total cost: $${bookedListing.price * totalDays}
-                Days: ${newReservation.days[0]} to ${newReservation.days[1]}
+                Days: ${reservation.days[0]} to ${reservation.days[1]}
                 Guest name: ${res.data.name}
 
-                Thank you for choosing VHomes!`
+              Thank you for choosing VHomes!`
           }
           transporter.sendMail(hostMailOptions, (error, info) => {
             if (error) {
@@ -335,9 +332,7 @@ router.post(
           })
         })
         .catch((err) => {
-          return res.status(500).json({
-            "errors": "Error sending confirmation email to guest."
-          })
+          console.log(err)
         })
 
       res.status(200).json({
