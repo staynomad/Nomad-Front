@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
+import { connect } from "react-redux";
 import { withStyles } from '@material-ui/core/styles';
 
 const CustomButton = withStyles((theme) => ({
@@ -33,13 +34,31 @@ const ReservationCard = (props) => {
           </div>
         </div>
       </NavLink>
-      {props.userSession && props.userSession.userId === reservation.userId ? (
+      {props.userSession && props.userSession.userId === reservation.user ? (
         <CustomButton>Check-in</CustomButton>
       ) : null}
-      {props.userSession && props.userSession.userId === reservation.userId ? (
+      {props.userSession && props.userSession.userId === reservation.user ? (
         <CustomButton>Check-out</CustomButton>
       ) : null}
     </div>
   )
 };
-export default ReservationCard;
+
+const mapStateToProps = state => {
+  const stateToReturn = {};
+  if (state.Login.userInfo) stateToReturn['userSession'] = state.Login.userInfo.session;
+  return stateToReturn;
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+
+  };
+};
+
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(
+  ReservationCard
+));
