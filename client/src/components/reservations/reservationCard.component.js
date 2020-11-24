@@ -4,6 +4,8 @@ import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { withStyles } from '@material-ui/core/styles';
 
+import { checkInToReservation, checkOutOfReservation } from '../../redux/actions/reservationActions';
+
 const CustomButton = withStyles((theme) => ({
   root: {
     color: "#00B183",
@@ -24,6 +26,14 @@ const ReservationCard = (props) => {
     setOpen(!open);
   };
 
+  const handleCheckIn = () => {
+    props.checkInToReservation(props.userSession.token, reservation._id);
+  };
+
+  const handleCheckOut = () => {
+    props.checkOutOfReservation(props.userSession.token, reservation._id);
+  };
+
   return (
     <div className='reservation-item' onClick={handleOpenClose}>
       <div className='reservation-information'>
@@ -33,10 +43,10 @@ const ReservationCard = (props) => {
         </div>
       </div>
       {props.userSession && props.userSession.userId === reservation.user ? (
-        <CustomButton>Check-in</CustomButton>
+        <CustomButton onClick={handleCheckIn}>Check-in</CustomButton>
       ) : null}
       {props.userSession && props.userSession.userId === reservation.user ? (
-        <CustomButton>Check-out</CustomButton>
+        <CustomButton onClick={handleCheckOut}>Check-out</CustomButton>
       ) : null}
     </div>
   )
@@ -50,7 +60,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-
+    checkInToReservation: (token, reservationId) => (dispatch(checkInToReservation(token, reservationId))),
+    checkOutOfReservation: (token, reservationId) => (dispatch(checkOutOfReservation(token, reservationId))),
   };
 };
 
