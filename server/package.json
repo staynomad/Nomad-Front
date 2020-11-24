@@ -8,8 +8,10 @@
     "start:production": "./bin/www.js"
   },
   "dependencies": {
+    "aws-sdk": "^2.797.0",
     "axios": "^0.21.0",
     "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.16.4",

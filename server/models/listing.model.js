@@ -2,16 +2,17 @@ const mongoose = require("mongoose");
 const User = require("./user.model");
 const Schema = mongoose.Schema;
 
-const { Array, Mixed, Number, ObjectId, String } = Schema.Types;
+const { Array, Mixed, Number, String, ObjectId } = Schema.Types;
 
 const ListingSchema = new Schema({
+  title: {
+    type: String,
+    default: null,
+  },
   location: {
     type: Mixed,
     index: { unique: true },
     required: true,
-  },
-  pictures: {
-    type: Array
   },
   description: {
     type: String,
@@ -25,26 +26,31 @@ const ListingSchema = new Schema({
     type: Number,
     required: true,
   },
-  rules: {
+  available: {
+    type: Array,
+    required: false,
+  },
+  pictures: {
     type: Array,
     default: null,
-  },
-  rating: {
-    type: Object,
-    default: null
   },
   userId: {
     type: ObjectId,
     ref: User,
-    required: true,
+    required: false,
   },
-  available: {
-    type: Array,
-    required: true,
-  },
+
   booked: {
-    type: Array
-  }
+    type: Array,
+  },
+  rating: {
+    type: Object,
+    default: null,
+  },
+  rules: {
+    type: Array,
+    default: null,
+  },
 });
 
 const Listing = mongoose.model("listing", ListingSchema);

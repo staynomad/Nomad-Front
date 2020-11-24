@@ -9,7 +9,7 @@ import DayPicker, { DateUtils } from 'react-day-picker'
 import 'react-day-picker/lib/style.css'
 import './listingPage.css'
 
-const stripePublicKey = "pk_test_51HDNtOE7SomQuJWLTiEqzbIriLpsErElVGi9Qwjg7xzSKHsYgnNflvxLdpN4LdFte2O0h2Y2cdDxP0gvXAmXjdsu00TuwlmhAT"
+const stripePublicKey = "pk_test_51HqRrRImBKNBYsooNTOTLagbqd8QUGaK6BeGwy6k2pQAJxkFF7NRwTT3ksBwyGVmq8UqhNVvKQS7Vlb69acFFCvq00hxgBuZhh"
 
 const stripePromise = loadStripe(stripePublicKey);
 
@@ -26,6 +26,7 @@ class ListingPage extends Component {
     await axios.get('http://localhost:8080/listings/byId/' + this.props.match.params.id)
     .then((res) => {
       this.setState({
+        listingTitle: res.data.listing.title,
         listingDescription: res.data.listing.description,
         listingLocation: `${res.data.listing.location.city}, ${res.data.listing.location.state}, ${res.data.listing.location.country}`,
         listingImages: ['image1', 'image2', 'image3'],
@@ -61,7 +62,7 @@ class ListingPage extends Component {
         listingBookedDays: bookedDays
       })
       // Get host's email from their userId
-      axios.get(`http://localhost:8080/user/getEmail/${this.state.listingUser}`)
+      axios.get(`http://localhost:8080/user/getUserInfo/${this.state.listingUser}`)
       .then((res) =>
         this.setState({
           hostEmail: res.data.email
@@ -143,7 +144,8 @@ class ListingPage extends Component {
 
     return (
       <div className="container">
-        <h1>{this.state.listingDescription}</h1> <br />
+        <h1>{this.state.listingTitle}</h1> <br />
+        {this.state.listingDescription} <br />
         {this.state.listingLocation} <br />
         {this.state.listingImages} <br />
         beds: {this.state.listingBeds} <br />

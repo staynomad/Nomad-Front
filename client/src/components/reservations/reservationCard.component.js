@@ -29,7 +29,7 @@ const ReservationCard = (props) => {
         <div className='reservation-information'>
           <div className='reservation-image'>reservation image here</div>
           <div>
-            <b>Reservation Date:</b> `${reservation.date[0]} - ${reservation.date[1]}`
+            <b>Reservation Date:</b> {reservation.days[0]} - {reservation.days[1]}
           </div>
         </div>
       </NavLink>
