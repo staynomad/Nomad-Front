@@ -73,11 +73,11 @@ router.post(
           const userMailOptions = {
             from: '"VHomes" <reservations@vhomesgroup.com>',
             to: res.data.email,
-            subject: `Your Reservation has been Confirmed: ${bookedListing.description}`,
+            subject: `Your Reservation has been Confirmed: ${bookedListing.title}`,
             text:
               `Thank you for booking with VHomes! Here's your reservation information:
 
-                  ${bookedListing.description}
+                  ${bookedListing.title}
                   Reservation number: ${newReservation._id}
                   Address: ${bookedListing.location.street}, ${bookedListing.location.city}, ${bookedListing.location.state}, ${bookedListing.location.zipcode}
                   Total cost: $${bookedListing.price * totalDays}
@@ -107,11 +107,11 @@ router.post(
           const hostMailOptions = {
             from: '"VHomes" <reservations@vhomesgroup.com>',
             to: res.data.email,
-            subject: `Your listing has been booked: ${bookedListing.description}`,
+            subject: `Your listing has been booked: ${bookedListing.title}`,
             text:
               `Thank you for listing on VHomes! Here's the information regarding your listing reservation:
 
-                ${bookedListing.description}
+                ${bookedListing.title}
                 Reservation number: ${newReservation._id}
                 Address: ${bookedListing.location.street}, ${bookedListing.location.city}, ${bookedListing.location.state}, ${bookedListing.location.zipcode}
                 Total cost: $${bookedListing.price * totalDays}
@@ -280,11 +280,11 @@ router.post(
           const userMailOptions = {
             from: '"VHomes" <reservations@vhomesgroup.com>',
             to: res.data.email,
-            subject: `Thanks for checking in to ${bookedListing.description}!`,
+            subject: `Thanks for checking in to ${bookedListing.title}!`,
             text:
               `You have successfully checked in to your stay! The host has been notified and will let you in soon. If you have any questions or concerns, please reach out to the host at ${res.data.email}.
 
-                  ${bookedListing.description}
+                  ${bookedListing.title}
                   Reservation number: ${reservation._id}
                   Address: ${bookedListing.location.street}, ${bookedListing.location.city}, ${bookedListing.location.state}, ${bookedListing.location.zipcode}
                   Days: ${reservation.days[0]} to ${reservation.days[1]}
@@ -311,11 +311,11 @@ router.post(
           const hostMailOptions = {
             from: '"VHomes" <reservations@vhomesgroup.com>',
             to: res.data.email,
-            subject: `Your guest has checked in to ${bookedListing.description}!`,
+            subject: `Your guest has checked in to ${bookedListing.title}!`,
             text:
               `Your guest has just checked in! Please provide them with the next steps to begin their stay. If you have any questions or concerns, please reach out to the guest at ${res.data.email}.
 
-                ${bookedListing.description}
+                ${bookedListing.title}
                 Address: ${bookedListing.location.street}, ${bookedListing.location.city}, ${bookedListing.location.state}, ${bookedListing.location.zipcode}
                 Days: ${reservation.days[0]} to ${reservation.days[1]}
                 Guest name: ${res.data.name}
