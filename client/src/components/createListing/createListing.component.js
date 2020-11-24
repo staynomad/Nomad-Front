@@ -36,7 +36,7 @@ class CreateListing extends Component {
         baths: "",
         maxpeople: "",
       },
-      pictures: "",
+      pictures: [],
       price: "",
       rules: "",
       dates: {
@@ -65,6 +65,7 @@ class CreateListing extends Component {
       return this.props.history.push("/accountVerification/send");
     }
   }
+
   handleChange(e, name) {
     this.setState({
       [name]: e,
@@ -73,14 +74,14 @@ class CreateListing extends Component {
   }
 
   onSubmit() {
-    console.log(this.state.dates);
+    const available = [this.state.dates.start_date, this.state.dates.end_date];
     const newListing = {
       title: this.state.title,
       location: this.state.location,
       description: this.state.description,
       details: this.state.details,
       price: this.state.price,
-      available: this.state.dates,
+      available: available,
       pictures: this.state.pictures,
     };
 
@@ -172,9 +173,9 @@ class CreateListing extends Component {
       pictures: this.state.pictures,
     };
     this.props.updateInfo(updatedData);
-    //console.log(this.props)
   }
 }
+
 const mapStateToProps = (state) => {
   if (state.Login.userInfo)
     return {
@@ -185,7 +186,6 @@ const mapStateToProps = (state) => {
     listingData: state,
   };
 };
-
 const mapDispatchToProps = (dispatch) => {
   return {
     updateInfo: (toUpdate) => dispatch(updateInfo(toUpdate)),

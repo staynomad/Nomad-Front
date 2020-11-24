@@ -1,4 +1,4 @@
-const uploadPhoto = (file, token) => {
+const uploadPhoto = async (file, bucket) => {
   const fileName = encodeURIComponent(file.name);
   let response = null;
   const xhr = new XMLHttpRequest();
@@ -8,7 +8,7 @@ const uploadPhoto = (file, token) => {
     : "http://localhost:8080";
   xhr.open(
     "GET",
-    `${apiBaseUrl}/photos/sign-s3?file-name=${fileName}&file-type=${file.type}`
+    `${apiBaseUrl}/photos/sign-s3?file-name=${fileName}&file-type=${file.type}&file-bucket=${bucket}`
   );
   xhr.onreadystatechange = () => {
     if (xhr.readyState === 4) {
