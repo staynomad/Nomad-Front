@@ -1,7 +1,7 @@
 import React from "react";
-import Navbar from "./components/general/navbar.component";
-import Footer from "./components/general/footer.component";
-import Home from "./components/homePage/home.component";
+import Navbar from "./components/homePage/navbar.component";
+import Footer from "./components/homePage/footer.component";
+import Home from "./components/homePage/newHome.component";
 import Login from "./components/authentication/login.component";
 import Signup from "./components/authentication/signup.component";
 import Contact from "./components/subpages/contact.component.js";
@@ -21,6 +21,7 @@ import ListingPage from "./components/listingPage/listingPage.component";
 import EditListing from "./components/editListing/editListing";
 import PaymentSuccess from "./components/listingPage/paymentSuccess.component"
 import AccountVerification from "./components/authentication/verifyAccount.component"
+import newHome from "./components/homePage/newHome1.component"
 import "./App.css";
 
 //to add more items just copy the format and add the route path. look at navbar component to see where the path is currently set to
@@ -33,6 +34,7 @@ function App() {
       <div className="App">
         <Switch>
           <Route path="/" exact component={Home} />
+          <Route path="/test" exact component={newHome} />
           <Route path="/ContactUs" exact component={Contact} />
           <Route path="/Login" exact component={Login} />
           <Route path="/SignUp" exact component={Signup} />
