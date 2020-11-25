@@ -27,8 +27,13 @@
 
 .checkbox {
   color: #31473b;
-  margin: 1%;
   font-size: 16px;
+}
+
+.check {
+  color: #31473b;
+  margin: 1%;
+  width: auto;
 }
 
 .login-content {

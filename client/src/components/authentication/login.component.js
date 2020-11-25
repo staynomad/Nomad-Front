@@ -51,7 +51,7 @@ const Login = (props) => {
             </div>
             <div style={{ margin: "2% 0 3%" }}>
               <button
-                className='login btn green'
+                className='btn green'
                 style={{ width: "100%" }}
                 onClick={(e) => {
                   handleLogin(e)

@@ -71,8 +71,9 @@ const Signup = () => {
               setUserSignup({ ...userSignup, check: e.target.value })
             }
           />
-          <label className="checkbox">
+          <div className="checkbox">
             <input
+              className="check"
               type="checkbox"
               name="isHost"
               checked={userSignup.isChecked}
@@ -80,8 +81,8 @@ const Signup = () => {
                 setUserSignup({ ...userSignup, isHost: !e.isHost })
               }
             />{" "}
-            are you a host?
-          </label>
+            <label>are you a host?</label>    
+          </div>
           <input
             type="submit"
             value="create your account"
