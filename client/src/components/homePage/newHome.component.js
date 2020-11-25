@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 import './css/animate.css'
 import './css/common.css'
 import './css/grid.css'
@@ -17,6 +18,7 @@ import man from './images/man.png'
 import woman from './images/woman.png'
 
 class newHome extends Component {
+
   render() {
     return (
       <div data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
@@ -32,23 +34,21 @@ class newHome extends Component {
         </div>
 
         <div className="col-sm-12 col-md-8 col-lg-5" >
-          <div className="spacer_l"></div>
-           <div className=" wow fadeInUp" data-wow-delay="0.5s">
-          <h1>VHomes</h1>
-          <div className="intro_text">The future of flexible rentals.</div>
-        </div>
-
-          <div className="spacer_m"></div>
-          <div className=" wow fadeInUp" data-wow-delay="0.5s">
-          <div className="login_bar">
-           <input type="text" className="login" />
-              <span className="subscribe_button" onclick="subscribeOnClick()">Subscribe</span>
-              <span className="subscribing"></span>
-              <span className="thanks"> Thank you! You have been subscribed</span>
+            <div className="spacer_l"></div>
+             <div className=" wow fadeInUp" data-wow-delay="0.5s">
+            <h1>VHomes</h1>
+            <div className="intro_text">The future of flexible rentals.</div>
           </div>
-         <div className="intro_text">Subscribe now to get notified when we launch. </div>
-        </div>
-        </div>
+
+            <div className="spacer_m"></div>
+            <div className=" wow fadeInUp" data-wow-delay="0.5s">
+            <div className="login_bar">
+             <input type="text" className="login" placeholder="city" />
+                <span className="subscribe_button" onclick="">Search</span>
+            </div>
+           <div className="intro_text">Subscribe now to get notified when we launch. </div>
+          </div>
+          </div>
         </div>
 
 

@@ -111,7 +111,7 @@ class LeftMenu extends Component {
 
     return (
       <div>
-        <br /><br /><br /><br /><br /> {/* can implement this more cleanly with styling */}
+        <br /><br /><br /><br /><br /><br /><br /> {/* can implement this more cleanly with styling */}
         <Grid className="container">
           <Grid.Column width={3}>
             <Menu fluid vertical tabular>
