@@ -48,7 +48,7 @@ router.post(
       const newReservation = await new Reservation({
         user,
         listing,
-        active: false,
+        active: true,
         checkedIn: false,
         days
       }).save();
