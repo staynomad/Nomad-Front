@@ -14,9 +14,9 @@ class navbar extends Component {
       <footer>
         <div className="footer-content">
         	<div className="footer-social-media wow fadeInUp" data-wow-delay="0.4s">
-        		<a href="" target="_blank"><img src={linkedin} alt="" /></a>
-        		<a href="" ><img src={facebook} alt="" /></a>
-            <a href="" ><img src={ig} alt="" /></a>
+        		<a href="https://www.linkedin.com/company/vhomesgroup" target="_blank"><img src={linkedin} alt="" /></a>
+        		<a href="https://www.facebook.com/rentvhomes/" ><img src={facebook} alt="" /></a>
+            <a href="https://www.instagram.com/vhomesgroup/" ><img src={ig} alt="" /></a>
         	</div>
           <h5 className="wow fadeInUp" data-wow-delay="0.4s">© 2020 Vhomes- All Rights Reserved. </h5>
         </div>

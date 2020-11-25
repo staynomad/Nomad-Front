@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import './css/animate.css'
 import './css/common.css'
 import './css/grid.css'
@@ -277,7 +278,9 @@ class newHome extends Component {
         </div>
          <div className=" wow fadeInUp" data-wow-delay="0.5s">
         <div className="button3">
-        <button className="btn-hover color-5">Create a Listing Now</button>
+        <Link to="/createListing">
+          <button className="btn-hover color-5">Create a Listing Now</button>
+        </Link>
         </div>
         </div>
 
