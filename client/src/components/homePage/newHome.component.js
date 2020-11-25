@@ -1,48 +1,11 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { Helmet } from 'react-helmet'
-import './css/animate.css'
-import './css/common.css'
-import './css/grid.css'
-import './css/homepage.css'
-import illustration from './images/illustration.svg'
-import safety from './images/safety.svg'
-import space from './images/space.svg'
-import payment from './images/payment.svg'
-import kitchen from './images/kitchen.svg'
-import shower from './images/shower.svg'
-import laundry from './images/laundry.svg'
-import wifi from './images/wifi.svg'
-import step from './images/step.png'
-import man from './images/man.png'
-import woman from './images/woman.png'
 
 class newHome extends Component {
 
   render() {
     return (
       <div>
-        <Helmet>
-            <meta charset="UTF-8"name="viewport" content="width=device-width, initial-scale=1" />
-          <link rel="shortcut icon" type="image/png" href="images/favicon.ico"/>
-           <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i,800,900|Source+Sans+Pro:300,300i,400,400i,600,600i,700,700i,900&display=swap" rel="stylesheet"/>
-          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous"/>
-          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css"/>
-          <link rel="stylesheet" href="css/animate.css"/>
-            <link rel="stylesheet" href="css/grid.css"/>
-            <link rel="stylesheet" href="css/common.css"/>
-              <link rel="stylesheet" href="css/homepage.css"/>
-            <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-            <script src="js/script.js"></script>
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
-            <script src="js/jquery.js"></script>
-            <script src="js/jquery.parallax.js"></script>
-            <script src="js/smoothscroll.js"></script>
-            <script src="js/wow.min.js"></script>
-            <script src="js/custom.js"></script>
-        </Helmet>
 
         <div data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
 
@@ -52,7 +15,7 @@ class newHome extends Component {
             <div className="row gap large" >
           <div className="col-sm-12 col-md-8 col-lg-7" >
              <div className=" wow fadeInUp" data-wow-delay="0.5s">
-              <img src={illustration} alt="" className="media-image" />
+              <img src="./images/illustration.svg" alt="" className="media-image" />
             </div>
           </div>
 
@@ -84,7 +47,7 @@ class newHome extends Component {
                      <div className="col-sm-12 col-md-12 col-lg-4 " >
                       <div className="home-card">
                        <div className=" wow fadeInUp" data-wow-delay="0.5s">
-                    <img src={payment} alt=""  className="why-graphic" />
+                    <img src="./images/payment.svg" alt=""  className="why-graphic" />
                   </div>
                    <div className=" wow fadeInUp" data-wow-delay="0.5s">
                      <div className="subtitle">No more overpaying</div>
@@ -96,7 +59,7 @@ class newHome extends Component {
                     <div className="col-sm-12 col-md-12 col-lg-4 " >
                        <div className="home-card">
                          <div className=" wow fadeInUp" data-wow-delay="0.5s">
-                        <img src={space} alt="" className="why-graphic" />
+                        <img src="./images/space.svg" alt="" className="why-graphic" />
                       </div>
                        <div className=" wow fadeInUp" data-wow-delay="0.5s">
                         <div className="subtitle">Spaces designed for living</div>
@@ -108,7 +71,7 @@ class newHome extends Component {
                       <div className="col-sm-12 col-md-12 col-lg-4 " >
                          <div className="home-card">
                            <div className=" wow fadeInUp" data-wow-delay="0.5s">
-                           <img src={safety} alt="" className="why-graphic" />
+                           <img src="./images/safety.svg" alt="" className="why-graphic" />
                          </div>
                           <div className=" wow fadeInUp" data-wow-delay="0.5s">
                            <div className="subtitle">Prioritize your safety</div>
@@ -128,14 +91,14 @@ class newHome extends Component {
             <div className="row gap large " >
                <div className="col-sm-6 col-md-6 col-lg-3" >
               <div className=" wow fadeInUp" data-wow-delay="0.5s">
-                  <img src={wifi} alt="" className="AM-graphic "  />
+                  <img src="./images/wifi.svg" alt="" className="AM-graphic "  />
                   <div className="subtitle2">Fast Wifi</div>
               </div>
               </div>
 
               <div className="col-sm-6 col-md-6 col-lg-3" >
                     <div className=" wow fadeInUp" data-wow-delay="0.5s">
-                <img src={laundry} alt="" class="AM-graphic"  />
+                <img src="./images/laundry.svg" alt="" class="AM-graphic"  />
                   <div className="subtitle2">In-suite laundry</div>
               </div>
             </div>
@@ -143,14 +106,14 @@ class newHome extends Component {
 
               <div className="col-sm-6 col-md-6 col-lg-3" >
                  <div className=" wow fadeInUp" data-wow-delay="0.5s">
-                <img src={shower} alt="" class="AM-graphic"  />
+                <img src="./images/shower.svg" alt="" class="AM-graphic"  />
                   <div className="subtitle2">Shower amenities</div>
               </div>
             </div>
 
               <div className="col-sm-6 col-md-6 col-lg-3" >
                     <div className=" wow fadeInUp" data-wow-delay="0.5s">
-                <img src={kitchen} alt="" class="AM-graphic"  />
+                <img src="./images/kitchen.svg" alt="" class="AM-graphic"  />
                   <div className="subtitle2">Fully-equipped kitchen</div>
               </div>
             </div>
@@ -165,7 +128,7 @@ class newHome extends Component {
                <div className="spacer_l"></div>
               <div className="row gap large" >
           <div className="col-sm-12 col-md-6 col-lg-6" >
-                <img src={step} alt="" className="media-image" />
+                <img src="./images/step.png" alt="" className="media-image" />
           </div>
 
 
@@ -222,7 +185,7 @@ class newHome extends Component {
             <div>
               <div className="box">
                 <figure className="image">
-                  <img className="img-fluid rounded-circle" src={woman} />
+                  <img className="img-fluid rounded-circle" src="./images/woman.png" />
                 </figure>
 
                 <div className="test-component">
@@ -241,7 +204,7 @@ class newHome extends Component {
 
               <div className="box">
                 <figure className="image">
-                  <img className="img-fluid rounded-circle" src={man} />
+                  <img className="img-fluid rounded-circle" src="./images/man.png" />
                 </figure>
                 <div className="test-component">
                   <article className="test-title">
@@ -259,7 +222,7 @@ class newHome extends Component {
 
               <div className="box">
                 <figure className="image">
-                  <img className="img-fluid rounded-circle" src={woman} />
+                  <img className="img-fluid rounded-circle" src="./images/woman.png" />
                 </figure>
               <div className="test-component">
                   <article className="test-title">
@@ -277,7 +240,7 @@ class newHome extends Component {
 
               <div className="box">
                 <figure className="image">
-                  <img className="img-fluid rounded-circle" src={man} />
+                  <img className="img-fluid rounded-circle" src="./images/man.png" />
                 </figure>
                 <div className="test-component">
                   <article className="test-title">
