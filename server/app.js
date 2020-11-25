@@ -17,6 +17,7 @@ const userRouter = require("./routes/user");
 const accountVerificationRouter = require("./routes/accountVerification");
 const photosRouter = require("./routes/photos");
 const reviewRouter = require("./routes/reviews")
+const contactRouter = require("./routes/contact")
 
 
 const app = express();
@@ -35,6 +36,7 @@ app.use("/user", userRouter);
 app.use("/accountVerification", accountVerificationRouter);
 app.use("/photos", photosRouter);
 app.use("/reviews", reviewRouter);
+app.use("/contact", contactRouter)
 
 mongoose.connect(DATABASE_URI, {
   useCreateIndex: true,

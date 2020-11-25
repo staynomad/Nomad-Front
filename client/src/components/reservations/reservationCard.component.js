@@ -35,25 +35,35 @@ const ReservationCard = (props) => {
   };
 
   return (
-    <div className='reservation-item' onClick={handleOpenClose}>
-      <div className='reservation-information'>
-        <div className='reservation-image'>reservation image here</div>
-        <div>
-          <b>Reservation Date:</b> {reservation.days[0]} - {reservation.days[1]}
+    <>
+      { reservation.active ? (
+        <div className='reservation-item' onClick={handleOpenClose}>
+          <div className='reservation-information'>
+            <div className='reservation-image'>reservation image here</div>
+            <div>
+              <b>Reservation Date:</b> {reservation.days[0]} - {reservation.days[1]}
+            </div>
+          </div>
+          {props.userSession && props.userSession.userId === reservation.user && !props.reservation.checkedIn ? (
+            <CustomButton onClick={handleCheckIn}>
+              { !props.loading ? "Check-in" : <div id="spinner" />}
+            </CustomButton>
+          ) : (
+              <>
+                {/* Render an unclickable button */}
+              </>
+            )}
+          {props.userSession && props.userSession.userId === reservation.user && props.reservation.checkedIn ? (
+            <CustomButton onClick={handleCheckOut}>Check-out</CustomButton>
+          ) : null}
         </div>
-      </div>
-      {props.userSession && props.userSession.userId === reservation.user ? (
-        <CustomButton onClick={handleCheckIn}>Check-in</CustomButton>
       ) : null}
-      {props.userSession && props.userSession.userId === reservation.user ? (
-        <CustomButton onClick={handleCheckOut}>Check-out</CustomButton>
-      ) : null}
-    </div>
+    </>
   )
 };
 
 const mapStateToProps = state => {
-  const stateToReturn = {};
+  const stateToReturn = { ...state, loading: state.Loading.loading };
   if (state.Login.userInfo) stateToReturn['userSession'] = state.Login.userInfo.session;
   return stateToReturn;
 };

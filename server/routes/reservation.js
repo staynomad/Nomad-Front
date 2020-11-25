@@ -49,6 +49,7 @@ router.post(
         user,
         listing,
         active: false,
+        checkedIn: false,
         days
       }).save();
       const bookedInfo = {
@@ -155,7 +156,9 @@ router.get(
   requireUserAuth,
   async (req, res) => {
     try {
-      const reservation = await Reservation.find({ user: req.user._id });
+      const reservation = await Reservation.find({
+        user: req.user._id,
+      });
       if (!reservation) {
         return res.status(404).json({
           errors: ["User has not made any reservations"],
@@ -230,8 +233,9 @@ router.post(
   "/deactivate/:reservationId",
   async (req, res) => {
     try {
-      const update = { active: false }
-      const reservation = await Reservation.findByIdAndUpdate(req.params.reservationId, update);
+      const update = { active: false };
+      const options = { new: true };
+      const reservation = await Reservation.findByIdAndUpdate(req.params.reservationId, update, options);
       if (!reservation) {
         return res.status(404).json({
           errors: ["Reservation does not exist"],
@@ -258,8 +262,9 @@ router.post(
   requireUserAuth,
   async (req, res) => {
     try {
-      const update = { active: true }
-      const reservation = await Reservation.findByIdAndUpdate(req.params.reservationId, update);
+      const update = { checkedIn: true };
+      const options = { new: true };
+      const reservation = await Reservation.findByIdAndUpdate(req.params.reservationId, update, options);
       const bookedListing = await Listing.findById(reservation.listing)
       if (!reservation) {
         return res.status(404).json({
