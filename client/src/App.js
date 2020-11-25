@@ -21,7 +21,6 @@ import ListingPage from "./components/listingPage/listingPage.component";
 import EditListing from "./components/editListing/editListing";
 import PaymentSuccess from "./components/listingPage/paymentSuccess.component"
 import AccountVerification from "./components/authentication/verifyAccount.component"
-import newHome from "./components/homePage/newHome1.component"
 import "./App.css";
 
 //to add more items just copy the format and add the route path. look at navbar component to see where the path is currently set to
@@ -34,7 +33,6 @@ function App() {
       <div className="App">
         <Switch>
           <Route path="/" exact component={Home} />
-          <Route path="/test" exact component={newHome} />
           <Route path="/ContactUs" exact component={Contact} />
           <Route path="/Login" exact component={Login} />
           <Route path="/SignUp" exact component={Signup} />
