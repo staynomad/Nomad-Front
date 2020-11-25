@@ -46,11 +46,9 @@ class LeftMenu extends Component {
 
   handleItemClick(e, { name, compname }) {
     this.setState({ activeItem: name, render: compname })
-    console.log(this.state)
   }
 
   _renderSubComp() {
-    console.log(this.state)
     switch (this.state.render) {
       case 'profile':
         if (this.props.userSession) {
@@ -75,7 +73,7 @@ class LeftMenu extends Component {
               {this.props.userListings && this.props.userListings.length > 0 ? (
                 <>
                   {this.props.userListings.map((listing) => (
-                    <ListingCard key={listing} listing={listing} />
+                    <ListingCard key={listing._id} listing={listing} />
                   ))}
                 </>
               ) :
@@ -90,13 +88,12 @@ class LeftMenu extends Component {
         return (
           <>
             {this.props.userReservations ?
-              this.props.userReservations.sort(function(a, b) {
-              if (a.days[0] < b.days[0]) return -1;
-              if (a.days[0] > b.days[0]) return 1;
-              return 0;
-            }).map((reservation) => (
-              <ReservationCard key={reservation} reservation={reservation} />
-            )) : null}
+              this.props.userReservations.sort(function (a, b) {
+                if (a.days[0] < b.days[0]) return -1;
+                if (a.days[0] > b.days[0]) return 1;
+              }).map((reservation) => (
+                <ReservationCard key={reservation._id} reservation={reservation} />
+              )) : null}
           </>
         );
       case 'settings':
@@ -121,8 +118,8 @@ class LeftMenu extends Component {
                 compname='profile'
                 onClick={this.handleItemClick}
               />
-              { this.props.userSession ?
-                  this.props.userSession.isHost ?
+              {this.props.userSession ?
+                this.props.userSession.isHost ?
                   (
                     <Menu.Item
                       name='my listings'
@@ -134,7 +131,7 @@ class LeftMenu extends Component {
                       }}
                     />
                   ) : null
-                  : null
+                : null
               }
               <Menu.Item
                 name='my reservations'
@@ -165,15 +162,11 @@ class LeftMenu extends Component {
 }
 
 const mapStateToProps = state => {
-  if (state.Login.userInfo) return {
-    userListings: state.Listing.userListings,
-    userReservations: state.Reservations.reservations,
-    userSession: state.Login.userInfo.session,
-  }
-  return {
-    userListings: state.Listing.userListings,
-    userReservations: state.Reservations.reservations,
-  };
+  const stateToReturn = { ...state };
+  if (state.Login.userInfo) stateToReturn['userSession'] = state.Login.userInfo.session;
+  if (state.Listing.userListings) stateToReturn['userListings'] = state.Listing.userListings;
+  if (state.Reservations.reservations) stateToReturn['userReservations'] = state.Reservations.reservations;
+  return stateToReturn;
 };
 
 const mapDispatchToProps = dispatch => {

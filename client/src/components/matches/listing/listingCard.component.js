@@ -37,16 +37,15 @@ const ListingCard = (props) => {
   };
 
   const getAverageRating = () => {
-    console.log(listing)
     if (listing.rating) {
-        let total = 0
-        let count = 0
-        const entries = Object.entries(listing.rating)
-        for (let i = 0; i < entries.length; i++) {
-          total += parseInt(entries[i][1].stars)
-          count++
-        }
-        setRating(`${String(parseFloat(total / count).toFixed(1))} / 5`)
+      let total = 0
+      let count = 0
+      const entries = Object.entries(listing.rating)
+      for (let i = 0; i < entries.length; i++) {
+        total += parseInt(entries[i][1].stars)
+        count++
+      }
+      setRating(`${String(parseFloat(total / count).toFixed(1))} / 5`)
     }
     else {
       setRating('No ratings yet!')
@@ -66,7 +65,7 @@ const ListingCard = (props) => {
           </div>
           <div>
             <b>Rating:</b> {rating}
-            </div>
+          </div>
           <div>
             <b>Price:</b> ${listing.price}/night
           </div>

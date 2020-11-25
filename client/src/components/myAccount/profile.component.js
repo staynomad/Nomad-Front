@@ -11,13 +11,13 @@ const Profile = () => {
 
     useEffect(() => {
         const userId = loginInfo.userInfo.session.userId;
-        axios.get (`http://localhost:8080/user/getUserInfo/${userId}`)
-        .then (res => {
-            dispatch(setUserInfo(res.data))
-        })
-        .catch (err => {
-            console.log ('error: ', err.response);
-        })
+        axios.get(`http://localhost:8080/user/getUserInfo/${userId}`)
+            .then(res => {
+                dispatch(setUserInfo(res.data))
+            })
+            .catch(err => {
+                console.log('error: ', err.response);
+            })
     }, []);
 
     const Greeting = () => {
@@ -37,7 +37,7 @@ const Profile = () => {
             console.log("description: ", user.userInfo.description)
             return (
                 <div>
-                    <t>Email: { user.userInfo.email }</t>
+                    <t>Email: {user.userInfo.email}</t>
                     <br />
                     {user.userInfo.description ? <p>Description: {user.userInfo.description}</p> : <t>Add your description to get started!</t>}
                 </div>
@@ -56,7 +56,7 @@ const Profile = () => {
             <Information />
             <hr />
             <form action="/EditProfileInfo">
-                <button className="login btn green" style={{width: '30%'}}> EDIT PROFILE </button>
+                <button className="login btn green" style={{ width: '30%' }}> EDIT PROFILE </button>
             </form>
         </div>
     )
