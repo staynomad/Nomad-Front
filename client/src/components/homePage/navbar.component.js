@@ -2,11 +2,6 @@ import React, { Component } from 'react'
 import { Link, withRouter, Redirect } from 'react-router-dom'
 import { removeUserSession } from '../../redux/actions/authActions'
 import { connect } from "react-redux";
-import './css/animate.css'
-import './css/common.css'
-import './css/grid.css'
-import './css/homepage.css'
-import logo from './images/logo.png'
 
 class navbar extends Component {
   constructor(props) {
@@ -24,7 +19,7 @@ class navbar extends Component {
           <div className="nav-container">
                   <div className="logo">
                       <a href="/">
-                      <img src={logo} alt="logo" />
+                      <img src="./images/logo.png" alt="logo" />
                       </a>
                   </div>
                   <div id="mainListDiv" className="main_list">
