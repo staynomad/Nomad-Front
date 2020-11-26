@@ -7,6 +7,7 @@ import storage from 'redux-persist/lib/storage';
 
 /* Import Reducers */
 import CreateListing from './reducers/createListingReducer';
+import Errors from './reducers/errorReducer';
 import Loading from './reducers/loadingReducer';
 import Login from './reducers/authReducers';
 import Listing from './reducers/searchListingReducer';
@@ -18,6 +19,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const reducer = (history) => combineReducers({
     router: connectRouter(history),
     CreateListing,
+    Errors,
     Loading,
     Login,
     Listing,
