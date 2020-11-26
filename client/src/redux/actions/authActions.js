@@ -1,4 +1,5 @@
-import handleReq from "../../utils/fetchRequest.js";
+import handleReq from "../../utils/fetchRequest";
+import { setAuthError } from "./errorActions";
 
 /* Types */
 export const SET_USER_SESSION = 'VHomes/search/SET_USER_SESSION';
@@ -15,8 +16,11 @@ export const submitLogin = (userLogin) => async dispatch => {
     };
     const loginRes = await handleReq("/login", "POST", headers, userLogin);
 
-    if (loginRes.statusText === 'OK') {
+    if (loginRes && loginRes.statusText === 'OK') {
         const { isHost, token, userId } = loginRes.data;
         dispatch(setUserSession(isHost, token, userId));
-    };
+    } else {
+        const { errors } = loginRes.data;
+        dispatch(setAuthError(errors))
+    }
 };

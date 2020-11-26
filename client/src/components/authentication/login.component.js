@@ -1,15 +1,28 @@
 import React, { useState } from "react";
 import { Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { makeStyles } from '@material-ui/core/styles';
+import Alert from '@material-ui/lab/Alert';
 
 import { submitLogin } from "../../redux/actions/authActions";
 import "./login.css";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
+  },
+}));
 
 const Login = (props) => {
   const [userLogin, setUserLogin] = useState({
     email: "",
     password: "",
   });
+
+  const classes = useStyles();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -49,6 +62,13 @@ const Login = (props) => {
                 required={true}
               />
             </div>
+            {props.authErrors ? (
+              <div className={classes.root}>
+                {props.authErrors.map(error => (
+                  <Alert key={error} severity="error">{error}</Alert>
+                ))}
+              </div>
+            ) : null}
             <div style={{ margin: "2% 0 3%" }}>
               <button
                 className='btn green'
@@ -71,15 +91,16 @@ const Login = (props) => {
             </div>
           </form>
         </div>
+
       </div>
     );
 };
 
 const mapStateToProps = state => {
-  if (state.Login.userInfo) return {
-    userSession: state.Login.userInfo.session,
-  }
-  return {};
+  const stateToReturn = { ...state };
+  if (state.Login.userInfo) stateToReturn['userSession'] = state.Login.userInfo.session;
+  if (state.Errors.authErrors) stateToReturn['authErrors'] = state.Errors.authErrors;
+  return stateToReturn;
 };
 
 const mapDispatchToProps = dispatch => {
