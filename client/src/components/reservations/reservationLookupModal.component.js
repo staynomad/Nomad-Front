@@ -12,9 +12,7 @@ import {withRouter} from 'react-router-dom';
 const ReservationLookup = (props) => {
     const { reservationModal, setReservationModal, getListingById } = props;
     const [reservationID, setReservationID] = useState("")
-    const [ listing, setListing ] = useState("")
-
-    console.log("props: ", props)
+    const [ listing, setListing ] = useState("hi")
 
     const handleSubmit = async event => {
       event.preventDefault();
@@ -25,6 +23,9 @@ const ReservationLookup = (props) => {
     return (
     <div id="reservationLookupModal-page">
         <div className="modal-content reservationLookup-container">
+        {listing === ""
+        ?
+        <div>
           <h1 style={{color: 'white', fontFamily: 'Playfair Display'}}>Find more details about a reservation!</h1>
           <form onSubmit={handleSubmit}>
             <label id="reservationID" style={{'fontFamily': 'Playfair Display'}}>
@@ -48,13 +49,20 @@ const ReservationLookup = (props) => {
               </Button>
             </label>
           </form>
-          <br />
-          <CustomButton onClick={e => setReservationModal(false)}>
-              Return Home
-          </CustomButton>
         </div>
+      :
+      <div>
+        <h1 style={{color: 'white', fontFamily: 'Playfair Display'}}>Your reservation</h1>
+        {/* listing will go here */}
+      </div>
+      }
+      <br />
+      <CustomButton onClick={e => setReservationModal (false)}>
+        Return Home
+      </CustomButton>
+      </div>
     </div>
-    );
+  );
 };
 
 const CustomButton = withStyles (theme => ({
