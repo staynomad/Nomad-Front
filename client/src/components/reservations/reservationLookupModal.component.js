@@ -4,26 +4,31 @@ import Button from '@material-ui/core/Button';
 import './reservationLookupModal.css';
 import axios from 'axios';
 import { getListingById } from '../../redux/actions/searchListingActions';
-import {connect} from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import {withRouter} from 'react-router-dom';
-
-// must add logic to check if user is logged in
 
 const ReservationLookup = (props) => {
     const { reservationModal, setReservationModal, getListingById } = props;
     const [reservationID, setReservationID] = useState("")
-    const [ listing, setListing ] = useState("hi")
+    const [lookup, setLookup] = useState(true)
+    const listingInfo = useSelector(state => state.Listing.editListing);
+    const [error, setError] = useState(false)
 
     const handleSubmit = async event => {
       event.preventDefault();
-      const test = "5f6cd7a14720742685b3eedb"
-      setListing(await getListingById(test))
+      await getListingById(reservationID).then(() => setLookup(false)).catch(err => setError(true));
     };
+
+    const handleReturnHome = async event => {
+      event.preventDefault();
+      setReservationModal(false);
+      setLookup(false);
+    }
 
     return (
     <div id="reservationLookupModal-page">
         <div className="modal-content reservationLookup-container">
-        {listing === ""
+        {lookup
         ?
         <div>
           <h1 style={{color: 'white', fontFamily: 'Playfair Display'}}>Find more details about a reservation!</h1>
@@ -38,7 +43,7 @@ const ReservationLookup = (props) => {
                 style={{backgroundColor: 'white', width: '60%'}}
               />
             </label>
-            <br /><br />
+            {error ? <p style={{color: 'red'}}>There has been an error finding your reservation! Please make sure the ID is correct.</p> : <div><br /><br /></div>}
             <label id="submit">
               <Button
                 type="submit"
@@ -52,12 +57,18 @@ const ReservationLookup = (props) => {
         </div>
       :
       <div>
-        <h1 style={{color: 'white', fontFamily: 'Playfair Display'}}>Your reservation</h1>
-        {/* listing will go here */}
+        <h1>{listingInfo.title}</h1>
+        <p style={{color: 'white'}}>{listingInfo.description}</p>
+        <h2>Price: ${listingInfo.price} per night</h2>
+        {listingInfo.pictures.length !== 0 && listingInfo.pictures.map (pic => (<img style={{resizeMode: 'contain', height: 100, width: 200}} src={pic} key={pic} alt="Image of property"/>))}
+        {listingInfo.available && listingInfo.available[0] && listingInfo.available[1] && listingInfo.available[0] !== "" && listingInfo.available[1] !== "" &&
+          <p>Available from {listingInfo.available[0]} to {listingInfo.available[1]}</p>}
+        <p>Beds: {listingInfo.details.beds}, Baths: {listingInfo.details.baths}, Maximum guests: {listingInfo.details.maxpeople}</p>
+        <p>{listingInfo.location.street}, {listingInfo.location.city}, {listingInfo.location.state}, {listingInfo.location.zipcode}, {listingInfo.location.country}</p>
       </div>
       }
       <br />
-      <CustomButton onClick={e => setReservationModal (false)}>
+      <CustomButton onClick={handleReturnHome}>
         Return Home
       </CustomButton>
       </div>
