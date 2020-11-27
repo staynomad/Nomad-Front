@@ -1,6 +1,8 @@
 import React from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
-export default class LandingPageCL extends React.Component {
+class LandingPageCL extends React.Component {
   render() {
     return (
       <div>
@@ -9,3 +11,15 @@ export default class LandingPageCL extends React.Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  if (state.Login.userInfo)
+    return {
+      listingData: state,
+      userSession: state.Login.userInfo.session,
+    };
+  return {
+    listingData: state,
+  };
+};
+
+export default withRouter(connect(mapStateToProps, null)(LandingPageCL));

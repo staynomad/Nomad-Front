@@ -39,7 +39,6 @@ const ListingSchema = new Schema({
     ref: User,
     required: false,
   },
-
   booked: {
     type: Array,
   },
