@@ -355,4 +355,25 @@ router.post(
   }
 )
 
+/* Get listing by listingID (MongoDB Object ID) */
+router.get('/byId/:id', async (req, res) => {
+  try {
+    const reservation = await Reservation.findById(req.params.id);
+    if (!reservation) {
+      res.status (404).json ({
+        errors: ['Reservation does not exist.'],
+      });
+    } else {
+      res.status (200).json ({
+        reservation,
+      });
+    }
+  } catch (error) {
+    console.error (error);
+    res.status (500).json ({
+      errors: ['Error occurred while getting reservations. Please try again!'],
+    });
+  }
+});
+
 module.exports = router;
