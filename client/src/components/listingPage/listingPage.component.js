@@ -25,6 +25,7 @@ class ListingPage extends Component {
   async componentDidMount() {
     await axios.get('http://localhost:8080/listings/byId/' + this.props.match.params.id)
     .then((res) => {
+      console.log(res.data.listing.pictures)
       this.setState({
         listingTitle: res.data.listing.title,
         listingDescription: res.data.listing.description,
@@ -36,7 +37,8 @@ class ListingPage extends Component {
         listingPrice: res.data.listing.price,
         listingStartDate: res.data.listing.available[0],
         listingEndDate: res.data.listing.available[1],
-        listingUser: res.data.listing.userId
+        listingUser: res.data.listing.userId,
+        listingPictures: res.data.listing.pictures
       })
       // Set default disabled days based on booked days in listing object
       let startDate = new Date(this.state.listingStartDate)
@@ -145,6 +147,7 @@ class ListingPage extends Component {
     return (
       <div className="container">
         <h1>{this.state.listingTitle}</h1> <br />
+        <img className="reservation-image" src={this.state.listingPictures[0]} alt={this.state.listingTitle} />
         {this.state.listingDescription} <br />
         {this.state.listingLocation} <br />
         {this.state.listingImages} <br />

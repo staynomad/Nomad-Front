@@ -8,7 +8,6 @@ import { withStyles } from '@material-ui/core/styles';
 import ListingCard from '../matches/listing/listingCard.component';
 import ReservationCard from '../reservations/reservationCard.component';
 import Profile from "./profile.component"
-import Questionnaire from "../matches/questionnaire.component"
 import Settings from "./settings.component"
 import { searchUserListings } from '../../redux/actions/searchListingActions';
 import { searchUserReservations } from '../../redux/actions/reservationActions';

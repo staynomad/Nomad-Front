@@ -17,3 +17,10 @@
   border-top-right-radius: 50% !important;
   border-bottom-right-radius: 50% !important;
 }
+
+.reservation-image {
+  height: 150px;
+  width: 150px;
+  border: 1px solid black;
+  margin: 20px 0px;
+}

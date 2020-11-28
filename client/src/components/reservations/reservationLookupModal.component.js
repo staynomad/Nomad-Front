@@ -15,7 +15,7 @@ const ReservationLookup = (props) => {
     const [error, setError] = useState(false)
     const [reservationInfo, setReservationInfo] = useState({})
 
-    console.log("reservationInfo: ", reservationInfo);
+    // console.log("reservationInfo: ", reservationInfo);
 
     const handleSubmit = async event => {
       event.preventDefault ();

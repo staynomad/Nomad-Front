@@ -13,7 +13,7 @@ const newHome = ({isBlurred}) => {
         <div className="row gap large" >
       <div className="col-sm-12 col-md-8 col-lg-7" >
           <div className=" wow fadeInUp" data-wow-delay="0.5s">
-          <img src="./images/illustration.svg" alt="" className="media-image" />
+          <img src="./images/illustration.svg" alt="illustration" className="media-image" />
         </div>
       </div>
 
@@ -45,7 +45,7 @@ const newHome = ({isBlurred}) => {
                   <div className="col-sm-12 col-md-12 col-lg-4 " >
                   <div className="home-card">
                     <div className=" wow fadeInUp" data-wow-delay="0.5s">
-                <img src="./images/payment.svg" alt=""  className="why-graphic" />
+                <img src="./images/payment.svg" alt="payment"  className="why-graphic" />
               </div>
                 <div className=" wow fadeInUp" data-wow-delay="0.5s">
                   <div className="subtitle">No more overpaying</div>
@@ -57,7 +57,7 @@ const newHome = ({isBlurred}) => {
                 <div className="col-sm-12 col-md-12 col-lg-4 " >
                     <div className="home-card">
                       <div className=" wow fadeInUp" data-wow-delay="0.5s">
-                    <img src="./images/space.svg" alt="" className="why-graphic" />
+                    <img src="./images/space.svg" alt="space" className="why-graphic" />
                   </div>
                     <div className=" wow fadeInUp" data-wow-delay="0.5s">
                     <div className="subtitle">Spaces designed for living</div>
@@ -69,7 +69,7 @@ const newHome = ({isBlurred}) => {
                   <div className="col-sm-12 col-md-12 col-lg-4 " >
                       <div className="home-card">
                         <div className=" wow fadeInUp" data-wow-delay="0.5s">
-                        <img src="./images/safety.svg" alt="" className="why-graphic" />
+                        <img src="./images/safety.svg" alt="safety" className="why-graphic" />
                       </div>
                       <div className=" wow fadeInUp" data-wow-delay="0.5s">
                         <div className="subtitle">Prioritize your safety</div>
@@ -89,14 +89,14 @@ const newHome = ({isBlurred}) => {
         <div className="row gap large " >
             <div className="col-sm-6 col-md-6 col-lg-3" >
           <div className=" wow fadeInUp" data-wow-delay="0.5s">
-              <img src="./images/wifi.svg" alt="" className="AM-graphic "  />
+              <img src="./images/wifi.svg" alt="wifi" className="AM-graphic "  />
               <div className="subtitle2">Fast Wifi</div>
           </div>
           </div>
 
           <div className="col-sm-6 col-md-6 col-lg-3" >
                 <div className=" wow fadeInUp" data-wow-delay="0.5s">
-            <img src="./images/laundry.svg" alt="" class="AM-graphic"  />
+            <img src="./images/laundry.svg" alt="laundry" class="AM-graphic"  />
               <div className="subtitle2">In-suite laundry</div>
           </div>
         </div>
@@ -104,14 +104,14 @@ const newHome = ({isBlurred}) => {
 
           <div className="col-sm-6 col-md-6 col-lg-3" >
               <div className=" wow fadeInUp" data-wow-delay="0.5s">
-            <img src="./images/shower.svg" alt="" class="AM-graphic"  />
+            <img src="./images/shower.svg" alt="shower" class="AM-graphic"  />
               <div className="subtitle2">Shower amenities</div>
           </div>
         </div>
 
           <div className="col-sm-6 col-md-6 col-lg-3" >
                 <div className=" wow fadeInUp" data-wow-delay="0.5s">
-            <img src="./images/kitchen.svg" alt="" class="AM-graphic"  />
+            <img src="./images/kitchen.svg" alt="kitchen" class="AM-graphic"  />
               <div className="subtitle2">Fully-equipped kitchen</div>
           </div>
         </div>
@@ -126,7 +126,7 @@ const newHome = ({isBlurred}) => {
             <div className="spacer_l"></div>
           <div className="row gap large" >
       <div className="col-sm-12 col-md-6 col-lg-6" >
-            <img src="./images/step.png" alt="" className="media-image" />
+            <img src="./images/step.png" alt="step" className="media-image" />
       </div>
 
 
@@ -183,7 +183,7 @@ const newHome = ({isBlurred}) => {
         <div>
           <div className="box">
             <figure className="image">
-              <img className="img-fluid rounded-circle" src="./images/woman.png" />
+              <img className="img-fluid rounded-circle" src="./images/woman.png" alt="woman"/>
             </figure>
 
             <div className="test-component">
@@ -202,7 +202,7 @@ const newHome = ({isBlurred}) => {
 
           <div className="box">
             <figure className="image">
-              <img className="img-fluid rounded-circle" src="./images/man.png" />
+              <img className="img-fluid rounded-circle" src="./images/man.png" alt="man"/>
             </figure>
             <div className="test-component">
               <article className="test-title">
@@ -220,7 +220,7 @@ const newHome = ({isBlurred}) => {
 
           <div className="box">
             <figure className="image">
-              <img className="img-fluid rounded-circle" src="./images/woman.png"/>
+              <img className="img-fluid rounded-circle" src="./images/woman.png" alt="woman"/>
             </figure>
           <div className="test-component">
               <article className="test-title">
@@ -238,7 +238,7 @@ const newHome = ({isBlurred}) => {
 
           <div className="box">
             <figure className="image">
-              <img className="img-fluid rounded-circle" src="./images/man.png" />
+              <img className="img-fluid rounded-circle" src="./images/man.png" alt="man"/>
             </figure>
             <div className="test-component">
               <article className="test-title">
