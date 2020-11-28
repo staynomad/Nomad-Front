@@ -31,26 +31,28 @@ function App() {
 
   return (
     <>
-      <Navbar history={history} setReservationModal={setReservationModal} reservationModal={reservationModal}/>
+      <Navbar history={history} setReservationModal={setReservationModal} reservationModal={reservationModal} />
       <div className="App">
-        <Switch>
-          <Route path="/" exact component={() => <Home isBlurred={reservationModal} />}/>
-          <Route path="/ContactUs" exact component={Contact} />
-          <Route path="/Login" exact component={Login} />
-          <Route path="/SignUp" exact component={Signup} />
-          <Route path="/Services" exact component={Services} />
-          <Route path="/Reservations" exact component={Reservation} />
-          <Route path="/CreateListing" exact component={CreateListing} />
-          <Route path="/Matches" exact component={Matches} />
-          <Route path="/MyAccount" exact component={MyAccount} />
-          <Route path="/Questionnaire" exact component={Questionnaire} />
-          <Route path="/Listing/:id" exact component={ListingPage} />
-          <Route path="/EditListing/:listingId" exact component={EditListing} />
-          <Route path="/PaymentSuccess" exact component={PaymentSuccess} />
-          <Route path="/AccountVerification/:userId" exact component={AccountVerification} />
-          <Route path="/EditProfileInfo" exact component={EditProfileInfo} />
-        </Switch>
-        { reservationModal ? <ReservationLookup reservationModal={reservationModal} setReservationModal={setReservationModal}/> : null }
+        <div className="body-container">
+          <Switch>
+            <Route path="/" exact component={() => <Home isBlurred={reservationModal} />} />
+            <Route path="/ContactUs" exact component={Contact} />
+            <Route path="/Login" exact component={Login} />
+            <Route path="/SignUp" exact component={Signup} />
+            <Route path="/Services" exact component={Services} />
+            <Route path="/Reservations" exact component={Reservation} />
+            <Route path="/CreateListing" exact component={CreateListing} />
+            <Route path="/Matches" exact component={Matches} />
+            <Route path="/MyAccount" exact component={MyAccount} />
+            <Route path="/Questionnaire" exact component={Questionnaire} />
+            <Route path="/Listing/:id" exact component={ListingPage} />
+            <Route path="/EditListing/:listingId" exact component={EditListing} />
+            <Route path="/PaymentSuccess" exact component={PaymentSuccess} />
+            <Route path="/AccountVerification/:userId" exact component={AccountVerification} />
+            <Route path="/EditProfileInfo" exact component={EditProfileInfo} />
+          </Switch>
+        </div>
+        {reservationModal ? <ReservationLookup reservationModal={reservationModal} setReservationModal={setReservationModal} /> : null}
         <Footer />
       </div>
     </>

@@ -1,9 +1,8 @@
 #matches-page {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)),
-    url("../../assets/img/background/homebackground.jpg");
-  /* height: 100%; */
-  min-height: -webkit-fill-available;
+  background-color: white;
+  height: 100%;
   background-size: cover;
+  overflow: auto;
 }
 
 .container {
@@ -25,9 +24,6 @@
 .locations {
   padding-left: 2%;
   padding-right: 2%;
-}
-
-#roommate-listing-content-container {
 }
 
 #matches-component-filtering {
