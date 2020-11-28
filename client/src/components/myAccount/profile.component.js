@@ -36,7 +36,7 @@ const Profile = () => {
         if (!isEmpty) {
             console.log("description: ", user.userInfo.description)
             return (
-                <div>
+                <div style={{"padding": "20px"}}>
                     <t>Email: {user.userInfo.email}</t>
                     <br />
                     {user.userInfo.description ? <p>Description: {user.userInfo.description}</p> : <t>Add your description to get started!</t>}
@@ -56,7 +56,7 @@ const Profile = () => {
             <Information />
             <hr />
             <form action="/EditProfileInfo">
-                <button className="login btn green" style={{ width: '30%' }}> EDIT PROFILE </button>
+                <button className="btn green"> Edit Profile </button>
             </form>
         </div>
     )

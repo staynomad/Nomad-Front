@@ -56,7 +56,7 @@ const ListingCard = (props) => {
     <div className='listing-item' onClick={handleOpenClose}>
       <NavLink to={'/listing/' + listing._id}>
         <div className='listing-information'>
-          <div className='listing-image'>listing image here</div>
+          <img className='listing-image' src={listing.pictures[0]} alt={listing.title}/>
           <div>
             <b>{listing.title}</b>
           </div>
@@ -71,12 +71,14 @@ const ListingCard = (props) => {
           </div>
         </div>
       </NavLink>
-      {props.userSession && props.userSession.userId === listing.userId ? (
-        <CustomButton onClick={() => props.history.push(`/editListing/${listing._id}`)}>Edit</CustomButton>
-      ) : null}
-      {props.userSession && props.userSession.userId === listing.userId ? (
-        <CustomButton onClick={handleDeleteListing}>Delete</CustomButton>
-      ) : null}
+      <div>
+        {props.userSession && props.userSession.userId === listing.userId ? (
+          <CustomButton onClick={() => props.history.push(`/editListing/${listing._id}`)}>Edit</CustomButton>
+        ) : null}
+        {props.userSession && props.userSession.userId === listing.userId ? (
+          <CustomButton onClick={handleDeleteListing}>Delete</CustomButton>
+        ) : null}
+      </div>
     </div>
   )
 };
