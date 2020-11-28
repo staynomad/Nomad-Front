@@ -24,6 +24,7 @@ const navbar = (props) => {
                       props.userSession
                       ? <ul className="navlinks">
                           <li><Link to="/Matches">Explore</Link></li>
+                          <li><Link to="/" onClick={e => props.setReservationModal(true)}>Reservations</Link></li>
                           <li><a onClick={handleLogout}>Log Out</a></li>
                           <li className="nav-item xl-ml-40">
                             <Link className="button button-outline-primary" to="/MyAccount">Profile</Link>
