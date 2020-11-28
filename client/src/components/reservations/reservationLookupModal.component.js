@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import './reservationLookupModal.css';
@@ -13,10 +13,20 @@ const ReservationLookup = (props) => {
     const [lookup, setLookup] = useState(true)
     const listingInfo = useSelector(state => state.Listing.editListing);
     const [error, setError] = useState(false)
+    const [reservationInfo, setReservationInfo] = useState({})
 
+    console.log("reservationInfo: ", reservationInfo);
+    
     const handleSubmit = async event => {
-      event.preventDefault();
-      await getListingById(reservationID).then(() => setLookup(false)).catch(err => setError(true));
+      event.preventDefault ();
+      let info = {}
+
+      axios.get(`http://localhost:8080/reservation/byId/${reservationID}`)
+      .then(res => info = res.data)
+      .then(() => setReservationInfo(info))
+      .then(() => getListingById(info.reservation.listing))
+      .then(() => setLookup(false))
+      .catch(err => setError(true));
     };
 
     const handleReturnHome = async event => {
@@ -55,16 +65,21 @@ const ReservationLookup = (props) => {
             </label>
           </form>
         </div>
-      :
-      <div>
-        <h1>{listingInfo.title}</h1>
-        <p style={{color: 'white'}}>{listingInfo.description}</p>
-        <h2>Price: ${listingInfo.price} per night</h2>
-        {listingInfo.pictures.length !== 0 && listingInfo.pictures.map (pic => (<img style={{resizeMode: 'contain', height: 100, width: 200}} src={pic} key={pic} alt="Image of property"/>))}
-        {listingInfo.available && listingInfo.available[0] && listingInfo.available[1] && listingInfo.available[0] !== "" && listingInfo.available[1] !== "" &&
-          <p>Available from {listingInfo.available[0]} to {listingInfo.available[1]}</p>}
-        <p>Beds: {listingInfo.details.beds}, Baths: {listingInfo.details.baths}, Maximum guests: {listingInfo.details.maxpeople}</p>
-        <p>{listingInfo.location.street}, {listingInfo.location.city}, {listingInfo.location.state}, {listingInfo.location.zipcode}, {listingInfo.location.country}</p>
+        :
+        <div>
+          <h1>Your Reservation</h1>
+          <p style={{color: 'white'}}>Check in: {reservationInfo.reservation.days[0]}, Check out: {reservationInfo.reservation.days[1]}</p>
+          <p style={{color: 'white'}}>Length of stay: {reservationInfo.reservation.days.length} days</p>
+          <p style={{color: 'white'}}>This is an {reservationInfo.reservation.active ? 'active' : 'inactive'} reservation.</p>
+          <p style={{color: 'white'}}>You have{reservationInfo.reservation.checkedIn ? ' ' : ' not '}checked in.</p>
+          <p style={{color: 'white'}}>You booked this reservation at {reservationInfo.reservation.createdAt}.</p>
+          <hr />
+          <h1>{listingInfo.title}</h1>
+          <p style={{color: 'white'}}>{listingInfo.description}</p>
+          <h2>Price: ${listingInfo.price} per night</h2>
+          {listingInfo.pictures.length !== 0 && listingInfo.pictures.map (pic => (<img style={{resizeMode: 'contain', height: 100, width: 200}} src={pic} key={pic} alt="Image of property"/>))}
+          <p>Beds: {listingInfo.details.beds}, Baths: {listingInfo.details.baths}, Maximum guests: {listingInfo.details.maxpeople}</p>
+          <p>{listingInfo.location.street}, {listingInfo.location.city}, {listingInfo.location.state}, {listingInfo.location.zipcode}, {listingInfo.location.country}</p>
       </div>
       }
       <br />
