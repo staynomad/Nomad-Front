@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import Search from './search.component'
 
 const newHome = ({isBlurred}) => {
 
@@ -26,10 +27,11 @@ const newHome = ({isBlurred}) => {
 
           <div className="spacer_m"></div>
           <div className=" wow fadeInUp" data-wow-delay="0.5s">
-          <div className="login_bar">
+          <Search />
+          {/*<div className="login_bar">
             <input type="text" className="login" placeholder="city" />
               <span className="subscribe_button" onclick="">Search</span>
-          </div>
+          </div>*/}
           <div className="intro_text">Subscribe now to get notified when we launch. </div>
         </div>
         </div>
@@ -49,7 +51,7 @@ const newHome = ({isBlurred}) => {
               </div>
                 <div className=" wow fadeInUp" data-wow-delay="0.5s">
                   <div className="subtitle">No more overpaying</div>
-                  <p>We are committed to finding you the best deal. Find roommates, split the price, and never spend more than $60 per night.</p>
+                  <p>We are committed to finding you the best deal. With VHomes you'll find the best stay possible for less than $60 per room per night. </p>
                   </div>
                 </div>
                 </div>
@@ -159,8 +161,8 @@ const newHome = ({isBlurred}) => {
         <div className="number-sec">3</div>
         </div>
       &nbsp;
-        <div className="subtitle">Connect with roommates </div>
-          <p>Want to save some money? Our roommate connection system will help you find others with similar taste. Split the cost of the stay and make friends! </p>
+        <div className="subtitle">Save your money </div>
+          <p>We guarantee that you'll never pay more than $60 per room per night. On top of that, use our roommate feature to meet new people and split the cost! </p>
           </div>
 
       </div>
