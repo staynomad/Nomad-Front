@@ -284,7 +284,7 @@ const newHome = ({isBlurred}) => {
       </div>
       </div>
 
-
+      
       <div className="spacer_xl"></div>
 
       </div>

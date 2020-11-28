@@ -4,8 +4,6 @@ import { removeUserSession } from '../../redux/actions/authActions'
 import { connect } from "react-redux";
 
 const navbar = (props) => {
-  console.log("IN NAVBAR")
-  console.log("reservationModal: ", props.reservationModal)
 
   const handleLogout = () => {
     window.sessionStorage.removeItem('accessToken');

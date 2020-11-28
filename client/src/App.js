@@ -28,8 +28,6 @@ import "./App.css";
 function App() {
   const history = useHistory();
   const [reservationModal, setReservationModal] = useState(false);
-  console.log("IN APP.JS")
-  console.log("reservationModal: ", reservationModal)
 
   return (
     <>
