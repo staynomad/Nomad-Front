@@ -7,7 +7,7 @@
 }
 
 :root {
-  --color-darkgreen: #094a38; 
+  --color-darkgreen: #094a38;
   --color-green: #00b183;
   --color-darkgrey: #5a7184;
   --color-black: #222222;
@@ -38,7 +38,7 @@ body{
 
 .AM-graphic{
  width: 100px;
-} 
+}
 
 @media screen and (max-width: 768px) {
  .illustration{
@@ -67,7 +67,7 @@ body{
 
 
 .design{
-    padding: 70px 0;
+    padding: 20px 0;
     text-align: center;
     background-color: rgba(222, 238, 236, 0.6);
 }
@@ -230,7 +230,7 @@ body{
   width: 100px;
   text-align: center;
   line-height: 150px;
-  vertical-align: middle; 
+  vertical-align: middle;
   color: white;
   -webkit-transition: transform 0.5s ease 0s;
      -moz-transition: transform 0.5s ease 0s;
@@ -303,4 +303,3 @@ input {
     height: 40px;
     outline: none;
       }
-
