@@ -126,7 +126,7 @@ const newHome = ({isBlurred}) => {
             <div className="spacer_l"></div>
           <div className="row gap large" >
       <div className="col-sm-12 col-md-6 col-lg-6" >
-            <img src="./images/step.svg" alt="" className="media-image" />
+            <img src="./images/step.png" alt="" className="media-image" />
       </div>
 
 
@@ -137,8 +137,8 @@ const newHome = ({isBlurred}) => {
         <div className="number-sec">1</div>
         </div>
       &nbsp;
-        <div className="subtitle">Look up a location</div>
-          <p>Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. </p>
+        <div className="subtitle">Search for a location</div>
+          <p>Find beautiful properties from hosts all over the world. Can't decide where you want to go? Hit "Explore" and discover some of our most popular stays. </p>
           </div>
 
       <div className="spacer_s"></div>
@@ -149,7 +149,7 @@ const newHome = ({isBlurred}) => {
         </div>
       &nbsp;
         <div className="subtitle">Browse recommended stays</div>
-          <p>Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. </p>
+          <p>Booking a vacation has never been so easy. We tailor search results specifically to your liking and make it easy for you to find you dream stay. </p>
           </div>
 
       <div className="spacer_s"></div>
@@ -160,7 +160,7 @@ const newHome = ({isBlurred}) => {
         </div>
       &nbsp;
         <div className="subtitle">Connect with roommates </div>
-          <p>Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. </p>
+          <p>Want to save some money? Our roommate connection system will help you find others with similar taste. Split the cost of the stay and make friends! </p>
           </div>
 
       </div>
@@ -170,12 +170,12 @@ const newHome = ({isBlurred}) => {
 
       <div className="spacer_xl"></div>
         <div className=" wow fadeInUp" data-wow-delay="0.5s">
-      <h2>What Clients Said about VHomes?  </h2>
+      <h2>From our guests  </h2>
       </div>
         <div className=" wow fadeInUp" data-wow-delay="0.5s">
-      <div className="button3">
+      <Link to="/MyAccount" className="button3">
       <button className="btn-hover color-5">Make a Testimonial</button>
-      </div>
+      </Link>
       </div>
 
         <div className=" wow fadeInUp" data-wow-delay="0.5s">
@@ -258,7 +258,7 @@ const newHome = ({isBlurred}) => {
 
       <div className="spacer_xl"></div>
         <div className=" wow fadeInUp" data-wow-delay="0.5s">
-      <h2>Want to Host Your Property?</h2>
+      <h2>Want to host your property?</h2>
       </div>
         <div className=" wow fadeInUp" data-wow-delay="0.5s">
       <div className="button3">
