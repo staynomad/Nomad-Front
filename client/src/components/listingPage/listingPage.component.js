@@ -36,7 +36,14 @@ class ListingPage extends Component {
         listingPrice: res.data.listing.price,
         listingStartDate: res.data.listing.available[0],
         listingEndDate: res.data.listing.available[1],
-        listingUser: res.data.listing.userId
+        listingUser: res.data.listing.userId,
+      })
+      let picturesArray = []
+      for (let i = 0; i < res.data.listing.pictures.length; i++) {
+        picturesArray.push(res.data.listing.pictures[i])
+      }
+      this.setState({
+        listingPictures: picturesArray
       })
       // Set default disabled days based on booked days in listing object
       let startDate = new Date(this.state.listingStartDate)
@@ -145,6 +152,7 @@ class ListingPage extends Component {
     return (
       <div className="container">
         <h1>{this.state.listingTitle}</h1> <br />
+        <img className="reservation-image" src={this.state.listingPictures} alt={this.state.listingTitle} /> <br />
         {this.state.listingDescription} <br />
         {this.state.listingLocation} <br />
         {this.state.listingImages} <br />

@@ -63,16 +63,17 @@ const EditProfileInfo = (props) => {
     }
 
     return (
-        <div>
+        <div className="container">
             <br /><br /><br />
             <h2 style={{ color: "#02b188", textDecoration: "none" }}>Submit changes to your profile information!</h2>
             <hr />
             {submitted ? <t>Your new profile information has been recorded!</t>
-            : 
-            <form onSubmit={handleSubmit} >
+            :
+            <form onSubmit={handleSubmit} style={{"text-align": "left"}}>
                 <label id="name" value={profileState.name}>
                     <t>Write your name: </t>
                     <input
+                        className="login_bar"
                         type="text"
                         id="profileInfoName"
                         name="name"
@@ -84,6 +85,7 @@ const EditProfileInfo = (props) => {
                 <label id="email" value={profileState.email}>
                     <t>Write your email: </t>
                     <input
+                        className="login_bar"
                         type="text"
                         id="profileInfoEmail"
                         name="email"
@@ -95,6 +97,7 @@ const EditProfileInfo = (props) => {
                 <label id="description" value={profileState.description}>
                     <t>Write a description about yourself: </t>
                     <textarea
+                        className="login_bar"
                         id="profileInfoDescription"
                         name="description"
                         placeholder={profileState.description}
@@ -113,9 +116,9 @@ const EditProfileInfo = (props) => {
                         onChange={handleChange}
                     />
                 </label>
-                {submitted ? null : 
+                {submitted ? null :
                     <label id="submit">
-                        <button type="submit" id="profileInfoSubmit" className="login btn green" style={{width: '80%'}}>
+                        <button type="submit" id="profileInfoSubmit" className="btn green" style={{width: '80%'}}>
                             Click here to submit your new profile information!
                         </button>
                     </label>
