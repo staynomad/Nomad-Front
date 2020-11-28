@@ -1,0 +1,28 @@
+#reservationLookupModal-page {
+  height: fit-content;
+  padding: 0px 0px 0px;
+  min-width: fit-content;
+  position: absolute;
+  float: left;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.modal-content {
+  background-color: #EAB98F;
+  position: static;
+  padding: 10px;
+  text-align: left;
+  border-radius: 5px;
+  border: 1px solid;
+  width: max-content;
+}
+
+.modal-content:target {
+  height: 40px;
+}
+
+.reservationLookup-container {
+  margin: 2% 30% 0 30%;
+} 

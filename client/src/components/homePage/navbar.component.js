@@ -1,60 +1,53 @@
 import React, { Component } from 'react'
-import { NavLink, withRouter } from 'react-router-dom'
+import { Link, withRouter, Redirect, NavLink } from 'react-router-dom'
 import { removeUserSession } from '../../redux/actions/authActions'
 import { connect } from "react-redux";
 
-class navbar extends Component {
-  constructor(props) {
-    super(props)
-    this.handleLogout = this.handleLogout.bind(this)
-  }
-  handleLogout() {
+const navbar = (props) => {
+  console.log("IN NAVBAR")
+  console.log("reservationModal: ", props.reservationModal)
+
+  const handleLogout = () => {
     window.sessionStorage.removeItem('accessToken');
-    this.props.removeUserSession();
-    this.props.history.push('/');
+    props.removeUserSession();
+    props.history.push('/');
   }
-  render() {
-    return (
-      <nav className="nav">
+
+  return (
+    <nav className="nav">
         <div className="nav-container">
-          <div className="logo">
-            <NavLink to="/">
-              <img src="./images/logo.png" alt="logo" />
-            </NavLink>
-          </div>
-          <div id="mainListDiv" className="main_list">
-            <ul className="navlinks">
-              <li><NavLink to="/Matches" activeClassName="nav-active">Explore</NavLink></li>
-              <li><NavLink exact to="/" activeClassName="nav-active">Reservations</NavLink></li>
-              {
-                this.props.userSession
-                  ?
-                  (
-                    <>
-                      <li><a onClick={this.handleLogout}>Log Out</a></li>
-                      <li className="nav-item xl-ml-40">
-                        <NavLink className="button button-outline-primary" to="/MyAccount" activeClassName="nav-active">Profile</NavLink>
-                      </li>
-                    </>
-                  )
-                  :
-                  (
-                    <li className="nav-item xl-ml-40">
-                      <NavLink className="button button-outline-primary" to="/Login" activeClassName="nav-active">Login</NavLink>
-                    </li>
-                  )
-              }
-            </ul>
-          </div>
-          <span className="navTrigger">
-            <i></i>
-            <i></i>
-            <i></i>
-          </span>
-        </div>
-      </nav>
-    )
-  }
+                <div className="logo">
+                    <a href="/">
+                    <img src={logo} alt="logo" />
+                    </a>
+                </div>
+                <div id="mainListDiv" className="main_list">
+                    {
+                      props.userSession
+                      ? <ul className="navlinks">
+                          <li><Link to="/Matches">Explore</Link></li>
+                          <li><a onClick={handleLogout}>Log Out</a></li>
+                          <li className="nav-item xl-ml-40">
+                            <Link className="button button-outline-primary" to="/MyAccount">Profile</Link>
+                          </li>
+                        </ul>
+                      : <ul className="navlinks">
+                          <li><Link to="/Matches">Explore</Link></li>
+                          <li><Link to="/" onClick={e => props.setReservationModal(true)}>Reservations</Link></li>
+                          <li className="nav-item xl-ml-40">
+                            <Link className="button button-outline-primary" to="/Login">Login</Link>
+                          </li>
+                        </ul>
+                    }
+                </div>
+                <span className="navTrigger">
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                </span>
+              </div>
+        </nav>
+  )
 }
 
 const mapStateToProps = state => {
