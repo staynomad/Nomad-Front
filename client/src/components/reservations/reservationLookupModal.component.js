@@ -16,7 +16,7 @@ const ReservationLookup = (props) => {
     const [reservationInfo, setReservationInfo] = useState({})
 
     console.log("reservationInfo: ", reservationInfo);
-    
+
     const handleSubmit = async event => {
       event.preventDefault ();
       let info = {}
@@ -110,4 +110,3 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default withRouter(connect(null, mapDispatchToProps)(ReservationLookup));
-

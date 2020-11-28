@@ -16,7 +16,7 @@ const navbar = (props) => {
         <div className="nav-container">
                 <div className="logo">
                     <a href="/">
-                    <img src={logo} alt="logo" />
+                    <img src="./images/logo.png" alt="logo" />
                     </a>
                 </div>
                 <div id="mainListDiv" className="main_list">
