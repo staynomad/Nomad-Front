@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { NavLink, withRouter } from 'react-router-dom'
 import { removeUserSession } from '../../redux/actions/authActions'
 import { connect } from "react-redux";

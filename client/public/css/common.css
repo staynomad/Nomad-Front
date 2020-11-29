@@ -479,25 +479,30 @@ p{
 /* container */
 
 .container_l{
+	margin-top: 10%;
   max-width:1400px;
   margin: 0 auto;
 }
 
 .container {
+	margin-top: 10%;
 	max-width:1200px;
 	margin: 0 auto;
 
 }
 .container_s {
+	margin-top: 10%;
 	max-width: 946px;
 	margin: 0 auto;
 }
 
 .container_xs {
+	margin-top: 10%;
 	max-width: 751px;
 	margin: 0 auto;
 }
 .container_xxs {
+	margin-top: 10%;
 	max-width: 556px;
 	margin: 0 auto;
 }
