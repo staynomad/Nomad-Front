@@ -1,5 +1,7 @@
+@import "~react-image-gallery/styles/css/image-gallery.css";
+
 .container_s {
-  margin-top: 10%;
+  margin-top: 8% !important;
 }
 
 .Selectable .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
