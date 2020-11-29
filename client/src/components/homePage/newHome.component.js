@@ -26,13 +26,10 @@ const newHome = ({isBlurred}) => {
           <div className="intro_text">The future of flexible rentals.</div>
         </div>
 
-          <div className="spacer_m"></div>
+          <div className="spacer_s"></div>
           <div className=" wow fadeInUp" data-wow-delay="0.5s">
           <Search />
-          {/*<div className="login_bar">
-            <input type="text" className="login" placeholder="city" />
-              <span className="subscribe_button" onclick="">Search</span>
-          </div>*/}
+          <div className="spacer_xs"></div>
           <div className="intro_text">Subscribe now to get notified when we launch. </div>
         </div>
         </div>
