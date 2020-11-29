@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import './reservationLookupModal.css';
@@ -77,7 +77,7 @@ const ReservationLookup = (props) => {
           <h1>{listingInfo.title}</h1>
           <p style={{color: 'white'}}>{listingInfo.description}</p>
           <h2>Price: ${listingInfo.price} per night</h2>
-          {listingInfo.pictures.length !== 0 && listingInfo.pictures.map (pic => (<img style={{resizeMode: 'contain', height: 100, width: 200}} src={pic} key={pic} alt="Image of property"/>))}
+          {listingInfo.pictures.length !== 0 && listingInfo.pictures.map (pic => (<img style={{resizeMode: 'contain', height: 100, width: 200}} src={pic} key={pic} alt="Property"/>))}
           <p>Beds: {listingInfo.details.beds}, Baths: {listingInfo.details.baths}, Maximum guests: {listingInfo.details.maxpeople}</p>
           <p>{listingInfo.location.street}, {listingInfo.location.city}, {listingInfo.location.state}, {listingInfo.location.zipcode}, {listingInfo.location.country}</p>
       </div>

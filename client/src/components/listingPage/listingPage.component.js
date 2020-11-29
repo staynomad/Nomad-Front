@@ -6,8 +6,10 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { loadStripe } from "@stripe/stripe-js"
 import DayPicker, { DateUtils } from 'react-day-picker'
+import SimpleImageSlider from 'react-simple-image-slider'
 import 'react-day-picker/lib/style.css'
 import './listingPage.css'
+import './paymentSuccess.css'
 
 const stripePublicKey = "pk_test_51HqRrRImBKNBYsooNTOTLagbqd8QUGaK6BeGwy6k2pQAJxkFF7NRwTT3ksBwyGVmq8UqhNVvKQS7Vlb69acFFCvq00hxgBuZhh"
 
@@ -20,16 +22,22 @@ class ListingPage extends Component {
     this.handleDayClick = this.handleDayClick.bind(this);
     this.handleResetClick = this.handleResetClick.bind(this);
     this.state = this.getInitialState();
+    this.setState({
+      listingPictures: [],
+      isLoading: true
+    })
   }
 
   async componentDidMount() {
+    this.setState({
+      isLoading: true
+    })
     await axios.get('http://localhost:8080/listings/byId/' + this.props.match.params.id)
     .then((res) => {
       this.setState({
         listingTitle: res.data.listing.title,
         listingDescription: res.data.listing.description,
         listingLocation: `${res.data.listing.location.city}, ${res.data.listing.location.state}, ${res.data.listing.location.country}`,
-        listingImages: ['image1', 'image2', 'image3'],
         listingBaths: parseInt(res.data.listing.details.baths),
         listingBeds: parseInt(res.data.listing.details.beds),
         listingMaxPeople: parseInt(res.data.listing.details.maxpeople),
@@ -37,14 +45,15 @@ class ListingPage extends Component {
         listingStartDate: res.data.listing.available[0],
         listingEndDate: res.data.listing.available[1],
         listingUser: res.data.listing.userId,
+        listingPictures: res.data.listing.pictures
       })
-      let picturesArray = []
+      /* let pictures = []
       for (let i = 0; i < res.data.listing.pictures.length; i++) {
-        picturesArray.push(res.data.listing.pictures[i])
+        pictures.push({url: res.data.listing.pictures[i]})
       }
       this.setState({
-        listingPictures: picturesArray
-      })
+        listingPictures: pictures
+      }) */
       // Set default disabled days based on booked days in listing object
       let startDate = new Date(this.state.listingStartDate)
       let endDate = new Date(this.state.listingEndDate)
@@ -66,22 +75,30 @@ class ListingPage extends Component {
         })
       }
       this.setState({
-        listingBookedDays: bookedDays
+        listingBookedDays: bookedDays,
+        isLoading: false
       })
       // Get host's email from their userId
       axios.get(`http://localhost:8080/user/getUserInfo/${this.state.listingUser}`)
       .then((res) =>
         this.setState({
-          hostEmail: res.data.email
+          hostEmail: res.data.email,
+          isLoading: false
         })
       )
     })
     .catch((err) => {
+      this.setState({
+        isLoading: false
+      })
       console.log(err.response)
     })
   }
 
   handlePayment() {
+    this.setState({
+      isLoading: true
+    })
     if (!this.props.userSession) {
       alert("Please log in to create a reservation.")
       return this.props.history.push('/login')
@@ -122,8 +139,14 @@ class ListingPage extends Component {
       if (result.error) {
         alert(result.error.message);
       }
+      this.setState({
+        isLoading: false
+      })
     })
     .catch((err) => {
+      this.setState({
+        isLoading: false
+      })
       alert(err.response.data.errors)
       window.location.reload()
     })
@@ -150,49 +173,60 @@ class ListingPage extends Component {
     const modifiers = { start: from, end: to }
 
     return (
-      <div className="container">
-        <h1>{this.state.listingTitle}</h1> <br />
-        <img className="reservation-image" src={this.state.listingPictures} alt={this.state.listingTitle} /> <br />
-        {this.state.listingDescription} <br />
-        {this.state.listingLocation} <br />
-        {this.state.listingImages} <br />
-        beds: {this.state.listingBeds} <br />
-        baths: {this.state.listingBaths} <br />
-        {this.state.listingMaxPeople} people max <br />
-        ${this.state.listingPrice} per night <br />
-        <a href={`mailto:${this.state.hostEmail}`}>
-          <button type="button"> Contact Host </button>
-        </a> <br /><br />
-
-        <div>
-          <p>
-            {!from && !to && 'Please select the first day.'}
-            {from && !to && 'Please select the last day.'}
-            {from &&
-              to &&
-              `Selected from ${from.toLocaleDateString()} to
-                  ${to.toLocaleDateString()}`}{' '}
-            {from && to && (
-              <button className="link" onClick={this.handleResetClick}>
-                Reset
-              </button>
-            )}
-          </p>
-          <DayPicker
-            className="Selectable"
-            selectedDays={[from, { from, to }]}
-            modifiers={modifiers}
-            onDayClick={this.handleDayClick}
-            disabledDays={this.state.listingBookedDays}
-            inputProps={
-              { required: true }
-            }
-          />
-      </div>
+      <div className="container_s">
       {
-        this.state.from && this.state.to ?
-        <input type="button" value="reserve now" onClick={this.handlePayment} /> :
-        null
+        this.state.isLoading
+        ? <div id="spinner"></div>
+        : <div>
+            <h4 className="subtitle">{this.state.listingTitle}</h4>
+            <h5>{this.state.listingLocation}</h5> <br />
+            <img className="reservation-image" src={this.state.listingPictures} alt={this.state.listingTitle} /> <br />
+            {/*<SimpleImageSlider
+              width={896}
+              height={504}
+              images={this.state.listingPictures}
+            />*/}
+
+            <p>{this.state.listingDescription}</p> <br />
+            beds: {this.state.listingBeds} <br />
+            baths: {this.state.listingBaths} <br />
+            {this.state.listingMaxPeople} people max <br />
+            ${this.state.listingPrice} per night <br />
+            <a href={`mailto:${this.state.hostEmail}`}>
+              <button type="button"> Contact Host </button>
+            </a> <br /><br />
+
+            <div>
+              <p>
+                {!from && !to && 'Please select the first day.'}
+                {from && !to && 'Please select the last day.'}
+                {from &&
+                  to &&
+                  `Selected from ${from.toLocaleDateString()} to
+                      ${to.toLocaleDateString()}`}{' '}
+                {from && to && (
+                  <button className="link" onClick={this.handleResetClick}>
+                    Reset
+                  </button>
+                )}
+              </p>
+              <DayPicker
+                className="Selectable"
+                selectedDays={[from, { from, to }]}
+                modifiers={modifiers}
+                onDayClick={this.handleDayClick}
+                disabledDays={this.state.listingBookedDays}
+                inputProps={
+                  { required: true }
+                }
+              />
+          </div>
+          {
+            this.state.from && this.state.to ?
+            <input type="button" value="reserve now" onClick={this.handlePayment} /> :
+            null
+          }
+        </div>
       }
     </div>
     )

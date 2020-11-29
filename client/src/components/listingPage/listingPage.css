@@ -1,5 +1,5 @@
-.container {
-  margin: 5% 5% 5% 5%;
+.container_s {
+  margin-top: 10%;
 }
 
 .Selectable .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
@@ -19,7 +19,7 @@
 }
 
 .reservation-image {
-  height: 500px;
+  width: 100%;
   border: 1px solid black;
   margin: 20px 0px;
 }
