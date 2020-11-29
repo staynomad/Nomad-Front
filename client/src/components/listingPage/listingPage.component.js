@@ -6,10 +6,9 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { loadStripe } from "@stripe/stripe-js"
 import DayPicker, { DateUtils } from 'react-day-picker'
-import SimpleImageSlider from 'react-simple-image-slider'
+import ImageGallery from 'react-image-gallery'
 import 'react-day-picker/lib/style.css'
 import './listingPage.css'
-import './paymentSuccess.css'
 
 const stripePublicKey = "pk_test_51HqRrRImBKNBYsooNTOTLagbqd8QUGaK6BeGwy6k2pQAJxkFF7NRwTT3ksBwyGVmq8UqhNVvKQS7Vlb69acFFCvq00hxgBuZhh"
 
@@ -29,9 +28,6 @@ class ListingPage extends Component {
   }
 
   async componentDidMount() {
-    this.setState({
-      isLoading: true
-    })
     await axios.get('http://localhost:8080/listings/byId/' + this.props.match.params.id)
     .then((res) => {
       this.setState({
@@ -47,13 +43,15 @@ class ListingPage extends Component {
         listingUser: res.data.listing.userId,
         listingPictures: res.data.listing.pictures
       })
-      /* let pictures = []
-      for (let i = 0; i < res.data.listing.pictures.length; i++) {
-        pictures.push({url: res.data.listing.pictures[i]})
+      let pictures = []
+      for (let i = 0; i < this.state.listingPictures.length; i++) {
+        pictures.push({
+          original: String(this.state.listingPictures[i])
+        })
       }
       this.setState({
         listingPictures: pictures
-      }) */
+      })
       // Set default disabled days based on booked days in listing object
       let startDate = new Date(this.state.listingStartDate)
       let endDate = new Date(this.state.listingEndDate)
@@ -75,8 +73,7 @@ class ListingPage extends Component {
         })
       }
       this.setState({
-        listingBookedDays: bookedDays,
-        isLoading: false
+        listingBookedDays: bookedDays
       })
       // Get host's email from their userId
       axios.get(`http://localhost:8080/user/getUserInfo/${this.state.listingUser}`)
@@ -88,9 +85,6 @@ class ListingPage extends Component {
       )
     })
     .catch((err) => {
-      this.setState({
-        isLoading: false
-      })
       console.log(err.response)
     })
   }
@@ -175,17 +169,19 @@ class ListingPage extends Component {
     return (
       <div className="container_s">
       {
-        this.state.isLoading
+        !this.state.listingPictures || !this.state.listingTitle || !this.state.listingLocation || !this.state.listingDescription || !this.state.listingBeds || !this.state.listingBaths || !this.state.listingMaxPeople || !this.state.listingPrice
         ? <div id="spinner"></div>
         : <div>
             <h4 className="subtitle">{this.state.listingTitle}</h4>
             <h5>{this.state.listingLocation}</h5> <br />
-            <img className="reservation-image" src={this.state.listingPictures} alt={this.state.listingTitle} /> <br />
-            {/*<SimpleImageSlider
-              width={896}
-              height={504}
-              images={this.state.listingPictures}
-            />*/}
+
+            <ImageGallery
+              items={this.state.listingPictures}
+              showThumbnails={false}
+              showPlayButton={false}
+              onErrorImageURL={"Error loading images."}
+              originalAlt={`${this.state.listingTitle}`}
+            />
 
             <p>{this.state.listingDescription}</p> <br />
             beds: {this.state.listingBeds} <br />
