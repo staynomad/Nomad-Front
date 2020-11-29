@@ -1,3 +1,4 @@
+
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Search from './search.component'
@@ -277,6 +278,7 @@ const newHome = ({isBlurred}) => {
     </div>
     </div>
   )
+
 }
 
 export default newHome;
