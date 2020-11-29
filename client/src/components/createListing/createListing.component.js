@@ -8,13 +8,16 @@ import DetailsCL from "./detailsCL.component";
 import Location from "./locationCL.component";
 import Description from "./descCL.component";
 import PricesCL from "./pricesCL.component";
-//import RulesCL from "./rulesCL.component";
 import TitleCL from "./titleCL.component";
 import LandingPageCL from "./landingPageCL.component";
 import PhotoUpload from "./photos/photoUpload.component";
+import { getSignedURL } from "./photos/photoUploadRequests";
 import "./createListing.css";
 import ConfirmSubmission from "./confirmSubmission.component";
-
+import {
+  setLoadingTrue,
+  setLoadingFalse,
+} from "../../redux/actions/loadingActions";
 class CreateListing extends Component {
   constructor(props) {
     super(props);
@@ -36,7 +39,7 @@ class CreateListing extends Component {
         baths: "",
         maxpeople: "",
       },
-      pictures: [],
+      photos: { pictures: [], temp_image_url: [] },
       price: "",
       rules: "",
       dates: {
@@ -49,9 +52,11 @@ class CreateListing extends Component {
     this.togglePage = this.togglePage.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.postRequest = this.postRequest.bind(this);
   }
   componentDidMount() {
     this.props.updateInfo(this.state);
+    this.props.setLoadingFalse();
     if (!this.props.userSession) {
       alert("Please log in to create a listing.");
       return this.props.history.push("/login");
@@ -70,10 +75,33 @@ class CreateListing extends Component {
     this.setState({
       [name]: e,
     });
-    console.log(this.state);
   }
 
   onSubmit() {
+    let cur_photos = this.state.photos.pictures;
+    let photoURLS = [];
+
+    this.props.setLoadingTrue();
+
+    for (let i = 0; i < cur_photos.length; i++) {
+      const updatedFileName = encodeURIComponent(
+        cur_photos[i].name + Math.random() * 1000
+      );
+      let action = this.props.setLoadingTrue;
+      if (i === cur_photos.length - 1) {
+        action = this.props.setLoadingFalse;
+      }
+      getSignedURL(
+        cur_photos[i],
+        updatedFileName,
+        "vhomes-images-bucket",
+        action
+      );
+      const picURL =
+        "https://vhomes-images-bucket.s3.amazonaws.com/" + updatedFileName;
+      photoURLS.push(picURL);
+    }
+
     const available = [this.state.dates.start_date, this.state.dates.end_date];
     const newListing = {
       title: this.state.title,
@@ -82,7 +110,7 @@ class CreateListing extends Component {
       details: this.state.details,
       price: this.state.price,
       available: available,
-      pictures: this.state.pictures,
+      pictures: photoURLS,
     };
 
     const production = process.env.NODE_ENV === "production";
@@ -95,29 +123,38 @@ class CreateListing extends Component {
         Authorization: `Bearer ${this.props.userSession.token}`,
       },
     })
-      .then(() => console.log("listing created"))
-      .then(() => this.setState({ loading_spinner: true }))
+      .then(() => this.postRequest())
       .then(() => (window.location = "/"))
       .catch((res) => console.log(res));
   }
 
+  async postRequest() {
+    /*while (this.props.loading) {
+      this.postRequest();
+    }
+    if (!this.props.loading) {
+      return;
+    } else {
+      this.postRequest();
+    }*/
+    await new Promise((r) => setTimeout(r, 5000));
+  }
   render() {
     const pages = [
       <LandingPageCL />,
-      <PhotoUpload onUpload={this.handleChange} />,
+      <PhotoUpload handle={this.handleChange} />,
       <TitleCL handle={this.handleChange} />,
       <Location handle={this.handleChange} />,
       <Description handle={this.handleChange} />,
       <DetailsCL handle={this.handleChange} />,
       <PricesCL handle={this.handleChange} />,
       <DatesCL handle={this.handleChange} />,
-      //<RulesCL handle={this.handleChange} />,
       <ConfirmSubmission handle={this.state} />,
     ];
     return (
       <div className="fullListingBackground">
         <div className="overallListingForm">
-          {this.state.loading_spinner ? (
+          {this.props.loading ? (
             <div id="spinner" />
           ) : (
             <form>
@@ -170,7 +207,7 @@ class CreateListing extends Component {
       price: this.state.price,
       rules: this.state.rules,
       dates: this.state.dates,
-      pictures: this.state.pictures,
+      photos: this.state.photos,
     };
     this.props.updateInfo(updatedData);
   }
@@ -181,6 +218,7 @@ const mapStateToProps = (state) => {
     return {
       listingData: state,
       userSession: state.Login.userInfo.session,
+      loading: state.Loading.loading,
     };
   return {
     listingData: state,
@@ -189,6 +227,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     updateInfo: (toUpdate) => dispatch(updateInfo(toUpdate)),
+    setLoadingFalse: () => dispatch(setLoadingFalse()),
+    setLoadingTrue: () => dispatch(setLoadingTrue()),
   };
 };
 export default withRouter(

@@ -1,5 +1,4 @@
-const uploadPhoto = async (file, bucket) => {
-  const fileName = encodeURIComponent(file.name);
+const getSignedURL = (file, fileName, bucket, setLoading) => {
   let response = null;
   const xhr = new XMLHttpRequest();
   const production = process.env.NODE_ENV === "production";
@@ -14,28 +13,31 @@ const uploadPhoto = async (file, bucket) => {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
         response = JSON.parse(xhr.responseText);
-        uploadFile(file, response.signedReq, response.url, response, file.name);
+        uploadFile(
+          file,
+          response.signedReq,
+          response.url,
+          file.name,
+          setLoading
+        );
       } else {
-        alert("could not get signed url");
+        alert("could not get signed url. Please refresh and try again");
       }
     }
   };
   xhr.send();
-  return response;
-};
+}; //uploadFile(file, response.signedReq, response.url, response, file.name);
 
-const uploadFile = (file, signedRequest, url, fileName) => {
+const uploadFile = (file, signedRequest, url, fileName, setLoading) => {
   const xhr = new XMLHttpRequest();
   xhr.open("PUT", signedRequest);
-  //let updatedFileName = fileName + toString(Math.random() * 1000);
   file = new File([file], fileName, { type: file.type });
   xhr.setRequestHeader("Content-type", file.type);
   xhr.setRequestHeader("x-amz-acl", "public-read");
-
   xhr.onreadystatechange = () => {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-        alert("file uploaded");
+        setLoading();
       } else {
         alert("could not upload file");
       }
@@ -43,5 +45,5 @@ const uploadFile = (file, signedRequest, url, fileName) => {
   };
   xhr.send(file);
 };
-export default uploadPhoto;
-//token=${token}&
+
+export { getSignedURL, uploadFile };
