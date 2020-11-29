@@ -3,7 +3,10 @@ import "./createListing.css";
 import "./locationListing.css";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-
+import {
+  incompleteForm,
+  completeForm,
+} from "../../redux/actions/loadingActions";
 class Location extends Component {
   constructor(props) {
     super(props);
@@ -13,13 +16,21 @@ class Location extends Component {
   oldData = () => {
     return this.props.listingData.CreateListing.state.location;
   };
-
+  componentDidMount() {
+    const oldAddy = this.props.listingData.CreateListing.state.location.street;
+    if (oldAddy === "") {
+      this.props.incompleteForm();
+    } else {
+      this.props.completeForm();
+    }
+  }
   // this.props.listingData.CreateListing.state.location
   handleChange(e) {
     const { name, value } = e.target;
     if (isNaN(value) && name === "zipcode") {
       console.log("invalid input");
     } else {
+      this.props.completeForm();
       this.setState({
         [name]: value,
       });
@@ -28,13 +39,16 @@ class Location extends Component {
       ...this.state,
       [name]: value,
     };
+    if (value === "") {
+      this.props.incompleteForm();
+    }
     this.props.handle(updatedData, "location");
   }
   render() {
     return (
       <div className="LocationForm">
         <div>
-          <div className="startText">Get Started!</div>
+          <div className="startText">Address</div>
           <br />
           <div className="questionText">Where is your home located?</div>
           <br />
@@ -128,5 +142,13 @@ const mapStateToProps = (state) => {
     listingData: state,
   };
 };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    completeForm: () => dispatch(completeForm()),
+    incompleteForm: () => dispatch(incompleteForm()),
+  };
+};
 
-export default withRouter(connect(mapStateToProps, null)(Location));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Location)
+);

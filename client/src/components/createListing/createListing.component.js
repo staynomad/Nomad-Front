@@ -17,6 +17,8 @@ import ConfirmSubmission from "./confirmSubmission.component";
 import {
   setLoadingTrue,
   setLoadingFalse,
+  incompleteForm,
+  completeForm,
 } from "../../redux/actions/loadingActions";
 class CreateListing extends Component {
   constructor(props) {
@@ -48,6 +50,7 @@ class CreateListing extends Component {
         today: new Date(),
       },
       loading_spinner: false,
+      nextToggle: true,
     };
     this.togglePage = this.togglePage.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -57,6 +60,7 @@ class CreateListing extends Component {
   componentDidMount() {
     this.props.updateInfo(this.state);
     this.props.setLoadingFalse();
+
     if (!this.props.userSession) {
       alert("Please log in to create a listing.");
       return this.props.history.push("/login");
@@ -142,12 +146,12 @@ class CreateListing extends Component {
   render() {
     const pages = [
       <LandingPageCL />,
-      <PhotoUpload handle={this.handleChange} />,
       <TitleCL handle={this.handleChange} />,
       <Location handle={this.handleChange} />,
       <Description handle={this.handleChange} />,
       <DetailsCL handle={this.handleChange} />,
       <PricesCL handle={this.handleChange} />,
+      <PhotoUpload handle={this.handleChange} />,
       <DatesCL handle={this.handleChange} />,
       <ConfirmSubmission handle={this.state} />,
     ];
@@ -160,6 +164,14 @@ class CreateListing extends Component {
             <form>
               <div>{pages[this.state.formval]}</div>
               <div>
+                {!this.state.nextToggle ? (
+                  <span style={{ color: "red" }}>
+                    You are missing some parts. Please fill them in to continue
+                  </span>
+                ) : (
+                  ""
+                )}
+                <br />
                 {this.state.formval > 0 ? (
                   <input
                     className="changebut"
@@ -170,6 +182,7 @@ class CreateListing extends Component {
                 ) : (
                   ""
                 )}
+
                 {this.state.formval < this.state.maxpages - 1 ? (
                   <input
                     className="changebut"
@@ -195,9 +208,18 @@ class CreateListing extends Component {
 
   togglePage(e) {
     let temp = this.state.formval;
-    e.target.value === "Next" ? temp++ : temp--;
+    let validToggle = false;
+    if (e.target.value === "Next" && this.props.formCompleted) {
+      temp++;
+      validToggle = true;
+    } else if (e.target.value === "Back") {
+      temp--;
+      validToggle = true;
+    }
+
     this.setState({
       formval: temp,
+      nextToggle: validToggle,
     });
     const updatedData = {
       title: this.state.title,
@@ -219,9 +241,11 @@ const mapStateToProps = (state) => {
       listingData: state,
       userSession: state.Login.userInfo.session,
       loading: state.Loading.loading,
+      formCompleted: state.Loading.formCompleted,
     };
   return {
     listingData: state,
+    formCompleted: state.Loading.formCompleted,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -229,6 +253,8 @@ const mapDispatchToProps = (dispatch) => {
     updateInfo: (toUpdate) => dispatch(updateInfo(toUpdate)),
     setLoadingFalse: () => dispatch(setLoadingFalse()),
     setLoadingTrue: () => dispatch(setLoadingTrue()),
+    completeForm: () => dispatch(completeForm()),
+    incompleteForm: () => dispatch(incompleteForm()),
   };
 };
 export default withRouter(

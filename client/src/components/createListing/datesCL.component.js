@@ -5,7 +5,10 @@ import DatePicker, { DateUtils } from "react-day-picker";
 import Helmet from "react-helmet";
 import "react-day-picker/lib/style.css";
 import "./createListing.css";
-
+import {
+  incompleteForm,
+  completeForm,
+} from "../../redux/actions/loadingActions";
 class DatesCL extends Component {
   constructor(props) {
     super(props);
@@ -24,6 +27,11 @@ class DatesCL extends Component {
       invalid_date: false,
       today: oldData.today,
     };
+    if (oldData.start_date && oldData.end_date) {
+      this.props.completeForm();
+    } else {
+      this.props.incompleteForm();
+    }
     return initData;
   };
   handleDayClick(day) {
@@ -34,6 +42,7 @@ class DatesCL extends Component {
     } else {
       this.setState({ invalid_date: true });
     }
+    this.props.completeForm();
 
     const cleaned_dates = {
       start_date: range.from,
@@ -51,7 +60,6 @@ class DatesCL extends Component {
     const modifiers = { start: from, end: to };
     return (
       <div>
-        <div className="startText">Availibility</div> <br />
         <h1 className="questionText">When is your property available?</h1>
         <p>
           {!from && !to && "Please select the first day."}
@@ -107,23 +115,12 @@ const mapStateToProps = (state) => {
     listingData: state,
   };
 };
-export default withRouter(connect(mapStateToProps, null)(DatesCL));
-
-/*
- http://react-day-picker.js.org/examples/selected-range
-  <div style={{ display: "inline-block" }}>
-          <h3>Start Date</h3>
-          <DatePicker
-            onDayClick={this.handleDayClick}
-            selectedDays={this.state.start_date}
-          />
-        </div>
-        <div style={{ display: "inline-block" }}>
-          <h3>End Date</h3>
-          <DatePicker
-            onDayClick={this.handleDayClick}
-            selectedDays={this.state.end_date}
-          />
-        </div>
-
-*/
+const mapDispatchToProps = (dispatch) => {
+  return {
+    completeForm: () => dispatch(completeForm()),
+    incompleteForm: () => dispatch(incompleteForm()),
+  };
+};
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(DatesCL)
+);

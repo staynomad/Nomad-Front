@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Axios from "axios";
 import { withStyles } from "@material-ui/core/styles";
-import { NavLink, withRouter } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 
 var PERSONALITY_TYPES = [
