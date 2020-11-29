@@ -5,15 +5,16 @@ import { Grid, Menu, Segment } from "semantic-ui-react";
 import { NavLink, withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 
-import ListingCard from "../matches/listing/listingCard.component";
-import ReservationCard from "../reservations/reservationCard.component";
-import Profile from "./profile.component";
-//import Questionnaire from "../matches/questionnaire.component"
-import Settings from "./settings.component";
-import { searchUserListings } from "../../redux/actions/searchListingActions";
-import { searchUserReservations } from "../../redux/actions/reservationActions";
-import "semantic-ui-css/semantic.min.css";
-import "./menu.css";
+
+import ListingCard from '../matches/listing/listingCard.component';
+import ReservationCard from '../reservations/reservationCard.component';
+import Profile from "./profile.component"
+import Settings from "./settings.component"
+import { searchUserListings } from '../../redux/actions/searchListingActions';
+import { searchUserReservations } from '../../redux/actions/reservationActions';
+import 'semantic-ui-css/semantic.min.css'
+import './menu.css';
+
 
 const CustomButton = withStyles((theme) => ({
   root: {

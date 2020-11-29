@@ -16,6 +16,7 @@ import MenuList from '@material-ui/core/MenuList';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import SearchIcon from '@material-ui/icons/Search';
+import ReservationLookup from '../reservations/reservationLookupModal.component';
 
 import { removeUserSession } from '../../redux/actions/authActions';
 
@@ -145,7 +146,7 @@ const Navbar = (props) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [itemToSearch, setItemToSearch] = React.useState("");
-  const { history } = props;
+  const {history, reservationModal, setReservationModal} = props;
 
   const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {

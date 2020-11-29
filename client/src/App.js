@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "./components/homePage/navbar.component";
 import Footer from "./components/homePage/footer.component";
 import Home from "./components/homePage/newHome.component";
@@ -10,6 +10,7 @@ import Reservation from "./components/reservations/findReservation.component";
 import Matches from "./components/matches/matches.component.js";
 import Questionnaire from "./components/matches/questionnaire.component";
 import EditProfileInfo from "./components/myAccount/editProfileInfo.component";
+import ReservationLookup from './components/reservations/reservationLookupModal.component';
 import {
   Route,
   Switch,
@@ -26,28 +27,32 @@ import "./App.css";
 //to add more items just copy the format and add the route path. look at navbar component to see where the path is currently set to
 function App() {
   const history = useHistory();
+  const [reservationModal, setReservationModal] = useState(false);
 
   return (
     <>
-      <Navbar history={history} />
+      <Navbar history={history} setReservationModal={setReservationModal} reservationModal={reservationModal} />
       <div className="App">
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/ContactUs" exact component={Contact} />
-          <Route path="/Login" exact component={Login} />
-          <Route path="/SignUp" exact component={Signup} />
-          <Route path="/Services" exact component={Services} />
-          <Route path="/Reservations" exact component={Reservation} />
-          <Route path="/CreateListing" exact component={CreateListing} />
-          <Route path="/Matches" exact component={Matches} />
-          <Route path="/MyAccount" exact component={MyAccount} />
-          <Route path="/Questionnaire" exact component={Questionnaire} />
-          <Route path="/Listing/:id" exact component={ListingPage} />
-          <Route path="/EditListing/:listingId" exact component={EditListing} />
-          <Route path="/PaymentSuccess" exact component={PaymentSuccess} />
-          <Route path="/AccountVerification/:userId" exact component={AccountVerification} />
-          <Route path="/EditProfileInfo" exact component={EditProfileInfo} />
-        </Switch>
+        <div className="body-container">
+          <Switch>
+            <Route path="/" exact component={() => <Home isBlurred={reservationModal} />} />
+            <Route path="/ContactUs" exact component={Contact} />
+            <Route path="/Login" exact component={Login} />
+            <Route path="/SignUp" exact component={Signup} />
+            <Route path="/Services" exact component={Services} />
+            <Route path="/Reservations" exact component={Reservation} />
+            <Route path="/CreateListing" exact component={CreateListing} />
+            <Route path="/Matches" exact component={Matches} />
+            <Route path="/MyAccount" exact component={MyAccount} />
+            <Route path="/Questionnaire" exact component={Questionnaire} />
+            <Route path="/Listing/:id" exact component={ListingPage} />
+            <Route path="/EditListing/:listingId" exact component={EditListing} />
+            <Route path="/PaymentSuccess" exact component={PaymentSuccess} />
+            <Route path="/AccountVerification/:userId" exact component={AccountVerification} />
+            <Route path="/EditProfileInfo" exact component={EditProfileInfo} />
+          </Switch>
+        </div>
+        {reservationModal ? <ReservationLookup reservationModal={reservationModal} setReservationModal={setReservationModal} /> : null}
         <Footer />
       </div>
     </>
