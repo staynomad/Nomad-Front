@@ -5,16 +5,14 @@ import { Grid, Menu, Segment } from "semantic-ui-react";
 import { NavLink, withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 
-
-import ListingCard from '../matches/listing/listingCard.component';
-import ReservationCard from '../reservations/reservationCard.component';
-import Profile from "./profile.component"
-import Settings from "./settings.component"
-import { searchUserListings } from '../../redux/actions/searchListingActions';
-import { searchUserReservations } from '../../redux/actions/reservationActions';
-import 'semantic-ui-css/semantic.min.css'
-import './menu.css';
-
+import ListingCard from "../matches/listing/listingCard.component";
+import ReservationCard from "../reservations/reservationCard.component";
+import Profile from "./profile.component";
+import Settings from "./settings.component";
+import { searchUserListings } from "../../redux/actions/searchListingActions";
+import { searchUserReservations } from "../../redux/actions/reservationActions";
+import "semantic-ui-css/semantic.min.css";
+import "./menu.css";
 
 const CustomButton = withStyles((theme) => ({
   root: {
@@ -93,6 +91,7 @@ class LeftMenu extends Component {
                   .sort(function (a, b) {
                     if (a.days[0] < b.days[0]) return -1;
                     if (a.days[0] > b.days[0]) return 1;
+                    return 1;
                   })
                   .map((reservation) => (
                     <ReservationCard

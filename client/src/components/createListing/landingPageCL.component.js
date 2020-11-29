@@ -1,8 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-
+import {
+  incompleteForm,
+  completeForm,
+} from "../../redux/actions/loadingActions";
 class LandingPageCL extends React.Component {
+  componentDidMount() {
+    this.props.completeForm();
+  }
   render() {
     return (
       <div>
@@ -21,5 +27,12 @@ const mapStateToProps = (state) => {
     listingData: state,
   };
 };
-
-export default withRouter(connect(mapStateToProps, null)(LandingPageCL));
+const mapDispatchToProps = (dispatch) => {
+  return {
+    completeForm: () => dispatch(completeForm()),
+    incompleteForm: () => dispatch(incompleteForm()),
+  };
+};
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(LandingPageCL)
+);

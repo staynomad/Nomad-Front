@@ -5,6 +5,8 @@ import { withRouter } from "react-router-dom";
 import {
   setLoadingTrue,
   setLoadingFalse,
+  incompleteForm,
+  completeForm,
 } from "../../../redux/actions/loadingActions";
 import { updateInfo } from "../../../redux/actions/createListingActions";
 
@@ -16,8 +18,14 @@ class PhotoUpload extends Component {
   }
 
   getInitialState() {
+    let pics = this.props.photoData.pictures;
+    if (pics.length === 0) {
+      this.props.incompleteForm();
+    } else {
+      this.props.completeForm();
+    }
     return {
-      pictures: this.props.photoData.pictures,
+      pictures: pics,
       temp_image_url: this.props.photoData.temp_image_url,
       invalid_type: false,
     };
@@ -35,6 +43,7 @@ class PhotoUpload extends Component {
         URL.createObjectURL(currentImage),
       ];
       const cur_images = [...this.state.pictures, currentImage];
+      this.props.completeForm();
       this.setState({
         pictures: cur_images,
         invalid_type: false,
@@ -103,6 +112,8 @@ const mapDispatchToProps = (dispatch) => {
     updateInfo: (toUpdate) => dispatch(updateInfo(toUpdate)),
     setLoadingFalse: () => dispatch(setLoadingFalse()),
     setLoadingTrue: () => dispatch(setLoadingTrue()),
+    completeForm: () => dispatch(completeForm()),
+    incompleteForm: () => dispatch(incompleteForm()),
   };
 };
 export default withRouter(

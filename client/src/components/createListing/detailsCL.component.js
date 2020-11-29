@@ -3,7 +3,10 @@ import "./createListing.css";
 import "./detailsListing.css";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-
+import {
+  incompleteForm,
+  completeForm,
+} from "../../redux/actions/loadingActions";
 class DetailsCL extends Component {
   constructor(props) {
     super(props);
@@ -13,16 +16,28 @@ class DetailsCL extends Component {
   oldData = () => {
     return this.props.listingData.CreateListing.state.details;
   };
-
+  componentDidMount() {
+    const oldDetails = this.props.listingData.CreateListing.state.details;
+    this.props.completeForm();
+    for (let item in oldDetails) {
+      if (oldDetails[item] === "") {
+        this.props.incompleteForm();
+      }
+    }
+  }
   handleChange(e) {
     const { name, value } = e.target;
     if (!isNaN(value)) {
       if (value < 10) {
+        this.props.completeForm();
         this.setState({
           invalidInput: false,
           [name]: value,
         });
       }
+    }
+    if (value === "") {
+      this.props.incompleteForm();
     }
     const updatedData = {
       ...this.state,
@@ -93,5 +108,12 @@ const mapStateToProps = (state) => {
     listingData: state,
   };
 };
-
-export default withRouter(connect(mapStateToProps, null)(DetailsCL));
+const mapDispatchToProps = (dispatch) => {
+  return {
+    completeForm: () => dispatch(completeForm()),
+    incompleteForm: () => dispatch(incompleteForm()),
+  };
+};
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(DetailsCL)
+);

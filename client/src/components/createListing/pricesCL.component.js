@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import "./createListing.css";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-
+import {
+  incompleteForm,
+  completeForm,
+} from "../../redux/actions/loadingActions";
 class PricesCL extends Component {
   constructor(props) {
     super(props);
@@ -15,16 +18,25 @@ class PricesCL extends Component {
   oldData = () => {
     return this.props.listingData.CreateListing.state.price;
   };
-
+  componentDidMount() {
+    const oldPrice = this.props.listingData.CreateListing.state.price;
+    if (oldPrice === "") {
+      this.props.incompleteForm();
+    } else {
+      this.props.completeForm();
+    }
+  }
   handleChange(e) {
     const { name, value } = e.target;
-    if (!isNaN(value)) {
-      if (value < 1000) {
-        this.setState({
-          [name]: value,
-        });
-        this.props.handle(value, name);
-      }
+    if (!isNaN(value) && value < 1000) {
+      this.props.completeForm();
+      this.setState({
+        [name]: value,
+      });
+      this.props.handle(value, name);
+    }
+    if (value === "") {
+      this.props.incompleteForm();
     }
   }
   render() {
@@ -64,5 +76,12 @@ const mapStateToProps = (state) => {
     listingData: state,
   };
 };
-
-export default withRouter(connect(mapStateToProps, null)(PricesCL));
+const mapDispatchToProps = (dispatch) => {
+  return {
+    completeForm: () => dispatch(completeForm()),
+    incompleteForm: () => dispatch(incompleteForm()),
+  };
+};
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(PricesCL)
+);

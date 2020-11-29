@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import "./createListing.css";
+import {
+  incompleteForm,
+  completeForm,
+} from "../../redux/actions/loadingActions";
 class TitleCL extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +19,12 @@ class TitleCL extends Component {
   componentDidMount() {
     const oldTitle = this.props.listingData.CreateListing.state.title;
     const oldDif = this.state.maxchars - oldTitle.length;
+    if (oldTitle === "") {
+      this.props.incompleteForm();
+    } else {
+      this.props.completeForm();
+    }
+
     this.setState({
       title: oldTitle,
       charleft: oldDif,
@@ -24,11 +34,16 @@ class TitleCL extends Component {
     const { name, value } = e.target;
     const dif = this.state.maxchars - value.length;
     if (value.length <= this.state.maxchars) {
+      this.props.completeForm();
       this.setState({
         [name]: value,
         charleft: dif,
       });
     }
+    if (value === "") {
+      this.props.incompleteForm();
+    }
+
     this.props.handle(value, name);
   };
 
@@ -37,7 +52,9 @@ class TitleCL extends Component {
       <div>
         <div className="startText">Title</div>
         <br />
-        <div className="questionText">What do you want to call this listing?</div>
+        <div className="questionText">
+          What do you want to call this listing?
+        </div>
         <br />
         <textarea
           type="text"
@@ -56,6 +73,15 @@ class TitleCL extends Component {
 const mapStateToProps = (state) => {
   return {
     listingData: state,
+    formCompleted: state.Loading.formCompleted,
   };
 };
-export default withRouter(connect(mapStateToProps, null)(TitleCL));
+const mapDispatchToProps = (dispatch) => {
+  return {
+    completeForm: () => dispatch(completeForm()),
+    incompleteForm: () => dispatch(incompleteForm()),
+  };
+};
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(TitleCL)
+);
