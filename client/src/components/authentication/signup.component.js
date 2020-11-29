@@ -33,11 +33,10 @@ const Signup = () => {
     <Redirect to="/login" />
   ) : (
     <div id="signup-content">
-      <div className="login-form signup-form">
-        <h2 className="services-title signup-title">
-          create an <br />
-          account
-        </h2>
+      <div className="login-form signup-form container">
+        <h1 style={{ color: "#31473b", fontSize: "48px" }}>
+          Sign Up
+        </h1>
         <form className="form signup-form">
           <input
             type="email"
@@ -71,7 +70,7 @@ const Signup = () => {
               setUserSignup({ ...userSignup, check: e.target.value })
             }
           />
-          <div className="checkbox">
+          <label className="checkbox">
             <input
               className="check"
               type="checkbox"
@@ -80,9 +79,9 @@ const Signup = () => {
               onChange={(e) =>
                 setUserSignup({ ...userSignup, isHost: !e.isHost })
               }
-            />{" "}
-            <label>are you a host?</label>    
-          </div>
+            />
+            {"  Are you a host?"}
+          </label>
           <input
             type="submit"
             value="create your account"
