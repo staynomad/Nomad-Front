@@ -172,7 +172,7 @@ class ListingPage extends Component {
         !this.state.listingPictures || !this.state.listingTitle || !this.state.listingLocation || !this.state.listingDescription || !this.state.listingBeds || !this.state.listingBaths || !this.state.listingMaxPeople || !this.state.listingPrice
         ? <div id="spinner"></div>
         : <div>
-            <h4 className="subtitle">{this.state.listingTitle}</h4>
+            <h3 className="subtitle">{this.state.listingTitle}</h3>
             <h5>{this.state.listingLocation}</h5> <br />
 
             <ImageGallery
@@ -193,7 +193,7 @@ class ListingPage extends Component {
             </a> <br /><br />
 
             <div>
-              <p>
+              <div style={{"align-text": "center"}}>
                 {!from && !to && 'Please select the first day.'}
                 {from && !to && 'Please select the last day.'}
                 {from &&
@@ -205,7 +205,7 @@ class ListingPage extends Component {
                     Reset
                   </button>
                 )}
-              </p>
+              </div>
               <DayPicker
                 className="Selectable"
                 selectedDays={[from, { from, to }]}

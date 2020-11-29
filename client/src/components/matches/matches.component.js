@@ -35,7 +35,7 @@ const Matches = (props) => {
 
   return (
     <div id='matches-page'>
-      <div className='container'>
+      <div className='container_s'>
         <button className="filter btn green" onClick={() => {
           setRoommateView(!roommateView);
           setListingView(false)

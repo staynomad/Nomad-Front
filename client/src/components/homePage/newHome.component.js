@@ -83,10 +83,10 @@ const newHome = ({isBlurred}) => {
       </div>
 
 
-      <div className="spacer_xl"></div>
-      <div className="design">
-        <div className="container">
-        <h2 className="wow fadeInUp" data-wow-delay="0.5s">Our Amenities</h2>
+      <div className="spacer_xxl"></div>
+      <div className="container_wide">
+        <div className="design">
+        <h2 className="wow fadeInUp" data-wow-delay="0.5s">Our amenities</h2>
           <div className="spacer_l"></div>
         <div className="row gap large " >
             <div className="col-sm-6 col-md-6 col-lg-3" >
@@ -173,11 +173,6 @@ const newHome = ({isBlurred}) => {
       <div className="spacer_xl"></div>
         <div className=" wow fadeInUp" data-wow-delay="0.5s">
       <h2>From our guests  </h2>
-      </div>
-        <div className=" wow fadeInUp" data-wow-delay="0.5s">
-      <Link to="/MyAccount" className="button3">
-      <button className="btn-hover color-5">Make a Testimonial</button>
-      </Link>
       </div>
 
         <div className=" wow fadeInUp" data-wow-delay="0.5s">
