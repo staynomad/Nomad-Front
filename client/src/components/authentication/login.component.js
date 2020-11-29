@@ -33,10 +33,11 @@ const Login = (props) => {
     <Redirect to={{ pathname: "/" }} />
   ) : (
       <div className='login-content'>
-        <div className='login-form'>
+        <div className='login-form container'>
           <form action='/login' className='form'>
             <div>
-              <h2 style={{ color: "#31473b", fontSize: "48px" }}>welcome back</h2>
+              <h1 style={{ color: "#31473b", fontSize: "48px" }}>Welcome Back</h1>
+              <div className="spacer_xs"></div>
             </div>
             <div>
               <input
