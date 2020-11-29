@@ -1,16 +1,26 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import uploadPhoto from "./photoUploadRequests";
+//import { getSignedURL } from "./photoUploadRequests";
+import {
+  setLoadingTrue,
+  setLoadingFalse,
+} from "../../../redux/actions/loadingActions";
+import { updateInfo } from "../../../redux/actions/createListingActions";
+
 class PhotoUpload extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      images: [],
-      image_url: [],
+    this.state = this.getInitialState();
+    this.onClick = this.onClick.bind(this);
+  }
+
+  getInitialState() {
+    return {
+      pictures: this.props.photoData.pictures,
+      temp_image_url: this.props.photoData.temp_image_url,
       invalid_type: false,
     };
-    this.onClick = this.onClick.bind(this);
   }
 
   onClick(e) {
@@ -20,29 +30,45 @@ class PhotoUpload extends Component {
       currentImage.type === "image/jpg" ||
       currentImage.type === "image/jpeg"
     ) {
-      const cur_images = this.state.image_url;
-      cur_images.push(URL.createObjectURL(currentImage));
+      const cur_images_urls = [
+        ...this.state.temp_image_url,
+        URL.createObjectURL(currentImage),
+      ];
+      const cur_images = [...this.state.pictures, currentImage];
       this.setState({
-        images: e.target.files,
+        pictures: cur_images,
         invalid_type: false,
-        image_url: cur_images,
+        temp_image_url: cur_images_urls,
       });
-      console.log(cur_images);
-      //uploadPhoto(currentImage, "vhomes-images-bucket");
-      //this.props.handle(saved_picture.url, "pictures");
+
+      const temp = {
+        pictures: cur_images,
+        temp_image_url: cur_images_urls,
+      };
+      /*
+      getSignedURL(
+        currentImage,
+        "vhomes-images-bucket",
+        this.props.setLoadingFalse,
+        
+      );*/
+      this.props.handle(temp, "photos");
     } else {
       this.setState({
         invalid_type: true,
       });
     }
   }
+
   currentImagesList() {
-    return this.state.image_url.map((image) => {
+    return this.state.temp_image_url.map((image) => {
       return (
         <img
           style={{ maxHeight: 100, maxwidth: 100 }}
           id="target"
           src={image}
+          alt=" "
+          key={Math.random()}
         />
       );
     });
@@ -68,8 +94,17 @@ class PhotoUpload extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    listingData: state.CreateListing.state,
+    photoData: state.CreateListing.state.photos,
     userSession: state.Login.userInfo.session,
   };
 };
-export default withRouter(connect(mapStateToProps, null)(PhotoUpload));
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateInfo: (toUpdate) => dispatch(updateInfo(toUpdate)),
+    setLoadingFalse: () => dispatch(setLoadingFalse()),
+    setLoadingTrue: () => dispatch(setLoadingTrue()),
+  };
+};
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(PhotoUpload)
+);
