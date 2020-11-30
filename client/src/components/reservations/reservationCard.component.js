@@ -3,6 +3,8 @@ import Button from '@material-ui/core/Button';
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { withStyles } from '@material-ui/core/styles';
+import { getListingById } from '../../redux/actions/searchListingActions';
+import '../matches/listing/listings.css'
 
 import { checkInToReservation, checkOutOfReservation } from '../../redux/actions/reservationActions';
 
@@ -37,11 +39,12 @@ const ReservationCard = (props) => {
   return (
     <>
       { reservation.active ? (
-        <div className='reservation-item' onClick={handleOpenClose}>
-          <div className='reservation-information'>
-            <div className='reservation-image'>reservation image here</div>
+        <div className='listing-item' onClick={handleOpenClose}>
+          <div className='listing-information'>
+            <div className='listing-image'>reservation image here</div>
             <div>
-              <b>Reservation Date:</b> {reservation.days[0]} - {reservation.days[1]}
+              <b>From: </b> {reservation.days[0]} <br />
+              <b>To: </b> {reservation.days[1]}
             </div>
           </div>
           {props.userSession && props.userSession.userId === reservation.user && !props.reservation.checkedIn ? (
@@ -72,6 +75,7 @@ const mapDispatchToProps = dispatch => {
   return {
     checkInToReservation: (token, reservationId) => (dispatch(checkInToReservation(token, reservationId))),
     checkOutOfReservation: (token, reservationId) => (dispatch(checkOutOfReservation(token, reservationId))),
+    getListingById: listingId => dispatch(getListingById(listingId))
   };
 };
 

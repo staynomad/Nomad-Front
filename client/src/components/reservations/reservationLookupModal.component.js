@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import './reservationLookupModal.css';
 import axios from 'axios';
 import { getListingById } from '../../redux/actions/searchListingActions';
