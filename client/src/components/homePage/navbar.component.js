@@ -26,7 +26,7 @@ const navbar = (props) => {
               </NavLink>
             </li>
             <li>
-              <NavLink exact to="/" activeClassName="nav-active">
+              <NavLink to="/" onClick={e => props.setReservationModal(true)}>
                 Reservations
               </NavLink>
             </li>
