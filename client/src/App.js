@@ -35,7 +35,7 @@ function App() {
       <div className="App">
         <div className="body-container">
           <Switch>
-            <Route path="/" exact component={() => <Home isBlurred={reservationModal} />} />
+            <Route path="/" exact component={() => <Home isBlurred={reservationModal} history={history}/>} />
             <Route path="/ContactUs" exact component={Contact} />
             <Route path="/Login" exact component={Login} />
             <Route path="/SignUp" exact component={Signup} />
