@@ -76,31 +76,72 @@ class LeftMenu extends Component {
                   ))}
                 </>
               ) : (
-                <>
-                  <div>No Listings!</div>
-                </>
-              )}
+                  <>
+                    <div>No Listings!</div>
+                  </>
+                )}
             </div>
           </>
         );
       case "my reservations":
+        let reservations = {
+          active: [],
+          expired: [],
+        };
+        const { userReservations } = this.props;
+
+        if (this.props.userReservations) {
+          userReservations.forEach(reservation => {
+            // Split string to Year (idx 0), Month (idx 1), Day (idx 2) then convert to num
+            const expireDate = reservation.days[1].split('-').map(date => {
+              return Number.parseInt(date, 10)
+            });
+            // Convert using to milliseconds
+            const expireDateConverted = new Date(expireDate[0], expireDate[1] - 1, expireDate[2]).getTime();
+            const curDate = new Date().getTime();
+            // Compare to check if curDate is past expired
+            const isExpired = curDate > expireDateConverted;
+
+            if (isExpired) reservations.expired.push(reservation);
+            else reservations.active.push(reservation);
+          });
+
+          console.log(reservations)
+        }
         return (
-          <>
-            {this.props.userReservations
-              ? this.props.userReservations
-                  .sort(function (a, b) {
-                    if (a.days[0] < b.days[0]) return -1;
-                    if (a.days[0] > b.days[0]) return 1;
-                    return 1;
-                  })
+          <div className="reservations-container">
+            <div classname="reservations-active">
+              {reservations.active.length > 0 ? (
+                reservations.active.sort(function (a, b) {
+                  if (a.days[0] < b.days[0]) return -1;
+                  if (a.days[0] > b.days[0]) return 1;
+                  return 1;
+                })
                   .map((reservation) => (
                     <ReservationCard
                       key={reservation._id}
                       reservation={reservation}
                     />
                   ))
-              : null}
-          </>
+              ) : null}
+            </div>
+            <div className="reservations-expired">
+              {reservations.expired.length > 0 ? (
+                reservations.expired.sort(function (a, b) {
+                  if (a.days[0] < b.days[0]) return -1;
+                  if (a.days[0] > b.days[0]) return 1;
+                  return 1;
+                })
+                  .map((reservation) => (
+                    <ReservationCard
+                      key={reservation._id}
+                      reservation={reservation}
+                    />
+                  ))
+              )
+                : null}
+            </div>
+          </div>
         );
       case "settings":
         return <Settings />;
