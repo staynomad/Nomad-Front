@@ -8,7 +8,7 @@ import "./matches.css";
 const Matches = (props) => {
   const [seen, setSeen] = useState(false);
   const [roommateView, setRoommateView] = useState(false);
-  const [listingView, setListingView] = useState(false);
+  const [listingView, setListingView] = useState(true);
   // const [roommateFilters, setRoommateFilters] = useState({});
   const [listingFilterState, setListingFilterState] = useState({
     minRating: 0,
@@ -36,7 +36,7 @@ const Matches = (props) => {
   return (
     <div id='matches-page'>
       <div className='container_s'>
-        <button className="filter btn green" onClick={() => {
+        {/*<button className="filter btn green" onClick={() => {
           setRoommateView(!roommateView);
           setListingView(false)
         }}>
@@ -50,7 +50,7 @@ const Matches = (props) => {
           }}
         >
           listings
-        </button>
+        </button>*/}
         <button className="filter btn green" onClick={toggle}>
           filter
         </button>
