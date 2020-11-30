@@ -242,7 +242,7 @@ class ListingPage extends Component {
               />
             ) : null}
           </div>
-        )}
+        }
       </div>
     );
   }

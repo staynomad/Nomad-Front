@@ -85,7 +85,7 @@ router.post(
                   Days: ${newReservation.days[0]} to ${newReservation.days[1]}
                   Host name: ${res.data.name}
 
-                  When you arrive at the property, make sure to checkin via the VHomes website in order to alert the host that you have arrived. If you have any questions or concerns, please reach out to the host at ${res.data.email}. Hope you enjoy your stay!`
+              When you arrive at the property, make sure to checkin via the VHomes website in order to alert the host that you have arrived. If you have any questions or concerns, please reach out to the host at ${res.data.email}. To cancel your reservation, please contact us at reservations@vhomesgroup.com. Hope you enjoy your stay!`
           }
           transporter.sendMail(userMailOptions, (error, info) => {
             if (error) {
@@ -112,14 +112,14 @@ router.post(
             text:
               `Thank you for listing on VHomes! Here's the information regarding your listing reservation:
 
-                ${bookedListing.title}
-                Reservation number: ${newReservation._id}
-                Address: ${bookedListing.location.street}, ${bookedListing.location.city}, ${bookedListing.location.state}, ${bookedListing.location.zipcode}
-                Total cost: $${bookedListing.price * totalDays}
-                Days: ${newReservation.days[0]} to ${newReservation.days[1]}
-                Guest name: ${res.data.name}
+                  ${bookedListing.title}
+                  Reservation number: ${newReservation._id}
+                  Address: ${bookedListing.location.street}, ${bookedListing.location.city}, ${bookedListing.location.state}, ${bookedListing.location.zipcode}
+                  Total cost: $${bookedListing.price * totalDays}
+                  Days: ${newReservation.days[0]} to ${newReservation.days[1]}
+                  Guest name: ${res.data.name}
 
-                We'll send you another email once the guest has checked in. If you have any questions or concerns, please reach out to the guest at ${res.data.email}. Thank you for choosing VHomes!`
+              We'll send you another email once the guest has checked in. If you have any questions or concerns, please reach out to the guest at ${res.data.email}. To cancel this reservation, please contact us at reservations@vhomesgroup.com. Thank you for choosing VHomes!`
           }
           transporter.sendMail(hostMailOptions, (error, info) => {
             if (error) {
@@ -320,10 +320,10 @@ router.post(
             text:
               `Your guest has just checked in! Please provide them with the next steps to begin their stay. If you have any questions or concerns, please reach out to the guest at ${res.data.email}.
 
-                ${bookedListing.title}
-                Address: ${bookedListing.location.street}, ${bookedListing.location.city}, ${bookedListing.location.state}, ${bookedListing.location.zipcode}
-                Days: ${reservation.days[0]} to ${reservation.days[1]}
-                Guest name: ${res.data.name}
+                  ${bookedListing.title}
+                  Address: ${bookedListing.location.street}, ${bookedListing.location.city}, ${bookedListing.location.state}, ${bookedListing.location.zipcode}
+                  Days: ${reservation.days[0]} to ${reservation.days[1]}
+                  Guest name: ${res.data.name}
 
               Thank you for choosing VHomes!`
           }
