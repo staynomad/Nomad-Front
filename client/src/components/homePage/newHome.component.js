@@ -3,7 +3,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Search from './search.component'
 
-const newHome = ({isBlurred}) => {
+const newHome = (props) => {
+  const {isBlurred, history} = props
 
   return (
     <div style={isBlurred ? {filter: 'blur(5px)'} : {}}>
@@ -28,9 +29,9 @@ const newHome = ({isBlurred}) => {
 
           <div className="spacer_s"></div>
           <div className=" wow fadeInUp" data-wow-delay="0.5s">
-          <Search />
+          <Search history={history}/>
           <div className="spacer_xs"></div>
-          <div className="intro_text">Subscribe now to get notified when we launch. </div>
+          <div className="intro_text">Search now to find your next dream vacation. </div>
         </div>
         </div>
       </div>
@@ -96,7 +97,7 @@ const newHome = ({isBlurred}) => {
 
           <div className="col-sm-6 col-md-6 col-lg-3" >
                 <div className=" wow fadeInUp" data-wow-delay="0.5s">
-            <img src="./images/laundry.svg" alt="laundry" class="AM-graphic"  />
+            <img src="./images/laundry.svg" alt="laundry" className="AM-graphic"  />
               <div className="subtitle2">In-suite laundry</div>
           </div>
         </div>
@@ -104,14 +105,14 @@ const newHome = ({isBlurred}) => {
 
           <div className="col-sm-6 col-md-6 col-lg-3" >
               <div className=" wow fadeInUp" data-wow-delay="0.5s">
-            <img src="./images/shower.svg" alt="shower" class="AM-graphic"  />
+            <img src="./images/shower.svg" alt="shower" className="AM-graphic"  />
               <div className="subtitle2">Shower amenities</div>
           </div>
         </div>
 
           <div className="col-sm-6 col-md-6 col-lg-3" >
                 <div className=" wow fadeInUp" data-wow-delay="0.5s">
-            <img src="./images/kitchen.svg" alt="kitchen" class="AM-graphic"  />
+            <img src="./images/kitchen.svg" alt="kitchen" className="AM-graphic"  />
               <div className="subtitle2">Fully-equipped kitchen</div>
           </div>
         </div>

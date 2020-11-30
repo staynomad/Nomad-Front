@@ -1,17 +1,31 @@
-import React, { Component } from "react";
+import React from "react";
 import "./home.css";
-export default class Search extends Component {
-  render() {
-    return (
-      <div className="overallsearch">
-        <input className="inputtextbox" type="text" placeholder="city" />
-        <a href="/Matches">
 
-          <input className="booknowbutton" type="button" value="book now"/>
-        </a>
-        <br />
+const Search = (props) => {
+  const [itemToSearch, setItemToSearch] = React.useState("");
+  const {history} = props;
 
-      </div>
-    );
-  }
+  const handleSearch = (event) => {
+    event.preventDefault();
+    history.push(`/matches?${itemToSearch}`);
+    setItemToSearch("")
+  };
+
+  return (
+    <div className="overallsearch">
+      <input
+        type="text"
+        placeholder="city"
+        className="inputtextbox"
+        onChange={(e) => setItemToSearch(e.target.value)}
+        value={itemToSearch}
+      />
+      <input className="booknowbutton" type="button" value="book now" onClick={handleSearch}/>
+      <br />
+
+    </div>
+  )
 }
+
+
+export default Search

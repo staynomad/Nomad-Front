@@ -34,17 +34,17 @@ const Profile = () => {
 
     const Information = () => {
         if (!isEmpty) {
-            console.log("description: ", user.userInfo.description)
+            // console.log("description: ", user.userInfo.description)
             return (
                 <div style={{"padding": "20px"}}>
-                    <t>Email: {user.userInfo.email}</t>
+                    <div>Email: {user.userInfo.email}</div>
                     <br />
-                    {user.userInfo.description ? <p>Description: {user.userInfo.description}</p> : <t>Add your description to get started!</t>}
+                    {user.userInfo.description ? <p>Description: {user.userInfo.description}</p> : <div>Add your description to get started!</div>}
                 </div>
             )
         } else {
             return (
-                <t>Add your description to get started!</t>
+                <div>Add your description to get started!</div>
             )
         }
     }

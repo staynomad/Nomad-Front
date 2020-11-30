@@ -7,23 +7,71 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  display: flex;
+  place-content: center;
+  align-items: center;
+  height: -webkit-fill-available;
 }
 
+
 .modal-content {
-  background-color: #EAB98F;
-  position: static;
-  padding: 10px;
-  text-align: left;
-  border-radius: 5px;
-  border: 5px solid;
-  border-color: #00b183;
-  width: max-content;
+  box-shadow: 1px 1px 7px 2px #787878;
+  margin: auto;
+  max-width: fit-content;
+  min-width: 500px;
+  max-height: fit-content;
+  min-height: 400px;
+  background-color: white;
+  padding: 60px;
 }
 
 .modal-content:target {
   height: 40px;
 }
 
-.reservationLookup-container {
-  margin: 2% 30% 0 30%;
-} 
+.searchbutton {
+  padding: 0;
+  font-size: 16px;
+  height: 50px;
+  width: 100px;
+  color: white;
+  background: var(--color-green);
+  border-radius: 8px;
+  border-color: #02b188;
+  color: white;
+  -webkit-transition: transform 0.5s ease 0s;
+     -moz-transition: transform 0.5s ease 0s;
+       -o-transition: transform 0.5s ease 0s;
+}
+
+.searchbutton:hover {
+  transform: scale(1.01);
+  background-color: #01c490;
+  cursor:pointer;
+}
+
+.exit {
+  font-size: 16px !important;
+  color: var(--color-green) !important;
+}
+
+.exit:hover {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.botText {
+  font-size: 18px;
+  color: #31473b;
+}
+
+.listingImage {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.listingInfo {
+  text-align: center !important;
+}
