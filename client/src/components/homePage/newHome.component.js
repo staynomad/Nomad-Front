@@ -30,7 +30,7 @@ const newHome = ({isBlurred}) => {
           <div className=" wow fadeInUp" data-wow-delay="0.5s">
           <Search />
           <div className="spacer_xs"></div>
-          <div className="intro_text">Subscribe now to get notified when we launch. </div>
+          <div className="intro_text">Search now to find your next dream vacation. </div>
         </div>
         </div>
       </div>

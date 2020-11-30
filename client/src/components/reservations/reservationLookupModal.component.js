@@ -41,67 +41,64 @@ const ReservationLookup = (props) => {
         {lookup
         ?
         <div>
-          <h1 style={{color: 'white', fontFamily: 'Playfair Display'}}>Find more details about a reservation!</h1>
+          <h2>Find your reservation</h2>
+          <div className="spacer_s"></div>
           <form onSubmit={handleSubmit}>
             <label id="reservationID" style={{'fontFamily': 'Playfair Display'}}>
               <input
+                className="login_bar"
                 type="text"
                 id="reservationID"
                 name="reservationID"
-                placeholder="Reservation ID"
+                placeholder="reservation ID"
                 onChange={e => setReservationID(e.target.value)}
-                style={{backgroundColor: 'white', width: '60%'}}
+                style={{"width": "100%", "padding-left": "2%"}}
               />
             </label>
-            {error ? <p style={{color: 'red'}}>There has been an error finding your reservation! Please make sure the ID is correct.</p> : <div><br /><br /></div>}
+            <p>You'll find this in your reservation confirmation email.</p>
+            {error ? <p style={{color: 'red'}}>There has been an error finding your reservation! Please make sure the ID is correct.</p> : null}
             <label id="submit">
-              <Button
+              <button
                 type="submit"
                 id="reservationIDSubmit"
-                style={{width: '30%', backgroundColor: '#00b183', 'fontFamily': 'Playfair Display'}}
+                className="searchbutton btn"
               >
-                Search
-              </Button>
+                search
+              </button>
             </label>
           </form>
+          <p className='botText'>
+            New to VHomes?
+            <a
+              href='/SignUp'
+              style={{ color: "#02b188", paddingLeft: "2%" }}
+            > sign up
+            </a>
+          </p>
         </div>
         :
         <div>
-          <h1>Your Reservation</h1>
-          <p style={{color: 'white'}}>Check in: {reservationInfo.reservation.days[0]}, Check out: {reservationInfo.reservation.days[1]}</p>
-          <p style={{color: 'white'}}>Length of stay: {reservationInfo.reservation.days.length} days</p>
-          <p style={{color: 'white'}}>This is an {reservationInfo.reservation.active ? 'active' : 'inactive'} reservation.</p>
-          <p style={{color: 'white'}}>You have{reservationInfo.reservation.checkedIn ? ' ' : ' not '}checked in.</p>
-          <p style={{color: 'white'}}>You booked this reservation at {reservationInfo.reservation.createdAt}.</p>
+          <h2>{listingInfo.title}</h2>
+          <p className="listingInfo">{listingInfo.location.street}, {listingInfo.location.city}, {listingInfo.location.state}, {listingInfo.location.zipcode}, {listingInfo.location.country}</p>
+          <div className="listingImage">{listingInfo.pictures.length !== 0 && listingInfo.pictures.map (pic => (<img style={{resizeMode: 'contain', height: 100, width: 200}} src={pic} key={pic} alt="Property"/>))}</div>
+          <div className="spacer_xs"></div>
+
           <hr />
-          <h1>{listingInfo.title}</h1>
-          <p style={{color: 'white'}}>{listingInfo.description}</p>
-          <h2>Price: ${listingInfo.price} per night</h2>
-          {listingInfo.pictures.length !== 0 && listingInfo.pictures.map (pic => (<img style={{resizeMode: 'contain', height: 100, width: 200}} src={pic} key={pic} alt="Property"/>))}
-          <p>Beds: {listingInfo.details.beds}, Baths: {listingInfo.details.baths}, Maximum guests: {listingInfo.details.maxpeople}</p>
-          <p>{listingInfo.location.street}, {listingInfo.location.city}, {listingInfo.location.state}, {listingInfo.location.zipcode}, {listingInfo.location.country}</p>
+
+          <h2>Your Reservation</h2>
+          <p className="listingInfo">Check in: {reservationInfo.reservation.days[0]}, Check out: {reservationInfo.reservation.days[1]}</p>
+          <p className="listingInfo">This is an {reservationInfo.reservation.active ? <p style={{color: 'white'}}>You have{reservationInfo.reservation.checkedIn ? ' ' : ' not '}checked in.</p> : 'inactive'} reservation.</p>
+
       </div>
       }
-      <br />
-      <CustomButton onClick={handleReturnHome}>
-        Return Home
-      </CustomButton>
+      <div className="spacer_s"></div>
+      <p className="exit" onClick={handleReturnHome}>
+        exit
+      </p>
       </div>
     </div>
   );
 };
-
-const CustomButton = withStyles (theme => ({
-  root: {
-    color: 'white',
-    backgroundColor: 'transparent',
-    border: '2px solid white',
-    borderRadius: '8px',
-    font: 'inherit',
-    fontSize: '16px',
-    fontWeight: 'normal',
-  },
-})) (Button);
 
 const mapDispatchToProps = dispatch => {
   return {
