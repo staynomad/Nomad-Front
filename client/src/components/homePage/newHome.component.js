@@ -90,7 +90,7 @@ const newHome = ({isBlurred}) => {
             <div className="col-sm-6 col-md-6 col-lg-3" >
           <div className=" wow fadeInUp" data-wow-delay="0.5s">
               <img src="./images/wifi.svg" alt="wifi" className="AM-graphic "  />
-              <div className="subtitle2">Fast Wifi</div>
+              <div className="subtitle2">Fast wifi</div>
           </div>
           </div>
 
@@ -183,12 +183,13 @@ const newHome = ({isBlurred}) => {
 
             <div className="test-component">
               <article className="test-title">
-                  <div>Dianne Russell</div>
+                  <div>Dalia</div>
               </article>
               <article className="test-content">
                 <p className="quote">
-                  This home is great. The host was very responsive, place was nice and clean. Will definitely use again for sure.
+                  It's a great place to stay!! Close to everything, clean, and great value.
                 </p>
+                <div className="spacer_xxs">June 2020</div>
               </article>
             </div>
           </div>
@@ -201,52 +202,18 @@ const newHome = ({isBlurred}) => {
             </figure>
             <div className="test-component">
               <article className="test-title">
-                <div>Jacob Jones</div>
+                <div> Larry</div>
               </article>
               <article className="test-content">
                 <p className="quote">
-                  This home is great. The host was very responsive, place was nice and clean. Will definitely use again for sure.
+                  Our family would like to first and foremost thank you for making us feel safe and comfortable.
                 </p>
+                <div className="spacer_xxs">June 2020</div>
               </article>
             </div>
           </div>
         </div>
-        <div>
 
-          <div className="box">
-            <figure className="image">
-              <img className="img-fluid rounded-circle" src="./images/woman.png" alt="woman"/>
-            </figure>
-          <div className="test-component">
-              <article className="test-title">
-                <div>  Jenny Wilson </div>
-              </article>
-              <article className="test-content">
-                <p className="quote">
-                  This home is great. The host was very responsive, place was nice and clean. Will definitely use again for sure.
-                </p>
-              </article>
-            </div>
-          </div>
-        </div>
-        <div>
-
-          <div className="box">
-            <figure className="image">
-              <img className="img-fluid rounded-circle" src="./images/man.png" alt="man"/>
-            </figure>
-            <div className="test-component">
-              <article className="test-title">
-                <div> Ralph Edwards</div>
-              </article>
-              <article className="test-content">
-                <p className="quote">
-                  This home is great. The host was very responsive, place was nice and clean. Will definitely use again for sure.
-                </p>
-              </article>
-            </div>
-          </div>
-        </div>
       </div>
       </div>
 

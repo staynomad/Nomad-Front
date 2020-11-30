@@ -54,7 +54,7 @@ router.post("/createListing", requireUserAuth, async (req, res) => {
          http://localhost:3000/listing/${newListing._id}`,
       html:
         `<p>
-          Your listing is live! Click the following link to view your listing page.
+          Your listing is live! Click the following link to view your listing page. <br>
           <a href="http://localhost:3000/listing/${newListing._id}">http://localhost:3000/listing/${newListing._id}</a>
          </p>`
       }
