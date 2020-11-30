@@ -3,7 +3,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Search from './search.component'
 
-const newHome = ({isBlurred}) => {
+const newHome = (props) => {
+  const {isBlurred, history} = props
 
   return (
     <div style={isBlurred ? {filter: 'blur(5px)'} : {}}>
@@ -28,7 +29,7 @@ const newHome = ({isBlurred}) => {
 
           <div className="spacer_s"></div>
           <div className=" wow fadeInUp" data-wow-delay="0.5s">
-          <Search />
+          <Search history={history}/>
           <div className="spacer_xs"></div>
           <div className="intro_text">Search now to find your next dream vacation. </div>
         </div>
