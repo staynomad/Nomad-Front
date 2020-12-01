@@ -69,6 +69,7 @@ const ListingCard = (props) => {
           <div>
             <b>Price:</b> ${listing.price}/night
           </div>
+          <div className="spacer_xxs"></div>
         </div>
       </NavLink>
       <div>
