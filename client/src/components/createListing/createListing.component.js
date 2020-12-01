@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { updateInfo } from "../../redux/actions/createListingActions";
-import Axios from "axios";
+import { app } from '../../utils/axiosConfig.js'
 import DatesCL from "./datesCL.component";
 import DetailsCL from "./detailsCL.component";
 import Location from "./locationCL.component";
@@ -122,7 +122,7 @@ class CreateListing extends Component {
       ? "https://vhomesback.herokuapp.com"
       : "http://localhost:8080";
 
-    Axios.post(`${apiBaseUrl}/listings/createListing`, newListing, {
+    app.post(`${apiBaseUrl}/listings/createListing`, newListing, {
       headers: {
         Authorization: `Bearer ${this.props.userSession.token}`,
       },

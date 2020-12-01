@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import axios from 'axios'
+import { app } from '../../utils/axiosConfig.js'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import '../listingPage/paymentSuccess.css'
@@ -18,7 +18,7 @@ class verifyAccount extends Component {
   componentDidMount() {
     if (this.props.match.params.userId !== "send")
     {
-      axios.post("http://localhost:8080/user/verify/" + this.props.match.params.userId)
+      app.post("http://localhost:8080/user/verify/" + this.props.match.params.userId)
       .then(() => {
         this.setState({
           verified: true
@@ -42,13 +42,13 @@ class verifyAccount extends Component {
       alert("Please log in to send a verification email for your account.")
       return this.props.history.push('/login')
     }
-    axios.get(`http://localhost:8080/user/getUserInfo/${this.props.userSession.userId}`)
+    app.get(`http://localhost:8080/user/getUserInfo/${this.props.userSession.userId}`)
     .then((res) => {
       const data = {
         email: res.data.email,
         userId: this.props.userSession.userId
       }
-      axios.post("http://localhost:8080/accountVerification/sendVerificationEmail", data, {
+      app.post("http://localhost:8080/accountVerification/sendVerificationEmail", data, {
         headers: {
           "Authorization": `Bearer ${this.props.userSession.token}`
         }
