@@ -13,8 +13,10 @@ const Signup = () => {
   });
 
   const [signupSuccess, setSignupSuccess] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   const handleSubmit = (e) => {
+    setLoading(true)
     e.preventDefault();
     axios
       .post("http://localhost:8080/signup", userSignup)
@@ -26,6 +28,7 @@ const Signup = () => {
       .catch((err) => {
         alert(err.response.data.errors[0]);
         //window.location.reload() I (Prateek) commented this out bc its super annoying to have to reinput all your data if its not properly filled out the password
+        setLoading(false)
       });
   };
 
@@ -82,12 +85,16 @@ const Signup = () => {
             />
             {"  Are you a host?"}
           </label>
-          <input
-            type="submit"
-            value="create your account"
-            className="btn green"
-            onClick={(e) => handleSubmit(e)}
-          />
+          {
+            loading
+            ? <div id="spinner"></div>
+            : <input
+              type="submit"
+              value="create your account"
+              className="btn green"
+              onClick={(e) => handleSubmit(e)}
+              />
+          }
         </form>
         <div className="botText">
           already have an account?{" "}

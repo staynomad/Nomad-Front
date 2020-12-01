@@ -235,6 +235,8 @@ class ListingPage extends Component {
               />
             </div>
             {this.state.from && this.state.to ? (
+              this.state.isLoading ?
+              <div id="spinner"></div> :
               <input
                 type="button"
                 value="reserve now"

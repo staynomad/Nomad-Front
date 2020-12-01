@@ -3,7 +3,6 @@ import { Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
-
 import { submitLogin } from "../../redux/actions/authActions";
 import "./login.css";
 
@@ -21,10 +20,12 @@ const Login = (props) => {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false)
 
   const classes = useStyles();
 
   const handleLogin = (e) => {
+    setLoading(true)
     e.preventDefault();
     props.submitLogin(userLogin)
   };
@@ -70,17 +71,21 @@ const Login = (props) => {
                 ))}
               </div>
             ) : null}
-            <div style={{ margin: "2% 0 3%" }}>
-              <button
-                className='btn green'
-                style={{ width: "100%" }}
-                onClick={(e) => {
-                  handleLogin(e)
-                }}
-              >
-                log in
-            </button>
-            </div>
+            {
+              loading
+              ? <div id="spinner"></div>
+              : <div style={{ margin: "2% 0 3%" }}>
+                <button
+                  className='btn green'
+                  style={{ width: "100%" }}
+                  onClick={(e) => {
+                    handleLogin(e)
+                  }}
+                >
+                  log in
+              </button>
+              </div>
+            }
             <div className='botText'>
               <span>don't have an account? </span>
               <a
