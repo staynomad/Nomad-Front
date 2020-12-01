@@ -162,16 +162,13 @@ class EditListing extends Component {
     render() {
         return (
             <>
-                <div>
-                    <br /><br /><br /><br /><br />
-                </div>
-
                 { !this.props.loading ? (
-                    <>
-                        <h1 style={{ marginBottom: "5%" }}>Edit Listing</h1>
+                    <div className="container_s">
+                        <h2>Edit Listing</h2>
                         <form>
                             {/* Title */}
-                            <textarea
+                            <div className="label-text">Title:</div> <br />
+                            <input
                                 className="textInputBox"
                                 maxLength="50"
                                 name="title"
@@ -180,85 +177,96 @@ class EditListing extends Component {
                                 required
                                 type="text"
                                 value={this.state.title}
-                            ></textarea>
-                            <h3>{this.state.charleft.title} characters are left</h3>
+                                style={{height: "40px", paddingLeft: "1.25%"}}
+                            ></input>
+                            <p style={{paddingLeft: "2.5%"}}>{this.state.charleft.title} characters are left</p>
+
                             {/* Location */}
+                            <div className="label-text">Location:</div> <br />
                             <div className="listing-wrapper">
                                 <div className="listing-inputs">
-                                    <div className="gen-subsec">
-                                        <div className="label-text">Street:</div>
-                                        <input
-                                            type="text"
-                                            name="street"
-                                            className="inputBox streetInputbox"
-                                            value={this.state.location.street}
-                                            placeholder="5230 Newell Road"
-                                            onChange={this.handleLocationChange}
-                                            required
-                                        />
+                                    <div className="row1">
+                                      <div className="gen-subsec">
+                                          <div className="label-text spaceRight">Street:</div>
+                                          <input
+                                              type="text"
+                                              name="street"
+                                              className="inputBox"
+                                              value={this.state.location.street}
+                                              placeholder="5230 Newell Road"
+                                              onChange={this.handleLocationChange}
+                                              required
+                                          />
+                                      </div>
+                                      <div className="gen-subsec">
+                                          <div className="label-text spaceRight">City: </div>
+                                          <input
+                                              type="text"
+                                              name="city"
+                                              className="inputBox"
+                                              value={this.state.location.city}
+                                              placeholder="Palo Alto"
+                                              onChange={this.handleLocationChange}
+                                              required
+                                          />
+                                      </div>
+                                      <div className="gen-subsec">
+                                          <div className="label-text spaceRight">State: </div>
+                                          <input
+                                              type="text"
+                                              name="state"
+                                              className=" inputBox"
+                                              value={this.state.location.state}
+                                              placeholder="CA"
+                                              onChange={this.handleLocationChange}
+                                              required
+                                          />
+                                      </div>
                                     </div>
-                                    <div className="gen-subsec">
-                                        <div className="label-text">City:</div>
-                                        <input
-                                            type="text"
-                                            name="city"
-                                            className="inputBox cityInputBox"
-                                            value={this.state.location.city}
-                                            placeholder="Palo Alto"
-                                            onChange={this.handleLocationChange}
-                                            required
-                                        />
-                                    </div>
-                                    <div className="gen-subsec">
-                                        <div className="label-text">State:</div>
-                                        <input
-                                            type="text"
-                                            name="state"
-                                            className=" inputBox stateInputBox"
-                                            value={this.state.location.state}
-                                            placeholder="CA"
-                                            onChange={this.handleLocationChange}
-                                            required
-                                        />
-                                    </div>
-                                    <div className="gen-subsec">
-                                        <div className="label-text">Country:</div>
-                                        <input
-                                            type="text"
-                                            name="country"
-                                            className="inputBox countryInputBox"
-                                            value={this.state.location.country}
-                                            placeholder="USA"
-                                            onChange={this.handleLocationChange}
-                                            required
-                                        />
-                                    </div>
-                                    <div className="gen-subsec">
-                                        <div className="label-text">Zipcode:</div>
-                                        <input
-                                            type="text"
-                                            name="zipcode"
-                                            className="inputBox zipInputBox"
-                                            value={this.state.location.zipcode}
-                                            placeholder="90210"
-                                            onChange={this.handleLocationChange}
-                                            required
-                                        />
-                                    </div>
-                                    <div className="gen-subsec">
-                                        <div className="label-text">Apartment:</div>
-                                        <input
-                                            type="text"
-                                            name="apartment"
-                                            className="inputBox aptnumInputBox"
-                                            value={this.state.location.apartment}
-                                            placeholder="aptnum"
-                                            onChange={this.handleLocationChange}
-                                        />
+
+                                    <div className="row1">
+                                      <div className="gen-subsec">
+                                          <div className="label-text spaceRight">Country: </div>
+                                          <input
+                                              type="text"
+                                              name="country"
+                                              className="inputBox"
+                                              value={this.state.location.country}
+                                              placeholder="USA"
+                                              onChange={this.handleLocationChange}
+                                              required
+                                          />
+                                      </div>
+                                      <div className="gen-subsec">
+                                          <div className="label-text spaceRight">Zipcode: </div>
+                                          <input
+                                              type="text"
+                                              name="zipcode"
+                                              className="inputBox"
+                                              value={this.state.location.zipcode}
+                                              placeholder="90210"
+                                              onChange={this.handleLocationChange}
+                                              required
+                                          />
+                                      </div>
+                                      <div className="gen-subsec">
+                                          <div className="label-text spaceRight">Apartment: </div>
+                                          <input
+                                              type="text"
+                                              name="apartment"
+                                              className="inputBox"
+                                              value={this.state.location.apartment}
+                                              placeholder="aptnum"
+                                              onChange={this.handleLocationChange}
+                                          />
+                                      </div>
                                     </div>
                                 </div>
                             </div>
+                            <div className="spacer_l"></div>
+
                             {/* Description */}
+                            <div className="label-text">Description:</div> <br />
                             <textarea
                                 type="text"
                                 maxLength="500"
@@ -269,78 +277,74 @@ class EditListing extends Component {
                                 onChange={this.handleDescriptionChange}
                                 required
                             ></textarea>
-                            <h3>{this.state.charleft.description} characters are left</h3>
+                            <p style={{paddingLeft: "2.5%"}}>{this.state.charleft.description} characters are left</p>
+                            <div className="spacer_m"></div>
+
                             {/* Details */}
-                            <div className="details-wrapper">
-                                <div className="overall-details">
-                                    <div className="beds">
-                                        <div className="input-label-details">Beds: </div>
-                                        <input
-                                            type="number"
-                                            name="beds"
-                                            placeholder="e.g. 3"
-                                            className="input-box-details"
-                                            value={this.state.details.beds}
-                                            onChange={this.handleDetailsChange}
-                                            required
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <div className="baths">
-                                            <div className="input-label-details">Baths: </div>
-                                            <input
-                                                type="number"
-                                                name="baths"
-                                                className="input-box-details"
-                                                placeholder="e.g. 2"
-                                                value={this.state.details.baths}
-                                                onChange={this.handleDetailsChange}
-                                                required
-                                            />
-                                        </div>
-
-                                        <div className="maxppl">
-                                            <div className="input-label-details">Max people: </div>
-                                            <input
-                                                type="number"
-                                                name="maxpeople"
-                                                placeholder="e.g. 5"
-                                                className="input-box-details"
-                                                value={this.state.details.maxpeople}
-                                                onChange={this.handleDetailsChange}
-                                                required
-                                            />
-                                        </div>
-
-                                        {/* Price */}
-                                        <input
-                                            type="text"
-                                            name="price"
-                                            className="priceInputBox"
-                                            value={this.state.price}
-                                            placeholder="$ per night"
-                                            onChange={this.handlePriceChange}
-                                            required
-                                        />
-                                        <p>List Price: ${this.state.price} per night</p>
-                                        <p>After taxes and fees: ${this.state.price} per night</p>
+                            <div className="listing-wrapper">
+                                <div className="listing-inputs">
+                                <div className="label-text">Details:</div>
+                                    <div className="row2">
+                                      <div className="detailLabel spaceRight">Beds: </div>
+                                      <input
+                                          type="number"
+                                          name="beds"
+                                          placeholder="e.g. 3"
+                                          className="input-box-details"
+                                          value={this.state.details.beds}
+                                          onChange={this.handleDetailsChange}
+                                          required
+                                      />
+                                      <div className="detailLabel spaceRight">Baths: </div>
+                                      <input
+                                          type="number"
+                                          name="baths"
+                                          className="input-box-details"
+                                          placeholder="e.g. 2"
+                                          value={this.state.details.baths}
+                                          onChange={this.handleDetailsChange}
+                                          required
+                                      />
+                                      <div className="detailLabel spaceRight">Max people: </div>
+                                      <input
+                                          type="number"
+                                          name="maxpeople"
+                                          placeholder="e.g. 5"
+                                          className="input-box-details"
+                                          value={this.state.details.maxpeople}
+                                          onChange={this.handleDetailsChange}
+                                          required
+                                      />
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Rules */}
-                            <textarea
-                                type="text"
-                                name="rules"
-                                className="textInputBox"
-                                value={this.state.rules}
-                                placeholder="rules"
-                                onChange={this.handleRulesChange}
-                            ></textarea>
+                            {/* Price */}
+                            <div className="listing-wrapper">
+                                <div className="listing-inputs">
+                                    <div className="row2">
+                                      <div className="detailLabel spaceRight">Price: </div>
+                                      <input
+                                          type="text"
+                                          name="price"
+                                          className="input-box-details"
+                                          value={this.state.price}
+                                          placeholder="$ per night"
+                                          onChange={this.handlePriceChange}
+                                          required
+                                      />
+                                    </div>
+                                    <div style={{textAlign: "center !important"}}>
+                                      List Price: ${this.state.price} per night <br />
+                                      After taxes and fees: ${this.state.price} per night
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="spacer_s"></div>
                             <CustomButton onClick={this.handleSubmit}>Submit</CustomButton>
                         </form>
-                    </>
+                          <div className="spacer_l"></div>
+                    </div>
                 ) : (
                         <div className="spinner-container">
                             <div id="spinner" />

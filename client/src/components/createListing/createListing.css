@@ -45,6 +45,10 @@
   background-color: white;
 }
 
+.textInputBox:hover {
+  background-color: #00b1821d;
+}
+
 .descriptionTextInputBox {
   width: 98%;
   padding-top: 10px;
