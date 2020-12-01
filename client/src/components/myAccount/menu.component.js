@@ -31,21 +31,27 @@ class LeftMenu extends Component {
     super(props);
     this.state = {
       activeItem: "profile",
+      hideExpired: false,
       render: "profile",
     };
     this.handleItemClick = this.handleItemClick.bind(this);
-  }
+    this.handleExpiredToggle = this.handleExpiredToggle.bind(this);
+  };
 
   componentDidMount() {
     if (!this.props.userSession) {
       alert("Please log in to view your profile.");
       return this.props.history.push("/login");
     }
-  }
+  };
 
   handleItemClick(e, { name, compname }) {
     this.setState({ activeItem: name, render: compname });
-  }
+  };
+
+  handleExpiredToggle() {
+    return this.state.hideExpired ? this.setState({ hideExpired: false }) : this.setState({ hideExpired: true });
+  };
 
   _renderSubComp() {
     switch (this.state.render) {
@@ -79,7 +85,7 @@ class LeftMenu extends Component {
             // Compare to check if curDate is past expired
             let isExpired = curDate > expireDateConverted;
 
-            if (isExpired) listings.expired.push(listing);
+            if (isExpired) return;
             else listings.active.push(listing);
           });
         }
@@ -90,28 +96,34 @@ class LeftMenu extends Component {
               <CustomButton>
                 <NavLink to="/CreateListing">Create Listing</NavLink>
               </CustomButton>
+              {
+                !this.state.hideExpired ?
+                  <CustomButton onClick={this.handleExpiredToggle}>Hide Expired</CustomButton>
+                  :
+                  <CustomButton onClick={this.handleExpiredToggle}>Show Expired</CustomButton>
+              }
             </div>
             <div id="listing-content">
-              <div className="listing-active">
-                {listings.active.length > 0 ? (
-                  listings.active.map((listing) => (
-                    <ListingCard
-                      key={listing._id}
-                      listing={listing}
-                    />
-                  ))
+              {
+                userListings && userListings.length > 0 ? (
+                  <>
+                    {!this.state.hideExpired ? (
+                      userListings.map((listing) => (
+                        <ListingCard
+                          key={listing._id}
+                          listing={listing}
+                        />
+                      ))
+                    ) : (
+                        listings.active.map((listing) => (
+                          <ListingCard
+                            key={listing._id}
+                            listing={listing}
+                          />
+                        ))
+                      )}
+                  </>
                 ) : null}
-              </div>
-              <div className="listing-expired">
-                {listings.expired.length > 0 ? (
-                  listings.expired.map((listing) => (
-                    <ListingCard
-                      key={listing._id}
-                      listing={listing}
-                    />
-                  ))
-                ) : null}
-              </div>
             </div>
           </>
         );
