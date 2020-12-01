@@ -6,7 +6,6 @@ import Login from "./components/authentication/login.component";
 import Signup from "./components/authentication/signup.component";
 import Contact from "./components/subpages/contact.component.js";
 import Services from "./components/subpages/services.component.js";
-import Reservation from "./components/reservations/findReservation.component";
 import Matches from "./components/matches/matches.component.js";
 import Questionnaire from "./components/matches/questionnaire.component";
 import EditProfileInfo from "./components/myAccount/editProfileInfo.component";
@@ -40,7 +39,6 @@ function App() {
             <Route path="/Login" exact component={Login} />
             <Route path="/SignUp" exact component={Signup} />
             <Route path="/Services" exact component={Services} />
-            <Route path="/Reservations" exact component={Reservation} />
             <Route path="/CreateListing" exact component={CreateListing} />
             <Route path="/Matches" exact component={Matches} />
             <Route path="/MyAccount" exact component={MyAccount} />
