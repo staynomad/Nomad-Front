@@ -31,7 +31,7 @@ class Listings extends Component {
     } else {
       /* Get all listings */
       this.props.searchAllListings();
-    };
+    }
   }
 
   componentDidMount() {

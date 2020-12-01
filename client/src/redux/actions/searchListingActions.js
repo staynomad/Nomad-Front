@@ -21,7 +21,10 @@ export const searchForListings = (itemToSearch) => async dispatch => {
     if (searchRes.statusText === 'OK') {
         const { filteredListings } = await searchRes.data;
         dispatch(setSearchListings(filteredListings));
-    };
+    }
+    else {
+      alert('No matches were found.')
+    }
 };
 
 export const searchAllListings = () => async dispatch => {
