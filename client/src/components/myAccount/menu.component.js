@@ -61,6 +61,29 @@ class LeftMenu extends Component {
           );
         } else return null;
       case "my listings":
+        let listings = {
+          active: [],
+          expired: [],
+        };
+        const { userListings } = this.props;
+
+        if (userListings) {
+          userListings.forEach(listing => {
+            // Split string to Year (idx 0), Month (idx 1), Day (idx 2) then convert to num
+            const expireDate = listing.available[1].split('-').map(date => {
+              return Number.parseInt(date, 10)
+            });
+            // Convert using to milliseconds
+            const expireDateConverted = new Date(expireDate[0], expireDate[1] - 1, expireDate[2]).getTime();
+            const curDate = new Date().getTime();
+            // Compare to check if curDate is past expired
+            let isExpired = curDate > expireDateConverted;
+
+            if (isExpired) listings.expired.push(listing);
+            else listings.active.push(listing);
+          });
+        }
+
         return (
           <>
             <div className="create-listing-container">
@@ -69,17 +92,26 @@ class LeftMenu extends Component {
               </CustomButton>
             </div>
             <div id="listing-content">
-              {this.props.userListings && this.props.userListings.length > 0 ? (
-                <>
-                  {this.props.userListings.map((listing) => (
-                    <ListingCard key={listing._id} listing={listing} />
-                  ))}
-                </>
-              ) : (
-                  <>
-                    <div>No Listings!</div>
-                  </>
-                )}
+              <div className="listing-active">
+                {listings.active.length > 0 ? (
+                  listings.active.map((listing) => (
+                    <ListingCard
+                      key={listing._id}
+                      listing={listing}
+                    />
+                  ))
+                ) : null}
+              </div>
+              <div className="listing-expired">
+                {listings.expired.length > 0 ? (
+                  listings.expired.map((listing) => (
+                    <ListingCard
+                      key={listing._id}
+                      listing={listing}
+                    />
+                  ))
+                ) : null}
+              </div>
             </div>
           </>
         );
@@ -100,13 +132,12 @@ class LeftMenu extends Component {
             const expireDateConverted = new Date(expireDate[0], expireDate[1] - 1, expireDate[2]).getTime();
             const curDate = new Date().getTime();
             // Compare to check if curDate is past expired
-            const isExpired = curDate > expireDateConverted;
+            let isExpired = curDate > expireDateConverted;
+            if (!reservation.isActive) isExpired = true;
 
             if (isExpired) reservations.expired.push(reservation);
             else reservations.active.push(reservation);
           });
-
-          console.log(reservations)
         }
         return (
           <div className="reservations-container">
