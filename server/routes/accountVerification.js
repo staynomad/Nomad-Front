@@ -1,4 +1,4 @@
-const axios = require('axios')
+const { baseURL } = require('../config')
 
 const express = require("express");
 const router = express.Router();
@@ -25,11 +25,11 @@ router.post(
         subject: `VHomes host account email verification needed`,
         text:
           `Please click the following link to verify your account
-           http://localhost:3000/accountVerification/${email}`,
+           ${baseURL}/accountVerification/${email}`,
         html:
           `<p>
             Please click
-            <a href="http://localhost:3000/accountVerification/${req.body.userId}">here</a>
+            <a href="${baseURL}/accountVerification/${req.body.userId}">here</a>
             to verify your account
            </p>`
         }

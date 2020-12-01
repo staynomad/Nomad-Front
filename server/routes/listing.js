@@ -7,6 +7,7 @@ const { requireUserAuth } = require("../utils");
 // const { check, validationResult } = require("express-validator");
 
 const nodemailer = require('nodemailer');
+const { baseURL } = require('../config')
 
 /* Add a listing */
 router.post("/createListing", requireUserAuth, async (req, res) => {
@@ -35,7 +36,7 @@ router.post("/createListing", requireUserAuth, async (req, res) => {
     }).save();
 
     // Send confirmation email to host
-    axios.get(`http://localhost:8080/user/getUserInfo/${req.user._id}`)
+    axios.get(`${baseURL}/user/getUserInfo/${req.user._id}`)
     .then((res) => {
       const transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -65,11 +66,6 @@ router.post("/createListing", requireUserAuth, async (req, res) => {
         else {
           console.log(`Create listing confirmation email sent to ${res.data.email}`)
         }
-      })
-    })
-    .catch((err) => {
-      return res.status(500).json({
-          "errors": "Error sending confirmation email to host."
       })
     })
 

@@ -7,6 +7,7 @@ const Reservation = require("../models/reservation.model");
 const Listing = require("../models/listing.model")
 const { requireUserAuth } = require("../utils");
 const nodemailer = require('nodemailer');
+const { baseURL } = require('../config')
 
 // Create a reservation
 router.post(
@@ -69,7 +70,7 @@ router.post(
       })
 
       // Send confirmation email to guest
-      axios.get(`http://localhost:8080/user/getUserInfo/${req.body.user}`)
+      axios.get(`${baseURL}/user/getUserInfo/${req.body.user}`)
         .then((res) => {
           const userMailOptions = {
             from: '"VHomes" <reservations@vhomesgroup.com>',
@@ -103,7 +104,7 @@ router.post(
         })
 
       // Send confirmation email to host
-      axios.get(`http://localhost:8080/user/getUserInfo/${bookedListing.userId}`)
+      axios.get(`${baseURL}/user/getUserInfo/${bookedListing.userId}`)
         .then((res) => {
           const hostMailOptions = {
             from: '"VHomes" <reservations@vhomesgroup.com>',
@@ -280,7 +281,7 @@ router.post(
         }
       })
       // Send checkin confirmation email to guest
-      axios.get(`http://localhost:8080/user/getUserInfo/${req.user._id}`)
+      axios.get(`${baseURL}/user/getUserInfo/${req.user._id}`)
         .then((res) => {
           const userMailOptions = {
             from: '"VHomes" <reservations@vhomesgroup.com>',
@@ -311,7 +312,7 @@ router.post(
         })
 
       // Send checkin confirmation email to host
-      axios.get(`http://localhost:8080/user/getUserInfo/${bookedListing.userId}`)
+      axios.get(`${baseURL}/user/getUserInfo/${bookedListing.userId}`)
         .then((res) => {
           const hostMailOptions = {
             from: '"VHomes" <reservations@vhomesgroup.com>',
@@ -346,7 +347,7 @@ router.post(
       });
     }
     catch (error) {
-      console.log(error);
+      // console.log(error);
       res.status(500).json({
         "errors":
           ["Error checking in. Please try again!"]
