@@ -233,11 +233,12 @@ router.post("/search", async (req, res) => {
     let decodedItemToSearch = decodeURI(itemToSearch);
     const listings = await Listing.find({});
     const filteredListings = listings.filter((listing) => {
-      const { street, city, zipcode } = listing.location;
+      const { street, city, zipcode, state } = listing.location;
       if (
         street.toLowerCase().includes(decodedItemToSearch) ||
         city.toLowerCase().includes(decodedItemToSearch) ||
-        zipcode.includes(decodedItemToSearch)
+        zipcode.includes(decodedItemToSearch) ||
+        state.toLowerCase().includes(decodedItemToSearch)
       )
         return true;
     });
@@ -251,7 +252,7 @@ router.post("/search", async (req, res) => {
         filteredListings,
       });
     }
-  } catch (e) {
+  } catch (error) {
     console.error(error);
     res.status(500).json({
       errors: [
