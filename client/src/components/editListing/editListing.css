@@ -26,3 +26,28 @@
     transform: rotate(360deg);
   }
 }
+
+.row1 {
+  width: 100% !important;
+  justify-content: space-between;
+  display: flex;
+}
+
+.row2 {
+  padding-top: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.spaceRight {
+  padding-right: 1% !important;
+}
+
+.detailLabel {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 120%;
+  padding-left: 3%;
+  color: #4d4842;
+}
