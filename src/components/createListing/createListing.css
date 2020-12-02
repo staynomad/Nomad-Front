@@ -123,3 +123,6 @@
     transform: rotate(360deg);
   }
 }
+.confirm-text {
+  text-align: center;
+}
