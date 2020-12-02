@@ -31,21 +31,27 @@ class LeftMenu extends Component {
     super(props);
     this.state = {
       activeItem: "profile",
+      hideExpired: false,
       render: "profile",
     };
     this.handleItemClick = this.handleItemClick.bind(this);
-  }
+    this.handleExpiredToggle = this.handleExpiredToggle.bind(this);
+  };
 
   componentDidMount() {
     if (!this.props.userSession) {
       alert("Please log in to view your profile.");
       return this.props.history.push("/login");
     }
-  }
+  };
 
   handleItemClick(e, { name, compname }) {
     this.setState({ activeItem: name, render: compname });
-  }
+  };
+
+  handleExpiredToggle() {
+    return this.state.hideExpired ? this.setState({ hideExpired: false }) : this.setState({ hideExpired: true });
+  };
 
   _renderSubComp() {
     switch (this.state.render) {
@@ -61,46 +67,124 @@ class LeftMenu extends Component {
           );
         } else return null;
       case "my listings":
+        let listings = {
+          active: [],
+          expired: [],
+        };
+        const { userListings } = this.props;
+
+        if (userListings) {
+          userListings.forEach(listing => {
+            // Split string to Year (idx 0), Month (idx 1), Day (idx 2) then convert to num
+            const expireDate = listing.available[1].split('-').map(date => {
+              return Number.parseInt(date, 10)
+            });
+            // Convert using to milliseconds
+            const expireDateConverted = new Date(expireDate[0], expireDate[1] - 1, expireDate[2]).getTime();
+            const curDate = new Date().getTime();
+            // Compare to check if curDate is past expired
+            let isExpired = curDate > expireDateConverted;
+
+            if (isExpired) return;
+            else listings.active.push(listing);
+          });
+        }
+
         return (
           <>
             <div className="create-listing-container">
               <CustomButton>
                 <NavLink to="/CreateListing">Create Listing</NavLink>
               </CustomButton>
+              {
+                !this.state.hideExpired ?
+                  <CustomButton onClick={this.handleExpiredToggle}>Hide Expired</CustomButton>
+                  :
+                  <CustomButton onClick={this.handleExpiredToggle}>Show Expired</CustomButton>
+              }
             </div>
             <div id="listing-content">
-              {this.props.userListings && this.props.userListings.length > 0 ? (
-                <>
-                  {this.props.userListings.map((listing) => (
-                    <ListingCard key={listing._id} listing={listing} />
-                  ))}
-                </>
-              ) : (
-                <>
-                  <div>No Listings!</div>
-                </>
-              )}
+              {
+                userListings && userListings.length > 0 ? (
+                  <>
+                    {!this.state.hideExpired ? (
+                      userListings.map((listing) => (
+                        <ListingCard
+                          key={listing._id}
+                          listing={listing}
+                        />
+                      ))
+                    ) : (
+                        listings.active.map((listing) => (
+                          <ListingCard
+                            key={listing._id}
+                            listing={listing}
+                          />
+                        ))
+                      )}
+                  </>
+                ) : null}
             </div>
           </>
         );
       case "my reservations":
+        let reservations = {
+          active: [],
+          expired: [],
+        };
+        const { userReservations } = this.props;
+
+        if (this.props.userReservations) {
+          userReservations.forEach(reservation => {
+            // Split string to Year (idx 0), Month (idx 1), Day (idx 2) then convert to num
+            const expireDate = reservation.days[1].split('-').map(date => {
+              return Number.parseInt(date, 10)
+            });
+            // Convert using to milliseconds
+            const expireDateConverted = new Date(expireDate[0], expireDate[1] - 1, expireDate[2]).getTime();
+            const curDate = new Date().getTime();
+            // Compare to check if curDate is past expired
+            let isExpired = curDate > expireDateConverted;
+            if (!reservation.isActive) isExpired = true;
+
+            if (isExpired) reservations.expired.push(reservation);
+            else reservations.active.push(reservation);
+          });
+        }
         return (
-          <>
-            {this.props.userReservations
-              ? this.props.userReservations
-                  .sort(function (a, b) {
-                    if (a.days[0] < b.days[0]) return -1;
-                    if (a.days[0] > b.days[0]) return 1;
-                    return 1;
-                  })
+          <div className="reservations-container">
+            <div classname="reservations-active">
+              {reservations.active.length > 0 ? (
+                reservations.active.sort(function (a, b) {
+                  if (a.days[0] < b.days[0]) return -1;
+                  if (a.days[0] > b.days[0]) return 1;
+                  return 1;
+                })
                   .map((reservation) => (
                     <ReservationCard
                       key={reservation._id}
                       reservation={reservation}
                     />
                   ))
-              : null}
-          </>
+              ) : null}
+            </div>
+            <div className="reservations-expired">
+              {reservations.expired.length > 0 ? (
+                reservations.expired.sort(function (a, b) {
+                  if (a.days[0] < b.days[0]) return -1;
+                  if (a.days[0] > b.days[0]) return 1;
+                  return 1;
+                })
+                  .map((reservation) => (
+                    <ReservationCard
+                      key={reservation._id}
+                      reservation={reservation}
+                    />
+                  ))
+              )
+                : null}
+            </div>
+          </div>
         );
       case "settings":
         return <Settings />;

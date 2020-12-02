@@ -57,9 +57,21 @@ class Listings extends Component {
       <>
         {this.state.listings ? (
           <div id='listing-content'>
-            {this.state.listings.map((listing) => (
-              <ListingCard key={listing} listing={listing} />
-            ))}
+            {this.state.listings.map((listing) => {
+              // Split string to Year (idx 0), Month (idx 1), Day (idx 2) then convert to num
+              const expireDate = listing.available[1].split('-').map(date => {
+                return Number.parseInt(date, 10)
+              });
+              // Convert using to milliseconds
+              const expireDateConverted = new Date(expireDate[0], expireDate[1] - 1, expireDate[2]).getTime();
+              const curDate = new Date().getTime();
+              // Compare to check if curDate is past expired
+              let isExpired = curDate > expireDateConverted;
+              if (isExpired) return null;
+              else return (
+                <ListingCard key={listing} listing={listing} />
+              )
+            })}
           </div>
         ) : null}
       </>
