@@ -1,0 +1,4 @@
+export const UPDATE_INFO = "UPDATE_INFO";
+export const FETCH_CURRENT = "FETCH_CURRENT";
+export const INCOMPLETE_FORM = "INCOMPLETE_FORM";
+export const COMPLETE_FORM = "COMPLETE_FORM";

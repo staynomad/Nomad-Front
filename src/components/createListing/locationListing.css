@@ -1,0 +1,60 @@
+.listing-wrapper {
+  display: flex;
+}
+
+.listing-inputs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.label-text {
+  margin-top: 4px;
+  font-weight: bold;
+  font-size: 120%;
+  color: #4d4842;
+}
+
+.gen-subsec {
+  display: flex;
+  padding-top: 8px;
+}
+.inputBox {
+  margin-bottom: 3%;
+  padding-left: 5%;
+  height: 30px;
+  width: 200px;
+  border-radius: 15px;
+  border: 2px solid rgb(210 210 210 / 80%);
+  background-color: white;
+  color: #4d4842;
+  font-size: 12px;
+}
+
+.inputBox:hover {
+  background-color: #00b1821d;
+}
+
+.streetInputbox {
+  margin-left: 18%;
+}
+
+.cityInputBox {
+  margin-left: 23.2%;
+}
+
+.stateInputBox {
+  margin-left: 20%;
+}
+
+.countryInputBox {
+  margin-left: 13%;
+}
+
+.zipInputBox {
+  margin-left: 13%;
+}
+
+.aptnumInputBox {
+  margin-left: 6.4%;
+}
