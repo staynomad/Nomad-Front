@@ -43,8 +43,6 @@ const Matches = (props) => {
         </div>
       <div className="spacer_s"></div>
       <Search history={history}/>
-      <div className="spacer_m"></div>
-      <div> Click on a listing to see more information! </div>
         {/*<button className="filter btn green" onClick={() => {
           setRoommateView(!roommateView);
           setListingView(false)

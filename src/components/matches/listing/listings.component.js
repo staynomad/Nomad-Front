@@ -53,10 +53,12 @@ class Listings extends Component {
   }
 
   render() {
+    var listings = this.state.listings || null
     return (
       <>
-        {this.state.listings ? (
+        {this.state.listings ? ( listings.length <= 0 ? <div><div className="spacer_s"></div>No listings yet!</div> :
           <div id='listing-content'>
+          <div><div className="spacer_s"></div>Click on a listing to see more information!</div>
             {this.state.listings.map((listing) => {
               // Split string to Year (idx 0), Month (idx 1), Day (idx 2) then convert to num
               const expireDate = listing.available[1].split('-').map(date => {

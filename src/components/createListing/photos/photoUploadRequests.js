@@ -3,7 +3,7 @@ const getSignedURL = (file, fileName, bucket, setLoading) => {
   const xhr = new XMLHttpRequest();
   const production = process.env.NODE_ENV === "production";
   const apiBaseUrl = production
-    ? "https://vhomesback.herokuapp.com"
+    ? "https://vhomes.herokuapp.com"
     : "http://localhost:8080";
   xhr.open(
     "GET",

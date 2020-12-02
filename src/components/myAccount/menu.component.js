@@ -123,7 +123,7 @@ class LeftMenu extends Component {
                         ))
                       )}
                   </>
-                ) : null}
+                ) : <div><div className="spacer_xs"></div>No listings yet. Click "Create Listing" to start!</div>}
             </div>
           </>
         );
