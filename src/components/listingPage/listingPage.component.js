@@ -130,17 +130,28 @@ class ListingPage extends Component {
           listingId: listingId,
           days: resDays,
         };
-        const response = await fetch(
-          "http://localhost:8080/payment/create-session",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(body),
-          }
-        );
-        const session = await response.json();
+        const response = await app({
+          url: '/payment/create-session',
+          method: 'POST',
+          headers:{
+            "Content-Type": "application/json"
+          },
+          data: JSON.stringify(body)
+        }).then((response) => {
+            return response.data;
+          }).catch((err) => console.log(err))
+
+
+        //   "http://localhost:8080/payment/create-session",
+        //   {
+        //     method: "POST",
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify(body),
+        //   }
+        // );
+        const session = await response; //json();
         // When the customer clicks on the button, redirect them to Checkout.
         const result = await stripe.redirectToCheckout({
           sessionId: session.id,
@@ -156,7 +167,7 @@ class ListingPage extends Component {
         this.setState({
           isLoading: false,
         });
-        alert(err.response.data.errors);
+        alert(err.response.errors); //response.data
         window.location.reload();
       });
   }
