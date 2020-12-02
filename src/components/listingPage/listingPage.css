@@ -25,3 +25,37 @@
   border: 1px solid black;
   margin: 20px 0px;
 }
+
+.listing-title {
+  font-size: 32px !important;
+}
+
+.listing-location {
+  font-size: 18px !important;
+  font-weight: bold !important;
+}
+
+.listing-description {
+  font-size: 16px !important;
+}
+
+.listing-details {
+  float: left !important;
+  max-width: 70% !important;
+}
+
+.listing-calendar {
+  float: right !important;
+}
+
+.reserve-now {
+  float: right !important;
+  width: auto;
+  padding-right: 13% !important;
+  padding-top: 0 !important;
+}
+
+.details {
+  text-align: left;
+  font-size: 16px;
+}
