@@ -5,4 +5,5 @@
     ```
     npm install
     ```
-**To start the client**, run ```npm start``` in the root directory.
+    
+To start the client, run ```npm start``` in the root directory.
