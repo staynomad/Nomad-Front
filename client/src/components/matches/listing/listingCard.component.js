@@ -20,17 +20,12 @@ export const CustomButton = withStyles((theme) => ({
 }))(Button);
 
 const ListingCard = (props) => {
-  const [open, setOpen] = useState(false);
   const [rating, setRating] = useState("")
   const { listing } = props;
 
   useEffect(() => {
     getAverageRating()
   })
-
-  const handleOpenClose = () => {
-    setOpen(!open);
-  };
 
   const handleDeleteListing = () => {
     props.deleteListingById(props.userSession.token, listing._id)
@@ -53,7 +48,7 @@ const ListingCard = (props) => {
   }
 
   return (
-    <div className='listing-item' onClick={handleOpenClose}>
+    <div className='listing-item'>
       <NavLink to={'/listing/' + listing._id}>
         <div className='listing-information'>
           <img className='listing-image' src={listing.pictures[0]} alt={listing.title}/>
@@ -71,7 +66,7 @@ const ListingCard = (props) => {
           </div>
           <div className="spacer_xxs"></div>
         </div>
-      </NavLink>
+        </NavLink>
       <div>
         {props.userSession && props.userSession.userId === listing.userId ? (
           <CustomButton onClick={() => props.history.push(`/editListing/${listing._id}`)}>Edit</CustomButton>

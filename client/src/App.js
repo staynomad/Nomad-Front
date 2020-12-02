@@ -38,7 +38,7 @@ function App() {
             <Route path="/Login" exact component={Login} />
             <Route path="/SignUp" exact component={Signup} />
             <Route path="/CreateListing" exact component={CreateListing} />
-            <Route path="/Matches" exact component={Matches} />
+            <Route path="/Matches" exact component={Matches} history={history}/>
             <Route path="/MyAccount" exact component={MyAccount} />
             <Route path="/Questionnaire" exact component={Questionnaire} />
             <Route path="/Listing/:id" exact component={ListingPage} />
