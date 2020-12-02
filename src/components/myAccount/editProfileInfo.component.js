@@ -23,7 +23,7 @@ const CustomButton = withStyles (theme => ({
 const EditProfileInfo = (props) => {
     const dispatch = useDispatch();
     const loginInfo = useSelector(state => state.Login)
-    const user = useSelector(state => state.User)
+    // const user = useSelector(state => state.User)
     const [ profileState, setProfileState ] = useState({})
     const [ submitted, setSubmitted ] = useState(false)
 

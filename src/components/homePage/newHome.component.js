@@ -1,7 +1,7 @@
-
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Search from './search.component'
+import Subscribe from './subscribe.component'
 
 const newHome = (props) => {
   const {isBlurred, history} = props
@@ -226,8 +226,10 @@ const newHome = (props) => {
         <div className=" wow fadeInUp" data-wow-delay="0.5s">
       <div className="button3">
       <Link to="/createListing">
-        <button className="btn-hover color-5">Create a Listing Now</button>
+        <button className="btn-hover color-5">Create a Listing</button>
       </Link>
+      <div className="spacer_xl"></div>
+      <Subscribe />
       </div>
       </div>
 
