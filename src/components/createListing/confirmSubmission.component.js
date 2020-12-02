@@ -1,54 +1,69 @@
 import React, { Component } from "react";
-export default class ConfirmSubmission extends Component {
-  constructor(props) {
-    super(props);
-    this.state = props.handle;
-  }
-  /*
-  componentDidMount() {
-    let temp = "";
-    temp =
-      this.state.location.street +
-      "\n" +
-      this.state.location.state +
-      ", " +
-      " " +
-      this.state.location.zipcode +
-      "apt num" +
-      this.state.location.aptnum;
-    this.setState({
-      completeAddress: temp,
-    });
-  }*/
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import "./createListing.css";
+class ConfirmSubmission extends Component {
   render() {
     return (
       <div>
-        <h1>Check your information</h1>
-        <div>
-          <h2>your address</h2>
-          <p>{this.state.location.street}</p>
-          <h2>the description you gave</h2>
-          <p>{this.state.description}</p>
-          <h2>details about your home</h2>
-          <p>{this.state.details.baths} bath/s</p>
-          <p>{this.state.details.beds} bed/s</p>
-          <p>you will receive {this.state.price} per night</p>
-          <h2>your listing will be within these dates</h2>
+        <h1>Please Check your information</h1>
+        <div className="confirm-container">
+          <h2>Title</h2>
+          <p className="confirm-text">{this.props.data.title}</p>
+          <h2>Address</h2>
+          <p>
+            <span>Street: </span> {this.props.data.location.street}
+          </p>
+          <p>
+            <span>City: </span>
+            {this.props.data.location.city}
+          </p>
+          <p>
+            <span>State: </span>
+            {this.props.data.location.state}
+          </p>
+          <p>
+            <span>Country: </span>
+            {this.props.data.location.country}
+          </p>
+          <p>
+            <span>Zipcode: </span>
+            {this.props.data.location.zipcode}
+          </p>
 
-          <h2>these are the rules you have detailed</h2>
-          <p>{this.state.rules}</p>
+          <h2>description</h2>
+          <p>{this.props.data.description}</p>
+          <h2>details about your home</h2>
+          <p>
+            <span>Beds:</span> {this.props.data.details.beds}
+          </p>
+          <p>
+            <span>Baths:</span> {this.props.data.details.baths}
+          </p>
+          <p>
+            <span>Max people:</span> {this.props.data.details.maxpeople}
+          </p>
+          <h2>Price</h2>
+          <p>${this.props.data.price} per night</p>
+          <h2>Dates</h2>
+          <p>
+            <span>Start date: </span>
+            {this.props.data.dates.start_date.toLocaleDateString()}
+          </p>
+          <p>
+            <span>End date: </span>
+            {this.props.data.dates.end_date.toLocaleDateString()}
+          </p>
         </div>
       </div>
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    data: state.CreateListing.state,
+  };
+};
 
-/*
-location: {},
-      description: "",
-      details: {},
-      price: 0,
-      rules: "",
-      dates: {},
-      <p>{this.state.dates.start_date.toLocaleDateString()}</p>
-*/
+export default withRouter(connect(mapStateToProps, null)(ConfirmSubmission));
+//{this.props.data.dates.end_date.toLocaleDateString()}
