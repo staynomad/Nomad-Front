@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'
+import { app } from '../../utils/axiosConfig.js'
 import Button from '@material-ui/core/Button';
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
@@ -25,7 +25,7 @@ const ReservationCard = (props) => {
   const { reservation } = props;
 
   useEffect(() => {
-    axios.get('http://localhost:8080/listings/byId/' + reservation.listing)
+    app.get('/listings/byId/' + reservation.listing)
     .then((res) => {
       setListing(res.data)
     })

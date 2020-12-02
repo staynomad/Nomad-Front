@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import {withStyles} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
+import { app } from '../../utils/axiosConfig.js'
 import {setUserInfo} from '../../redux/actions/userActions';
 import './editProfile.css'
 import "../createListing/createListing.css";
@@ -29,7 +29,7 @@ const EditProfileInfo = (props) => {
 
     useEffect(() => {
         const userId = loginInfo.userInfo.session.userId;
-        axios.get(`http://localhost:8080/user/getUserInfo/${userId}`)
+        app.get(`/user/getUserInfo/${userId}`)
             .then(res => {
                 dispatch(setUserInfo(res.data));
                 setProfileState({
@@ -48,7 +48,7 @@ const EditProfileInfo = (props) => {
         setSubmitted (!submitted);
         const userId = loginInfo.userInfo.session.userId;
         // route to update user information
-        axios.post (`http://localhost:8080/user/setUserInfo/${userId}`, profileState)
+        app.post (`/user/setUserInfo/${userId}`, profileState)
             .then (res => {
                 // updates redux store
                 dispatch(setUserInfo(res.data));

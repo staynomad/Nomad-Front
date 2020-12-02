@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { setUserInfo } from '../../redux/actions/userActions';
-import axios from 'axios';
+import { app } from '../../utils/axiosConfig.js'
 
 const Profile = () => {
     const loginInfo = useSelector(state => state.Login);
@@ -11,7 +11,7 @@ const Profile = () => {
 
     useEffect(() => {
         const userId = loginInfo.userInfo.session.userId;
-        axios.get(`http://localhost:8080/user/getUserInfo/${userId}`)
+        app.get(`/user/getUserInfo/${userId}`)
             .then(res => {
                 dispatch(setUserInfo(res.data))
             })

@@ -19,7 +19,7 @@ const Signup = () => {
     setLoading(true)
     e.preventDefault();
     app
-      .post("http://localhost:8080/signup", userSignup)
+      .post("/signup", userSignup)
       .then((res) => {
         window.sessionStorage.accessToken = res.token;
         setSignupSuccess(true);
