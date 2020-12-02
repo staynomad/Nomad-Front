@@ -5,6 +5,8 @@ import Button from '@material-ui/core/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import {setUserInfo} from '../../redux/actions/userActions';
+import './editProfile.css'
+import "../createListing/createListing.css";
 
 const CustomButton = withStyles (theme => ({
   root: {
@@ -64,40 +66,39 @@ const EditProfileInfo = (props) => {
 
     return (
         <div className="container">
-            <br /><br /><br />
-            <h2 style={{ color: "#02b188", textDecoration: "none" }}>Submit changes to your profile information!</h2>
+            <h2 style={{ color: "#02b188", textDecoration: "none" }}>Edit Profile</h2>
             <hr />
             {submitted ? <t>Your new profile information has been recorded!</t>
             :
             <form onSubmit={handleSubmit} style={{"text-align": "left"}}>
                 <label id="name" value={profileState.name}>
-                    <t>Write your name: </t>
+                    <div className="editProfileLabel">Write your name: </div>
                     <input
-                        className="login_bar"
+                        className="editProfileInput"
                         type="text"
                         id="profileInfoName"
                         name="name"
-                        placeholder={profileState.name}
+                        value={profileState.name}
                         onChange={handleChange}
                     />
                 </label>
-                <br /><br />
+                <div className="spacer_s"></div>
                 <label id="email" value={profileState.email}>
-                    <t>Write your email: </t>
+                    <div className="editProfileLabel">Write your email: </div>
                     <input
-                        className="login_bar"
+                        className="editProfileInput"
                         type="text"
                         id="profileInfoEmail"
                         name="email"
-                        placeholder={profileState.email}
+                        value={profileState.email}
                         onChange={handleChange}
                     />
                 </label>
-                <br /><br />
+                <div className="spacer_s"></div>
                 <label id="description" value={profileState.description}>
                     <t>Write a description about yourself: </t>
                     <textarea
-                        className="login_bar"
+                        className="descriptionTextInputBox"
                         id="profileInfoDescription"
                         name="description"
                         placeholder={profileState.description}
@@ -105,8 +106,7 @@ const EditProfileInfo = (props) => {
                         rows='5'
                     />
                 </label>
-                <br /><br />
-                <label id="image" value={profileState.image}>
+                {/*<label id="image" value={profileState.image}>
                     <t>Choose a profile image: </t>
                     <input
                         type="file"
@@ -115,10 +115,10 @@ const EditProfileInfo = (props) => {
                         placeholder={profileState.image}
                         onChange={handleChange}
                     />
-                </label>
+                </label>*/}
                 {submitted ? null :
                     <label id="submit">
-                        <button type="submit" id="profileInfoSubmit" className="btn green" style={{width: '80%'}}>
+                        <button type="submit" id="profileInfoSubmit" className="btn green">
                             Click here to submit your new profile information!
                         </button>
                     </label>
@@ -126,9 +126,11 @@ const EditProfileInfo = (props) => {
             </form>
             }
             <hr />
+            <div className="spacer_s"></div>
             <CustomButton>
                 <NavLink to="/MyAccount">Back to your profile page!</NavLink>
             </CustomButton>
+            <div className="spacer_l"></div>
         </div>
     )
 };

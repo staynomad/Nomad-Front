@@ -33,3 +33,15 @@
 #filtering-inputs {
   float: left;
 }
+
+.matches-banner {
+  background-color: rgba(	0, 177, 131, 0.4) !important;
+  border-radius: 10px;
+  height: 190px;
+  padding: 60px 0;
+}
+
+.banner-text {
+  color: white !important;
+  text-shadow: 1px 1px 10px #000000;
+}

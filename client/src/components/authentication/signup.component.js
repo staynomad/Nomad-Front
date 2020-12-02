@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
-import axios from "axios";
+import { app } from '../../utils/axiosConfig.js'
 import "./signup.css";
 
 const Signup = () => {
@@ -18,7 +18,7 @@ const Signup = () => {
   const handleSubmit = (e) => {
     setLoading(true)
     e.preventDefault();
-    axios
+    app
       .post("http://localhost:8080/signup", userSignup)
       .then((res) => {
         window.sessionStorage.accessToken = res.token;

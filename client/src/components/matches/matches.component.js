@@ -3,9 +3,11 @@ import { withRouter } from "react-router-dom";
 import Filter from "./filter.component";
 import Roommates from "./roommate/roommates.component";
 import Listings from "./listing/listings.component";
+import Search from "../homePage/search.component"
 import "./matches.css";
 
 const Matches = (props) => {
+  const { history } = props
   const [seen, setSeen] = useState(false);
   const [roommateView, setRoommateView] = useState(false);
   const [listingView, setListingView] = useState(true);
@@ -36,6 +38,13 @@ const Matches = (props) => {
   return (
     <div id='matches-page'>
       <div className='container_s'>
+        <div className='matches-banner'>
+          <h1 className='banner-text'>Discover your next stay</h1>
+        </div>
+      <div className="spacer_s"></div>
+      <Search history={history}/>
+      <div className="spacer_m"></div>
+      <div> Click on a listing to see more information! </div>
         {/*<button className="filter btn green" onClick={() => {
           setRoommateView(!roommateView);
           setListingView(false)
@@ -51,9 +60,9 @@ const Matches = (props) => {
         >
           listings
         </button>*/}
-        <button className="filter btn green" onClick={toggle}>
+        {/*<button className="filter btn green" onClick={toggle}>
           filter
-        </button>
+        </button>*/}
       </div>
       <div id="matches-components-filtering">
         <div id="filtering-inputs">

@@ -42,7 +42,10 @@
   background-color: white;
   color: #4d4842;
   font-size: 15px;
-  background-color: white;
+}
+
+.textInputBox:hover {
+  background-color: #00b1821d;
 }
 
 .descriptionTextInputBox {

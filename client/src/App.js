@@ -5,7 +5,6 @@ import Home from "./components/homePage/newHome.component";
 import Login from "./components/authentication/login.component";
 import Signup from "./components/authentication/signup.component";
 import Contact from "./components/subpages/contact.component.js";
-import Services from "./components/subpages/services.component.js";
 import Matches from "./components/matches/matches.component.js";
 import Questionnaire from "./components/matches/questionnaire.component";
 import EditProfileInfo from "./components/myAccount/editProfileInfo.component";
@@ -38,9 +37,8 @@ function App() {
             <Route path="/ContactUs" exact component={Contact} />
             <Route path="/Login" exact component={Login} />
             <Route path="/SignUp" exact component={Signup} />
-            <Route path="/Services" exact component={Services} />
             <Route path="/CreateListing" exact component={CreateListing} />
-            <Route path="/Matches" exact component={Matches} />
+            <Route path="/Matches" exact component={Matches} history={history}/>
             <Route path="/MyAccount" exact component={MyAccount} />
             <Route path="/Questionnaire" exact component={Questionnaire} />
             <Route path="/Listing/:id" exact component={ListingPage} />

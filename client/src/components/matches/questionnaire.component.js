@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Axios from "axios";
+import { app } from '../../utils/axiosConfig.js'
 import { withStyles } from "@material-ui/core/styles";
 import { NavLink } from "react-router-dom";
 import Button from "@material-ui/core/Button";
@@ -128,7 +128,7 @@ export default function Questionnaire(props) {
         }
       }
 
-      Axios.post(
+      app.post(
         `http://localhost:8080/questionnaire/submit_questionnaire/${props.userId}`,
         newQuestionnaire
       ).catch((res) => {
