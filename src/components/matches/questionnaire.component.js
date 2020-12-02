@@ -129,7 +129,7 @@ export default function Questionnaire(props) {
       }
 
       app.post(
-        `http://localhost:8080/questionnaire/submit_questionnaire/${props.userId}`,
+        `/questionnaire/submit_questionnaire/${props.userId}`,
         newQuestionnaire
       ).catch((res) => {
         console.log("there has been a problem creating this post request.");

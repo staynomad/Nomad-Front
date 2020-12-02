@@ -117,12 +117,7 @@ class CreateListing extends Component {
       pictures: photoURLS,
     };
 
-    const production = process.env.NODE_ENV === "production";
-    const apiBaseUrl = production
-      ? "https://vhomesback.herokuapp.com"
-      : "http://localhost:8080";
-
-    app.post(`${apiBaseUrl}/listings/createListing`, newListing, {
+    app.post(`/listings/createListing`, newListing, {
       headers: {
         Authorization: `Bearer ${this.props.userSession.token}`,
       },

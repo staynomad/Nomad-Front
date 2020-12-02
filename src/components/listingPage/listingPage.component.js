@@ -31,7 +31,7 @@ class ListingPage extends Component {
   }
 
   async componentDidMount() {
-    await app.get('http://localhost:8080/listings/byId/' + this.props.match.params.id)
+    await app.get('/listings/byId/' + this.props.match.params.id)
     .then((res) => {
       this.setState({
         listingTitle: res.data.listing.title,
@@ -79,7 +79,7 @@ class ListingPage extends Component {
         listingBookedDays: bookedDays
       })
       // Get host's email from their userId
-      app.get(`http://localhost:8080/user/getUserInfo/${this.state.listingUser}`)
+      app.get(`/user/getUserInfo/${this.state.listingUser}`)
       .then((res) =>
         this.setState({
           hostEmail: res.data.email,
@@ -115,7 +115,7 @@ class ListingPage extends Component {
       days: [selectedStartDay, selectedEndDay],
     };
     app
-      .post("http://localhost:8080/reservation/createReservation", data, {
+      .post("/reservation/createReservation", data, {
         headers: {
           Authorization: `Bearer ${this.props.userSession.token}`,
         },

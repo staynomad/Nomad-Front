@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './reservationLookupModal.css';
-import axios from 'axios';
+import { app } from '../../utils/axiosConfig.js'
 import { getListingById } from '../../redux/actions/searchListingActions';
 import { connect, useSelector } from 'react-redux';
 import {withRouter} from 'react-router-dom';
@@ -19,7 +19,7 @@ const ReservationLookup = (props) => {
       event.preventDefault ();
       let info = {}
 
-      axios.get(`http://localhost:8080/reservation/byId/${reservationID}`)
+      app.get(`/reservation/byId/${reservationID}`)
       .then(res => info = res.data)
       .then(() => setReservationInfo(info))
       .then(() => getListingById(info.reservation.listing))
