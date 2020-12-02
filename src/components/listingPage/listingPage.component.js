@@ -187,8 +187,8 @@ class ListingPage extends Component {
         !this.state.listingPictures || !this.state.listingTitle || !this.state.listingLocation || !this.state.listingDescription || !this.state.listingBeds || !this.state.listingBaths || !this.state.listingMaxPeople || !this.state.listingPrice
         ? <div id="spinner"></div>
         : <div>
-            <h3 className="subtitle">{this.state.listingTitle}</h3>
-            <h5>{this.state.listingLocation}</h5> <br />
+            <h2 className="listing-title">{this.state.listingTitle}</h2>
+            <h5 className="listing-location">{this.state.listingLocation}</h5> <br />
 
             <ImageGallery
               items={this.state.listingPictures}
@@ -198,32 +198,30 @@ class ListingPage extends Component {
               originalAlt={`${this.state.listingTitle}`}
             />
 
+            <div className="spacer_s"></div>
+            <div className="listing-details">
+              <p className="listing-description">{this.state.listingDescription}</p> <br />
+              <div className="details">
+                Beds: {this.state.listingBeds} <br />
+                Baths: {this.state.listingBaths} <br />
+                {this.state.listingMaxPeople} people max
+                <div className="spacer_xs"></div>
+                <a href={`mailto:${this.state.hostEmail}`}>
+                  <button className="btn green" type="button"> Contact Host </button>
+                </a>{" "}
+                <div className="spacer_xxl"></div>
+              </div>
+            </div>
 
-            <p>{this.state.listingDescription}</p> <br />
-            beds: {this.state.listingBeds} <br />
-            baths: {this.state.listingBaths} <br />
-            {this.state.listingMaxPeople} people max <br />$
-            {this.state.listingPrice} per night <br />
-            <a href={`mailto:${this.state.hostEmail}`}>
-              <button type="button"> Contact Host </button>
-            </a>{" "}
-            <br />
-            <br />
-            <div>
-
+            <div className="listing-calendar">
+              <div className="spacer_xs"></div>
               <div style={{"align-text": "center"}}>
                 {!from && !to && 'Please select the first day.'}
                 {from && !to && 'Please select the last day.'}
-
                 {from &&
                   to &&
-                  `Selected from ${from.toLocaleDateString()} to
+                  `From ${from.toLocaleDateString()} to
                       ${to.toLocaleDateString()}`}{" "}
-                {from && to && (
-                  <button className="link" onClick={this.handleResetClick}>
-                    Reset
-                  </button>
-                )}
               </div>
               <DayPicker
                 className="Selectable"
@@ -233,17 +231,22 @@ class ListingPage extends Component {
                 disabledDays={this.state.listingBookedDays}
                 inputProps={{ required: true }}
               />
+
+              <div className="spacer_xs"></div>
+              <div className="reserve-now">
+                {this.state.from && this.state.to ? (
+                  this.state.isLoading ?
+                  <div id="spinner"></div> :
+                  <input
+                    className="btn green"
+                    type="button"
+                    value="reserve now"
+                    onClick={this.handlePayment}
+                  />
+                ) : null}
+              </div>
+              </div>
             </div>
-            {this.state.from && this.state.to ? (
-              this.state.isLoading ?
-              <div id="spinner"></div> :
-              <input
-                type="button"
-                value="reserve now"
-                onClick={this.handlePayment}
-              />
-            ) : null}
-          </div>
         }
       </div>
     );
