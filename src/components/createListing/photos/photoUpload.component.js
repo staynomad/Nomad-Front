@@ -59,7 +59,7 @@ class PhotoUpload extends Component {
         currentImage,
         "vhomes-images-bucket",
         this.props.setLoadingFalse,
-        
+
       );*/
       this.props.handle(temp, "photos");
     } else {
@@ -85,7 +85,10 @@ class PhotoUpload extends Component {
   render() {
     return (
       <div>
-        <h1>upload some pictures</h1>
+        <h1>Pictures</h1>
+        <div className="questionText">
+          Share some images of your property!
+        </div> <br />
         <div>
           {this.state.invalid_type ? (
             <h2 style={{ color: "red" }}>Must be PNG, JPG, or JPEG format</h2>

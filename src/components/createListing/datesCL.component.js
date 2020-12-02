@@ -60,7 +60,10 @@ class DatesCL extends Component {
     const modifiers = { start: from, end: to };
     return (
       <div>
-        <h1 className="questionText">When is your property available?</h1>
+        <h1>Availability</h1>
+        <div className="questionText">
+          When is your property available?
+        </div>
         <p>
           {!from && !to && "Please select the first day."}
           {from && !to && "Please select the last day."}
