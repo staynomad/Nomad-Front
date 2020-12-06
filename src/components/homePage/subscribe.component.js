@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import axios from 'axios'
+import { app } from '../../utils/axiosConfig.js'
 
 class Subscribe extends Component {
   constructor(props) {
@@ -20,7 +20,7 @@ class Subscribe extends Component {
     const data = {
       email: this.state.email
     }
-    axios.post('https://vhomes-coming-soon-backend.herokuapp.com/users', data)
+    app.post('/subscribe', data)
     .then((res) => {
       this.setState({
         emailSent: true,
