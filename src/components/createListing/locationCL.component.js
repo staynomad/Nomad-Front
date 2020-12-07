@@ -122,7 +122,7 @@ class Location extends Component {
                 <div className="label-text">Apartment:</div>
                 <input
                   type="text"
-                  name="(optional)"
+                  name="aptnum"
                   className="inputBox aptnumInputBox"
                   value={this.state.aptnum}
                   placeholder="aptnum"
