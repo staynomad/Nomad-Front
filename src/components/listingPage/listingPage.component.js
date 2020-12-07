@@ -117,8 +117,7 @@ class ListingPage extends Component {
       listing: this.props.match.params.id,
       days: [selectedStartDay, selectedEndDay],
     };
-    app
-      .post("/reservation/createReservation", data, {
+    app.post("/reservation/createReservation", data, {
         headers: {
           Authorization: `Bearer ${this.props.userSession.token}`,
         },
@@ -218,7 +217,8 @@ class ListingPage extends Component {
               <div className="details">
                 Beds: {this.state.listingBeds} <br />
                 Baths: {this.state.listingBaths} <br />
-                {this.state.listingMaxPeople} people max
+                Max Guests: {this.state.listingMaxPeople} <br />
+                Price: ${this.state.listingPrice}/Night
                 <div className="spacer_xs"></div>
                 <a href={`mailto:${this.state.hostEmail}`}>
                   <button className="btn green" type="button"> Contact Host </button>
