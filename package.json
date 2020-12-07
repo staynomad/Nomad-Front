@@ -30,7 +30,6 @@
     "stripe": "^8.121.0"
   },
   "proxy": "https://vhomesback.herokuapp.com",
-  "homepage": "https://vhomes-group.github.io/VHomes_v2",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
