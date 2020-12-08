@@ -21,56 +21,84 @@ const CustomButton = withStyles((theme) => ({
 }))(Button);
 
 const ReservationCard = (props) => {
-  const [listing, setListing] = useState(null)
+  const [listing, setListing] = useState(null);
+  const [confirmCheck, setConfirmCheck] = useState(false);
+  const [checkState, setCheckState] = useState(null);
   const { reservation } = props;
 
   useEffect(() => {
     app.get('/listings/byId/' + reservation.listing)
-    .then((res) => {
-      setListing(res.data)
-    })
-    .catch((err) => {
-      alert('Unable to retrieve some reservations.')
-    })
+      .then((res) => {
+        setListing(res.data)
+      })
+      .catch((err) => {
+        alert('Unable to retrieve some reservations.')
+      })
   }, [])
 
-  const handleCheckIn = () => {
-    props.checkInToReservation(props.userSession.token, reservation._id);
-  };
-
-  const handleCheckOut = () => {
-    props.checkOutOfReservation(props.userSession.token, reservation._id);
+  const handleCheckConfirm = () => {
+    setConfirmCheck(false);
+    if (checkState === 'out') return props.checkOutOfReservation(props.userSession.token, reservation._id);
+    if (checkState === 'in') return props.checkInToReservation(props.userSession.token, reservation._id);
   };
 
   return (
     <>
       { reservation.active ? (
         !listing ? <div id="spinner"></div>
-        : (<div className='listing-item'>
-        <div className='listing-information'>
-          <img className='listing-image' src={listing.listing.pictures[0]} alt={listing.listing.title}/>
-          <b>{listing.listing.title}</b>
-          {listing.listing.location.street}, {listing.listing.location.city}, {listing.listing.location.state}, {listing.listing.location.zipcode}, {listing.listing.location.country}
-          <div>
-          <b>Check-In: </b> {reservation.days[0].substring(5)} <br />
-          <b>Check-Out: </b> {reservation.days[1].substring(5)}
-          </div>
-        </div>
-        <div className="spacer_xxs"></div>
-        {props.userSession && props.userSession.userId === reservation.user && !props.reservation.checkedIn ? (
-          <CustomButton onClick={handleCheckIn}>
-            { !props.loading ? "Check-in" : <div id="spinner" />}
-          </CustomButton>
-        ) : (
-            <>
-              {/* Render an unclickable button */}
-            </>
-          )}
-        {props.userSession && props.userSession.userId === reservation.user && props.reservation.checkedIn ? (
-          <CustomButton onClick={handleCheckOut}>Check-out</CustomButton>
-        ) : null}
-      </div>
-    )) : null}
+          : (
+            <div className='listing-item'>
+              { confirmCheck ? (
+                <>
+                  <div>Confirm check in / out?</div>
+                </>
+              ) : (
+                  <div className='listing-information'>
+                    <img className='listing-image' src={listing.listing.pictures[0]} alt={listing.listing.title} />
+                    <b>{listing.listing.title}</b>
+                    {listing.listing.location.street}, {listing.listing.location.city}, {listing.listing.location.state}, {listing.listing.location.zipcode}, {listing.listing.location.country}
+                    <div>
+                      <b>Check-In: </b> {reservation.days[0].substring(5)} <br />
+                      <b>Check-Out: </b> {reservation.days[1].substring(5)}
+                    </div>
+                  </div>
+                )}
+              <div className="spacer_xxs" />
+              {
+                confirmCheck ? (
+                  <>
+                    <CustomButton onClick={() => setConfirmCheck(false)}>Cancel</CustomButton>
+                    <CustomButton onClick={handleCheckConfirm}>Confirm</CustomButton>
+                  </>
+                ) : (
+                    <>
+                      {props.userSession && props.userSession.userId === reservation.user && !props.reservation.checkedIn ? (
+                        <CustomButton onClick={
+                          () => {
+                            setConfirmCheck(true);
+                            setCheckState('in');
+                          }}>
+                          { !props.loading ? "Check-in" : <div id="spinner" />}
+                        </CustomButton>
+                      ) : (
+                          <>
+                            {/* Render an unclickable button */}
+                          </>
+                        )}
+                      {props.userSession && props.userSession.userId === reservation.user && props.reservation.checkedIn ? (
+                        <CustomButton onClick={
+                          () => {
+                            setConfirmCheck(true);
+                            setCheckState('out');
+                          }}>
+                          { !props.loading ? "Check-Out" : <div id="spinner" />}
+                        </CustomButton>
+                      ) : null}
+                    </>
+                  )
+              }
+            </div>
+          )) : null}
     </>
   )
 };

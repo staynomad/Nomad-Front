@@ -19,13 +19,26 @@ export const CustomButton = withStyles((theme) => ({
   },
 }))(Button);
 
+const DeleteButton = withStyles((theme) => ({
+  root: {
+    color: "red",
+    backgroundColor: "transparent",
+    border: "2px solid red",
+    borderRadius: "8px",
+    font: "inherit",
+    fontSize: "16px",
+    fontWeight: "normal",
+  },
+}))(Button);
+
 const ListingCard = (props) => {
-  const [rating, setRating] = useState("")
+  const [rating, setRating] = useState("");
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const { listing } = props;
 
   useEffect(() => {
-    getAverageRating()
-  })
+    getAverageRating();
+  });
 
   const handleDeleteListing = () => {
     props.deleteListingById(props.userSession.token, listing._id)
@@ -50,30 +63,51 @@ const ListingCard = (props) => {
   return (
     <div className='listing-item'>
       <NavLink to={'/listing/' + listing._id}>
-        <div className='listing-information'>
-          <img className='listing-image' src={listing.pictures[0]} alt={listing.title}/>
-          <div>
-            <b>{listing.title}</b>
-          </div>
-          <div>
-            <b>Details:</b> {listing.details.beds > 1 ? `${listing.details.beds} beds` : `${listing.details.beds} bed`}  {listing.details.baths > 1 ? `${listing.details.baths} baths` : `${listing.details.baths} bath`}
-          </div>
-          <div>
-            <b>Rating:</b> {rating}
-          </div>
-          <div>
-            <b>Price:</b> ${listing.price}/night
-          </div>
-          <div className="spacer_xxs"></div>
-        </div>
-        </NavLink>
+        {confirmDelete ? (
+          <>
+            <div>Are you sure you want to delete this listing?</div>
+            <br />
+          </>
+        ) : (
+            <>
+              <div className='listing-information'>
+                <img className='listing-image' src={listing.pictures[0]} alt={listing.title} />
+                <div>
+                  <b>{listing.title}</b>
+                </div>
+                <div>
+                  <b>Details:</b> {listing.details.beds > 1 ? `${listing.details.beds} beds` : `${listing.details.beds} bed`}  {listing.details.baths > 1 ? `${listing.details.baths} baths` : `${listing.details.baths} bath`}
+                </div>
+                <div>
+                  <b>Rating:</b> {rating}
+                </div>
+                <div>
+                  <b>Price:</b> ${listing.price}/night
+            </div>
+                <div className="spacer_xxs" />
+              </div>
+            </>
+          )}
+      </NavLink>
       <div>
-        {props.userSession && props.userSession.userId === listing.userId ? (
-          <CustomButton onClick={() => props.history.push(`/editListing/${listing._id}`)}>Edit</CustomButton>
-        ) : null}
-        {props.userSession && props.userSession.userId === listing.userId ? (
-          <CustomButton onClick={handleDeleteListing}>Delete</CustomButton>
-        ) : null}
+        {
+          confirmDelete ? (
+            <>
+              <CustomButton onClick={() => setConfirmDelete(false)}>Cancel</CustomButton>
+              <DeleteButton onClick={handleDeleteListing}>Confirm Delete</DeleteButton>
+            </>
+          ) : (
+              <>
+                {props.userSession && props.userSession.userId === listing.userId ? (
+                  <CustomButton onClick={() => props.history.push(`/editListing/${listing._id}`)}>Edit</CustomButton>
+                ) : null}
+                {props.userSession && props.userSession.userId === listing.userId ? (
+                  <CustomButton onClick={() => setConfirmDelete(true)}>Delete</CustomButton>
+                ) : null}
+              </>
+            )
+        }
+
       </div>
     </div>
   )
