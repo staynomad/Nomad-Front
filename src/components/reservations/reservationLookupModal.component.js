@@ -48,7 +48,7 @@ const ReservationLookup = (props) => {
                 name="reservationID"
                 placeholder="reservation ID"
                 onChange={e => setReservationID(e.target.value)}
-                style={{"width": "100%", "padding-left": "2%"}}
+                style={{"width": "100%", paddingLeft: "2%"}}
               />
             </label>
             <p>You'll find this in your reservation confirmation email.</p>
