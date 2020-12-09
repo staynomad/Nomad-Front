@@ -21,6 +21,7 @@ class ListingPage extends Component {
   constructor(props) {
     super(props);
     this.handlePayment = this.handlePayment.bind(this);
+    this.handlePaymentReordered = this.handlePaymentReordered.bind(this);
     this.handleDayClick = this.handleDayClick.bind(this);
     this.handleResetClick = this.handleResetClick.bind(this);
     this.state = this.getInitialState();
@@ -219,7 +220,7 @@ class ListingPage extends Component {
 
       // If the stripe call succeeds, create reservation
       if (response.status === 201) {
-        const newReservation = app.post("/reservation/createReservation", data, {
+        const newReservation = await app.post("/reservation/createReservation", data, {
           headers: {
             Authorization: `Bearer ${this.props.userSession.token}`,
           },
@@ -237,7 +238,7 @@ class ListingPage extends Component {
           //     body: JSON.stringify(body),
           //   }
           // );
-          const session = await response; //json();
+          const session = response.data; //json();
           // When the customer clicks on the button, redirect them to Checkout.
           const result = await stripe.redirectToCheckout({
             sessionId: session.id,
@@ -246,15 +247,14 @@ class ListingPage extends Component {
           this.setState({
             isLoading: false,
           });
-
-          return response.data;
-        }
+        };
       };
     } catch (e) {
+      console.log(e)
       this.setState({
         isLoading: false,
       });
-      alert(e.response.errors); //response.data
+      alert(e); //response.data
       window.location.reload();
     }
   }
@@ -340,7 +340,7 @@ class ListingPage extends Component {
                         className="btn green"
                         type="button"
                         value="reserve now"
-                        onClick={this.handlePayment}
+                        onClick={this.handlePaymentReordered}
                       />
                   ) : null}
                 </div>
