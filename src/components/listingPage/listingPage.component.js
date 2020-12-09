@@ -21,6 +21,7 @@ class ListingPage extends Component {
   constructor(props) {
     super(props);
     this.handlePayment = this.handlePayment.bind(this);
+    this.handlePaymentReordered = this.handlePaymentReordered.bind(this);
     this.handleDayClick = this.handleDayClick.bind(this);
     this.handleResetClick = this.handleResetClick.bind(this);
     this.state = this.getInitialState();
@@ -340,7 +341,7 @@ class ListingPage extends Component {
                         className="btn green"
                         type="button"
                         value="reserve now"
-                        onClick={this.handlePayment}
+                        onClick={this.handlePaymentReordered}
                       />
                   ) : null}
                 </div>
