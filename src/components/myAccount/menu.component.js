@@ -154,7 +154,7 @@ class LeftMenu extends Component {
         return (
           <div className="reservations-container">
           {
-            reservations.active.length == 0 && reservations.expired.length == 0 ?
+            reservations.active.length === 0 && reservations.expired.length === 0 ?
             <div>No reservations yet!</div> :
             <div>
               <div classname="reservations-active">
