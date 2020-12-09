@@ -46,6 +46,7 @@ function App() {
             <Route path="/PaymentSuccess" exact component={PaymentSuccess} />
             <Route path="/AccountVerification/:userId" exact component={AccountVerification} />
             <Route path="/EditProfileInfo" exact component={EditProfileInfo} />
+            <Route path="/contact" exact component={Contact} />
           </Switch>
         </div>
         {reservationModal ? <ReservationLookup reservationModal={reservationModal} setReservationModal={setReservationModal} /> : null}

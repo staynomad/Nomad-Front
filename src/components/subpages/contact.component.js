@@ -1,50 +1,79 @@
-import React from "react";
+import React, { useState } from "react";
+import { app } from '../../utils/axiosConfig.js'
 import "./contact.css";
 
 const Contact = () => {
+  const [contactState, setContactState] = useState({})
+  const [isLoading, setLoading] = useState(false)
+
+  const handleChange = event => {
+    const value = event.target.value;
+    setContactState({...contactState, [event.target.name]: value})
+  }
+
+  const handleSubmit = event => {
+    setLoading(true)
+    event.preventDefault ();
+    const data = {
+      name: contactState.name,
+      email: contactState.email,
+      subject: `Inquiry from ${contactState.name}`,
+      text: contactState.text
+    }
+    app.post('/contact/', data)
+    .then(() => {
+      setLoading(false)
+    })
+    .catch((err) => {
+      alert('Could not send email. Please try again.')
+      setLoading(false)
+    })
+  }
+
   return (
-    <div className='content'>
-      <form action='mailto:michael@vhomesgroup.com'>
-        <div className='inner-forms'>
-          <div className='header'>
-            <h2 className='small'>questions or concerns?</h2>
-          </div>
-          <div className='input'>
-            <input
-              type='text'
-              name='name'
-              placeholder='your name'
-              required={true}
-              className='input mb-30 radius10 border-transparent-white ctc-input'
-            />
-          </div>
-          <div className='input'>
-            <input
-              type='email'
-              name='email'
-              placeholder='your email'
-              required='required'
-              className='input mb-30 radius10 border-transparent-white ctc-input'
-            />
-          </div>
-          <textarea
-            name='message'
-            placeholder='your message'
-            className='input contact_1 mb-40 w-full radius10 border-transparent-white'
+    <div className='content container'>
+      <div className='inner-forms'>
+        <div className='header'>
+          <h1>Contact Us</h1>
+        </div>
+        <div className="spacer_s"></div>
+        <div className='contact-input'>
+          <input
+            type='text'
+            name='name'
+            placeholder='your name'
+            value={contactState.name}
+            onChange={handleChange}
+            required={true}
+            className='contact-input-text mb-30 radius10'
           />
         </div>
-        <div className='row justify=content-between'>
-          <button className='btn action-3 green'>send a message</button>
+        <div className='contact-input'>
+          <input
+            type='email'
+            name='email'
+            placeholder='your email'
+            value={contactState.email}
+            onChange={handleChange}
+            required='required'
+            className='contact-input-text mb-30 radius10'
+          />
         </div>
-        <div className='contact-info'>
-          <div>
-            <span className='call-text'>or call us</span>
-          </div>
-          <a href='tel:+15555055050' className='link mt-35 color-white f-22'>
-            1 (224) 456-8915
-          </a>
+        <textarea
+          name='message'
+          placeholder='your message'
+          value={contactState.text}
+          onChange={handleChange}
+          className='contact-input contact_1 mb-40 w-full radius10'
+        />
+      </div>
+      {
+        isLoading ?
+        <div id="spinner"></div> :
+        <div className='rowcontact-button'>
+          <button onclick={handleSubmit} className='btn action-3 green'>send</button>
         </div>
-      </form>
+      }
     </div>
   );
 };
