@@ -9,7 +9,7 @@ import "./matches.css";
 const Matches = (props) => {
   const { history } = props
   const [seen, setSeen] = useState(false);
-  const [roommateView, setRoommateView] = useState(false);
+  var roommateView = false;
   const [listingView, setListingView] = useState(true);
   // const [roommateFilters, setRoommateFilters] = useState({});
   const [listingFilterState, setListingFilterState] = useState({

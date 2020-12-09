@@ -124,7 +124,6 @@ class CreateListing extends Component {
     })
       .then(() => this.postRequest())
       .then(() => (window.location = "/MyAccount"))
-      .catch((res) => console.log(res));
   }
 
   async postRequest() {

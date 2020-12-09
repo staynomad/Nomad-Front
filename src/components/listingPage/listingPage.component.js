@@ -94,10 +94,6 @@ class ListingPage extends Component {
         })
       )
     })
-    .catch((err) => {
-      console.log(err.response)
-    })
-
   }
 
   handlePayment() {

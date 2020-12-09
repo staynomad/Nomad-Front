@@ -132,9 +132,7 @@ export default function Questionnaire(props) {
         `/questionnaire/submit_questionnaire/${props.userId}`,
         newQuestionnaire
       ).catch((res) => {
-        console.log("there has been a problem creating this post request.");
         noErrors = false;
-        console.log(res);
       });
 
       noErrors && fieldsFilledOut && setSuccessfulPost(true);

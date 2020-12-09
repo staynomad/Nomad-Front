@@ -37,11 +37,8 @@ const EditProfileInfo = (props) => {
                     email: res.data.email,
                     description: '',
                     image: ''})
-            })
-            .catch(err => {
-                console.log('error: ', err.response);
             });
-    }, []);
+    }, [dispatch, loginInfo.userInfo.session.userId]);
 
     const handleSubmit = event => {
         event.preventDefault ();
@@ -53,9 +50,6 @@ const EditProfileInfo = (props) => {
                 // updates redux store
                 dispatch(setUserInfo(res.data));
             })
-            .catch (err => {
-            console.log ('handleSubmit error: ', err.response);
-        });
     };
 
 
