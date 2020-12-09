@@ -6,14 +6,12 @@ import { connect, useSelector } from 'react-redux';
 import {withRouter} from 'react-router-dom';
 
 const ReservationLookup = (props) => {
-    const { reservationModal, setReservationModal, getListingById } = props;
+    const { setReservationModal, getListingById } = props;
     const [reservationID, setReservationID] = useState("")
     const [lookup, setLookup] = useState(true)
     const listingInfo = useSelector(state => state.Listing.editListing);
     const [error, setError] = useState(false)
     const [reservationInfo, setReservationInfo] = useState({})
-
-    // console.log("reservationInfo: ", reservationInfo);
 
     const handleSubmit = async event => {
       event.preventDefault ();
