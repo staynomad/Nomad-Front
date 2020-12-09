@@ -1,6 +1,4 @@
 .content {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-    url("../../assets/img/background/arizona.jpg");
   background-size: cover;
   height: -webkit-fill-available;
 }
@@ -45,27 +43,24 @@ textarea.input {
   color: #ffff;
 }
 
-.ctc-input {
-  padding: 10px;
-  margin: 0px 50px 0px 50px;
-}
-
-.input {
+.contact-input {
   box-sizing: border-box;
   display: inline-block;
   vertical-align: top;
+  padding: 12px;
+}
+
+.contact-input-text {
+  color: #919dab;
   font-size: 18px;
   font-weight: 500;
-  border-radius: 30px;
-  transition: border-color 0.3s;
-  color: #919dab;
-  padding: 12px;
+  border-width: 1px !important;
+  border-color: #7E9388 !important;
 }
 
 input,
 textarea {
   background: transparent;
-  outline: none;
   resize: none;
 }
 
@@ -111,17 +106,10 @@ textarea {
   margin-bottom: 30px;
 }
 
-.small {
-  color: white;
-  opacity: 0.8;
-  font-size: 2em;
-}
-
-.contact-info {
-  padding-bottom: 2%;
-  text-align: -webkit-center;
-}
-
 .inner-forms {
   display: inline-block;
+}
+
+.contact-button {
+  float: right !important;
 }
