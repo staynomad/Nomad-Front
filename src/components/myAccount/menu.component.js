@@ -153,37 +153,43 @@ class LeftMenu extends Component {
         }
         return (
           <div className="reservations-container">
-            <div classname="reservations-active">
-              {reservations.active.length > 0 ? (
-                reservations.active.sort(function (a, b) {
-                  if (a.days[0] < b.days[0]) return -1;
-                  if (a.days[0] > b.days[0]) return 1;
-                  return 1;
-                })
-                  .map((reservation) => (
-                    <ReservationCard
-                      key={reservation._id}
-                      reservation={reservation}
-                    />
-                  ))
-              ) : null}
+          {
+            reservations.active.length == 0 && reservations.expired.length == 0 ?
+            <div>No reservations yet!</div> :
+            <div>
+              <div classname="reservations-active">
+                {reservations.active.length > 0 ? (
+                  reservations.active.sort(function (a, b) {
+                    if (a.days[0] < b.days[0]) return -1;
+                    if (a.days[0] > b.days[0]) return 1;
+                    return 1;
+                  })
+                    .map((reservation) => (
+                      <ReservationCard
+                        key={reservation._id}
+                        reservation={reservation}
+                      />
+                    ))
+                ) : null}
+              </div>
+              <div className="reservations-expired">
+                {reservations.expired.length > 0 ? (
+                  reservations.expired.sort(function (a, b) {
+                    if (a.days[0] < b.days[0]) return -1;
+                    if (a.days[0] > b.days[0]) return 1;
+                    return 1;
+                  })
+                    .map((reservation) => (
+                      <ReservationCard
+                        key={reservation._id}
+                        reservation={reservation}
+                      />
+                    ))
+                )
+                  : null}
+              </div>
             </div>
-            <div className="reservations-expired">
-              {reservations.expired.length > 0 ? (
-                reservations.expired.sort(function (a, b) {
-                  if (a.days[0] < b.days[0]) return -1;
-                  if (a.days[0] > b.days[0]) return 1;
-                  return 1;
-                })
-                  .map((reservation) => (
-                    <ReservationCard
-                      key={reservation._id}
-                      reservation={reservation}
-                    />
-                  ))
-              )
-                : null}
-            </div>
+          }
           </div>
         );
       case "settings":
