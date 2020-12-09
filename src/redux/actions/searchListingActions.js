@@ -18,19 +18,19 @@ export const searchForListings = (itemToSearch) => async dispatch => {
     const headers = { "Content-Type": "application/json" };
     const searchRes = await handleReq("/listings/search", "POST", headers, { itemToSearch });
 
-    if (searchRes.statusText === 'OK') {
+    if (searchRes.status === 200) {
         const { filteredListings } = await searchRes.data;
         dispatch(setSearchListings(filteredListings));
     }
     else {
-      alert('No matches were found.')
+        alert('No matches were found.')
     }
 };
 
 export const searchAllListings = () => async dispatch => {
     const searchAllRes = await handleReq("/listings", "GET");
 
-    if (searchAllRes.statusText === 'OK') {
+    if (searchAllRes.status === 200) {
         const { listings } = await searchAllRes.data;
         dispatch(setSearchListings(listings))
     };
@@ -40,7 +40,7 @@ export const searchFilteredListings = (filterState) => async dispatch => {
     const headers = { 'Content-Type': 'application/json' };
     const searchAllRes = await handleReq("/listings/filteredListings", "POST", headers, filterState);
 
-    if (searchAllRes.statusText === 'OK') {
+    if (searchAllRes.status === 200) {
         const { listings } = await searchAllRes.data;
         dispatch(setSearchListings(listings))
     };
@@ -50,7 +50,7 @@ export const searchUserListings = (token) => async dispatch => {
     const headers = { "Authorization": `Bearer ${token}` };
     const searchUserRes = await handleReq("/listings/byUserId", "GET", headers)
 
-    if (searchUserRes.statusText === 'OK') {
+    if (searchUserRes.status === 200) {
         const { userListings } = await searchUserRes.data;
         dispatch(setUserListings(userListings));
     };
@@ -60,7 +60,7 @@ export const getListingById = (listingId) => async dispatch => {
     dispatch(setLoadingTrue());
     const searchListingRes = await handleReq(`/listings/byId/${listingId}`, "GET")
 
-    if (searchListingRes.statusText === 'OK') {
+    if (searchListingRes.status === 200) {
         const { listing } = await searchListingRes.data;
         dispatch(setLoadingFalse());
         dispatch(setEditListing(listing));
@@ -71,7 +71,7 @@ export const deleteListingById = (token, listingId) => async dispatch => {
     const headers = { "Authorization": `Bearer ${token}` };
     const deleteListingRes = await handleReq(`/listings/delete/${listingId}`, "DELETE", headers);
 
-    if (deleteListingRes.statusText === 'OK') {
+    if (deleteListingRes.status === 200) {
         dispatch(deleteListing(listingId));
     };
 };
