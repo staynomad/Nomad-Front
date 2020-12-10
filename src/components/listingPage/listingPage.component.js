@@ -27,10 +27,14 @@ class ListingPage extends Component {
     this.setState({
       listingPictures: [],
       isLoading: true,
+      outOfRange: false,
     });
   }
 
   async componentDidMount() {
+    this.setState({
+      outOfRange: false
+    })
     await app.get('/listings/byId/' + this.props.match.params.id)
       .then((res) => {
         this.setState({
@@ -61,8 +65,8 @@ class ListingPage extends Component {
         // Set default disabled days based on booked days in listing object
         let startDate = new Date(this.state.listingStartDate)
         let endDate = new Date(this.state.listingEndDate)
-        endDate.setDate(endDate.getDate() + 1)
-        startDate.setDate(startDate.getDate() + 1)
+        endDate.setDate(endDate.getDate())
+        startDate.setDate(startDate.getDate())
         let bookedDays = [{
           after: endDate,
           before: startDate
@@ -180,6 +184,32 @@ class ListingPage extends Component {
   }
 
   handleDayClick(day) {
+    // Check listing availability dates separately
+    var startListingDate = new Date(this.state.listingBookedDays[0].before)
+    startListingDate.setDate(startListingDate.getDate() - 1)
+    var endListingDate = new Date(this.state.listingBookedDays[0].after)
+    endListingDate.setDate(endListingDate.getDate() + 1)
+    if (day < startListingDate || day > endListingDate) {
+      this.setState({
+        outOfRange: true
+      })
+      return
+    }
+    for (let i = 1; i < this.state.listingBookedDays.length; i++) {
+      // Have to subtract one from end date of reservation because of offset
+      var endDate = new Date(this.state.listingBookedDays[i].before)
+      endDate.setDate(endDate.getDate() - 1)
+      // Check if selected day falls within any of the disabled days
+      if (day < endDate && day > this.state.listingBookedDays[i].after) {
+        this.setState({
+          outOfRange: true
+        })
+        return
+      }
+    }
+    this.setState({
+      outOfRange: false
+    })
     const range = DateUtils.addDayToRange(day, this.state);
     this.setState(range);
   }
@@ -214,9 +244,9 @@ class ListingPage extends Component {
                 <p className="listing-description">{this.state.listingDescription}</p> <br />
                 <div className="details">
                   Beds: {this.state.listingBeds} <br />
-                Baths: {this.state.listingBaths} <br />
-                Max Guests: {this.state.listingMaxPeople} <br />
-                Price: ${this.state.listingPrice}/Night
+                  Baths: {this.state.listingBaths} <br />
+                  Max Guests: {this.state.listingMaxPeople} <br />
+                  Price: ${this.state.listingPrice}/Night
                 <div className="spacer_xs"></div>
                   <a href={`mailto:${this.state.hostEmail}`}>
                     <button className="btn green" type="button"> Contact Host </button>
@@ -228,12 +258,16 @@ class ListingPage extends Component {
               <div className="listing-calendar">
                 <div className="spacer_xs"></div>
                 <div style={{ "align-text": "center" }}>
-                  {!from && !to && 'Please select the first day.'}
+                {
+                  this.state.outOfRange ?
+                  'Selected day is not available.' :
+                  <div>{!from && !to && 'Please select the first day.'}
                   {from && !to && 'Please select the last day.'}
                   {from &&
                     to &&
                     `From ${from.toLocaleDateString()} to
-                      ${to.toLocaleDateString()}`}{" "}
+                    ${to.toLocaleDateString()}`}{" "}</div>
+                }
                 </div>
                 <DayPicker
                   className="Selectable"
