@@ -15,10 +15,7 @@ const Profile = () => {
             .then(res => {
                 dispatch(setUserInfo(res.data))
             })
-            .catch(err => {
-                console.log('error: ', err.response);
-            })
-    }, []);
+    }, [dispatch, loginInfo.userInfo.session.userId]);
 
     const Greeting = () => {
         if (!isEmpty) {
@@ -27,14 +24,12 @@ const Profile = () => {
             )
 
         } else {
-            // Would be nice to have a loading symbol
             return null
         }
     }
 
     const Information = () => {
         if (!isEmpty) {
-            // console.log("description: ", user.userInfo.description)
             return (
                 <div style={{"padding": "20px"}}>
                     <div>Email: {user.userInfo.email}</div>

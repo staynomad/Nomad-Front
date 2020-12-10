@@ -23,7 +23,6 @@ const Signup = () => {
       .then((res) => {
         window.sessionStorage.accessToken = res.token;
         setSignupSuccess(true);
-        console.log(res);
       })
       .catch((err) => {
         alert(err.response.data.errors[0]);

@@ -20,8 +20,7 @@ const stripePromise = loadStripe(stripePublicKey);
 class ListingPage extends Component {
   constructor(props) {
     super(props);
-    this.handlePayment = this.handlePayment.bind(this);
-    this.handlePaymentReordered = this.handlePaymentReordered.bind(this);
+    this.handleSessionRedirect = this.handleSessionRedirect.bind(this);
     this.handleDayClick = this.handleDayClick.bind(this);
     this.handleResetClick = this.handleResetClick.bind(this);
     this.state = this.getInitialState();
@@ -97,85 +96,7 @@ class ListingPage extends Component {
 
   }
 
-  handlePayment() {
-    this.setState({
-      isLoading: true,
-    });
-    if (!this.props.userSession) {
-      alert("Please log in to create a reservation.");
-      return this.props.history.push("/login");
-    }
-    const selectedStartDay = JSON.stringify(this.state.from).substring(
-      1,
-      JSON.stringify(this.state.from).indexOf("T")
-    );
-    const selectedEndDay = JSON.stringify(this.state.to).substring(
-      1,
-      JSON.stringify(this.state.to).indexOf("T")
-    );
-    const data = {
-      user: this.props.userSession.userId, // get userId from redux store
-      listing: this.props.match.params.id,
-      days: [selectedStartDay, selectedEndDay],
-    };
-    app.post("/reservation/createReservation", data, {
-      headers: {
-        Authorization: `Bearer ${this.props.userSession.token}`,
-      },
-    })
-      .then(async (res) => {
-        // Create Stripe Checkout Session
-        const stripe = await stripePromise;
-        const resDays =
-          parseInt((this.state.to - this.state.from) / (1000 * 3600 * 24)) + 1;
-        const listingId = data.listing;
-        const body = {
-          listingId: listingId,
-          days: resDays,
-        };
-        const response = await app({
-          url: '/payment/create-session',
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/json"
-          },
-          data: JSON.stringify(body)
-        }).then((response) => {
-          return response.data;
-        }).catch((err) => console.log(err))
-
-
-        //   "http://localhost:8080/payment/create-session",
-        //   {
-        //     method: "POST",
-        //     headers: {
-        //       "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify(body),
-        //   }
-        // );
-        const session = await response; //json();
-        // When the customer clicks on the button, redirect them to Checkout.
-        const result = await stripe.redirectToCheckout({
-          sessionId: session.id,
-        });
-        if (result.error) {
-          alert(result.error.message);
-        }
-        this.setState({
-          isLoading: false,
-        });
-      })
-      .catch((err) => {
-        this.setState({
-          isLoading: false,
-        });
-        alert(err.response.errors); //response.data
-        window.location.reload();
-      });
-  }
-
-  async handlePaymentReordered() {
+  async handleSessionRedirect() {
     this.setState({
       isLoading: true,
     });
@@ -202,44 +123,37 @@ class ListingPage extends Component {
     const resDays =
       parseInt((this.state.to - this.state.from) / (1000 * 3600 * 24)) + 1;
     const listingId = data.listing;
-    const body = {
+    let body = {
       listingId: listingId,
       days: resDays,
     };
 
     // Wrap calls in try-catch block.  All errors handled by catch
     try {
-      const response = await app({
-        url: '/payment/create-session',
-        method: 'POST',
+      const newReservation = await app.post("/reservation/createReservation", data, {
         headers: {
-          "Content-Type": "application/json"
+          Authorization: `Bearer ${this.props.userSession.token}`,
         },
-        data: JSON.stringify(body)
       });
 
-      // If the stripe call succeeds, create reservation
-      if (response.status === 201) {
-        const newReservation = await app.post("/reservation/createReservation", data, {
-          headers: {
-            Authorization: `Bearer ${this.props.userSession.token}`,
-          },
-        });
 
-        // If creating a reservation succeeds
-        // continue with the rest of the stripe stuff
-        if (newReservation.status === 201) {
-          //   "http://localhost:8080/payment/create-session",
-          //   {
-          //     method: "POST",
-          //     headers: {
-          //       "Content-Type": "application/json",
-          //     },
-          //     body: JSON.stringify(body),
-          //   }
-          // );
+      // If the stripe call succeeds, create reservation
+      if (newReservation.status === 201) {
+        const { reservationId } = newReservation.data;
+        body["reservationId"] = reservationId;
+
+        const response = await app({
+          url: '/payment/create-session',
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json"
+          },
+          data: JSON.stringify(body)
+        });
+        // Redirect to stripe session after inactive reservation is made
+        if (response.status === 201) {
           const session = response.data; //json();
-          // When the customer clicks on the button, redirect them to Checkout.
+          // Redirect to stripe checkout session
           const result = await stripe.redirectToCheckout({
             sessionId: session.id,
           });
@@ -250,12 +164,11 @@ class ListingPage extends Component {
         };
       };
     } catch (e) {
-      console.log(e)
+      console.log(e.response.data.errors)
       this.setState({
         isLoading: false,
       });
-      alert(e); //response.data
-      window.location.reload();
+      alert(e.response.data.errors); //response.data
     }
   }
 
@@ -340,7 +253,7 @@ class ListingPage extends Component {
                         className="btn green"
                         type="button"
                         value="reserve now"
-                        onClick={this.handlePaymentReordered}
+                        onClick={this.handleSessionRedirect}
                       />
                   ) : null}
                 </div>

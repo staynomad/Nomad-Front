@@ -14,6 +14,7 @@
   display: inline-flex;
   padding: 60px;
   border-radius: 2%;
+  margin-bottom: 2% !important;
 }
 
 .startText {
@@ -129,4 +130,10 @@
 
 .header-text {
   text-align: center !important;
+}
+
+.import-calendar {
+  margin-bottom: 0 !important;
+  padding-bottom: 0;
+  float: left;
 }

@@ -6,14 +6,12 @@ import { connect, useSelector } from 'react-redux';
 import {withRouter} from 'react-router-dom';
 
 const ReservationLookup = (props) => {
-    const { reservationModal, setReservationModal, getListingById } = props;
+    const { setReservationModal, getListingById } = props;
     const [reservationID, setReservationID] = useState("")
     const [lookup, setLookup] = useState(true)
     const listingInfo = useSelector(state => state.Listing.editListing);
     const [error, setError] = useState(false)
     const [reservationInfo, setReservationInfo] = useState({})
-
-    // console.log("reservationInfo: ", reservationInfo);
 
     const handleSubmit = async event => {
       event.preventDefault ();
@@ -50,7 +48,7 @@ const ReservationLookup = (props) => {
                 name="reservationID"
                 placeholder="reservation ID"
                 onChange={e => setReservationID(e.target.value)}
-                style={{"width": "100%", "padding-left": "2%"}}
+                style={{"width": "100%", paddingLeft: "2%"}}
               />
             </label>
             <p>You'll find this in your reservation confirmation email.</p>
