@@ -18,8 +18,9 @@ import CreateListing from "./components/createListing/createListing.component";
 import MyAccount from "./components/myAccount/menu.component";
 import ListingPage from "./components/listingPage/listingPage.component";
 import EditListing from "./components/editListing/editListing";
-import PaymentSuccess from "./components/listingPage/paymentSuccess.component"
-import AccountVerification from "./components/authentication/verifyAccount.component"
+import PaymentSuccess from "./components/listingPage/paymentSuccess.component";
+import AccountVerification from "./components/authentication/verifyAccount.component";
+import ActivateReservation from "./components/reservations/activateReservation.component";
 import "./App.css";
 
 //to add more items just copy the format and add the route path. look at navbar component to see where the path is currently set to
@@ -33,12 +34,12 @@ function App() {
       <div className="App">
         <div className="body-container">
           <Switch>
-            <Route path="/" exact component={() => <Home isBlurred={reservationModal} history={history}/>} />
+            <Route path="/" exact component={() => <Home isBlurred={reservationModal} history={history} />} />
             <Route path="/ContactUs" exact component={Contact} />
             <Route path="/Login" exact component={Login} />
             <Route path="/SignUp" exact component={Signup} />
             <Route path="/CreateListing" exact component={CreateListing} />
-            <Route path="/Matches" exact component={Matches} history={history}/>
+            <Route path="/Matches" exact component={Matches} history={history} />
             <Route path="/MyAccount" exact component={MyAccount} />
             <Route path="/Questionnaire" exact component={Questionnaire} />
             <Route path="/Listing/:id" exact component={ListingPage} />
@@ -47,6 +48,7 @@ function App() {
             <Route path="/AccountVerification/:userId" exact component={AccountVerification} />
             <Route path="/EditProfileInfo" exact component={EditProfileInfo} />
             <Route path="/contact" exact component={Contact} />
+            <Route path="/completeReservation/:listingId/:reservationId" exact component={ActivateReservation} />
           </Switch>
         </div>
         {reservationModal ? <ReservationLookup reservationModal={reservationModal} setReservationModal={setReservationModal} /> : null}
