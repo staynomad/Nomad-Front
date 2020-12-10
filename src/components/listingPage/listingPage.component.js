@@ -186,9 +186,9 @@ class ListingPage extends Component {
   handleDayClick(day) {
     // Check listing availability dates separately
     var startListingDate = new Date(this.state.listingBookedDays[0].before)
-    startListingDate.setDate(startListingDate.getDate() - 1)
+    startListingDate.setDate(startListingDate.getDate())
     var endListingDate = new Date(this.state.listingBookedDays[0].after)
-    endListingDate.setDate(endListingDate.getDate() + 1)
+    endListingDate.setDate(endListingDate.getDate())
     if (day < startListingDate || day > endListingDate) {
       this.setState({
         outOfRange: true
