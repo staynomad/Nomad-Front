@@ -30,6 +30,9 @@ form.form {
   margin: 2% 0;
   width: 350px;
   border: 2px solid rgb(210 210 210 / 47%);
+  border-radius: 20px !important;
+  padding-left: 3%;
+  font-size: 16px;
 }
 
 .btn {

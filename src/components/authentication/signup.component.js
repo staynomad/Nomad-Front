@@ -72,6 +72,7 @@ const Signup = () => {
               setUserSignup({ ...userSignup, check: e.target.value })
             }
           />
+          <div className="spacer_xxs"></div>
           <label className="checkbox">
             <input
               className="check"
@@ -84,6 +85,7 @@ const Signup = () => {
             />
             {"  Are you a host?"}
           </label>
+          <div className="spacer_xxs"></div>
           {
             loading
             ? <div id="spinner"></div>
