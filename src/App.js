@@ -21,6 +21,7 @@ import EditListing from "./components/editListing/editListing";
 import PaymentSuccess from "./components/listingPage/paymentSuccess.component";
 import AccountVerification from "./components/authentication/verifyAccount.component";
 import ActivateReservation from "./components/reservations/activateReservation.component";
+import ImportCalendar from "./components/createListing/importCalendar.component"
 import "./App.css";
 
 //to add more items just copy the format and add the route path. look at navbar component to see where the path is currently set to
@@ -49,6 +50,7 @@ function App() {
             <Route path="/EditProfileInfo" exact component={EditProfileInfo} />
             <Route path="/contact" exact component={Contact} />
             <Route path="/completeReservation/:listingId/:reservationId" exact component={ActivateReservation} />
+            <Route path="/test" exact component={ImportCalendar} />
           </Switch>
         </div>
         {reservationModal ? <ReservationLookup reservationModal={reservationModal} setReservationModal={setReservationModal} /> : null}
