@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { app } from '../../utils/axiosConfig.js'
-import axios from 'axios'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { importCalendar } from "../../redux/actions/calendarSyncActions";
 
 class ImportCalendar extends Component {
   constructor(props) {
@@ -12,24 +13,16 @@ class ImportCalendar extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentDidMount() {
-    // temporary solution: using allorigins proxy to bypass airbnb access-control-allow-origin server response header
-    // https://gist.github.com/jimmywarting/ac1be6ea0297c16c477e17f8fbe51347
-    axios.get("https://api.allorigins.win/raw?url=https://www.airbnb.com/calendar/ical/46943704.ics?s=e2cf1d44f063299b1060fea2da160a8d")
-    .then((res) => {
-      console.log(res.data) // raw text response from ical file
-    })
-  }
-
   handleChange(e) {
     this.setState({
       calendarURL: e.target.value
     })
   }
 
-  handleSubmit() {
-    console.log("handle submit here")
-    // axios request to url via proxy, get calendar data, update redux to and from fields
+  handleSubmit(e) {
+    e.preventDefault()
+    // add url validation here
+    this.props.importCalendar(this.state.calendarURL, true)
   }
 
   render() {
@@ -52,4 +45,23 @@ class ImportCalendar extends Component {
   }
 }
 
-export default ImportCalendar
+const mapStateToProps = state => {
+    const stateToReturn = {
+        ...state,
+        loading: state.Loading.loading,
+    };
+    return stateToReturn;
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        importCalendar: (calendarURL, newImport) => dispatch(importCalendar(calendarURL, newImport)),
+    };
+};
+
+export default withRouter(connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(
+    ImportCalendar
+));
