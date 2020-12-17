@@ -38,7 +38,11 @@ const ReservationCard = (props) => {
 
   const handleCheckConfirm = () => {
     setConfirmCheck(false);
-    if (checkState === 'out') return props.checkOutOfReservation(props.userSession.token, reservation._id);
+    if (checkState === 'out') {
+      props.checkOutOfReservation(props.userSession.token, reservation._id);
+      props.setReviewModal(true);
+      return;
+    };
     if (checkState === 'in') return props.checkInToReservation(props.userSession.token, reservation._id);
   };
 

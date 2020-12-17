@@ -65,8 +65,7 @@ export const checkOutOfReservation = (token, reservationId) => async (
   );
 
   if (checkOutRes.statusText === "OK") {
-    const { message, reservation } = await checkOutRes.data;
-    console.log(message);
+    const { reservation } = await checkOutRes.data;
     dispatch(setLoadingFalse());
     dispatch(updateUserReservations(reservation));
   }

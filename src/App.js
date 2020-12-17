@@ -21,12 +21,14 @@ import EditListing from "./components/editListing/editListing";
 import PaymentSuccess from "./components/listingPage/paymentSuccess.component";
 import AccountVerification from "./components/authentication/verifyAccount.component";
 import ActivateReservation from "./components/reservations/activateReservation.component";
+import ReviewPopup from "./components/review/reviewModal.component";
 import "./App.css";
 
 //to add more items just copy the format and add the route path. look at navbar component to see where the path is currently set to
 function App() {
   const history = useHistory();
   const [reservationModal, setReservationModal] = useState(false);
+  const [reviewModal, setReviewModal] = useState(false);
 
   return (
     <>
@@ -40,7 +42,7 @@ function App() {
             <Route path="/SignUp" exact component={Signup} />
             <Route path="/CreateListing" exact component={CreateListing} />
             <Route path="/Matches" exact component={Matches} history={history} />
-            <Route path="/MyAccount" exact component={MyAccount} />
+            <Route path="/MyAccount" exact component={MyAccount} setReviewModal={setReviewModal} />
             <Route path="/Questionnaire" exact component={Questionnaire} />
             <Route path="/Listing/:id" exact component={ListingPage} />
             <Route path="/EditListing/:listingId" exact component={EditListing} />
@@ -52,6 +54,7 @@ function App() {
           </Switch>
         </div>
         {reservationModal ? <ReservationLookup reservationModal={reservationModal} setReservationModal={setReservationModal} /> : null}
+        {reviewModal ? <ReviewPopup setReviewModal={setReviewModal} /> : null}
         <Footer />
       </div>
     </>
