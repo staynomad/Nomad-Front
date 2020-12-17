@@ -9,7 +9,8 @@ import {
   incompleteForm,
   completeForm,
 } from "../../redux/actions/loadingActions";
-import ImportCalendar from './importCalendar.component.js'
+import ImportCalendar from "./importCalendar.component.js";
+import { newListing } from "../../redux/actions/createListingActions";
 
 class DatesCL extends Component {
   constructor(props) {
@@ -22,12 +23,12 @@ class DatesCL extends Component {
 
   componentDidMount() {
     this.setState({
-      displayImport: false
-    })
+      displayImport: false,
+    });
   }
 
   getInitialState = () => {
-    const oldData = this.props.listingData.CreateListing.state.dates;
+    const oldData = this.props.listingData.dates;
     const initData = {
       date_range: {
         from: oldData.start_date,
@@ -58,7 +59,7 @@ class DatesCL extends Component {
       end_date: range.to,
       booked: [null, null],
     };
-    this.props.handle(cleaned_dates, "dates");
+    this.props.newListing({ value: cleaned_dates, name: "dates" });
   }
   handleResetClick() {
     this.setState(this.getInitialState());
@@ -66,9 +67,9 @@ class DatesCL extends Component {
 
   handleImportToggle() {
     this.setState({
-      displayImport: !this.state.displayImport
-    })
-    console.log(this.state.displayImport)
+      displayImport: !this.state.displayImport,
+    });
+    console.log(this.state.displayImport);
   }
 
   render() {
@@ -76,51 +77,60 @@ class DatesCL extends Component {
     const modifiers = { start: from, end: to };
     return (
       <>
-      {
-        this.state.displayImport ?
-
-        <div>
-          <ImportCalendar />
-          <br />
-          <p className="import-calendar" style={{textDecoration: "underline", cursor: "pointer", paddingLeft: "3%", paddingRight: "1%"}} onClick={this.handleImportToggle}>Select</p>
-          <p className="import-calendar">dates instead</p>
-          <br />
-        </div> :
-
-        <div>
-          <h1>Availability</h1>
-          <div className="questionText">
-            When is your property available?
-          </div>
-          <div className="spacer_xs"></div>
+        {this.state.displayImport ? (
           <div>
-            {!from && !to && "Please select the first day."}
-            {from && !to && "Please select the last day."}
-            {from &&
-              to &&
-              `Selected from ${from.toLocaleDateString()} to
-                  ${to.toLocaleDateString()}`}{" "}
-            {from && to && (
-              <button className="link" onClick={this.handleResetClick}>
-                Reset
-              </button>
-            )}
+            <ImportCalendar />
+            <br />
+            <p
+              className="import-calendar"
+              style={{
+                textDecoration: "underline",
+                cursor: "pointer",
+                paddingLeft: "3%",
+                paddingRight: "1%",
+              }}
+              onClick={this.handleImportToggle}
+            >
+              Select
+            </p>
+            <p className="import-calendar">dates instead</p>
+            <br />
           </div>
-          {this.state.invalid_date ? (
-            <h3 style={{ color: "red" }}>First selection must be after today</h3>
-          ) : (
-            ""
-          )}
-          <DatePicker
-            className="Selectable"
-            numberOfMonths={2}
-            selectedDays={[from, { from, to }]}
-            modifiers={modifiers}
-            onDayClick={this.handleDayClick}
-            inputProps={{ required: true }}
-          />
-          <Helmet>
-            <style>{`
+        ) : (
+          <div>
+            <h1>Availability</h1>
+            <div className="questionText">When is your property available?</div>
+            <div className="spacer_xs"></div>
+            <div>
+              {!from && !to && "Please select the first day."}
+              {from && !to && "Please select the last day."}
+              {from &&
+                to &&
+                `Selected from ${from.toLocaleDateString()} to
+                  ${to.toLocaleDateString()}`}{" "}
+              {from && to && (
+                <button className="link" onClick={this.handleResetClick}>
+                  Reset
+                </button>
+              )}
+            </div>
+            {this.state.invalid_date ? (
+              <h3 style={{ color: "red" }}>
+                First selection must be after today
+              </h3>
+            ) : (
+              ""
+            )}
+            <DatePicker
+              className="Selectable"
+              numberOfMonths={2}
+              selectedDays={[from, { from, to }]}
+              modifiers={modifiers}
+              onDayClick={this.handleDayClick}
+              inputProps={{ required: true }}
+            />
+            <Helmet>
+              <style>{`
             .Selectable .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
               background-color: #f0f8ff !important;
               color: #4a90e2;
@@ -137,24 +147,37 @@ class DatesCL extends Component {
               border-bottom-right-radius: 50% !important;
             }
           `}</style>
-          </Helmet>
-          <br />
-          <p className="import-calendar" style={{textDecoration: "underline", cursor: "pointer", paddingLeft: "3%", paddingRight: "1%"}} onClick={this.handleImportToggle}>Import</p>
-          <p className="import-calendar">your calendar instead</p>
-          <br />
-        </div>
-      }
+            </Helmet>
+            <br />
+            <p
+              className="import-calendar"
+              style={{
+                textDecoration: "underline",
+                cursor: "pointer",
+                paddingLeft: "3%",
+                paddingRight: "1%",
+              }}
+              onClick={this.handleImportToggle}
+            >
+              Import
+            </p>
+            <p className="import-calendar">your calendar instead</p>
+            <br />
+          </div>
+        )}
       </>
     );
   }
 }
 const mapStateToProps = (state) => {
   return {
-    listingData: state,
+    listingData: state.CreateListing,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
+    newListing: (updatedData) => dispatch(newListing(updatedData)),
+
     completeForm: () => dispatch(completeForm()),
     incompleteForm: () => dispatch(incompleteForm()),
   };

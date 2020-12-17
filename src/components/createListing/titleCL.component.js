@@ -6,6 +6,8 @@ import {
   incompleteForm,
   completeForm,
 } from "../../redux/actions/loadingActions";
+import { newListing } from "../../redux/actions/createListingActions";
+
 class TitleCL extends Component {
   constructor(props) {
     super(props);
@@ -15,16 +17,14 @@ class TitleCL extends Component {
       maxchars: 40,
     };
   }
-  //
   componentDidMount() {
-    const oldTitle = this.props.listingData.CreateListing.state.title;
+    const oldTitle = this.props.listingData.title;
     const oldDif = this.state.maxchars - oldTitle.length;
     if (oldTitle === "") {
       this.props.incompleteForm();
     } else {
       this.props.completeForm();
     }
-
     this.setState({
       title: oldTitle,
       charleft: oldDif,
@@ -43,8 +43,7 @@ class TitleCL extends Component {
     if (value === "") {
       this.props.incompleteForm();
     }
-
-    this.props.handle(value, name);
+    this.props.newListing({ name: "title", value: value });
   };
 
   render() {
@@ -72,12 +71,13 @@ class TitleCL extends Component {
 }
 const mapStateToProps = (state) => {
   return {
-    listingData: state,
+    listingData: state.CreateListing,
     formCompleted: state.Loading.formCompleted,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
+    newListing: (updatedData) => dispatch(newListing(updatedData)),
     completeForm: () => dispatch(completeForm()),
     incompleteForm: () => dispatch(incompleteForm()),
   };
