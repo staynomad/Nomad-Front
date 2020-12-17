@@ -34,7 +34,7 @@ const ReservationCard = (props) => {
       .catch((err) => {
         alert('Unable to retrieve some reservations.')
       })
-  }, [])
+  }, [reservation.listing])
 
   const handleCheckConfirm = () => {
     setConfirmCheck(false);

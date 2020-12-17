@@ -46,22 +46,22 @@ class ImportCalendar extends Component {
 }
 
 const mapStateToProps = state => {
-    const stateToReturn = {
-        ...state,
-        loading: state.Loading.loading,
-    };
-    return stateToReturn;
+  const stateToReturn = {
+    ...state,
+    loading: state.Loading.loading,
+  };
+  return stateToReturn;
 };
 
 const mapDispatchToProps = dispatch => {
-    return {
-        importCalendar: (calendarURL, newImport) => dispatch(importCalendar(calendarURL, newImport)),
-    };
+  return {
+    importCalendar: (calendarURL, newImport) => dispatch(importCalendar(calendarURL, newImport)),
+  };
 };
 
 export default withRouter(connect(
-    mapStateToProps,
-    mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(
-    ImportCalendar
+  ImportCalendar
 ));
