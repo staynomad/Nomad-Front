@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { updateInfo } from "../../redux/actions/createListingActions";
-import { app } from '../../utils/axiosConfig.js'
+import { newListing } from "../../redux/actions/createListingActions";
+import { app } from "../../utils/axiosConfig.js";
 import DatesCL from "./datesCL.component";
 import DetailsCL from "./detailsCL.component";
 import Location from "./locationCL.component";
@@ -26,29 +26,6 @@ class CreateListing extends Component {
     this.state = {
       formval: 0,
       maxpages: 9,
-      title: "",
-      location: {
-        street: "",
-        city: "",
-        state: "",
-        country: "",
-        zipcode: "",
-        aptnum: "",
-      },
-      description: "",
-      details: {
-        beds: "",
-        baths: "",
-        maxpeople: "",
-      },
-      photos: { pictures: [], temp_image_url: [] },
-      price: "",
-      rules: "",
-      dates: {
-        start_date: null,
-        end_date: null,
-        today: new Date(),
-      },
       loading_spinner: false,
       nextToggle: true,
     };
@@ -82,11 +59,11 @@ class CreateListing extends Component {
   }
 
   onSubmit() {
-    let cur_photos = this.state.photos.pictures;
+    const dataToSend = this.props.listingData;
+    let cur_photos = dataToSend.photos.pictures;
+
     let photoURLS = [];
-
     this.props.setLoadingTrue();
-
     for (let i = 0; i < cur_photos.length; i++) {
       const updatedFileName = encodeURIComponent(
         cur_photos[i].name + Math.random() * 1000
@@ -106,48 +83,41 @@ class CreateListing extends Component {
       photoURLS.push(picURL);
     }
 
-    const available = [this.state.dates.start_date, this.state.dates.end_date];
+    const available = [dataToSend.dates.start_date, dataToSend.dates.end_date];
+
     const newListing = {
-      title: this.state.title,
-      location: this.state.location,
-      description: this.state.description,
-      details: this.state.details,
-      price: this.state.price,
+      title: dataToSend.title,
+      location: dataToSend.location,
+      description: dataToSend.description,
+      details: dataToSend.details,
+      price: dataToSend.price,
       available: available,
       pictures: photoURLS,
     };
-
-    app.post(`/listings/createListing`, newListing, {
-      headers: {
-        Authorization: `Bearer ${this.props.userSession.token}`,
-      },
-    })
+    app
+      .post(`/listings/createListing`, newListing, {
+        headers: {
+          Authorization: `Bearer ${this.props.userSession.token}`,
+        },
+      })
       .then(() => this.postRequest())
-      .then(() => (window.location = "/MyAccount"))
+      .then(() => (window.location = "/MyAccount"));
   }
 
   async postRequest() {
-    /*while (this.props.loading) {
-      this.postRequest();
-    }
-    if (!this.props.loading) {
-      return;
-    } else {
-      this.postRequest();
-    }*/
     await new Promise((r) => setTimeout(r, 5000));
   }
   render() {
     const pages = [
       <LandingPageCL />,
-      <TitleCL handle={this.handleChange} />,
-      <Location handle={this.handleChange} />,
-      <Description handle={this.handleChange} />,
-      <DetailsCL handle={this.handleChange} />,
-      <PricesCL handle={this.handleChange} />,
-      <PhotoUpload handle={this.handleChange} />,
-      <DatesCL handle={this.handleChange} />,
-      <ConfirmSubmission handle={this.state} />,
+      <TitleCL />,
+      <Location />,
+      <Description />,
+      <DetailsCL />,
+      <PricesCL />,
+      <PhotoUpload />,
+      <DatesCL />,
+      <ConfirmSubmission />,
     ];
     return (
       <div className="fullListingBackground">
@@ -215,36 +185,25 @@ class CreateListing extends Component {
       formval: temp,
       nextToggle: validToggle,
     });
-    const updatedData = {
-      title: this.state.title,
-      location: this.state.location,
-      description: this.state.description,
-      details: this.state.details,
-      price: this.state.price,
-      rules: this.state.rules,
-      dates: this.state.dates,
-      photos: this.state.photos,
-    };
-    this.props.updateInfo(updatedData);
   }
 }
 
 const mapStateToProps = (state) => {
   if (state.Login.userInfo)
     return {
-      listingData: state,
+      listingData: state.CreateListing,
       userSession: state.Login.userInfo.session,
       loading: state.Loading.loading,
       formCompleted: state.Loading.formCompleted,
     };
   return {
-    listingData: state,
+    listingData: state.CreateListing,
     formCompleted: state.Loading.formCompleted,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateInfo: (toUpdate) => dispatch(updateInfo(toUpdate)),
+    updateInfo: (toUpdate) => dispatch(newListing(toUpdate)),
     setLoadingFalse: () => dispatch(setLoadingFalse()),
     setLoadingTrue: () => dispatch(setLoadingTrue()),
     completeForm: () => dispatch(completeForm()),
