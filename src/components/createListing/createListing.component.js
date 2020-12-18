@@ -61,10 +61,9 @@ class CreateListing extends Component {
   onSubmit() {
     const dataToSend = this.props.listingData;
     let cur_photos = dataToSend.photos.pictures;
+
     let photoURLS = [];
-
     this.props.setLoadingTrue();
-
     for (let i = 0; i < cur_photos.length; i++) {
       const updatedFileName = encodeURIComponent(
         cur_photos[i].name + Math.random() * 1000
@@ -111,14 +110,14 @@ class CreateListing extends Component {
   render() {
     const pages = [
       <LandingPageCL />,
-      <TitleCL handle={this.handleChange} />,
-      <Location handle={this.handleChange} />,
-      <Description handle={this.handleChange} />,
-      <DetailsCL handle={this.handleChange} />,
-      <PricesCL handle={this.handleChange} />,
-      <PhotoUpload handle={this.handleChange} />,
-      <DatesCL handle={this.handleChange} />,
-      <ConfirmSubmission handle={this.state} />,
+      <TitleCL />,
+      <Location />,
+      <Description />,
+      <DetailsCL />,
+      <PricesCL />,
+      <PhotoUpload />,
+      <DatesCL />,
+      <ConfirmSubmission />,
     ];
     return (
       <div className="fullListingBackground">
