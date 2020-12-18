@@ -4,6 +4,8 @@ import { withRouter } from "react-router-dom";
 import "./createListing.css";
 class ConfirmSubmission extends Component {
   render() {
+    const start = new Date(this.props.data.dates.start_date)
+    const end = new Date(this.props.data.dates.end_date)
     return (
       <div>
         <h1>Review Your Listing</h1>
@@ -42,9 +44,9 @@ class ConfirmSubmission extends Component {
           <h2 className="header-text">Dates</h2>
           <p className="confirm-text">
             <span>Start date: </span>
-            {this.props.data.dates.start_date.toLocaleDateString()} <br />
+            {start.toLocaleDateString()} <br />
             <span>End date: </span>
-            {this.props.data.dates.end_date.toLocaleDateString()} <br />
+            {end.toLocaleDateString()} <br />
           </p>
         </div>
       </div>

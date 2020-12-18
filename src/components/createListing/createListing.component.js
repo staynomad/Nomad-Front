@@ -194,7 +194,7 @@ const mapStateToProps = (state) => {
       listingData: state.CreateListing,
       userSession: state.Login.userInfo.session,
       loading: state.Loading.loading,
-      formCompleted: state.Loading.formCompleted,
+      formCompleted: state.Loading.formCompleted
     };
   return {
     listingData: state.CreateListing,

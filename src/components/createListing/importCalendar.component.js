@@ -31,6 +31,7 @@ class ImportCalendar extends Component {
         booked: this.props.booked
       })
     }
+    console.log(this.state)
   }
 
   render() {
