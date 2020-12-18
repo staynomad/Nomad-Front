@@ -19,10 +19,18 @@ class ImportCalendar extends Component {
     })
   }
 
-  handleSubmit(e) {
+  async handleSubmit(e) {
     e.preventDefault()
-    // add url validation here
-    this.props.importCalendar(this.state.calendarURL, true)
+    if (this.state.calendarURL.indexOf(".ics") === -1) {
+      alert("Invalid URL. Please try again.")
+    }
+    else {
+      await this.props.importCalendar(this.state.calendarURL, true)
+      this.setState({
+        available: this.props.available,
+        booked: this.props.booked
+      })
+    }
   }
 
   render() {
@@ -49,6 +57,8 @@ const mapStateToProps = state => {
     const stateToReturn = {
         ...state,
         loading: state.Loading.loading,
+        available: state.Calendar.available,
+        booked: state.Calendar.booked
     };
     return stateToReturn;
 };

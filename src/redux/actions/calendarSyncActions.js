@@ -1,11 +1,10 @@
 import { app } from '../../utils/axiosConfig.js'
 import axios from 'axios'
-import { setLoadingTrue, setLoadingFalse } from "./loadingActions";
 import ical from 'ical'
 
 /* Types */
-const SET_AVAILABLE = 'VHomes/dates/SET_AVAILABLE';
-const SET_BOOKED = 'VHomes/dates/SET_BOOKED';
+export const SET_AVAILABLE = 'VHomes/dates/SET_AVAILABLE';
+export const SET_BOOKED = 'VHomes/dates/SET_BOOKED';
 
 /* Actions */
 const setAvailable = dates => ({ type: SET_AVAILABLE, dates });
@@ -14,7 +13,6 @@ const setBooked = dates => ({ type: SET_BOOKED, dates });
 /* Fetch Calls */
 // Called every time reservation calendar is displayed
 export const calendarSync = (token, listingId) => async dispatch => {
-    dispatch(setLoadingTrue())
     await app.get(`/listings/byId/${listingId}`)
       .then((res) => {
         if (res.data.calendarURL) {
@@ -24,13 +22,11 @@ export const calendarSync = (token, listingId) => async dispatch => {
       .catch(() => {
         alert('Unable to retrieve calendar. Please try again.') // change from alert to conditional render (see authActions for example)
       })
-    dispatch(setLoadingFalse());
 };
 
 // Called when new URL used to import calendar availability
 export const importCalendar = (calendarURL, newImport) => async dispatch => {
   // add some verification for URL here
-  dispatch(setLoadingTrue())
   // temporary solution: using allorigins proxy to bypass airbnb access-control-allow-origin server response header
   // https://gist.github.com/jimmywarting/ac1be6ea0297c16c477e17f8fbe51347
   // https://www.airbnb.com/calendar/ical/47099387.ics?s=ebf2806742045a636872a57a62b9e90e
@@ -75,9 +71,11 @@ export const importCalendar = (calendarURL, newImport) => async dispatch => {
         dispatch(setBooked(booked))
       }
 
-      if (newImport == false) {
+      if (newImport === false) {
         console.log("handle reservation sync")
       }
     })
-  dispatch(setLoadingFalse());
+    .catch((err) => {
+      alert("Unable to import calendar. Please try again.")
+    })
 }
