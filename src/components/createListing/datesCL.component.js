@@ -144,7 +144,7 @@ class DatesCL extends Component {
             )}
           </div>
           {this.state.invalid_date ? (
-            <h3 style={{ color: "red" }}>First selection must be after today</h3>
+            <div style={{ color: "red" }}>First selection must be after today</div>
           ) : (
             ""
           )}

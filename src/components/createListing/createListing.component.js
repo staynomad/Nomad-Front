@@ -93,6 +93,8 @@ class CreateListing extends Component {
       price: dataToSend.price,
       available: available,
       pictures: photoURLS,
+      calendarURL: this.props.calendarURL,
+      booked: this.props.booked
     };
     app
       .post(`/listings/createListing`, newListing, {
@@ -194,7 +196,9 @@ const mapStateToProps = (state) => {
       listingData: state.CreateListing,
       userSession: state.Login.userInfo.session,
       loading: state.Loading.loading,
-      formCompleted: state.Loading.formCompleted
+      formCompleted: state.Loading.formCompleted,
+      calendarURL: state.Calendar.calendarURL,
+      booked: state.Calendar.booked
     };
   return {
     listingData: state.CreateListing,
