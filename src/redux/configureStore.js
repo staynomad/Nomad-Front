@@ -13,6 +13,7 @@ import Login from './reducers/authReducers';
 import Listing from './reducers/searchListingReducer';
 import Reservations from './reducers/reservationReducer';
 import User from './reducers/userReducer';
+import Calendar from './reducers/calendarSyncReducer'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -24,7 +25,8 @@ const reducer = (history) => combineReducers({
     Login,
     Listing,
     Reservations,
-    User
+    User,
+    Calendar
 });
 
 const persistConfig = {
