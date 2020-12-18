@@ -22,7 +22,7 @@ class ImportCalendar extends Component {
   handleSubmit(e) {
     e.preventDefault()
     // add url validation here
-    this.props.importCalendar(this.state.calendarURL, true)
+    this.props.importCalendar(this.state.calendarURL)
   }
 
   render() {
@@ -55,7 +55,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        importCalendar: (calendarURL, newImport) => dispatch(importCalendar(calendarURL, newImport)),
+        importCalendar: (calendarURL) => dispatch(importCalendar(calendarURL)),
     };
 };
 
