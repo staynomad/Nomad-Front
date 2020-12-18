@@ -13,7 +13,6 @@
     "axios": "^0.20.0",
     "connected-react-router": "^6.8.0",
     "ical": "^0.8.0",
-    "ical2json": "^3.0.0",
     "react": "^16.13.1",
     "react-day-picker": "^7.4.8",
     "react-dom": "^16.13.1",
@@ -55,7 +54,5 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "html-loader": "^1.3.2"
-  }
+  "devDependencies": {}
 }
