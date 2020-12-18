@@ -18,7 +18,7 @@ export const calendarSync = (token, listingId) => async dispatch => {
     await app.get(`/listings/byId/${listingId}`)
       .then((res) => {
         if (res.data.calendarURL) {
-          importCalendar(res.data.calendarURL)
+          importCalendar(res.data.calendarURL, false)
         }
       })
       .catch(() => {
@@ -28,7 +28,7 @@ export const calendarSync = (token, listingId) => async dispatch => {
 };
 
 // Called when new URL used to import calendar availability
-export const importCalendar = (calendarURL) => async dispatch => {
+export const importCalendar = (calendarURL, newImport) => async dispatch => {
   // add some verification for URL here
   dispatch(setLoadingTrue())
   // temporary solution: using allorigins proxy to bypass airbnb access-control-allow-origin server response header
@@ -59,10 +59,25 @@ export const importCalendar = (calendarURL) => async dispatch => {
             latestStart = availableStart[i]
           }
         }
-        // TODO: parse reserved dates and blocked dates
+        dispatch(setAvailable([earliestEnd.toISOString(), latestStart.toISOString()]))
+        // Set blocked days from ical file as "booked"
+        var booked = []
+        for (let i = 0; i < availableStart.length; i++) {
+          if (availableEnd[i].getTime() === earliestEnd.getTime() || availableStart[i].getTime() === latestStart.getTime()) {
+            continue
+          }
+          booked.push({
+            start: availableStart[i].toISOString().substring(0, availableStart[i].toISOString().indexOf("T")),
+            end: availableEnd[i].toISOString().substring(0, availableEnd[i].toISOString().indexOf("T")),
+            reservationId: null
+          })
+        }
+        dispatch(setBooked(booked))
       }
-      console.log([earliestEnd.toISOString(), latestStart.toISOString()])
-      dispatch(setAvailable([earliestEnd.toISOString(), latestStart.toISOString()]))
+
+      if (newImport == false) {
+        console.log("handle reservation sync")
+      }
     })
   dispatch(setLoadingFalse());
 }
