@@ -22,7 +22,7 @@ class ImportCalendar extends Component {
   handleSubmit(e) {
     e.preventDefault()
     // add url validation here
-    this.props.importCalendar(this.state.calendarURL)
+    this.props.importCalendar(this.state.calendarURL, true)
   }
 
   render() {
