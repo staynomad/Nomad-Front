@@ -11,6 +11,7 @@ import {
 } from "../../redux/actions/loadingActions";
 import ImportCalendar from "./importCalendar.component.js";
 import { newListing } from "../../redux/actions/createListingActions";
+import { importCalendar } from "../../redux/actions/calendarSyncActions";
 
 class DatesCL extends Component {
   constructor(props) {
@@ -19,6 +20,8 @@ class DatesCL extends Component {
     this.handleDayClick = this.handleDayClick.bind(this);
     this.handleResetClick = this.handleResetClick.bind(this);
     this.handleImportToggle = this.handleImportToggle.bind(this);
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount() {
@@ -72,31 +75,53 @@ class DatesCL extends Component {
     console.log(this.state.displayImport);
   }
 
+  handleChange(e) {
+    this.setState({
+      calendarURL: e.target.value
+    })
+  }
+
+  async handleSubmit(e) {
+    e.preventDefault()
+    if (this.state.calendarURL.indexOf(".ics") === -1) {
+      alert("Invalid URL. Please try again.")
+    }
+    else {
+      await this.props.importCalendar(this.state.calendarURL, true)
+      this.setState({
+        available: this.props.available,
+        booked: this.props.booked
+      })
+    }
+  }
+
   render() {
     const { from, to } = this.state.date_range;
     const modifiers = { start: from, end: to };
     return (
       <>
-        {this.state.displayImport ? (
-          <div>
-            <ImportCalendar />
-            <br />
-            <p
-              className="import-calendar"
-              style={{
-                textDecoration: "underline",
-                cursor: "pointer",
-                paddingLeft: "3%",
-                paddingRight: "1%",
-              }}
-              onClick={this.handleImportToggle}
-            >
-              Select
-            </p>
-            <p className="import-calendar">dates instead</p>
-            <br />
-          </div>
-        ) : (
+
+      {
+        this.state.displayImport ?
+
+        <div>
+          <form onSubmit={this.handleSubmit}>
+            <input
+              type="text"
+              placeholder="Calendar URL"
+              value={this.state.calendarURL}
+              onChange={this.handleChange}
+            />
+            <input
+              type="submit"
+              value="import"
+            />
+          </form>
+          <br />
+          <p className="import-calendar" style={{textDecoration: "underline", cursor: "pointer", paddingLeft: "3%", paddingRight: "1%"}} onClick={this.handleImportToggle}>Select</p>
+          <p className="import-calendar">dates instead</p>
+          <br />
+        </div> : 
           <div>
             <h1>Availability</h1>
             <div className="questionText">When is your property available?</div>
@@ -171,7 +196,11 @@ class DatesCL extends Component {
 }
 const mapStateToProps = (state) => {
   return {
+
     listingData: state.CreateListing,
+    available: state.Calendar.available,
+    booked: state.Calendar.booked
+
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -180,6 +209,7 @@ const mapDispatchToProps = (dispatch) => {
 
     completeForm: () => dispatch(completeForm()),
     incompleteForm: () => dispatch(incompleteForm()),
+    importCalendar: (calendarURL) => dispatch(importCalendar(calendarURL)),
   };
 };
 export default withRouter(
