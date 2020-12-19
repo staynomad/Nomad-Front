@@ -6,6 +6,8 @@ import {
   incompleteForm,
   completeForm,
 } from "../../redux/actions/loadingActions";
+import { newListing } from "../../redux/actions/createListingActions";
+
 class PricesCL extends Component {
   constructor(props) {
     super(props);
@@ -16,10 +18,10 @@ class PricesCL extends Component {
   }
 
   oldData = () => {
-    return this.props.listingData.CreateListing.state.price;
+    return this.props.listingData.price;
   };
   componentDidMount() {
-    const oldPrice = this.props.listingData.CreateListing.state.price;
+    const oldPrice = this.props.listingData.price;
     if (oldPrice === "") {
       this.props.incompleteForm();
     } else {
@@ -33,7 +35,7 @@ class PricesCL extends Component {
       this.setState({
         [name]: value,
       });
-      this.props.handle(value, name);
+      this.props.newListing({ value: value, name: "price" });
     }
     if (value === "") {
       this.props.incompleteForm();
@@ -61,11 +63,6 @@ class PricesCL extends Component {
           ) : (
             ""
           )}
-          {this.state.price ? (
-            <p>After taxes and fees: ${this.state.price} per night</p>
-          ) : (
-            ""
-          )}
         </div>
       </div>
     );
@@ -73,11 +70,12 @@ class PricesCL extends Component {
 }
 const mapStateToProps = (state) => {
   return {
-    listingData: state,
+    listingData: state.CreateListing,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
+    newListing: (updatedData) => dispatch(newListing(updatedData)),
     completeForm: () => dispatch(completeForm()),
     incompleteForm: () => dispatch(incompleteForm()),
   };
@@ -85,3 +83,10 @@ const mapDispatchToProps = (dispatch) => {
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(PricesCL)
 );
+/* 
+          {this.state.price ? (
+            <p>After taxes and fees: ${this.state.price} per night</p>
+          ) : (
+            ""
+          )}
+          */

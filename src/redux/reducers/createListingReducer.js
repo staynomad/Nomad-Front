@@ -1,16 +1,38 @@
-import { UPDATE_INFO, FETCH_CURRENT } from "./createListingTypes";
+import { NEW_LISTING } from "./createListingTypes";
 ///location: {street: "",city: "",state: "",country: "",zipcode: "",aptnum: ""}
-export default function (state = {}, action) {
+const initialLocation = {
+  title: "",
+  location: {
+    street: "",
+    city: "",
+    state: "",
+    country: "",
+    zipcode: "",
+    aptnum: "",
+  },
+  description: "",
+  details: {
+    beds: "",
+    baths: "",
+    maxpeople: "",
+  },
+  price: "",
+  photos: { pictures: [], temp_image_url: [] },
+  rules: "",
+  dates: {
+    start_date: null,
+    end_date: null,
+    today: new Date(),
+  },
+};
+export default function (state = initialLocation, action) {
   switch (action.type) {
-    case UPDATE_INFO:
+    case NEW_LISTING:
+      const name = action.payload.name;
+      const value = action.payload.value;
       return {
         ...state,
-        state: action.payload,
-      };
-
-    case FETCH_CURRENT:
-      return {
-        createListing: action.payload,
+        [name]: value,
       };
     default:
       return state;

@@ -7,6 +7,8 @@ import {
   incompleteForm,
   completeForm,
 } from "../../redux/actions/loadingActions";
+import { newListing } from "../../redux/actions/createListingActions";
+
 class Location extends Component {
   constructor(props) {
     super(props);
@@ -14,8 +16,9 @@ class Location extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
   oldData = () => {
-    return this.props.listingData.CreateListing.state.location;
+    return this.props.listingData.location;
   };
+  /* 
   componentDidMount() {
     const oldAddy = this.props.listingData.CreateListing.state.location.street;
     if (oldAddy === "") {
@@ -24,7 +27,7 @@ class Location extends Component {
       this.props.completeForm();
     }
   }
-  // this.props.listingData.CreateListing.state.location
+  */
   handleChange(e) {
     const { name, value } = e.target;
     if (isNaN(value) && name === "zipcode") {
@@ -42,7 +45,7 @@ class Location extends Component {
     if (value === "") {
       this.props.incompleteForm();
     }
-    this.props.handle(updatedData, "location");
+    this.props.newListing({ name: "location", value: updatedData });
   }
   render() {
     return (
@@ -139,11 +142,12 @@ class Location extends Component {
 }
 const mapStateToProps = (state) => {
   return {
-    listingData: state,
+    listingData: state.CreateListing,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
+    newListing: (updatedData) => dispatch(newListing(updatedData)),
     completeForm: () => dispatch(completeForm()),
     incompleteForm: () => dispatch(incompleteForm()),
   };

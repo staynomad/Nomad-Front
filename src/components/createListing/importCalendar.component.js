@@ -19,10 +19,19 @@ class ImportCalendar extends Component {
     })
   }
 
-  handleSubmit(e) {
+  async handleSubmit(e) {
     e.preventDefault()
-    // add url validation here
-    this.props.importCalendar(this.state.calendarURL, true)
+    if (this.state.calendarURL.indexOf(".ics") === -1) {
+      alert("Invalid URL. Please try again.")
+    }
+    else {
+      await this.props.importCalendar(this.state.calendarURL, true)
+      this.setState({
+        available: this.props.available,
+        booked: this.props.booked
+      })
+    }
+    console.log(this.state)
   }
 
   render() {
@@ -30,12 +39,17 @@ class ImportCalendar extends Component {
       <div className="container">
         <form onSubmit={this.handleSubmit}>
           <input
+            className="input login-input"
+            style={{ paddingBottom: "0", marginBottom: "0" }}
             type="text"
             placeholder="Calendar URL"
             value={this.state.calendarURL}
             onChange={this.handleChange}
           />
+          <br />
           <input
+            className="btn green"
+            style={{ width: "auto" }}
             type="submit"
             value="import"
           />
@@ -49,13 +63,15 @@ const mapStateToProps = state => {
   const stateToReturn = {
     ...state,
     loading: state.Loading.loading,
+    available: state.Calendar.available,
+    booked: state.Calendar.booked
   };
   return stateToReturn;
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    importCalendar: (calendarURL, newImport) => dispatch(importCalendar(calendarURL, newImport)),
+    importCalendar: (calendarURL) => dispatch(importCalendar(calendarURL)),
   };
 };
 
