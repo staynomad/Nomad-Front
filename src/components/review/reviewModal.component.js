@@ -14,7 +14,7 @@ const ReviewPopup = (props) => {
     };
 
     return (
-        <div id="review-container">
+        <div className="container" id="review-container">
             <p>Would you like to leave a review?</p>
             <CustomButton onClick={handleRedirect}>Yes</CustomButton>
             <CustomButton onClick={handleCloseModal}>No thanks</CustomButton>

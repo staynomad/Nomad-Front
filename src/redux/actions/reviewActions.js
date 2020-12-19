@@ -28,4 +28,8 @@ export const submitReview = (
         dispatch(setLoadingFalse());
         dispatch(push(`/listing/${listingId}`));
     }
+    else {
+        alert(submitReviewRes.data.errors)
+        dispatch(window.location.reload())
+    }
 };
