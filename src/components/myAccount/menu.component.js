@@ -169,6 +169,7 @@ class LeftMenu extends Component {
                             key={reservation._id}
                             reservation={reservation}
                             setReviewModal={this.props.setReviewModal}
+                            setReviewListingId={this.props.setReviewListingId}
                           />
                         ))
                     ) : null}

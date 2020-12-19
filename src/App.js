@@ -29,6 +29,7 @@ function App() {
   const history = useHistory();
   const [reservationModal, setReservationModal] = useState(false);
   const [reviewModal, setReviewModal] = useState(false);
+  const [reviewListingId, setReviewListingId] = useState("");
 
   return (
     <>
@@ -42,9 +43,10 @@ function App() {
             <Route path="/SignUp" exact component={Signup} />
             <Route path="/CreateListing" exact component={CreateListing} />
             <Route path="/Matches" exact component={Matches} history={history} />
-            <Route path="/MyAccount" exact component={MyAccount} setReviewModal={setReviewModal} />
+            <Route path="/MyAccount" exact component={() => <MyAccount setReviewModal={setReviewModal} setReviewListingId={setReviewListingId} />} />
             <Route path="/Questionnaire" exact component={Questionnaire} />
-            <Route path="/Listing/:id" exact component={ListingPage} />
+            <Route path="/Listing/:id" exact component={() => <ListingPage review={false} />} />
+            <Route path="/Listing/:id/review" exact component={() => <ListingPage review={true} />} />
             <Route path="/EditListing/:listingId" exact component={EditListing} />
             <Route path="/PaymentSuccess" exact component={PaymentSuccess} />
             <Route path="/AccountVerification/:userId" exact component={AccountVerification} />
@@ -54,7 +56,7 @@ function App() {
           </Switch>
         </div>
         {reservationModal ? <ReservationLookup reservationModal={reservationModal} setReservationModal={setReservationModal} /> : null}
-        {reviewModal ? <ReviewPopup setReviewModal={setReviewModal} /> : null}
+        {reviewModal ? <ReviewPopup setReviewModal={setReviewModal} reviewListingId={reviewListingId} /> : null}
         <Footer />
       </div>
     </>

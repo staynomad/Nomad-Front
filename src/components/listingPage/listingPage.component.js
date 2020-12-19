@@ -8,9 +8,10 @@ import { withRouter } from 'react-router-dom'
 import { loadStripe } from "@stripe/stripe-js"
 import DayPicker, { DateUtils } from 'react-day-picker'
 import ImageGallery from 'react-image-gallery'
+import StarRatings from 'react-star-ratings';
 import 'react-day-picker/lib/style.css'
 import './listingPage.css'
-
+import { submitReview } from '../../redux/actions/reviewActions';
 
 const stripePublicKey =
   "pk_test_51HqRrRImBKNBYsooNTOTLagbqd8QUGaK6BeGwy6k2pQAJxkFF7NRwTT3ksBwyGVmq8UqhNVvKQS7Vlb69acFFCvq00hxgBuZhh";
@@ -21,13 +22,18 @@ class ListingPage extends Component {
   constructor(props) {
     super(props);
     this.handleSessionRedirect = this.handleSessionRedirect.bind(this);
+    this.handleChangeRating = this.handleChangeRating.bind(this);
     this.handleDayClick = this.handleDayClick.bind(this);
     this.handleResetClick = this.handleResetClick.bind(this);
+    this.handleReviewChange = this.handleReviewChange.bind(this);
+    this.handleReviewSubmit = this.handleReviewSubmit.bind(this);
     this.state = this.getInitialState();
     this.setState({
       listingPictures: [],
       isLoading: true,
       outOfRange: false,
+      rating: 0,
+      review: "",
     });
   }
 
@@ -212,11 +218,29 @@ class ListingPage extends Component {
     })
     const range = DateUtils.addDayToRange(day, this.state);
     this.setState(range);
-  }
+  };
 
   handleResetClick() {
     this.setState(this.getInitialState());
-  }
+  };
+
+  handleChangeRating(newRating, name) {
+    return this.setState({ [name]: newRating });
+  };
+
+  handleReviewChange(e) {
+    const { name, value } = e.target;
+    return this.setState({ [name]: value });
+  };
+
+  handleReviewSubmit(e) {
+    e.preventDefault();
+    const { rating, review } = this.state;
+    const listingId = this.props.match.params.id;
+    const token = this.props.userSession.token;
+
+    this.props.submitReview(rating, review, listingId, token)
+  };
 
   render() {
     const { from, to } = this.state;
@@ -258,16 +282,16 @@ class ListingPage extends Component {
               <div className="listing-calendar">
                 <div className="spacer_xs"></div>
                 <div style={{ "align-text": "center" }}>
-                {
-                  this.state.outOfRange ?
-                  'Selected day is not available.' :
-                  <div>{!from && !to && 'Please select the first day.'}
-                  {from && !to && 'Please select the last day.'}
-                  {from &&
-                    to &&
-                    `From ${from.toLocaleDateString()} to
+                  {
+                    this.state.outOfRange ?
+                      'Selected day is not available.' :
+                      <div>{!from && !to && 'Please select the first day.'}
+                        {from && !to && 'Please select the last day.'}
+                        {from &&
+                          to &&
+                          `From ${from.toLocaleDateString()} to
                     ${to.toLocaleDateString()}`}{" "}</div>
-                }
+                  }
                 </div>
                 <DayPicker
                   className="Selectable"
@@ -277,7 +301,6 @@ class ListingPage extends Component {
                   disabledDays={this.state.listingBookedDays}
                   inputProps={{ required: true }}
                 />
-
                 <div className="spacer_xs"></div>
                 <div className="reserve-now">
                   {this.state.from && this.state.to ? (
@@ -292,6 +315,28 @@ class ListingPage extends Component {
                   ) : null}
                 </div>
               </div>
+              {this.props.review ? (
+                <>
+                  <form onSubmit={this.handleReviewSubmit}>
+                    <StarRatings
+                      rating={this.state.rating}
+                      changeRating={this.handleChangeRating}
+                      starHoverColor="#00B183"
+                      starRatedColor="#00B183"
+                      name='rating'
+                    />
+                    <input
+                      type="text"
+                      name="review"
+                      placeholder="e.g. This was a great place to stay!"
+                      value={this.state.review}
+                      onChange={this.handleReviewChange}
+                      required
+                    />
+                    <button className="btn green" type="submit">Submit Review</button>
+                  </form>
+                </>
+              ) : null}
             </div>
         }
       </div>
@@ -299,12 +344,21 @@ class ListingPage extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  if (state.Login.userInfo)
-    return {
-      userSession: state.Login.userInfo.session,
-    };
-  return {};
+const mapStateToProps = state => {
+  let stateToReturn = { ...state };
+  if (state.Login.userInfo) stateToReturn['userSession'] = state.Login.userInfo.session;
+  return stateToReturn;
 };
 
-export default withRouter(connect(mapStateToProps)(ListingPage));
+const mapDispatchToProps = dispatch => {
+  return {
+    submitReview: (...args) => dispatch(submitReview(...args)),
+  }
+}
+
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(
+  ListingPage
+));

@@ -7,10 +7,10 @@ const ReviewPopup = (props) => {
         return props.setReviewModal(false);
     }
 
-
+    // Redirect to review component
     const handleRedirect = async () => {
-        // Redirect to review component
-        return;
+        props.setReviewModal(false);
+        return props.history.push(`/listing/${props.reviewListingId}/review`);
     };
 
     return (
