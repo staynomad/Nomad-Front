@@ -29,7 +29,6 @@ class CreateListing extends Component {
       loading_spinner: false,
       nextToggle: true,
     };
-    this.togglePage = this.togglePage.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.postRequest = this.postRequest.bind(this);
@@ -94,7 +93,7 @@ class CreateListing extends Component {
       available: available,
       pictures: photoURLS,
       calendarURL: this.props.calendarURL,
-      booked: this.props.booked
+      booked: this.props.booked,
     };
     app
       .post(`/listings/createListing`, newListing, {
@@ -121,6 +120,14 @@ class CreateListing extends Component {
       <DatesCL />,
       <ConfirmSubmission />,
     ];
+    const pageList = pages.map((page) => {
+      return (
+        <div>
+          {page}
+          <br />
+        </div>
+      );
+    });
     return (
       <div className="fullListingBackground">
         <div className="overallListingForm">
@@ -128,7 +135,7 @@ class CreateListing extends Component {
             <div id="spinner" />
           ) : (
             <form>
-              <div>{pages[this.state.formval]}</div>
+              <div>{pageList}</div>
               <div>
                 {!this.state.nextToggle ? (
                   <span style={{ color: "red" }}>
@@ -138,55 +145,18 @@ class CreateListing extends Component {
                   ""
                 )}
                 <br />
-                {this.state.formval > 0 ? (
-                  <input
-                    className="changebut"
-                    type="button"
-                    onClick={this.togglePage}
-                    value="Back"
-                  />
-                ) : (
-                  ""
-                )}
-
-                {this.state.formval < this.state.maxpages - 1 ? (
-                  <input
-                    className="changebut"
-                    type="button"
-                    onClick={this.togglePage}
-                    value="Next"
-                  />
-                ) : (
-                  <input
-                    className="changebut"
-                    type="button"
-                    onClick={this.onSubmit}
-                    value="Submit"
-                  />
-                )}
+                <input
+                  className="changebut"
+                  type="button"
+                  onClick={this.onSubmit}
+                  value="Submit"
+                />
               </div>
             </form>
           )}
         </div>
       </div>
     );
-  }
-
-  togglePage(e) {
-    let temp = this.state.formval;
-    let validToggle = false;
-    if (e.target.value === "Next" && this.props.formCompleted) {
-      temp++;
-      validToggle = true;
-    } else if (e.target.value === "Back") {
-      temp--;
-      validToggle = true;
-    }
-
-    this.setState({
-      formval: temp,
-      nextToggle: validToggle,
-    });
   }
 }
 
@@ -198,7 +168,7 @@ const mapStateToProps = (state) => {
       loading: state.Loading.loading,
       formCompleted: state.Loading.formCompleted,
       calendarURL: state.Calendar.calendarURL,
-      booked: state.Calendar.booked
+      booked: state.Calendar.booked,
     };
   return {
     listingData: state.CreateListing,
