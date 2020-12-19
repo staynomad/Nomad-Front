@@ -39,12 +39,17 @@ class ImportCalendar extends Component {
       <div className="container">
         <form onSubmit={this.handleSubmit}>
           <input
+            className="input login-input"
+            style={{paddingBottom: "0", marginBottom: "0"}}
             type="text"
             placeholder="Calendar URL"
             value={this.state.calendarURL}
             onChange={this.handleChange}
           />
+          <br />
           <input
+            className="btn green"
+            style={{width: "auto"}}
             type="submit"
             value="import"
           />

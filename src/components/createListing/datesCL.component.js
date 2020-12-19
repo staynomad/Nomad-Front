@@ -82,6 +82,9 @@ class DatesCL extends Component {
   }
 
   async handleSubmit(e) {
+    this.setState({
+      importLoading: true
+    })
     e.preventDefault()
     if (this.state.calendarURL.indexOf(".ics") === -1) {
       alert("Invalid URL. Please try again.")
@@ -95,6 +98,9 @@ class DatesCL extends Component {
       this.props.newListing({ value: cleaned_dates, name: "dates" });
       this.props.completeForm();
     }
+    this.setState({
+      importLoading: false
+    })
   }
 
   render() {
@@ -108,15 +114,24 @@ class DatesCL extends Component {
         <div>
           <form onSubmit={this.handleSubmit}>
             <input
+              className="input login-input"
+              style={{paddingBottom: "0", marginBottom: "0"}}
               type="text"
               placeholder="Calendar URL"
               value={this.state.calendarURL}
               onChange={this.handleChange}
             />
-            <input
-              type="submit"
-              value="import"
-            />
+            <br />
+            {
+              this.state.importLoading ?
+              <div id="spinner"></div> :
+              <input
+                className="btn green"
+                style={{width: "auto"}}
+                type="submit"
+                value="import"
+              />
+            }
           </form>
           <br />
           <p className="import-calendar" style={{textDecoration: "underline", cursor: "pointer", paddingLeft: "3%", paddingRight: "1%"}} onClick={this.handleImportToggle}>Select</p>
