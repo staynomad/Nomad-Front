@@ -7,6 +7,8 @@ import {
   incompleteForm,
   completeForm,
 } from "../../redux/actions/loadingActions";
+import { newListing } from "../../redux/actions/createListingActions";
+
 class DetailsCL extends Component {
   constructor(props) {
     super(props);
@@ -14,10 +16,10 @@ class DetailsCL extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
   oldData = () => {
-    return this.props.listingData.CreateListing.state.details;
+    return this.props.listingData.details;
   };
   componentDidMount() {
-    const oldDetails = this.props.listingData.CreateListing.state.details;
+    const oldDetails = this.props.listingData.details;
     this.props.completeForm();
     for (let item in oldDetails) {
       if (oldDetails[item] === "") {
@@ -43,7 +45,7 @@ class DetailsCL extends Component {
       ...this.state,
       [name]: value,
     };
-    this.props.handle(updatedData, "details");
+    this.props.newListing({ value: updatedData, name: "details" });
   }
   render() {
     return (
@@ -105,11 +107,12 @@ class DetailsCL extends Component {
 */
 const mapStateToProps = (state) => {
   return {
-    listingData: state,
+    listingData: state.CreateListing,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
+    newListing: (updatedData) => dispatch(newListing(updatedData)),
     completeForm: () => dispatch(completeForm()),
     incompleteForm: () => dispatch(incompleteForm()),
   };

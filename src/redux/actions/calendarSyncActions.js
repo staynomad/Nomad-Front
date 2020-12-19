@@ -5,10 +5,12 @@ import ical from 'ical'
 /* Types */
 export const SET_AVAILABLE = 'VHomes/dates/SET_AVAILABLE';
 export const SET_BOOKED = 'VHomes/dates/SET_BOOKED';
+export const SET_CALENDAR_URL = 'VHomes/dates/SET_CALENDAR_URL'
 
 /* Actions */
 const setAvailable = dates => ({ type: SET_AVAILABLE, dates });
 const setBooked = dates => ({ type: SET_BOOKED, dates });
+const setCalendarURL = dates => ({ type: SET_CALENDAR_URL, dates })
 
 /* Fetch Calls */
 // Called every time reservation calendar is displayed
@@ -70,6 +72,7 @@ export const importCalendar = (calendarURL, newImport) => async dispatch => {
         }
         dispatch(setBooked(booked))
       }
+      dispatch(setCalendarURL(calendarURL))
 
       if (newImport === false) {
         console.log("handle reservation sync")

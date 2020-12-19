@@ -1,8 +1,8 @@
-import { UPDATE_INFO } from "../reducers/createListingTypes";
+import { NEW_LISTING } from "../reducers/createListingTypes";
 
-export const updateInfo = (updateData) => (dispatch) => {
+export const newListing = (updateData) => (dispatch) => {
   dispatch({
-    type: UPDATE_INFO,
+    type: NEW_LISTING,
     payload: updateData,
   });
 };

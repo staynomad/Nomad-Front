@@ -6,6 +6,7 @@ import {
   completeForm,
 } from "../../redux/actions/loadingActions";
 import "./createListing.css";
+import { newListing } from "../../redux/actions/createListingActions";
 
 class Description extends Component {
   constructor(props) {
@@ -18,7 +19,7 @@ class Description extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
   componentDidMount() {
-    const newDesc = this.props.listingData.CreateListing.state.description;
+    const newDesc = this.props.listingData.description;
     const dif = this.state.maxchars - newDesc.length;
     if (newDesc === "") {
       this.props.incompleteForm();
@@ -44,7 +45,7 @@ class Description extends Component {
       this.props.incompleteForm();
     }
 
-    this.props.handle(value, name);
+    this.props.newListing({ value: value, name: "description" });
   }
   render() {
     return (
@@ -71,11 +72,12 @@ class Description extends Component {
 }
 const mapStateToProps = (state) => {
   return {
-    listingData: state,
+    listingData: state.CreateListing,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
+    newListing: (updatedData) => dispatch(newListing(updatedData)),
     completeForm: () => dispatch(completeForm()),
     incompleteForm: () => dispatch(incompleteForm()),
   };

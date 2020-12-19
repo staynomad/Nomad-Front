@@ -3,12 +3,10 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 //import { getSignedURL } from "./photoUploadRequests";
 import {
-  setLoadingTrue,
-  setLoadingFalse,
   incompleteForm,
   completeForm,
 } from "../../../redux/actions/loadingActions";
-import { updateInfo } from "../../../redux/actions/createListingActions";
+import { newListing } from "../../../redux/actions/createListingActions";
 
 class PhotoUpload extends Component {
   constructor(props) {
@@ -54,14 +52,7 @@ class PhotoUpload extends Component {
         pictures: cur_images,
         temp_image_url: cur_images_urls,
       };
-      /*
-      getSignedURL(
-        currentImage,
-        "vhomes-images-bucket",
-        this.props.setLoadingFalse,
-
-      );*/
-      this.props.handle(temp, "photos");
+      this.props.newListing({ value: temp, name: "photos" });
     } else {
       this.setState({
         invalid_type: true,
@@ -82,13 +73,15 @@ class PhotoUpload extends Component {
       );
     });
   }
+
   render() {
     return (
       <div>
         <h1>Pictures</h1>
         <div className="questionText">
           Share some images of your property!
-        </div> <br />
+        </div>{" "}
+        <br />
         <div>
           {this.state.invalid_type ? (
             <h2 style={{ color: "red" }}>Must be PNG, JPG, or JPEG format</h2>
@@ -106,15 +99,12 @@ class PhotoUpload extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    photoData: state.CreateListing.state.photos,
-    userSession: state.Login.userInfo.session,
+    photoData: state.CreateListing.photos,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateInfo: (toUpdate) => dispatch(updateInfo(toUpdate)),
-    setLoadingFalse: () => dispatch(setLoadingFalse()),
-    setLoadingTrue: () => dispatch(setLoadingTrue()),
+    newListing: (toUpdate) => dispatch(newListing(toUpdate)),
     completeForm: () => dispatch(completeForm()),
     incompleteForm: () => dispatch(incompleteForm()),
   };
