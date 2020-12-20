@@ -82,7 +82,7 @@ const ListingCard = (props) => {
                   <b>Rating:</b> {rating}
                 </div>
                 <div>
-                  <b>Price:</b> ${listing.price}/night
+                  <b>Price:</b> ${(listing.price + listing.tax).toFixed(2)}/night
             </div>
                 <div className="spacer_xxs" />
               </div>
