@@ -15,7 +15,7 @@ const Search = (props) => {
     <div className="overallsearch">
       <input
         type="text"
-        placeholder="search for your next stay"
+        placeholder="find your next stay"
         className="inputtextbox"
         onChange={(e) => setItemToSearch(e.target.value)}
         value={itemToSearch}
