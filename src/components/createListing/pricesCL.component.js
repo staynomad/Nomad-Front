@@ -59,7 +59,10 @@ class PricesCL extends Component {
             required
           />
           {this.state.price ? (
-            <p>List Price: ${this.state.price} per night</p>
+            <div>
+              <p>List Price: ${parseFloat(this.state.price).toFixed(2)} per night</p>
+              <p>Tax: ${(this.state.price * .1).toFixed(2)}</p>
+            </div>
           ) : (
             ""
           )}
@@ -83,7 +86,7 @@ const mapDispatchToProps = (dispatch) => {
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(PricesCL)
 );
-/* 
+/*
           {this.state.price ? (
             <p>After taxes and fees: ${this.state.price} per night</p>
           ) : (

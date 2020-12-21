@@ -39,7 +39,8 @@ class ConfirmSubmission extends Component {
           </p>
 
           <h2 className="header-text">Price</h2>
-          <p className="confirm-text">${this.props.data.price} per night</p>
+          <p className="confirm-text">${parseFloat(this.props.data.price).toFixed(2)} per night</p>
+          <p className="confirm-text">${(this.props.data.price * .1).toFixed(2)} tax</p>
 
           <h2 className="header-text">Dates</h2>
           <p className="confirm-text">

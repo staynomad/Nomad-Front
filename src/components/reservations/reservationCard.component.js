@@ -26,6 +26,8 @@ const ReservationCard = (props) => {
   const [checkState, setCheckState] = useState(null);
   const { reservation } = props;
 
+  console.log(props.setReviewModal)
+
   useEffect(() => {
     app.get('/listings/byId/' + reservation.listing)
       .then((res) => {
@@ -39,8 +41,9 @@ const ReservationCard = (props) => {
   const handleCheckConfirm = () => {
     setConfirmCheck(false);
     if (checkState === 'out') {
-      props.checkOutOfReservation(props.userSession.token, reservation._id);
+      props.setReviewListingId(reservation.listing);
       props.setReviewModal(true);
+      props.checkOutOfReservation(props.userSession.token, reservation._id);
       return;
     };
     if (checkState === 'in') return props.checkInToReservation(props.userSession.token, reservation._id);

@@ -1,6 +1,5 @@
 // https://stripe.com/docs/checkout/integration-builder
 
-
 import React, { Component } from 'react'
 import { app } from '../../utils/axiosConfig.js'
 import { connect } from 'react-redux'
@@ -15,7 +14,6 @@ import { submitReview } from '../../redux/actions/reviewActions';
 
 const stripePublicKey =
   "pk_test_51HqRrRImBKNBYsooNTOTLagbqd8QUGaK6BeGwy6k2pQAJxkFF7NRwTT3ksBwyGVmq8UqhNVvKQS7Vlb69acFFCvq00hxgBuZhh";
-
 const stripePromise = loadStripe(stripePublicKey);
 
 class ListingPage extends Component {
@@ -54,6 +52,7 @@ class ListingPage extends Component {
           listingBeds: parseInt(res.data.listing.details.beds),
           listingMaxPeople: parseInt(res.data.listing.details.maxpeople),
           listingPrice: res.data.listing.price,
+          listingTax: res.data.listing.tax,
           listingStartDate: res.data.listing.available[0],
           listingEndDate: res.data.listing.available[1],
           listingUser: res.data.listing.userId,
@@ -115,14 +114,10 @@ class ListingPage extends Component {
       alert("Please log in to create a reservation.");
       return this.props.history.push("/login");
     };
-    const selectedStartDay = JSON.stringify(this.state.from).substring(
-      1,
-      JSON.stringify(this.state.from).indexOf("T")
-    );
-    const selectedEndDay = JSON.stringify(this.state.to).substring(
-      1,
-      JSON.stringify(this.state.to).indexOf("T")
-    );
+    const selectedStartDay = JSON.stringify(this.state.from)
+      .substring(1, JSON.stringify(this.state.from).indexOf("T"));
+    const selectedEndDay = JSON.stringify(this.state.to)
+      .substring(1, JSON.stringify(this.state.to).indexOf("T"));
     const data = {
       user: this.props.userSession.userId, // get userId from redux store
       listing: this.props.match.params.id,
@@ -270,7 +265,7 @@ class ListingPage extends Component {
                   Beds: {this.state.listingBeds} <br />
                   Baths: {this.state.listingBaths} <br />
                   Max Guests: {this.state.listingMaxPeople} <br />
-                  Price: ${this.state.listingPrice}/Night
+                  Price: ${(this.state.listingPrice + this.state.listingTax).toFixed(2)}/Night
                 <div className="spacer_xs"></div>
                   <a href={`mailto:${this.state.hostEmail}`}>
                     <button className="btn green" type="button"> Contact Host </button>

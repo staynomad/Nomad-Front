@@ -145,10 +145,12 @@ class LeftMenu extends Component {
             const curDate = new Date().getTime();
             // Compare to check if curDate is past expired
             let isExpired = curDate > expireDateConverted;
-            if (!reservation.isActive) isExpired = true;
+            if (!reservation.active) isExpired = true;
 
             if (isExpired) reservations.expired.push(reservation);
             else reservations.active.push(reservation);
+
+            console.log(reservations)
           });
         }
         return (
