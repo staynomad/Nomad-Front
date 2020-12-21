@@ -70,8 +70,8 @@ class ListingPage extends Component {
         // Set default disabled days based on booked days in listing object
         let startDate = new Date(this.state.listingStartDate)
         let endDate = new Date(this.state.listingEndDate)
-        endDate.setDate(endDate.getDate())
-        startDate.setDate(startDate.getDate())
+        endDate.setDate(endDate.getDate() + 1)
+        startDate.setDate(startDate.getDate() + 1)
         let bookedDays = [{
           after: endDate,
           before: startDate
@@ -187,7 +187,7 @@ class ListingPage extends Component {
   handleDayClick(day) {
     // Check listing availability dates separately
     var startListingDate = new Date(this.state.listingBookedDays[0].before)
-    startListingDate.setDate(startListingDate.getDate())
+    startListingDate.setDate(startListingDate.getDate() - 1)
     var endListingDate = new Date(this.state.listingBookedDays[0].after)
     endListingDate.setDate(endListingDate.getDate())
     if (day < startListingDate || day > endListingDate) {

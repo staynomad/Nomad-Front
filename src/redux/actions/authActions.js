@@ -16,7 +16,7 @@ export const submitLogin = (userLogin) => async dispatch => {
     };
     const loginRes = await handleReq("/login", "POST", headers, userLogin);
 
-    if (loginRes && loginRes.status === 201) {
+    if (loginRes && loginRes.status === 200) {
         const { isHost, token, userId } = loginRes.data;
         dispatch(setUserSession(isHost, token, userId));
     } else {

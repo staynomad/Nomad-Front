@@ -63,7 +63,7 @@ const ReservationCard = (props) => {
                   <div className='listing-information'>
                     <img className='listing-image' src={listing.listing.pictures[0]} alt={listing.listing.title} />
                     <b>{listing.listing.title}</b>
-                    {listing.listing.location.street}, {listing.listing.location.city}, {listing.listing.location.state}, {listing.listing.location.zipcode}, {listing.listing.location.country}
+                    {listing.listing.location.street}, {listing.listing.location.city}, {listing.listing.location.state}, {listing.listing.location.zipcode}
                     <div>
                       <b>Check-In: </b> {reservation.days[0].substring(5)} <br />
                       <b>Check-Out: </b> {reservation.days[1].substring(5)}

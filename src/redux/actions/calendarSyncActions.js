@@ -57,7 +57,7 @@ export const importCalendar = (calendarURL, newImport) => async dispatch => {
             latestStart = availableStart[i]
           }
         }
-        dispatch(setAvailable([earliestEnd.toISOString(), latestStart.toISOString()]))
+        dispatch(setAvailable([earliestEnd, latestStart]))
         // Set blocked days from ical file as "booked"
         var booked = []
         for (let i = 0; i < availableStart.length; i++) {

@@ -83,14 +83,17 @@ class CreateListing extends Component {
       photoURLS.push(picURL);
     }
 
-    const available = [dataToSend.dates.start_date, dataToSend.dates.end_date];
+    const available = [
+      dataToSend.dates.start_date.toISOString().substring(0, dataToSend.dates.start_date.toISOString().indexOf("T")),
+      dataToSend.dates.end_date.toISOString().substring(0, dataToSend.dates.end_date.toISOString().indexOf("T"))
+    ];
 
     const newListing = {
       title: dataToSend.title,
       location: dataToSend.location,
       description: dataToSend.description,
       details: dataToSend.details,
-      price: dataToSend.price.toFixed(2),
+      price: parseFloat(dataToSend.price).toFixed(2),
       tax: (dataToSend.price * .1).toFixed(2),
       available: available,
       pictures: photoURLS,

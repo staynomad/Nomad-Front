@@ -133,6 +133,7 @@ class LeftMenu extends Component {
           expired: [],
         };
         const { userReservations } = this.props;
+        console.log(userReservations)
 
         if (this.props.userReservations) {
           userReservations.forEach(reservation => {
@@ -149,8 +150,6 @@ class LeftMenu extends Component {
 
             if (isExpired) reservations.expired.push(reservation);
             else reservations.active.push(reservation);
-
-            console.log(reservations)
           });
         }
         return (
@@ -159,7 +158,7 @@ class LeftMenu extends Component {
               reservations.active.length === 0 && reservations.expired.length === 0 ?
                 <div>No reservations yet!</div> :
                 <div>
-                  <div classname="reservations-active">
+                  <div className="reservations-active">
                     {reservations.active.length > 0 ? (
                       reservations.active.sort(function (a, b) {
                         if (a.days[0] < b.days[0]) return -1;
@@ -174,7 +173,7 @@ class LeftMenu extends Component {
                             setReviewListingId={this.props.setReviewListingId}
                           />
                         ))
-                    ) : null}
+                    ) : <div>No active reservations</div>}
                   </div>
                   <div className="reservations-expired">
                     {reservations.expired.length > 0 ? (
