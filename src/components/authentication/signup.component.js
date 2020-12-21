@@ -14,19 +14,24 @@ const Signup = () => {
 
   const [signupSuccess, setSignupSuccess] = useState(false);
   const [loading, setLoading] = useState(false)
+  const [validationError, setValidationError] = useState('')
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     setLoading(true)
     e.preventDefault();
     app
       .post("/signup", userSignup)
       .then((res) => {
         window.sessionStorage.accessToken = res.token;
+        setValidationError('')
         setSignupSuccess(true);
       })
       .catch((err) => {
-        alert(err.response.data.errors[0]);
-        //window.location.reload() I (Prateek) commented this out bc its super annoying to have to reinput all your data if its not properly filled out the password
+        const error = err.response.data.errors[0]
+        const errorField = error[0]
+        const errorMessage = error[1]
+        setUserSignup({ ...userSignup, [errorField]: '' })
+        setValidationError(`${errorMessage}`)
         setLoading(false)
       });
   };
@@ -39,39 +44,38 @@ const Signup = () => {
         <h1 style={{ color: "#31473b", fontSize: "48px" }}>
           Sign Up
         </h1>
-        <form className="form signup-form">
+        <form className="form signup-form" onSubmit={handleSubmit} noValidate>
           <input
             type="email"
             placeholder="email"
             className="input login-input"
-            onChange={(e) =>
-              setUserSignup({ ...userSignup, email: e.target.value })
-            }
+            value={userSignup.email}
+            onChange={e => setUserSignup({ ...userSignup, email: e.target.value })}
           />
           <input
             type="text"
             placeholder="name"
             className="input login-input"
-            onChange={(e) =>
-              setUserSignup({ ...userSignup, name: e.target.value })
-            }
+            value={userSignup.name}
+            onChange={e => setUserSignup({ ...userSignup, name: e.target.value })}
           />
           <input
             type="password"
             placeholder="password"
             className="input login-input"
-            onChange={(e) =>
-              setUserSignup({ ...userSignup, password: e.target.value })
-            }
+            value={userSignup.password}
+            onChange={e => setUserSignup({ ...userSignup, password: e.target.value })}
           />
           <input
             type="password"
             placeholder="confirm"
             className="input login-input"
-            onChange={(e) =>
-              setUserSignup({ ...userSignup, check: e.target.value })
-            }
+            value={userSignup.check}
+            onChange={e => setUserSignup({ ...userSignup, check: e.target.value })}
           />
+
+          { validationError === '' ? null : <p>{ validationError }</p> }
+
           <div className="spacer_xxs"></div>
           <label className="checkbox">
             <input
@@ -79,9 +83,7 @@ const Signup = () => {
               type="checkbox"
               name="isHost"
               checked={userSignup.isChecked}
-              onChange={(e) =>
-                setUserSignup({ ...userSignup, isHost: !e.isHost })
-              }
+              onChange={e => setUserSignup({ ...userSignup, isHost: !e.isHost })}
             />
             {"  Are you a host?"}
           </label>
@@ -93,7 +95,6 @@ const Signup = () => {
               type="submit"
               value="create your account"
               className="btn green"
-              onClick={(e) => handleSubmit(e)}
               />
           }
         </form>

@@ -34,6 +34,7 @@ const ReservationCard = (props) => {
       .catch((err) => {
         alert('Unable to retrieve some reservations.')
       })
+      // eslint-disable-next-line
   }, [])
 
   const handleCheckConfirm = () => {
