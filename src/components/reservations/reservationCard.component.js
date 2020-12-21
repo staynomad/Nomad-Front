@@ -26,6 +26,8 @@ const ReservationCard = (props) => {
   const [checkState, setCheckState] = useState(null);
   const { reservation } = props;
 
+  console.log(props.setReviewModal)
+
   useEffect(() => {
     app.get('/listings/byId/' + reservation.listing)
       .then((res) => {
@@ -34,12 +36,16 @@ const ReservationCard = (props) => {
       .catch((err) => {
         alert('Unable to retrieve some reservations.')
       })
-      // eslint-disable-next-line
-  }, [])
+  }, [reservation.listing])
 
   const handleCheckConfirm = () => {
     setConfirmCheck(false);
-    if (checkState === 'out') return props.checkOutOfReservation(props.userSession.token, reservation._id);
+    if (checkState === 'out') {
+      props.setReviewListingId(reservation.listing);
+      props.setReviewModal(true);
+      props.checkOutOfReservation(props.userSession.token, reservation._id);
+      return;
+    };
     if (checkState === 'in') return props.checkInToReservation(props.userSession.token, reservation._id);
   };
 
@@ -57,7 +63,7 @@ const ReservationCard = (props) => {
                   <div className='listing-information'>
                     <img className='listing-image' src={listing.listing.pictures[0]} alt={listing.listing.title} />
                     <b>{listing.listing.title}</b>
-                    {listing.listing.location.street}, {listing.listing.location.city}, {listing.listing.location.state}, {listing.listing.location.zipcode}, {listing.listing.location.country}
+                    {listing.listing.location.street}, {listing.listing.location.city}, {listing.listing.location.state}, {listing.listing.location.zipcode}
                     <div>
                       <b>Check-In: </b> {reservation.days[0].substring(5)} <br />
                       <b>Check-Out: </b> {reservation.days[1].substring(5)}

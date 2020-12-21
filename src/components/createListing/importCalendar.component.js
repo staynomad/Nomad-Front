@@ -40,7 +40,7 @@ class ImportCalendar extends Component {
         <form onSubmit={this.handleSubmit}>
           <input
             className="input login-input"
-            style={{paddingBottom: "0", marginBottom: "0"}}
+            style={{ paddingBottom: "0", marginBottom: "0" }}
             type="text"
             placeholder="Calendar URL"
             value={this.state.calendarURL}
@@ -49,7 +49,7 @@ class ImportCalendar extends Component {
           <br />
           <input
             className="btn green"
-            style={{width: "auto"}}
+            style={{ width: "auto" }}
             type="submit"
             value="import"
           />
@@ -60,24 +60,24 @@ class ImportCalendar extends Component {
 }
 
 const mapStateToProps = state => {
-    const stateToReturn = {
-        ...state,
-        loading: state.Loading.loading,
-        available: state.Calendar.available,
-        booked: state.Calendar.booked
-    };
-    return stateToReturn;
+  const stateToReturn = {
+    ...state,
+    loading: state.Loading.loading,
+    available: state.Calendar.available,
+    booked: state.Calendar.booked
+  };
+  return stateToReturn;
 };
 
 const mapDispatchToProps = dispatch => {
-    return {
-        importCalendar: (calendarURL) => dispatch(importCalendar(calendarURL)),
-    };
+  return {
+    importCalendar: (calendarURL) => dispatch(importCalendar(calendarURL)),
+  };
 };
 
 export default withRouter(connect(
-    mapStateToProps,
-    mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(
-    ImportCalendar
+  ImportCalendar
 ));

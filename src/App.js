@@ -21,13 +21,15 @@ import EditListing from "./components/editListing/editListing";
 import PaymentSuccess from "./components/listingPage/paymentSuccess.component";
 import AccountVerification from "./components/authentication/verifyAccount.component";
 import ActivateReservation from "./components/reservations/activateReservation.component";
-import importCalendar from "./components/createListing/importCalendar.component"
+import ReviewPopup from "./components/review/reviewModal.component";
 import "./App.css";
 
 //to add more items just copy the format and add the route path. look at navbar component to see where the path is currently set to
 function App() {
   const history = useHistory();
   const [reservationModal, setReservationModal] = useState(false);
+  const [reviewModal, setReviewModal] = useState(false);
+  const [reviewListingId, setReviewListingId] = useState("");
 
   return (
     <>
@@ -41,19 +43,20 @@ function App() {
             <Route path="/SignUp" exact component={Signup} />
             <Route path="/CreateListing" exact component={CreateListing} />
             <Route path="/Matches" exact component={Matches} history={history} />
-            <Route path="/MyAccount" exact component={MyAccount} />
+            <Route path="/MyAccount" exact component={() => <MyAccount setReviewModal={setReviewModal} setReviewListingId={setReviewListingId} />} />
             <Route path="/Questionnaire" exact component={Questionnaire} />
-            <Route path="/Listing/:id" exact component={ListingPage} />
+            <Route path="/Listing/:id" exact component={() => <ListingPage review={false} />} />
+            <Route path="/Listing/:id/review" exact component={() => <ListingPage review={true} />} />
             <Route path="/EditListing/:listingId" exact component={EditListing} />
             <Route path="/PaymentSuccess" exact component={PaymentSuccess} />
             <Route path="/AccountVerification/:userId" exact component={AccountVerification} />
             <Route path="/EditProfileInfo" exact component={EditProfileInfo} />
             <Route path="/contact" exact component={Contact} />
             <Route path="/completeReservation/:listingId/:reservationId" exact component={ActivateReservation} />
-            <Route path="/test" exact component={importCalendar} />
           </Switch>
         </div>
         {reservationModal ? <ReservationLookup reservationModal={reservationModal} setReservationModal={setReservationModal} /> : null}
+        {reviewModal ? <ReviewPopup setReviewModal={setReviewModal} reviewListingId={reviewListingId} /> : null}
         <Footer />
       </div>
     </>

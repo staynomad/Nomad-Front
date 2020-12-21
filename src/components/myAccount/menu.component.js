@@ -133,6 +133,7 @@ class LeftMenu extends Component {
           expired: [],
         };
         const { userReservations } = this.props;
+        console.log(userReservations)
 
         if (this.props.userReservations) {
           userReservations.forEach(reservation => {
@@ -145,7 +146,7 @@ class LeftMenu extends Component {
             const curDate = new Date().getTime();
             // Compare to check if curDate is past expired
             let isExpired = curDate > expireDateConverted;
-            if (!reservation.isActive) isExpired = true;
+            if (!reservation.active) isExpired = true;
 
             if (isExpired) reservations.expired.push(reservation);
             else reservations.active.push(reservation);
@@ -153,43 +154,45 @@ class LeftMenu extends Component {
         }
         return (
           <div className="reservations-container">
-          {
-            reservations.active.length === 0 && reservations.expired.length === 0 ?
-            <div>No reservations yet!</div> :
-            <div>
-              <div classname="reservations-active">
-                {reservations.active.length > 0 ? (
-                  reservations.active.sort(function (a, b) {
-                    if (a.days[0] < b.days[0]) return -1;
-                    if (a.days[0] > b.days[0]) return 1;
-                    return 1;
-                  })
-                    .map((reservation) => (
-                      <ReservationCard
-                        key={reservation._id}
-                        reservation={reservation}
-                      />
-                    ))
-                ) : null}
-              </div>
-              <div className="reservations-expired">
-                {reservations.expired.length > 0 ? (
-                  reservations.expired.sort(function (a, b) {
-                    if (a.days[0] < b.days[0]) return -1;
-                    if (a.days[0] > b.days[0]) return 1;
-                    return 1;
-                  })
-                    .map((reservation) => (
-                      <ReservationCard
-                        key={reservation._id}
-                        reservation={reservation}
-                      />
-                    ))
-                )
-                  : null}
-              </div>
-            </div>
-          }
+            {
+              reservations.active.length === 0 && reservations.expired.length === 0 ?
+                <div>No reservations yet!</div> :
+                <div>
+                  <div className="reservations-active">
+                    {reservations.active.length > 0 ? (
+                      reservations.active.sort(function (a, b) {
+                        if (a.days[0] < b.days[0]) return -1;
+                        if (a.days[0] > b.days[0]) return 1;
+                        return 1;
+                      })
+                        .map((reservation) => (
+                          <ReservationCard
+                            key={reservation._id}
+                            reservation={reservation}
+                            setReviewModal={this.props.setReviewModal}
+                            setReviewListingId={this.props.setReviewListingId}
+                          />
+                        ))
+                    ) : <div>No active reservations</div>}
+                  </div>
+                  <div className="reservations-expired">
+                    {reservations.expired.length > 0 ? (
+                      reservations.expired.sort(function (a, b) {
+                        if (a.days[0] < b.days[0]) return -1;
+                        if (a.days[0] > b.days[0]) return 1;
+                        return 1;
+                      })
+                        .map((reservation) => (
+                          <ReservationCard
+                            key={reservation._id}
+                            reservation={reservation}
+                          />
+                        ))
+                    )
+                      : null}
+                  </div>
+                </div>
+            }
           </div>
         );
       case "settings":
