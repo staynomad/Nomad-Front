@@ -27,9 +27,9 @@ const Signup = () => {
         setSignupSuccess(true);
       })
       .catch((err) => {
-        const error = err.response.data.errors[0]
-        const errorField = error[0]
-        const errorMessage = error[1]
+        const error = err.response.data[0]
+        const errorField = error.param
+        const errorMessage = error.msg
         setUserSignup({ ...userSignup, [errorField]: '' })
         setValidationError(`${errorMessage}`)
         setLoading(false)
