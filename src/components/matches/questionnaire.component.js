@@ -3,6 +3,7 @@ import { app } from '../../utils/axiosConfig.js'
 import { withStyles } from "@material-ui/core/styles";
 import { NavLink } from "react-router-dom";
 import Button from "@material-ui/core/Button";
+import "./questionnaire.css"
 
 var PERSONALITY_TYPES = [
   "INTJ- The Architect",
@@ -24,7 +25,7 @@ var PERSONALITY_TYPES = [
   "I don't really know what this means!",
 ];
 
-const HOBBIES = [
+/*const HOBBIES = [
   "Reading",
   "Watching TV",
   "Spending Time with Family",
@@ -58,7 +59,7 @@ const HOBBIES = [
   "Horseback Riding",
   "Practicing an instrument",
   "Dancing",
-];
+];*/
 
 const CustomButton = withStyles((theme) => ({
   root: {
@@ -73,7 +74,7 @@ const CustomButton = withStyles((theme) => ({
 }))(Button);
 
 export default function Questionnaire(props) {
-  const [hobbies, setHobbies] = useState({});
+  // const [hobbies, setHobbies] = useState({});
   const [successfulPost, setSuccessfulPost] = useState(false);
   const [notLoggedIn, setNotLoggedIn] = useState(props.userId === "");
   const [totalState, setTotalState] = useState({
@@ -102,13 +103,13 @@ export default function Questionnaire(props) {
     });
   };
 
-  const handleChangeHobbies = (event) => {
+  /*const handleChangeHobbies = (event) => {
     const newHobbies = {
       ...hobbies,
       [event.target.name]: event.target.checked,
     };
     setHobbies(newHobbies);
-  };
+  };*/
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -116,7 +117,7 @@ export default function Questionnaire(props) {
     var fieldsFilledOut = true;
     const newQuestionnaire = {
       ...totalState,
-      hobbies: hobbies,
+      // hobbies: hobbies,
       userId: props.userId,
     };
     // post request
@@ -142,30 +143,14 @@ export default function Questionnaire(props) {
   };
 
   return (
-    <div>
-      <br />
-      <br />
-      <br />
-      <br />
-      <CustomButton>
-        <NavLink to="/MyAccount">Back to MyAccount</NavLink>
-      </CustomButton>
+    <div className="container">
       <h2>Roommate Preferences Form</h2>
       <hr />
       <form onSubmit={handleSubmit}>
-        <label id="name" value={totalState.name}>
-          <h3>Write your name here!</h3>
-          <input
-            type="text"
-            id="questionnaireNameInput"
-            name="name"
-            placeholder="Your full name"
-            onChange={handleChange}
-          />
-        </label>
         <label id="numberOfRoommates">
-          <h3>How many roommates would you prefer to live with?</h3>
+          <h3 className="question">How many roommates would you prefer to live with?</h3>
           <select
+            className="answer"
             id="questionnaireNumberOfRoommates"
             name="numberOfRoommates"
             value={totalState.numberOfRoommates}
@@ -192,8 +177,9 @@ export default function Questionnaire(props) {
           </select>
         </label>
         <label id="bedtime">
-          <h3>What is your ideal bedtime?</h3>
+          <h3 className="question">What is your ideal bedtime?</h3>
           <select
+            className="answer"
             id="questionnaireBedtime"
             value={totalState.bedtime}
             name="bedtime"
@@ -220,8 +206,9 @@ export default function Questionnaire(props) {
           </select>
         </label>
         <label id="petPreference">
-          <h3>If applicable, do you plan on bringing a pet?</h3>
+          <h3 className="question">If applicable, do you plan on bringing a pet?</h3>
           <select
+            className="answer"
             id="questionnairePetPreference"
             name="petPreference"
             value={totalState.petPreference}
@@ -239,8 +226,9 @@ export default function Questionnaire(props) {
           </select>
         </label>
         <label id="workFromHome">
-          <h3>WIll you be working from home?</h3>
+          <h3 className="question">WIll you be working from home?</h3>
           <select
+            className="answer"
             id="questionnaireWorkFromHome"
             name="workFromHome"
             value={totalState.workFromHome}
@@ -259,10 +247,9 @@ export default function Questionnaire(props) {
           </select>
         </label>
         <label id="workFromHomePreference">
-          <h3>
-            Would you like to live with someone who would be working from home?
-          </h3>
+          <h3 className="question">Would you like to live with someone who would be working from home?</h3>
           <select
+            className="answer"
             id="questionnaireWorkFromHomePreference"
             name="workFromHomePreference"
             value={totalState.workFromHomePreference}
@@ -283,8 +270,9 @@ export default function Questionnaire(props) {
           </select>
         </label>
         <label id="fridayNight">
-          <h3>Would you rather stay home or go out on a Friday night?</h3>
+          <h3 className="question">Would you rather stay home or go out on a Friday night?</h3>
           <select
+            className="answer"
             id="questionnaireFridayNight"
             name="fridayNight"
             value={totalState.fridayNight}
@@ -298,8 +286,9 @@ export default function Questionnaire(props) {
           </select>
         </label>
         <label id="cleaning">
-          <h3>How often do you plan to clean your living space?</h3>
+          <h3 className="question">How often do you plan to clean your living space?</h3>
           <select
+            className="answer"
             id="questionnaireCleaning"
             value={totalState.cleaning}
             name="cleaning"
@@ -316,10 +305,7 @@ export default function Questionnaire(props) {
           </select>
         </label>
         <label id="cleaningPreference">
-          <h3>
-            How important is it to you that your roommate frequently cleans the
-            living space?
-          </h3>
+          <h3 className="question">How important is it to you that your roommate frequently cleans the living space?</h3>
           <select
             id="questionnaireCleaningPreference"
             value={totalState.cleaningPreference}
@@ -337,8 +323,9 @@ export default function Questionnaire(props) {
           </select>
         </label>
         <label id="cooking">
-          <h3>How often do you plan to cook?</h3>
+          <h3 className="question">How often do you plan to cook?</h3>
           <select
+            className="answer"
             id="questionnaireCooking"
             value={totalState.cooking}
             name="cooking"
@@ -353,8 +340,9 @@ export default function Questionnaire(props) {
           </select>
         </label>
         <label id="cookingPreference">
-          <h3>How important is it to you that your roommate plans to cook?</h3>
+          <h3 className="question">How important is it to you that your roommate plans to cook?</h3>
           <select
+            className="answer"
             id="questionnaireCookingPreference"
             name="cookingPreference"
             value={totalState.cookingPreference}
@@ -371,8 +359,9 @@ export default function Questionnaire(props) {
           </select>
         </label>
         <label id="friends">
-          <h3>How often do you plan to have friends over?</h3>
+          <h3 className="question">How often do you plan to have friends over?</h3>
           <select
+            className="answer"
             id="questionnaireFriends"
             value={totalState.friends}
             name="friends"
@@ -389,10 +378,9 @@ export default function Questionnaire(props) {
           </select>
         </label>
         <label id="friendsPreference">
-          <h3>
-            How would you feel about your roommate(s) having friends over?
-          </h3>
+          <h3 className="question">How would you feel about your roommate(s) having friends over?</h3>
           <select
+            className="answer"
             id="questionnaireFriendsPreference"
             name="friendsPreference"
             value={totalState.friendsPreference}
@@ -411,8 +399,9 @@ export default function Questionnaire(props) {
           </select>
         </label>
         <label id="smoke">
-          <h3>Do you smoke?</h3>
+          <h3 className="question">Do you smoke?</h3>
           <select
+            className="answer"
             id="questionnaireSmoke"
             value={totalState.smoke}
             name="smoke"
@@ -425,22 +414,20 @@ export default function Questionnaire(props) {
               No, and I would not like to live with someone who smokes.
             </option>
             <option value="noInfreq">
-              No, but I would not mind living with someone who smokes
-              infrequently.
+              No, but I would not mind living with someone who smokes.
             </option>
-            <option value="noFreq">
-              No, but I would not mind living with someone who smokes
-              frequently.
+            <option value="yesInfreq">
+              Yes, but I would not like to live with someone who smokes.
             </option>
-            <option value="yesInfreq">Yes, but not very often.</option>
             <option value="yesFreq">
               Yes, I smoke, and I would not mind living with someone who smokes.
             </option>
           </select>
         </label>
         <label id="personalityType">
-          <h3>What is your Myers Briggs personality type?</h3>
+          <h3 className="question">What is your Myers Briggs personality type?</h3>
           <select
+            className="answer"
             id="questionnairePersonalityType"
             name="personalityType"
             value={totalState.personalityType}
@@ -453,33 +440,36 @@ export default function Questionnaire(props) {
             ))}
           </select>
         </label>
-        <label>
-          <h3>What are your favorite hobbies? Check all that apply!</h3>
+        {
+        /*<label>
+          <h3 className="question">What are your favorite hobbies? Check all that apply!</h3>
           {HOBBIES.map((hobby) => (
-            <label id={hobby} key={hobby}>
-              {hobby}
+            <label id={hobby} key={hobby} className="questionnaire-cb-labels">
               <input
+                className="questionnaire-checkbox"
                 type="checkbox"
                 id={hobby}
                 name={hobby}
                 onClick={handleChangeHobbies}
                 value={hobby}
               />
-              <br />
+              {hobby}
             </label>
           ))}
-        </label>
-        <hr />
+        </label>*/
+        }
+        <div className="spacer_xxs"></div>
         <input
+          className="btn green questionnaire-btn"
           type="submit"
           id="questionnaireSubmit"
           value="Submit your preferences!"
         />
       </form>
       {successfulPost ? (
-        <h3 style={{ color: "green" }}>Your responses have been recorded!</h3>
+        <h3 className="success-text" style={{ color: "green" }}>Your responses have been recorded!</h3>
       ) : (
-        <h3 style={{ color: "red" }}>
+        <h3 className="success-text" style={{ color: "red" }}>
           Your responses have not been recorded. Please make sure that all forms
           are filled out and press Submit your preferences!
         </h3>
@@ -492,6 +482,7 @@ export default function Questionnaire(props) {
       <CustomButton>
         <NavLink to="/MyAccount">Back to MyAccount</NavLink>
       </CustomButton>
+      <div className="spacer_m"></div>
     </div>
   );
 }
