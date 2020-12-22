@@ -1,0 +1,21 @@
+.question {
+  font-size: 16px !important;
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.answer {
+  margin-bottom: 1% !important;
+}
+
+.questionnaire-btn {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  width: auto !important;
+}
+
+.success-text {
+  font-size: 16px !important;
+  margin-top: 1% !important;
+  margin-bottom: 1% !important;
+}
