@@ -39,8 +39,7 @@ class Subscribe extends Component {
 
   render() {
     return (
-      <div className="overallsearch">
-      <h2>Subscribe to our mailing list</h2>
+      <div className="overall-subscribe">
         <input
           type="email"
           placeholder="email"

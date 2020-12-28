@@ -59,3 +59,21 @@
   border: 1px solid var(--color-green);
   padding-left: 15px;
 }
+
+.overall-subscribe {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.subscribe-text {
+  text-align: center !important;
+}
+
+.subscribe-img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 60%;
+}
