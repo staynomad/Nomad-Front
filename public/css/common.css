@@ -980,3 +980,7 @@ a:checked{
     transform: rotate(360deg);
   }
 }
+
+.underline {
+	text-decoration: underline;
+}
