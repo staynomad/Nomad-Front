@@ -137,3 +137,16 @@
   padding-bottom: 0;
   float: left;
 }
+
+.import-info {
+  margin-bottom: 0 !important;
+  padding-bottom: 0;
+  cursor: pointer;
+  padding-left: 3% !important;
+  width: 100% !important;
+  float: left !important;
+}
+
+span.import-info {
+    text-align: left;
+}

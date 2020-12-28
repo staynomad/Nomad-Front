@@ -22,7 +22,8 @@ import PaymentSuccess from "./components/listingPage/paymentSuccess.component";
 import AccountVerification from "./components/authentication/verifyAccount.component";
 import ActivateReservation from "./components/reservations/activateReservation.component";
 import ReviewPopup from "./components/review/reviewModal.component";
-import PageNotFound from "./components/subpages/404.component"
+import CalendarImportInfo from "./components/subpages/calendarImportInfo.component.js";
+import PageNotFound from "./components/subpages/404.component";
 import "./App.css";
 
 //to add more items just copy the format and add the route path. look at navbar component to see where the path is currently set to
@@ -54,6 +55,7 @@ function App() {
             <Route path="/EditProfileInfo" exact component={EditProfileInfo} />
             <Route path="/contact" exact component={Contact} />
             <Route path="/completeReservation/:listingId/:reservationId" exact component={ActivateReservation} />
+            <Route path="/how-to-import-or-export-calendar" exact component={CalendarImportInfo} />
             <Route path="*" exact component={PageNotFound} />
           </Switch>
         </div>
