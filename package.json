@@ -31,7 +31,7 @@
     "semantic-ui-react": "^2.0.0",
     "stripe": "^8.121.0"
   },
-  "proxy": "https://vhomesback.herokuapp.com",
+  "proxy": "http://vhomes-back-dev.us-west-2.elasticbeanstalk.com/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

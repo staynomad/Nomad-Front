@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const production = process.env.NODE_ENV === "production";
-const apiBaseUrl = production ? 'https://vhomes.herokuapp.com' : 'http://localhost:8080';
+const apiBaseUrl = production ? 'http://vhomes-back-dev.us-west-2.elasticbeanstalk.com/' : 'http://localhost:8080';
 
 export default async function handleReq(endpoint, methodType, customHeaders, data) {
   try {

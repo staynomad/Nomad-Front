@@ -5,6 +5,6 @@ const env = process.env.NODE_ENV; // current environment
 export const app = axios.create({
   baseURL:
     env === 'production'
-      ? 'https://vhomes.herokuapp.com' // production
+      ? 'http://vhomes-back-dev.us-west-2.elasticbeanstalk.com/' // production
       : 'http://localhost:8080', // development
 });
