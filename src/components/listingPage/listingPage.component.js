@@ -36,6 +36,7 @@ class ListingPage extends Component {
   }
 
   async componentDidMount() {
+    var today = new Date()
     this.setState({
       outOfRange: false
     })
@@ -87,8 +88,12 @@ class ListingPage extends Component {
             before: reserveEnd
           })
         }
+        bookedDays.push({
+          before: new Date(today)
+        })
         this.setState({
-          listingBookedDays: bookedDays
+          listingBookedDays: bookedDays,
+          today: today.setUTCHours(0,0,0,0)
         })
         // Get host's email from their userId
         app.get(`/user/getUserInfo/${this.state.listingUser}`)
@@ -190,7 +195,7 @@ class ListingPage extends Component {
     startListingDate.setDate(startListingDate.getDate() - 1)
     var endListingDate = new Date(this.state.listingBookedDays[0].after)
     endListingDate.setDate(endListingDate.getDate())
-    if (day < startListingDate || day > endListingDate) {
+    if (day < startListingDate || day > endListingDate || day < this.state.today) {
       this.setState({
         outOfRange: true
       })
