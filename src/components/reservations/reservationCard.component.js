@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { app } from '../../utils/axiosConfig.js'
 import Button from '@material-ui/core/Button';
-import { withRouter } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { withStyles } from '@material-ui/core/styles';
 import '../matches/listing/listings.css'
@@ -29,14 +29,16 @@ const ReservationCard = (props) => {
   useEffect(() => {
     app.get('/listings/byId/' + reservation.listing)
       .then((res) => {
-        setListing(res.data)
+        setListing(res.data.listing)
       })
       .catch((err) => {
         alert('Unable to retrieve some reservations.')
       })
   }, [reservation.listing])
 
-  const handleCheckConfirm = () => {
+  const handleCheckConfirm = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
     setConfirmCheck(false);
     if (checkState === 'out') {
       props.setReviewListingId(reservation.listing);
@@ -53,33 +55,35 @@ const ReservationCard = (props) => {
         !listing ? <div id="spinner"></div>
           : (
             <div className='listing-item'>
-              { confirmCheck ? (
-                <>
-                  <div>Confirm check in / out?</div>
-                </>
-              ) : (
-                  <div className='listing-information'>
-                    <img className='listing-image' src={listing.listing.pictures[0]} alt={listing.listing.title} />
-                    <b>{listing.listing.title}</b>
-                    {listing.listing.location.street}, {listing.listing.location.city}, {listing.listing.location.state}, {listing.listing.location.zipcode}
-                    <div>
-                      <b>Check-In: </b> {reservation.days[0].substring(5)} <br />
-                      <b>Check-Out: </b> {reservation.days[1].substring(5)}
-                    </div>
-                  </div>
-                )}
-              <div className="spacer_xxs" />
-              {
-                confirmCheck ? (
+              <NavLink to={'/listing/' + listing._id}>
+                {confirmCheck ? (
                   <>
-                    <CustomButton onClick={() => setConfirmCheck(false)}>Cancel</CustomButton>
-                    <CustomButton onClick={handleCheckConfirm}>Confirm</CustomButton>
+                    <div>Confirm check in / out?</div>
+                    <>
+                      <CustomButton onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        setConfirmCheck(false)
+                      }
+                      }>Cancel</CustomButton>
+                      <CustomButton onClick={handleCheckConfirm}>Confirm</CustomButton>
+                    </>
                   </>
                 ) : (
-                    <>
+                    <div className='listing-information'>
+                      <img className='listing-image' src={listing.pictures[0]} alt={listing.title} />
+                      <b>{listing.title}</b>
+                      {listing.location.street}, {listing.location.city}, {listing.location.state}, {listing.location.zipcode}
+                      <div>
+                        <b>Check-In: </b> {reservation.days[0].substring(5)} <br />
+                        <b>Check-Out: </b> {reservation.days[1].substring(5)}
+                      </div>
+                      <div className="spacer_xxs" />
                       {props.userSession && props.userSession.userId === reservation.user && !props.reservation.checkedIn ? (
                         <CustomButton onClick={
-                          () => {
+                          (e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
                             setConfirmCheck(true);
                             setCheckState('in');
                           }}>
@@ -92,16 +96,18 @@ const ReservationCard = (props) => {
                         )}
                       {props.userSession && props.userSession.userId === reservation.user && props.reservation.checkedIn ? (
                         <CustomButton onClick={
-                          () => {
+                          (e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
                             setConfirmCheck(true);
                             setCheckState('out');
                           }}>
                           { !props.loading ? "Check-Out" : <div id="spinner" />}
                         </CustomButton>
                       ) : null}
-                    </>
-                  )
-              }
+                    </div>
+                  )}
+              </NavLink>
             </div>
           )) : null}
     </>

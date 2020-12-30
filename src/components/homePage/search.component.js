@@ -3,7 +3,7 @@ import "./home.css";
 
 const Search = (props) => {
   const [itemToSearch, setItemToSearch] = React.useState("");
-  const {history} = props;
+  const { history } = props;
 
   const handleSearch = (event) => {
     event.preventDefault();
@@ -13,14 +13,16 @@ const Search = (props) => {
 
   return (
     <div className="overallsearch">
-      <input
-        type="text"
-        placeholder="find your next stay"
-        className="inputtextbox"
-        onChange={(e) => setItemToSearch(e.target.value)}
-        value={itemToSearch}
-      />
-      <input className="booknowbutton" type="button" value="search" onClick={handleSearch}/>
+      <form onSubmit={handleSearch}>
+        <input
+          type="text"
+          placeholder="find your next stay"
+          className="inputtextbox"
+          onChange={(e) => setItemToSearch(e.target.value)}
+          value={itemToSearch}
+        />
+        <input className="booknowbutton" type="button" value="search" onClick={handleSearch} />
+      </form>
       <br />
 
     </div>
@@ -28,4 +30,4 @@ const Search = (props) => {
 }
 
 
-export default Search
+export default Search;
