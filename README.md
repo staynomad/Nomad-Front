@@ -24,3 +24,5 @@ At the end, the remaining collections in the database will be listed.
 1. Checkout production branch and rebase from master
 2. Run `npm run build` to create a production build
 3. Use `firebase deploy` to update project
+
+*_Note: always amend new commits to production branch_*
