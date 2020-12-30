@@ -32,7 +32,11 @@
     "semantic-ui-react": "^2.0.0",
     "stripe": "^8.121.0"
   },
+<<<<<<< HEAD
   "proxy": "https://nvestup.com",
+=======
+  "proxy": "https://vhomes.herokuapp.com",
+>>>>>>> 3fcc393d... configuration for deployment
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

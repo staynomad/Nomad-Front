@@ -3,8 +3,13 @@ const getSignedURL = (file, fileName, bucket, setLoading) => {
   const xhr = new XMLHttpRequest();
   const production = process.env.NODE_ENV === "production";
   const apiBaseUrl = production
+<<<<<<< HEAD
     ? "https://nvestup.com"
     : "http://localhost:8080";
+=======
+    ? "https://vhomes.herokuapp.com"
+    : "https://nvestup.com";
+>>>>>>> 3fcc393d... configuration for deployment
   xhr.open(
     "GET",
     `${apiBaseUrl}/photos/sign-s3?file-name=${fileName}&file-type=${file.type}&file-bucket=${bucket}`
