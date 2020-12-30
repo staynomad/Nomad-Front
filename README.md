@@ -21,8 +21,14 @@ Enter 'y' if you want to drop the collection, and 'n' if you want to keep the co
 At the end, the remaining collections in the database will be listed.
 
 ## Deployment
+Steps:
 1. Checkout production branch and rebase from master
 2. Run `npm run build` to create a production build
 3. Use `firebase deploy` to update project
+
+Checklist:
+- ```axiosConfig.js```, ```fetchRequest.js```, and ```photoUploadRequest.js``` have the correct server URLs
+- ```listingPage.component.js``` is using the live Stripe public key
+- Firebase target folder is set to *_build_*
 
 *_Note: always amend new commits to production branch_*
