@@ -62,15 +62,16 @@ class CreateListing extends Component {
     let cur_photos = dataToSend.photos.pictures;
 
     let photoURLS = [];
+
     this.props.setLoadingTrue();
     for (let i = 0; i < cur_photos.length; i++) {
       const updatedFileName = encodeURIComponent(
         cur_photos[i].name + Math.random() * 1000
       );
       let action = this.props.setLoadingTrue;
-      if (i === cur_photos.length - 1) {
+      /*if (i === cur_photos.length - 1) { just forcing it to stay loading as long as 5 sec timeout is there. otherwise it sets then unsets then sets then unsets
         action = this.props.setLoadingFalse;
-      }
+      }*/
       getSignedURL(
         cur_photos[i],
         updatedFileName,
@@ -83,8 +84,12 @@ class CreateListing extends Component {
     }
 
     const available = [
-      dataToSend.dates.start_date.toISOString().substring(0, dataToSend.dates.start_date.toISOString().indexOf("T")),
-      dataToSend.dates.end_date.toISOString().substring(0, dataToSend.dates.end_date.toISOString().indexOf("T"))
+      dataToSend.dates.start_date
+        .toISOString()
+        .substring(0, dataToSend.dates.start_date.toISOString().indexOf("T")),
+      dataToSend.dates.end_date
+        .toISOString()
+        .substring(0, dataToSend.dates.end_date.toISOString().indexOf("T")),
     ];
 
     const newListing = {
@@ -93,7 +98,7 @@ class CreateListing extends Component {
       description: dataToSend.description,
       details: dataToSend.details,
       price: parseFloat(dataToSend.price).toFixed(2),
-      tax: (dataToSend.price * .1).toFixed(2),
+      tax: (dataToSend.price * 0.1).toFixed(2),
       available: available,
       pictures: photoURLS,
       calendarURL: this.props.calendarURL,
@@ -105,7 +110,9 @@ class CreateListing extends Component {
           Authorization: `Bearer ${this.props.userSession.token}`,
         },
       })
+      .then(() => this.props.setLoadingTrue())
       .then(() => this.postRequest())
+      .then(() => this.props.setLoadingFalse())
       .then(() => (window.location = "/MyAccount"));
   }
 
