@@ -26,8 +26,6 @@ const ReservationCard = (props) => {
   const [checkState, setCheckState] = useState(null);
   const { reservation } = props;
 
-  console.log(props.setReviewModal)
-
   useEffect(() => {
     app.get('/listings/byId/' + reservation.listing)
       .then((res) => {
