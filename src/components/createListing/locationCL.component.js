@@ -31,6 +31,7 @@ class Location extends Component {
   handleChange(e) {
     const { name, value } = e.target;
     if (isNaN(value) && name === "zipcode") {
+      this.props.incompleteForm();
       console.log("invalid input");
     } else {
       this.props.completeForm();
@@ -45,8 +46,11 @@ class Location extends Component {
     if (value === "") {
       this.props.incompleteForm();
     }
+
+    if (name === 'zipcode' && !/^\d{5}(-\d{4})?$/.test(value)) this.props.incompleteForm();
     this.props.newListing({ name: "location", value: updatedData });
   }
+
   render() {
     return (
       <div className="LocationForm">
