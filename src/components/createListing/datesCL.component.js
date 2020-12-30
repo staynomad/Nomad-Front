@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 import DatePicker, { DateUtils } from "react-day-picker";
 import Helmet from "react-helmet";
 import "react-day-picker/lib/style.css";
@@ -108,6 +108,7 @@ class DatesCL extends Component {
     const modifiers = { start: from, end: to };
     return (
       <>
+      <h1>Availability</h1>
       {
         this.state.displayImport ?
 
@@ -133,6 +134,7 @@ class DatesCL extends Component {
               />
             }
           </form>
+          <span className="import-info"><NavLink to="/how-to-import-or-export-calendar">&#9432;</NavLink> What's this?</span>
           <br />
           <p className="import-calendar" style={{textDecoration: "underline", cursor: "pointer", paddingLeft: "3%", paddingRight: "1%"}} onClick={this.handleImportToggle}>Select</p>
           <p className="import-calendar">dates instead</p>
@@ -140,7 +142,6 @@ class DatesCL extends Component {
         </div> :
 
         <div>
-          <h1>Availability</h1>
           <div className="questionText">
             When is your property available?
           </div>

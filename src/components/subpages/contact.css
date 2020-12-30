@@ -22,6 +22,7 @@
 .contact_1 {
   height: 170px;
   width: 100%;
+  padding: 10px;
 }
 
 textarea.input {
@@ -48,6 +49,7 @@ textarea.input {
   display: inline-block;
   vertical-align: top;
   padding: 12px;
+  font-size: 18px;
 }
 
 .contact-input-text {
@@ -56,6 +58,8 @@ textarea.input {
   font-weight: 500;
   border-width: 1px !important;
   border-color: #7E9388 !important;
+  border: 1px solid #7e9388 !important;
+  padding: 10px;
 }
 
 input,

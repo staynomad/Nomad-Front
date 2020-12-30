@@ -1,13 +1,75 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { withRouter, Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { makeStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
 import Search from './search.component'
 import Subscribe from './subscribe.component'
 
-const newHome = (props) => {
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: "5%",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    width: "50%",
+    height: "50%",
+  },
+}));
+
+const NewHome = (props) => {
   const {isBlurred, history} = props
+  const classes = useStyles();
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!props.userSession) {
+      setTimeout(() => {
+        setOpen(true)
+      }, 1000)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <div style={isBlurred ? {filter: 'blur(5px)'} : {}}>
+
+    <div>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={classes.modal}
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={open}>
+          <div className={classes.paper}>
+            <h2>Subscribe to our mailing list</h2>
+            <p className="subscribe-text">Sign up now to get our latest news. You won't regret it.</p>
+            <img className="subscribe-img" src="images/subscribe.png" alt="subscription graphic" />
+            <div className="spacer_s"></div>
+            <Subscribe/>
+          </div>
+        </Fade>
+      </Modal>
+    </div>
+
     <div data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
 
       <div className="spacer_xxl"></div>
@@ -229,6 +291,8 @@ const newHome = (props) => {
         <button className="btn-hover color-5">Create a Listing</button>
       </Link>
       <div className="spacer_xl"></div>
+      <h2>Subscribe to our mailing list</h2>
+      <p className="subscribe-text">Subscribe to our mailing list to get our latest news.</p>
       <Subscribe />
       </div>
       </div>
@@ -243,4 +307,15 @@ const newHome = (props) => {
 
 }
 
-export default newHome;
+const mapStateToProps = (state) => {
+  const stateToReturn = { ...state };
+  if (state.Login.userInfo)
+    stateToReturn["userSession"] = state.Login.userInfo.session;
+  return stateToReturn;
+};
+
+export default withRouter(connect(
+  mapStateToProps
+)(
+  NewHome
+));
