@@ -20,12 +20,10 @@ const Login = (props) => {
     email: "",
     password: "",
   });
-  const [loading, setLoading] = useState(false)
 
   const classes = useStyles();
 
   const handleLogin = (e) => {
-    setLoading(true)
     e.preventDefault();
     props.submitLogin(userLogin)
   };
@@ -72,19 +70,19 @@ const Login = (props) => {
               </div>
             ) : null}
             {
-              loading
-              ? <div id="spinner"></div>
-              : <div style={{ margin: "2% 0 3%" }}>
-                <button
-                  className='btn green'
-                  style={{ width: "100%" }}
-                  onClick={(e) => {
-                    handleLogin(e)
-                  }}
-                >
-                  log in
+              props.loading
+                ? <div id="spinner"></div>
+                : <div style={{ margin: "2% 0 3%" }}>
+                  <button
+                    className='btn green'
+                    style={{ width: "100%" }}
+                    onClick={(e) => {
+                      handleLogin(e)
+                    }}
+                  >
+                    log in
               </button>
-              </div>
+                </div>
             }
             <div className='botText'>
               <span>don't have an account? </span>
@@ -103,7 +101,7 @@ const Login = (props) => {
 };
 
 const mapStateToProps = state => {
-  const stateToReturn = { ...state };
+  const stateToReturn = { ...state, loading: state.Loading.loading };
   if (state.Login.userInfo) stateToReturn['userSession'] = state.Login.userInfo.session;
   if (state.Errors.authErrors) stateToReturn['authErrors'] = state.Errors.authErrors;
   return stateToReturn;
