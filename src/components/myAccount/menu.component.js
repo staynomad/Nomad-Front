@@ -6,8 +6,11 @@ import { NavLink, withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 
 import ListingCard from "../matches/listing/listingCard.component";
-import ReservationCard from "../reservations/reservationCard.component";
+import MaterialUIMenu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Profile from "./profile.component";
+import ReservationCard from "../reservations/reservationCard.component";
 import Settings from "./settings.component";
 import { searchUserListings } from "../../redux/actions/searchListingActions";
 import { searchUserReservations } from "../../redux/actions/reservationActions";
@@ -33,6 +36,7 @@ class LeftMenu extends Component {
       activeItem: "profile",
       hideExpired: false,
       render: "profile",
+      sortAnchorEl: null,
     };
     this.handleItemClick = this.handleItemClick.bind(this);
     this.handleExpiredToggle = this.handleExpiredToggle.bind(this);
@@ -72,6 +76,7 @@ class LeftMenu extends Component {
           expired: [],
         };
         const { userListings } = this.props;
+        const open = Boolean(this.state.sortAnchorEl);
 
         if (userListings) {
           userListings.forEach(listing => {
@@ -88,7 +93,17 @@ class LeftMenu extends Component {
             if (isExpired) return;
             else listings.active.push(listing);
           });
-        }
+        };
+
+        const handleClick = (event) => {
+          this.setState({ sortAnchorEl: event.currentTarget });
+          console.log(this.state.sortAnchorEl)
+        };
+
+        // Adjust this for sorting the listings -> TODO
+        const handleClose = () => {
+          this.setState({ sortAnchorEl: null });
+        };
 
         return (
           <>
@@ -102,6 +117,17 @@ class LeftMenu extends Component {
                   :
                   <CustomButton onClick={this.handleExpiredToggle}>Show Expired</CustomButton>
               }
+              <MoreVertIcon onClick={handleClick} />
+              <MaterialUIMenu
+                id="long-menu"
+                anchorEl={this.state.sortAnchorEl}
+                keepMounted
+                open={open}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>Sort by Created Date (Newest First)</MenuItem>
+                <MenuItem onClick={handleClose}>Sort by Created Date (Oldest First)</MenuItem>
+              </MaterialUIMenu>
             </div>
             <div id="listing-content">
               {
