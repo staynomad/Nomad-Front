@@ -21,6 +21,11 @@ const navbar = (props) => {
         <div id="mainListDiv" className="main_list">
           <ul className="navlinks">
             <li>
+              <NavLink exact to="/" activeClassName="nav-active">
+                Home
+              </NavLink>
+            </li>
+            <li>
               <NavLink to="/Matches" activeClassName="nav-active">
                 Explore
               </NavLink>
@@ -48,16 +53,16 @@ const navbar = (props) => {
                 </li>
               </>
             ) : (
-              <li className="nav-item xl-ml-40">
-                <NavLink
-                  className="button button-outline-primary"
-                  to="/Login"
-                  activeClassName="nav-active"
-                >
-                  Login
+                <li className="nav-item xl-ml-40">
+                  <NavLink
+                    className="button button-outline-primary"
+                    to="/Login"
+                    activeClassName="nav-active"
+                  >
+                    Login
                 </NavLink>
-              </li>
-            )}
+                </li>
+              )}
           </ul>
         </div>
         <span className="navTrigger">
