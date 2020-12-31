@@ -40,7 +40,9 @@ const ListingCard = (props) => {
     getAverageRating();
   });
 
-  const handleDeleteListing = () => {
+  const handleDeleteListing = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
     props.deleteListingById(props.userSession.token, listing._id)
   };
 
@@ -67,6 +69,15 @@ const ListingCard = (props) => {
           <>
             <div>Are you sure you want to delete this listing?</div>
             <br />
+            <>
+              <CustomButton onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                setConfirmDelete(false)
+              }
+              }>Cancel</CustomButton>
+              <DeleteButton onClick={handleDeleteListing}>Confirm Delete</DeleteButton>
+            </>
           </>
         ) : (
             <>
@@ -83,32 +94,28 @@ const ListingCard = (props) => {
                 </div>
                 <div>
                   <b>Price:</b> ${(listing.price + listing.tax).toFixed(2)}/night
-            </div>
+                </div>
                 <div className="spacer_xxs" />
+                <div>
+                  {props.userSession && props.userSession.userId === listing.userId ? (
+                    <CustomButton onClick={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      props.history.push(`/editListing/${listing._id}`)
+                    }}>Edit</CustomButton>
+                  ) : null}
+                  {props.userSession && props.userSession.userId === listing.userId ? (
+                    <CustomButton onClick={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      setConfirmDelete(true)
+                    }}>Delete</CustomButton>
+                  ) : null}
+                </div>
               </div>
             </>
           )}
       </NavLink>
-      <div>
-        {
-          confirmDelete ? (
-            <>
-              <CustomButton onClick={() => setConfirmDelete(false)}>Cancel</CustomButton>
-              <DeleteButton onClick={handleDeleteListing}>Confirm Delete</DeleteButton>
-            </>
-          ) : (
-              <>
-                {props.userSession && props.userSession.userId === listing.userId ? (
-                  <CustomButton onClick={() => props.history.push(`/editListing/${listing._id}`)}>Edit</CustomButton>
-                ) : null}
-                {props.userSession && props.userSession.userId === listing.userId ? (
-                  <CustomButton onClick={() => setConfirmDelete(true)}>Delete</CustomButton>
-                ) : null}
-              </>
-            )
-        }
-
-      </div>
     </div>
   )
 };
