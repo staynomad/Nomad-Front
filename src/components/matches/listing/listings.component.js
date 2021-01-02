@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import Pagination from '@material-ui/lab/Pagination';
 
 import "./listings.css";
 import ListingCard from './listingCard.component'
@@ -11,7 +12,9 @@ class Listings extends Component {
     super(props);
 
     this.state = {
+      itemsToDisplay: [],
       listings: [],
+      pageCount: 0,
     };
 
     this.handleSearch = this.handleSearch.bind(this);
@@ -45,37 +48,52 @@ class Listings extends Component {
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.searchListings !== prevState.listings) {
+    if (nextProps.searchListings && nextProps.searchListings !== prevState.listings) {
+      const activeListings = nextProps.searchListings.filter((listing) => {
+        // Split string to Year (idx 0), Month (idx 1), Day (idx 2) then convert to num
+        const expireDate = listing.available[1].split('-').map(date => {
+          return Number.parseInt(date, 10)
+        });
+        // Convert using to milliseconds
+        const expireDateConverted = new Date(expireDate[0], expireDate[1] - 1, expireDate[2]).getTime();
+        const curDate = new Date().getTime();
+        // Compare to check if curDate is past expired
+        let isExpired = curDate > expireDateConverted;
+        if (isExpired) return false;
+        else return true;
+      });
+
+      // Divide by number of items per page
+      const pageCount = Math.ceil(activeListings.length / 10);
+      // Display first 10 else max shown
+      const itemsToDisplay = activeListings.length > 10 ? [0, 9] : [0, activeListings.length - 1];
+
       return {
-        listings: nextProps.searchListings
+        itemsToDisplay: itemsToDisplay,
+        listings: activeListings,
+        pageCount: pageCount
       }
     }
   }
 
   render() {
-    var listings = this.state.listings || null
+    let listings = this.state.listings || null
+
     return (
       <>
         {this.state.listings ? (listings.length <= 0 ? <div><div className="spacer_s"></div>No listings yet!</div> :
           <div id='listing-content'>
             <div><div className="spacer_s"></div>Click on a listing to see more information!</div>
-            {this.state.listings.map((listing) => {
-              // Split string to Year (idx 0), Month (idx 1), Day (idx 2) then convert to num
-              const expireDate = listing.available[1].split('-').map(date => {
-                return Number.parseInt(date, 10)
-              });
-              // Convert using to milliseconds
-              const expireDateConverted = new Date(expireDate[0], expireDate[1] - 1, expireDate[2]).getTime();
-              const curDate = new Date().getTime();
-              // Compare to check if curDate is past expired
-              let isExpired = curDate > expireDateConverted;
-              if (isExpired) return null;
-              else return (
-                <ListingCard key={listing._id} listing={listing} />
-              )
-            })}
+            {
+              this.state.listings.map((listing, idx) => {
+                if (idx >= this.state.itemsToDisplay[0] && idx <= this.state.itemsToDisplay[1])
+                  return <ListingCard key={listing._id} listing={listing} />;
+                else return null;
+              })
+            }
           </div>
         ) : null}
+        <Pagination count={this.state.pageCount} />
       </>
     );
   }
