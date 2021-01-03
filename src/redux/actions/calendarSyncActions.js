@@ -14,26 +14,26 @@ const setCalendarURL = dates => ({ type: SET_CALENDAR_URL, dates })
 
 /* Fetch Calls */
 // Called every time reservation calendar is displayed
-export const calendarSync = (token, listingId) => async dispatch => {
+export const getCalendarURL = (listingId) => async dispatch => {
     await app.get(`/listings/byId/${listingId}`)
-      .then((res) => {
-        if (res.data.calendarURL) {
-          importCalendar(res.data.calendarURL, false)
+      .then( async (res) => {
+        if (res.data.listing.calendarURL) {
+          dispatch(setCalendarURL(res.data.listing.calendarURL))
         }
       })
       .catch(() => {
-        alert('Unable to retrieve calendar. Please try again.') // change from alert to conditional render (see authActions for example)
+        alert('Unable to sync calendar.')
       })
 };
 
 // Called when new URL used to import calendar availability
-export const importCalendar = (calendarURL, newImport) => async dispatch => {
+export const importCalendar = (calendarURL, listingId) => async dispatch => {
   // add some verification for URL here
   // temporary solution: using allorigins proxy to bypass airbnb access-control-allow-origin server response header
   // https://gist.github.com/jimmywarting/ac1be6ea0297c16c477e17f8fbe51347
   // https://www.airbnb.com/calendar/ical/47099387.ics?s=ebf2806742045a636872a57a62b9e90e
   await axios.get(`https://api.allorigins.win/raw?url=${calendarURL}`)
-    .then((res) => {
+    .then(async (res) => {
       const data = ical.parseICS(String(res.data))
       var availableStart = []
       var availableEnd = []
@@ -57,7 +57,6 @@ export const importCalendar = (calendarURL, newImport) => async dispatch => {
             latestStart = availableStart[i]
           }
         }
-        dispatch(setAvailable([earliestEnd, latestStart]))
         // Set blocked days from ical file as "booked"
         var booked = []
         for (let i = 0; i < availableStart.length; i++) {
@@ -70,15 +69,29 @@ export const importCalendar = (calendarURL, newImport) => async dispatch => {
             reservationId: null
           })
         }
-        dispatch(setBooked(booked))
+        if (!listingId) {
+          dispatch(setAvailable([earliestEnd, latestStart]))
+          dispatch(setBooked(booked))
+        }
+        else {
+          const data = {
+            available: [
+              earliestEnd.toISOString().substring(0, earliestEnd.toISOString().indexOf("T")),
+              latestStart.toISOString().substring(0, latestStart.toISOString().indexOf("T"))
+            ],
+            booked: booked
+          }
+          await app.put('/listings/syncListing/' + listingId, data)
+            .catch(() => {
+              alert("Unable to sync calendar.")
+            })
+        }
       }
-      dispatch(setCalendarURL(calendarURL))
-
-      if (newImport === false) {
-        console.log("handle reservation sync")
+      if (!listingId) {
+        dispatch(setCalendarURL(calendarURL))
       }
     })
     .catch((err) => {
-      alert("Unable to import calendar. Please try again.")
+      alert("Unable to sync calendar. Please try again.")
     })
 }

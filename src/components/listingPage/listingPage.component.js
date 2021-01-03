@@ -11,6 +11,8 @@ import StarRatings from 'react-star-ratings';
 import 'react-day-picker/lib/style.css'
 import './listingPage.css'
 import { submitReview } from '../../redux/actions/reviewActions';
+import { getCalendarURL } from "../../redux/actions/calendarSyncActions";
+import { importCalendar } from "../../redux/actions/calendarSyncActions";
 
 const stripePublicKey =
   "pk_test_51HqRrRImBKNBYsooNTOTLagbqd8QUGaK6BeGwy6k2pQAJxkFF7NRwTT3ksBwyGVmq8UqhNVvKQS7Vlb69acFFCvq00hxgBuZhh";
@@ -40,6 +42,8 @@ class ListingPage extends Component {
     this.setState({
       outOfRange: false
     })
+    await this.props.getCalendarURL(this.props.match.params.id)
+    await this.props.importCalendar(this.props.Calendar.calendarURL, this.props.match.params.id)
     await app.get('/listings/byId/' + this.props.match.params.id)
       .then((res) => {
         this.setState({
@@ -62,7 +66,7 @@ class ListingPage extends Component {
         let pictures = []
         for (let i = 0; i < this.state.listingPictures.length; i++) {
           pictures.push({
-            original: String(this.state.listingPictures[i])
+            original: String(this.state.listingPictures[i]),
           })
         }
         this.setState({
@@ -281,7 +285,7 @@ class ListingPage extends Component {
 
               <div className="listing-calendar">
                 <div className="spacer_xs"></div>
-                <div style={{ "align-text": "center" }}>
+                <div style={{ alignText: "center" }}>
                   {
                     this.state.outOfRange ?
                       'Selected day is not available.' :
@@ -347,12 +351,15 @@ class ListingPage extends Component {
 const mapStateToProps = state => {
   let stateToReturn = { ...state };
   if (state.Login.userInfo) stateToReturn['userSession'] = state.Login.userInfo.session;
+  stateToReturn['calendarURL'] = state.Calendar.calendarURL;
   return stateToReturn;
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     submitReview: (...args) => dispatch(submitReview(...args)),
+    getCalendarURL: (listingId) => dispatch(getCalendarURL(listingId)),
+    importCalendar: (calendarURL, listingId) => dispatch(importCalendar(calendarURL, listingId)),
   }
 }
 
