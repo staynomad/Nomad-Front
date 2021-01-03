@@ -20,6 +20,9 @@ export const getCalendarURL = (listingId) => async dispatch => {
         if (res.data.listing.calendarURL) {
           dispatch(setCalendarURL(res.data.listing.calendarURL))
         }
+        else {
+          dispatch(setCalendarURL(null))
+        }
       })
       .catch(() => {
         alert('Unable to sync calendar.')
