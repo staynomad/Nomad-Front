@@ -13,7 +13,8 @@ class navbar extends Component {
             <a href="https://www.instagram.com/vhomesgroup/" ><img src="/images/instagram.png" alt="" /></a>
         	</div>
           <div className="spacer_xs"></div>
-          <NavLink to="/contact">Contact Us</NavLink>
+          <NavLink to="/contact" className="footer-item">Contact Us</NavLink>
+          <NavLink to="/about" className="footer-item">About Us</NavLink>
           <h5>© 2021 Vhomes - All Rights Reserved. </h5>
         </div>
       </footer>

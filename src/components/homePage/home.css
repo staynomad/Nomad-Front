@@ -77,3 +77,8 @@
   margin-right: auto;
   height: 60%;
 }
+
+.footer-item {
+  padding-left: .3%;
+  padding-right: .3%;
+}
