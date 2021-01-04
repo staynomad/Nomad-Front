@@ -27,11 +27,18 @@ class Subscribe extends Component {
         replyText: "Thank's for subscribing!",
         isLoading: false
       })
+      if (res.status === 422) {
+        this.setState({
+          emailSent: true,
+          replyText: "You're already subscribed!",
+          isLoading: false
+        })
+      }
     })
     .catch((err) => {
       this.setState({
         emailSent: true,
-        replyText: "You're already subscribed!",
+        replyText: "Error subscribing. Please try again later.",
         isLoading: false
       })
     });
