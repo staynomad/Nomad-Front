@@ -14,10 +14,12 @@ class Listings extends Component {
     this.state = {
       itemsToDisplay: [],
       listings: [],
+      page: 0,
       pageCount: 0,
     };
 
     this.handleSearch = this.handleSearch.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
   };
 
   handleSearch() {
@@ -43,7 +45,7 @@ class Listings extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location || this.props.listingFilterState !== prevProps.listingFilterState) {
-      this.handleSearch();
+      return this.handleSearch();
     };
   };
 
@@ -68,12 +70,31 @@ class Listings extends Component {
       // Display first 10 else max shown
       const itemsToDisplay = activeListings.length > 10 ? [0, 9] : [0, activeListings.length - 1];
 
+      if (prevState && prevState.itemsToDisplay.length !== 0 && prevState.page !== 0) {
+        const { itemsToDisplay, page } = prevState;
+        console.log(itemsToDisplay, page)
+        return {
+          itemsToDisplay: itemsToDisplay,
+          listings: activeListings,
+          page: page,
+          pageCount: pageCount
+        }
+      }
+
       return {
         itemsToDisplay: itemsToDisplay,
         listings: activeListings,
+        page: 1,
         pageCount: pageCount
       }
     }
+  };
+
+  handlePageChange(event, page) {
+    const startIdx = ((page - 1) * 10);
+    const endIdx = ((page * 10) - 1) > this.state.listings.length ? this.state.listings.length : ((this.state.page * 10) - 1);
+
+    this.setState({ itemsToDisplay: [startIdx, endIdx] });
   }
 
   render() {
@@ -93,7 +114,7 @@ class Listings extends Component {
             }
           </div>
         ) : null}
-        <Pagination count={this.state.pageCount} />
+        <Pagination count={this.state.pageCount} onChange={this.handlePageChange} />
       </>
     );
   }
