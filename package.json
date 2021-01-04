@@ -15,6 +15,7 @@
     "ical": "^0.8.0",
     "react": "^16.13.1",
     "react-day-picker": "^7.4.8",
+    "react-device-detect": "^1.15.0",
     "react-dom": "^16.13.1",
     "react-helmet": "^6.1.0",
     "react-image-gallery": "^1.0.8",
