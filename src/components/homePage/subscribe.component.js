@@ -54,6 +54,7 @@ class Subscribe extends Component {
           onChange={(e) => {this.setState({email: e.target.value})}}
           value={this.state.email}
         />
+        <div className="spacer_xs"></div>
         {this.state.isLoading ? <div><br /><div id="spinner"></div></div> : <input className="booknowbutton" type="button" value="subscribe" onClick={this.handleSubscribe}/>}
         {this.state.emailSent ? <div><div className="spacer_s"></div>{this.state.replyText}</div> : null}
       </div>
