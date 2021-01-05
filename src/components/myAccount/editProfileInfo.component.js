@@ -42,13 +42,16 @@ const EditProfileInfo = (props) => {
 
     const handleSubmit = event => {
         event.preventDefault ();
-        setSubmitted (!submitted);
         const userId = loginInfo.userInfo.session.userId;
         // route to update user information
         app.post (`/user/setUserInfo/${userId}`, profileState)
             .then (res => {
                 // updates redux store
                 dispatch(setUserInfo(res.data));
+                setSubmitted (!submitted);
+            })
+            .catch (res => {
+                alert("Unable to edit profile.");
             })
     };
 
