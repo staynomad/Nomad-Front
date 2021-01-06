@@ -10,6 +10,7 @@ import ImageGallery from 'react-image-gallery'
 import StarRatings from 'react-star-ratings';
 import 'react-day-picker/lib/style.css'
 import './listingPage.css'
+import handleReq from '../../utils/fetchRequest';
 import { submitReview } from '../../redux/actions/reviewActions';
 
 const stripePublicKey =
@@ -93,7 +94,7 @@ class ListingPage extends Component {
         })
         this.setState({
           listingBookedDays: bookedDays,
-          today: today.setUTCHours(0,0,0,0)
+          today: today.setUTCHours(0, 0, 0, 0)
         })
         // Get host's email from their userId
         app.get(`/user/getUserInfo/${this.state.listingUser}`)
@@ -130,36 +131,28 @@ class ListingPage extends Component {
     };
 
     const stripe = await stripePromise;
-    const resDays =
-      parseInt((this.state.to - this.state.from) / (1000 * 3600 * 24)) + 1;
+    const resDays = parseInt((this.state.to - this.state.from) / (1000 * 3600 * 24)) + 1;
     const listingId = data.listing;
     let body = {
       listingId: listingId,
       days: resDays,
+      dates: [this.state.from, this.state.to]
     };
 
     // Wrap calls in try-catch block.  All errors handled by catch
     try {
-      const newReservation = await app.post("/reservation/createReservation", data, {
-        headers: {
-          Authorization: `Bearer ${this.props.userSession.token}`,
-        },
-      });
-
+      const newReservation = await handleReq("/reservation/createReservation", "POST", {
+        Authorization: `Bearer ${this.props.userSession.token}`,
+      }, data);
 
       // If the stripe call succeeds, create reservation
       if (newReservation.status === 201) {
         const { reservationId } = newReservation.data;
         body["reservationId"] = reservationId;
 
-        const response = await app({
-          url: '/payment/create-session',
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/json"
-          },
-          data: JSON.stringify(body)
-        });
+        const response = await handleReq('/payment/create-session', 'POST', {
+          "Content-Type": "application/json"
+        }, JSON.stringify(body));
         // Redirect to stripe session after inactive reservation is made
         if (response.status === 201) {
           const session = response.data; //json();
@@ -175,6 +168,7 @@ class ListingPage extends Component {
       };
     } catch (e) {
       console.log(e.response.data.errors)
+      console.log(e)
       this.setState({
         isLoading: false,
       });
@@ -191,10 +185,11 @@ class ListingPage extends Component {
 
   handleDayClick(day) {
     // Check listing availability dates separately
-    var startListingDate = new Date(this.state.listingBookedDays[0].before)
+    let startListingDate = new Date(this.state.listingBookedDays[0].before)
     startListingDate.setDate(startListingDate.getDate() - 1)
-    var endListingDate = new Date(this.state.listingBookedDays[0].after)
+    let endListingDate = new Date(this.state.listingBookedDays[0].after)
     endListingDate.setDate(endListingDate.getDate())
+
     if (day < startListingDate || day > endListingDate || day < this.state.today) {
       this.setState({
         outOfRange: true
@@ -203,7 +198,7 @@ class ListingPage extends Component {
     }
     for (let i = 1; i < this.state.listingBookedDays.length; i++) {
       // Have to subtract one from end date of reservation because of offset
-      var endDate = new Date(this.state.listingBookedDays[i].before)
+      const endDate = new Date(this.state.listingBookedDays[i].before)
       endDate.setDate(endDate.getDate() - 1)
       // Check if selected day falls within any of the disabled days
       if (day < endDate && day > this.state.listingBookedDays[i].after) {
@@ -213,11 +208,14 @@ class ListingPage extends Component {
         return
       }
     }
+
     this.setState({
       outOfRange: false
     })
     const range = DateUtils.addDayToRange(day, this.state);
     this.setState(range);
+
+    console.log(this.state.from, this.state.to)
   };
 
   handleResetClick() {
@@ -245,6 +243,8 @@ class ListingPage extends Component {
   render() {
     const { from, to } = this.state;
     const modifiers = { start: from, end: to };
+
+    const lessThanFourDays = parseInt((this.state.to - this.state.from) / (1000 * 3600 * 24)) + 1 < 4 ? true : false;
 
     return (
       <div className="container_s">
@@ -285,11 +285,12 @@ class ListingPage extends Component {
                   {
                     this.state.outOfRange ?
                       'Selected day is not available.' :
-                      <div>{!from && !to && 'Please select the first day.'}
-                        {from && !to && 'Please select the last day.'}
-                        {from &&
-                          to &&
-                          `From ${from.toLocaleDateString()} to
+                      lessThanFourDays ? 'Minimum 4 days required for reservation' :
+                        <div>{!from && !to && 'Please select the first day.'}
+                          {from && !to && 'Please select the last day.'}
+                          {from &&
+                            to &&
+                            `From ${from.toLocaleDateString()} to
                     ${to.toLocaleDateString()}`}{" "}</div>
                   }
                 </div>
@@ -303,7 +304,7 @@ class ListingPage extends Component {
                 />
                 <div className="spacer_xs"></div>
                 <div className="reserve-now">
-                  {this.state.from && this.state.to ? (
+                  {this.state.from && this.state.to && !lessThanFourDays ? (
                     this.state.isLoading ?
                       <div id="spinner"></div> :
                       <input

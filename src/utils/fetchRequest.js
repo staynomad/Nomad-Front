@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { logoutUser } from '../redux/actions/authActions';
+import { store } from '../index';
 
 const production = process.env.NODE_ENV === "production";
 const apiBaseUrl = production ? 'http://vhomes-back-dev.us-west-2.elasticbeanstalk.com' : 'http://localhost:8080';
@@ -15,6 +17,11 @@ export default async function handleReq(endpoint, methodType, customHeaders, dat
 
     return res;
   } catch (e) {
+    console.log(e.response)
+    if (e.response === "Unauthorized" || e.response.data.title === "JWT Error") {
+      alert("Login token expired. Please log in to continue.");
+      store.dispatch(logoutUser());
+    }
     return e.response;
   }
 
