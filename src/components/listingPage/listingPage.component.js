@@ -203,7 +203,6 @@ class ListingPage extends Component {
       })
       return
     }
-    console.log(this.state.listingBookedDays)
     for (let i = 0; i < this.state.listingBookedDays.length; i++) {
       // Have to subtract one from end date of reservation because of offset
       var endDate = new Date(this.state.listingBookedDays[i].before)
