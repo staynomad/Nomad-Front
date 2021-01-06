@@ -24,7 +24,6 @@ export default async function handleReq(endpoint, methodType, customHeaders, dat
     }
     return e.response;
   }
-
 }
 
 // module.exports = { handleAuth };
