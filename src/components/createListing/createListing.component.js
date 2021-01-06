@@ -110,12 +110,12 @@ class CreateListing extends Component {
           Authorization: `Bearer ${this.props.userSession.token}`,
         },
       })
-      .then(() => this.props.setLoadingTrue())
       .then(() => this.postRequest())
-      .then(() => this.props.setLoadingFalse())
       .then(() => (window.location = "/MyAccount"));
   }
-
+  componentWillUnmount() {
+    this.props.setLoadingFalse();
+  }
   async postRequest() {
     await new Promise((r) => setTimeout(r, 5000));
   }
