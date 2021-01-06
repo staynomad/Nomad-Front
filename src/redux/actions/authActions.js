@@ -1,4 +1,5 @@
 import handleReq from "../../utils/fetchRequest";
+import { push } from 'connected-react-router';
 import { setAuthError } from "./errorActions";
 import { setLoadingFalse, setLoadingTrue } from "./loadingActions";
 
@@ -8,9 +9,9 @@ export const REMOVE_USER_SESSION = 'VHomes/search/REMOVE_USER_SESSION';
 
 /* Actions */
 const setUserSession = (isHost, token, userId) => ({ type: SET_USER_SESSION, isHost, token, userId });
-export const removeUserSession = () => ({ type: REMOVE_USER_SESSION })
+const removeUserSession = () => ({ type: REMOVE_USER_SESSION })
 
-/* Fetch Calls */
+/* Fetch Calls and functions */
 export const submitLogin = (userLogin) => async dispatch => {
     dispatch(setLoadingTrue());
     const headers = {
@@ -28,3 +29,8 @@ export const submitLogin = (userLogin) => async dispatch => {
         dispatch(setAuthError(errors));
     }
 };
+
+export const logoutUser = () => dispatch => {
+    dispatch(removeUserSession());
+    dispatch(push(`/`));
+}

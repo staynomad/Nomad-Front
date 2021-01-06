@@ -59,3 +59,22 @@
   text-align: left;
   font-size: 16px;
 }
+
+.MuiPagination-root {
+  margin: 0 25%;
+}
+
+.MuiPagination-ul {
+  margin: 5% auto 5% auto !important;
+  width: max-content;
+}
+
+.Mui-selected {
+  background-color: #10B68B !important;
+  color: white !important;
+}
+
+.MuiPaginationItem-page:hover {
+  background-color: #10B68B !important;
+  color: white !important;
+}

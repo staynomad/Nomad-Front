@@ -10,7 +10,7 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import configureStore, { history } from './redux/configureStore';
 
-let store = configureStore();
+export let store = configureStore();
 let persistor = persistStore(store);
 
 ReactDOM.render(
