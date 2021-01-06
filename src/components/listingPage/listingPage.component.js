@@ -197,17 +197,14 @@ class ListingPage extends Component {
 
   handleDayClick(day) {
     // Check listing availability dates separately
-    var startListingDate = new Date(this.state.listingBookedDays[0].before)
-    startListingDate.setDate(startListingDate.getDate() - 1)
-    var endListingDate = new Date(this.state.listingBookedDays[0].after)
-    endListingDate.setDate(endListingDate.getDate())
-    if (day < startListingDate || day > endListingDate || day < this.state.today) {
+    if (day < this.state.today) {
       this.setState({
         outOfRange: true
       })
       return
     }
-    for (let i = 1; i < this.state.listingBookedDays.length; i++) {
+    console.log(this.state.listingBookedDays)
+    for (let i = 0; i < this.state.listingBookedDays.length; i++) {
       // Have to subtract one from end date of reservation because of offset
       var endDate = new Date(this.state.listingBookedDays[i].before)
       endDate.setDate(endDate.getDate() - 1)
@@ -255,7 +252,7 @@ class ListingPage extends Component {
     return (
       <div className="container_s">
         {
-          !this.state.listingPictures || !this.state.listingTitle || !this.state.listingLocation || !this.state.listingDescription || !this.state.listingBeds || !this.state.listingBaths || !this.state.listingMaxPeople || !this.state.listingPrice
+          !this.state.listingPictures
             ? <div id="spinner"></div>
             : <div>
               <h2 className="listing-title">{this.state.listingTitle}</h2>
@@ -265,7 +262,7 @@ class ListingPage extends Component {
                 items={this.state.listingPictures}
                 showThumbnails={false}
                 showPlayButton={false}
-                onErrorImageURL={"Error loading images."}
+                onErrorImageURL={"/images/default_listing.jpg"}
                 originalAlt={`${this.state.listingTitle}`}
               />
 
