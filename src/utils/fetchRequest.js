@@ -3,15 +3,7 @@ import { logoutUser } from '../redux/actions/authActions';
 import { store } from '../index';
 
 const production = process.env.NODE_ENV === "production";
-<<<<<<< HEAD
-<<<<<<< HEAD
 const apiBaseUrl = production ? 'https://nvestup.com' : 'http://localhost:8080';
-=======
-const apiBaseUrl = production ? 'https://vhomes.herokuapp.com' : 'https://nvestup.com';
->>>>>>> 3fcc393d... configuration for deployment
-=======
-const apiBaseUrl = production ? 'https://vhomes.herokuapp.com' : 'https://nvestup.com';
->>>>>>> 751a86ee... configuration for deployment
 
 export default async function handleReq(endpoint, methodType, customHeaders, data) {
   try {
