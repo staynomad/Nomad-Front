@@ -27,11 +27,18 @@ class Subscribe extends Component {
         replyText: "Thank's for subscribing!",
         isLoading: false
       })
+      if (res.status === 422) {
+        this.setState({
+          emailSent: true,
+          replyText: "You're already subscribed!",
+          isLoading: false
+        })
+      }
     })
     .catch((err) => {
       this.setState({
         emailSent: true,
-        replyText: "You're already subscribed!",
+        replyText: "Error subscribing. Please try again later.",
         isLoading: false
       })
     });
@@ -47,6 +54,7 @@ class Subscribe extends Component {
           onChange={(e) => {this.setState({email: e.target.value})}}
           value={this.state.email}
         />
+        <div className="spacer_xs"></div>
         {this.state.isLoading ? <div><br /><div id="spinner"></div></div> : <input className="booknowbutton" type="button" value="subscribe" onClick={this.handleSubscribe}/>}
         {this.state.emailSent ? <div><div className="spacer_s"></div>{this.state.replyText}</div> : null}
       </div>

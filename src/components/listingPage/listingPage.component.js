@@ -12,6 +12,7 @@ import 'react-day-picker/lib/style.css'
 import './listingPage.css'
 import handleReq from '../../utils/fetchRequest';
 import { submitReview } from '../../redux/actions/reviewActions';
+import { getCalendarURL, importCalendar } from "../../redux/actions/calendarSyncActions";
 
 const stripePublicKey =
   "pk_test_51HqRrRImBKNBYsooNTOTLagbqd8QUGaK6BeGwy6k2pQAJxkFF7NRwTT3ksBwyGVmq8UqhNVvKQS7Vlb69acFFCvq00hxgBuZhh";
@@ -41,6 +42,10 @@ class ListingPage extends Component {
     this.setState({
       outOfRange: false
     })
+    /* await this.props.getCalendarURL(this.props.match.params.id)
+    if (this.props.Calendar.calendarURL) {
+      await this.props.importCalendar(this.props.Calendar.calendarURL, this.props.match.params.id)
+    } */
     await app.get('/listings/byId/' + this.props.match.params.id)
       .then((res) => {
         this.setState({
@@ -63,7 +68,7 @@ class ListingPage extends Component {
         let pictures = []
         for (let i = 0; i < this.state.listingPictures.length; i++) {
           pictures.push({
-            original: String(this.state.listingPictures[i])
+            original: String(this.state.listingPictures[i]),
           })
         }
         this.setState({
@@ -185,18 +190,13 @@ class ListingPage extends Component {
 
   handleDayClick(day) {
     // Check listing availability dates separately
-    let startListingDate = new Date(this.state.listingBookedDays[0].before)
-    startListingDate.setDate(startListingDate.getDate() - 1)
-    let endListingDate = new Date(this.state.listingBookedDays[0].after)
-    endListingDate.setDate(endListingDate.getDate())
-
-    if (day < startListingDate || day > endListingDate || day < this.state.today) {
+    if (day < this.state.today) {
       this.setState({
         outOfRange: true
       })
       return
     }
-    for (let i = 1; i < this.state.listingBookedDays.length; i++) {
+    for (let i = 0; i < this.state.listingBookedDays.length; i++) {
       // Have to subtract one from end date of reservation because of offset
       const endDate = new Date(this.state.listingBookedDays[i].before)
       endDate.setDate(endDate.getDate() - 1)
@@ -249,7 +249,7 @@ class ListingPage extends Component {
     return (
       <div className="container_s">
         {
-          !this.state.listingPictures || !this.state.listingTitle || !this.state.listingLocation || !this.state.listingDescription || !this.state.listingBeds || !this.state.listingBaths || !this.state.listingMaxPeople || !this.state.listingPrice
+          !this.state.listingPictures
             ? <div id="spinner"></div>
             : <div>
               <h2 className="listing-title">{this.state.listingTitle}</h2>
@@ -259,7 +259,7 @@ class ListingPage extends Component {
                 items={this.state.listingPictures}
                 showThumbnails={false}
                 showPlayButton={false}
-                onErrorImageURL={"Error loading images."}
+                onErrorImageURL={"/images/default_listing.jpg"}
                 originalAlt={`${this.state.listingTitle}`}
               />
 
@@ -281,7 +281,7 @@ class ListingPage extends Component {
 
               <div className="listing-calendar">
                 <div className="spacer_xs"></div>
-                <div style={{ "align-text": "center" }}>
+                <div style={{ alignText: "center" }}>
                   {
                     this.state.outOfRange ?
                       'Selected day is not available.' :
@@ -348,12 +348,15 @@ class ListingPage extends Component {
 const mapStateToProps = state => {
   let stateToReturn = { ...state };
   if (state.Login.userInfo) stateToReturn['userSession'] = state.Login.userInfo.session;
+  stateToReturn['calendarURL'] = state.Calendar.calendarURL;
   return stateToReturn;
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     submitReview: (...args) => dispatch(submitReview(...args)),
+    getCalendarURL: (listingId) => dispatch(getCalendarURL(listingId)),
+    importCalendar: (calendarURL, listingId) => dispatch(importCalendar(calendarURL, listingId)),
   }
 }
 

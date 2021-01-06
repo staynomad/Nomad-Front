@@ -3,7 +3,7 @@ import { logoutUser } from '../redux/actions/authActions';
 import { store } from '../index';
 
 const production = process.env.NODE_ENV === "production";
-const apiBaseUrl = production ? 'http://vhomes-back-dev.us-west-2.elasticbeanstalk.com' : 'http://localhost:8080';
+const apiBaseUrl = production ? 'https://nvestup.com' : 'http://localhost:8080';
 
 export default async function handleReq(endpoint, methodType, customHeaders, data) {
   try {

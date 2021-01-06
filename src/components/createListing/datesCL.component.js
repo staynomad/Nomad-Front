@@ -90,13 +90,16 @@ class DatesCL extends Component {
       alert("Invalid URL. Please try again.")
     }
     else {
-      await this.props.importCalendar(this.state.calendarURL, true)
+      await this.props.importCalendar(this.state.calendarURL, null)
       const cleaned_dates = {
         start_date: this.props.available[0],
         end_date: this.props.available[1]
       }
       this.props.newListing({ value: cleaned_dates, name: "dates" });
       this.props.completeForm();
+      this.setState({
+        importDone: true
+      })
     }
     this.setState({
       importLoading: false
@@ -133,7 +136,11 @@ class DatesCL extends Component {
                 value="import"
               />
             }
+            {
+              this.state.importDone === true ? <div style={{ color: "#00b183" }}>Import successful!</div> : null
+            }
           </form>
+          <br />
           <span className="import-info"><NavLink to="/how-to-import-or-export-calendar">&#9432;</NavLink> What's this?</span>
           <br />
           <p className="import-calendar" style={{textDecoration: "underline", cursor: "pointer", paddingLeft: "3%", paddingRight: "1%"}} onClick={this.handleImportToggle}>Select</p>
@@ -213,7 +220,7 @@ const mapDispatchToProps = (dispatch) => {
     newListing: (updatedData) => dispatch(newListing(updatedData)),
     completeForm: () => dispatch(completeForm()),
     incompleteForm: () => dispatch(incompleteForm()),
-    importCalendar: (calendarURL) => dispatch(importCalendar(calendarURL)),
+    importCalendar: (calendarURL, listingId) => dispatch(importCalendar(calendarURL, listingId)),
   };
 };
 export default withRouter(
