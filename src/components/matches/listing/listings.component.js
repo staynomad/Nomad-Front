@@ -101,10 +101,10 @@ class Listings extends Component {
     let listings = this.state.listings || null
 
     return (
-      <>
+      <div className="wow fadeInUp" data-wow-delay="0.5s">
         {this.state.listings ? (listings.length <= 0 ? <div><div className="spacer_s"></div>No listings yet!</div> :
           <div id='listing-content'>
-            <div><div className="spacer_s"></div>Click on a listing to see more information!</div>
+            <div>Click on a listing to see more information!</div>
             {
               this.state.listings.map((listing, idx) => {
                 if (idx >= this.state.itemsToDisplay[0] && idx <= this.state.itemsToDisplay[1])
@@ -115,7 +115,7 @@ class Listings extends Component {
           </div>
         ) : null}
         <Pagination count={this.state.pageCount} onChange={this.handlePageChange} />
-      </>
+      </div>
     );
   }
 

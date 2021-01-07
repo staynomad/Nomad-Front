@@ -6,6 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 // import { Modal, DialogContent } from '@material-ui/core/';
 // import ListingsModal from './listingsmodal.component';
 import { deleteListingById } from '../../../redux/actions/searchListingActions';
+import "./explore.css"
 
 export const CustomButton = withStyles((theme) => ({
   root: {
@@ -33,6 +34,7 @@ const DeleteButton = withStyles((theme) => ({
 
 const ListingCard = (props) => {
   const [rating, setRating] = useState("");
+  const [numReviews, setNumReviews] = useState(0);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const { listing } = props;
 
@@ -55,68 +57,99 @@ const ListingCard = (props) => {
         total += parseInt(entries[i][1].stars)
         count++
       }
-      setRating(`${String(parseFloat(total / count).toFixed(1))} / 5`)
+      setRating(parseFloat(total / count).toFixed(1))
+      setNumReviews(count)
     }
     else {
       setRating('No ratings yet!')
     }
   }
 
+  var stars = []
+  for (let i = 0; i < parseInt(rating); i++) {
+    stars.push(<span className="fa fa-star checked"></span>)
+  }
+  if (stars.length === 0) {
+    stars = "No reviews yet. "
+  }
+
+  var empty_stars = []
+  for (let i = 0; i < 5 - parseInt(rating); i++) {
+    empty_stars.push(<span className="fa fa-star"></span>)
+  }
+
   return (
-    <div className='listing-item'>
+    <>
       <NavLink to={'/listing/' + listing._id}>
-        {confirmDelete ? (
-          <>
-            <div>Are you sure you want to delete this listing?</div>
-            <br />
             <>
-              <CustomButton onClick={(e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                setConfirmDelete(false)
-              }
-              }>Cancel</CustomButton>
-              <DeleteButton onClick={handleDeleteListing}>Confirm Delete</DeleteButton>
-            </>
-          </>
-        ) : (
-            <>
-              <div className='listing-information'>
-                <img className='listing-image' src={listing.pictures[0]} alt={listing.title} />
-                <div>
-                  <b>{listing.title}</b>
+            <div className='listing-item wow fadeInUp' data-wow-delay="0.5s">
+              <div className="list-card">
+                <img src={listing.pictures[0]} alt={listing.title} className="list-img" />
+                    <div className="list-card-content">
+                    <div className="list-title">{listing.title}</div>
+                   <div className="icon-inline" >
+                    <img src = 'images/guest.svg' class="list-icon" alt="guests" />
+                    <span className="detail">{listing.details.maxpeople} Guest</span>
+                  </div>
+                   <div className="icon-inline">
+                    <img src = 'images/bed.svg' class="list-icon" alt="beds" />
+                      <span className="detail">{listing.details.beds} Beds</span>
+                  </div>
+                   <div className="icon-inline">
+                    <img src = 'images/bath.svg' className="list-icon" alt="baths" />
+                      <span className="detail">{listing.details.baths} Bath</span>
+                  </div>
+                  <div className="rating">
+                  {stars}
+                  {empty_stars}
+                   <span>({numReviews})</span>
+                   </div>
+                  <div className="price-inline" >
+                  <div className="price"> ${listing.price} <span className="list-text">/ night</span></div>
+                  </div>
+                  <div className="price-inline" >
+                  <div className="button3">
+                    <button className="btn-hover color-5">Book Now</button>
+                  </div>
+                  </div>
+                  </div>
+                  <div>
+                  {confirmDelete ? (
+                    <>
+                      <>
+                        <CustomButton onClick={(e) => {
+                          e.stopPropagation();
+                          e.preventDefault();
+                          setConfirmDelete(false)
+                        }
+                        }>Cancel</CustomButton>
+                        <DeleteButton onClick={handleDeleteListing}>Confirm Delete</DeleteButton>
+                      </>
+                    </>
+                  ) :
+                    <>
+                    {props.userSession && props.userSession.userId === listing.userId ? (
+                      <CustomButton onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        props.history.push(`/editListing/${listing._id}`)
+                      }}>Edit</CustomButton>
+                    ) : null}
+                    {props.userSession && props.userSession.userId === listing.userId ? (
+                      <CustomButton onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        setConfirmDelete(true)
+                      }}>Delete</CustomButton>
+                    ) : null}
+                    </>
+                 }
                 </div>
-                <div>
-                  <b>Details:</b> {listing.details.beds > 1 ? `${listing.details.beds} beds` : `${listing.details.beds} bed`}  {listing.details.baths > 1 ? `${listing.details.baths} baths` : `${listing.details.baths} bath`}
-                </div>
-                <div>
-                  <b>Rating:</b> {rating}
-                </div>
-                <div>
-                  <b>Price:</b> ${(listing.price + listing.tax).toFixed(2)}/night
-                </div>
-                <div className="spacer_xxs" />
-                <div>
-                  {props.userSession && props.userSession.userId === listing.userId ? (
-                    <CustomButton onClick={(e) => {
-                      e.stopPropagation();
-                      e.preventDefault();
-                      props.history.push(`/editListing/${listing._id}`)
-                    }}>Edit</CustomButton>
-                  ) : null}
-                  {props.userSession && props.userSession.userId === listing.userId ? (
-                    <CustomButton onClick={(e) => {
-                      e.stopPropagation();
-                      e.preventDefault();
-                      setConfirmDelete(true)
-                    }}>Delete</CustomButton>
-                  ) : null}
                 </div>
               </div>
             </>
-          )}
       </NavLink>
-    </div>
+    </>
   )
 };
 
