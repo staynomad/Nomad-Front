@@ -95,7 +95,7 @@ class DetailsCL extends Component {
             </div>
           </div>
         </div>
-        <div className="spacer_m"></div>
+        <div className="spacer_s"></div>
       </div>
     );
   }

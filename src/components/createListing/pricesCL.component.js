@@ -57,9 +57,8 @@ class PricesCL extends Component {
             required
           />
           {this.state.price ? (
-            <div>
-              <p>List Price: ${parseFloat(this.state.price).toFixed(2)} per night</p>
-              <p>Tax: ${(this.state.price * .1).toFixed(2)}</p>
+            <div className="price-details">
+              ${(parseFloat(this.state.price) + (this.state.price * .1)).toFixed(2)} per night including tax
             </div>
           ) : (
             ""

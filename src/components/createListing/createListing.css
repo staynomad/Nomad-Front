@@ -171,3 +171,8 @@ span.import-info {
 .bad-image {
   color: red;
 }
+
+.price-details {
+  text-align: center !important;
+  margin-top: -3%;
+}
