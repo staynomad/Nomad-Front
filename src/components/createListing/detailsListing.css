@@ -25,24 +25,23 @@
   align-items: center;
   font-weight: bold;
   font-size: 120%;
-  padding: 3%;
-  padding-top: 3%;
-  padding-bottom: 5%;
+  padding: 5%;
   color: #4d4842;
-  vertical-align: middle;
 }
 
 .input-box-details {
-  width: 70px;
-  text-align: center;
+  width: 100%;
+  padding-left: 6%;
   background-color: white;
   border-radius: 5px;
-  height: 40px;
-  padding-left: 2%;
-  font-size: 100%;
+  height: 35px;
   border-radius: 20px;
   margin-top: 3%;
   margin-bottom: 3%;
   border: 2px solid rgb(210 210 210 / 47%);
   color: #4d4842;
+}
+
+.input-box-details:hover {
+  background-color: #00b1821d;
 }

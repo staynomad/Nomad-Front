@@ -10,6 +10,7 @@
 
 .label-text {
   margin-top: 4px;
+  padding-right: 15px;
   font-weight: bold;
   font-size: 120%;
   color: #4d4842;
@@ -21,9 +22,9 @@
 }
 .inputBox {
   margin-bottom: 3%;
-  padding-left: 5%;
+  padding-left: 2%;
   height: 30px;
-  width: 200px;
+  width: 100%;
   border-radius: 15px;
   border: 2px solid rgb(210 210 210 / 80%);
   background-color: white;
@@ -35,27 +36,7 @@
   background-color: #00b1821d;
 }
 
-.streetInputbox {
-  margin-left: 18%;
-}
-
-.cityInputBox {
-  margin-left: 23.2%;
-}
-
 .stateInputBox {
-  margin-left: 21%;
-  height: 30px;
-}
-
-.countryInputBox {
-  margin-left: 13%;
-}
-
-.zipInputBox {
-  margin-left: 13%;
-}
-
-.aptnumInputBox {
-  margin-left: 6.4%;
+  vertical-align: middle;
+  margin-bottom: 3%;
 }

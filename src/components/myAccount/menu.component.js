@@ -117,7 +117,7 @@ class LeftMenu extends Component {
                   :
                   <CustomButton onClick={this.handleExpiredToggle}>Show Expired</CustomButton>
               }
-              <MoreVertIcon onClick={handleClick} />
+              <MoreVertIcon onClick={handleClick} className="vert-menu"/>
               <MaterialUIMenu
                 id="long-menu"
                 anchorEl={this.state.sortAnchorEl}

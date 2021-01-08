@@ -24,15 +24,14 @@ class CreateListing extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      formval: 0,
-      maxpages: 9,
+      inputPage: true,
       loading_spinner: false,
       nextToggle: true,
     };
-    this.togglePage = this.togglePage.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.postRequest = this.postRequest.bind(this);
+    this.pageToggle = this.pageToggle.bind(this);
   }
   componentDidMount() {
     this.props.updateInfo(this.state);
@@ -57,21 +56,37 @@ class CreateListing extends Component {
       [name]: e,
     });
   }
+  pageToggle(e) {
+    let nexttemp = true;
+    let inputtemp = true;
 
+    if (e.target.value === "Next") {
+      if (this.props.formCompleted) {
+        inputtemp = false;
+      } else {
+        nexttemp = false;
+      }
+    }
+    this.setState({
+      inputPage: inputtemp,
+      nextToggle: nexttemp,
+    });
+  }
   onSubmit() {
     const dataToSend = this.props.listingData;
     let cur_photos = dataToSend.photos.pictures;
 
     let photoURLS = [];
+
     this.props.setLoadingTrue();
     for (let i = 0; i < cur_photos.length; i++) {
       const updatedFileName = encodeURIComponent(
         cur_photos[i].name + Math.random() * 1000
       );
       let action = this.props.setLoadingTrue;
-      if (i === cur_photos.length - 1) {
+      /*if (i === cur_photos.length - 1) { just forcing it to stay loading as long as 5 sec timeout is there. otherwise it sets then unsets then sets then unsets
         action = this.props.setLoadingFalse;
-      }
+      }*/
       getSignedURL(
         cur_photos[i],
         updatedFileName,
@@ -84,8 +99,12 @@ class CreateListing extends Component {
     }
 
     const available = [
-      dataToSend.dates.start_date.toISOString().substring(0, dataToSend.dates.start_date.toISOString().indexOf("T")),
-      dataToSend.dates.end_date.toISOString().substring(0, dataToSend.dates.end_date.toISOString().indexOf("T"))
+      dataToSend.dates.start_date
+        .toISOString()
+        .substring(0, dataToSend.dates.start_date.toISOString().indexOf("T")),
+      dataToSend.dates.end_date
+        .toISOString()
+        .substring(0, dataToSend.dates.end_date.toISOString().indexOf("T")),
     ];
 
     const newListing = {
@@ -94,11 +113,11 @@ class CreateListing extends Component {
       description: dataToSend.description,
       details: dataToSend.details,
       price: parseFloat(dataToSend.price).toFixed(2),
-      tax: (dataToSend.price * .1).toFixed(2),
+      tax: (dataToSend.price * 0.1).toFixed(2),
       available: available,
       pictures: photoURLS,
       calendarURL: this.props.calendarURL,
-      booked: this.props.booked
+      booked: this.props.booked,
     };
     app
       .post(`/listings/createListing`, newListing, {
@@ -109,10 +128,13 @@ class CreateListing extends Component {
       .then(() => this.postRequest())
       .then(() => (window.location = "/MyAccount"));
   }
-
-  async postRequest() {
-    await new Promise((r) => setTimeout(r, 5000));
+  componentWillUnmount() {
+    this.props.setLoadingFalse();
   }
+  async postRequest() {
+    await new Promise((r) => setTimeout(r, 3000));
+  }
+
   render() {
     const pages = [
       <LandingPageCL />,
@@ -123,8 +145,15 @@ class CreateListing extends Component {
       <PricesCL />,
       <PhotoUpload />,
       <DatesCL />,
-      <ConfirmSubmission />,
     ];
+    const pageList = pages.map((page) => {
+      return (
+        <div>
+          {page}
+          <br />
+        </div>
+      );
+    });
     return (
       <div className="fullListingBackground">
         <div className="overallListingForm">
@@ -132,65 +161,49 @@ class CreateListing extends Component {
             <div id="spinner" />
           ) : (
             <form>
-              <div>{pages[this.state.formval]}</div>
-              <div>
-                {!this.state.nextToggle ? (
-                  <span style={{ color: "red" }}>
-                    You are missing some parts. Please fill them in to continue
-                  </span>
-                ) : (
-                  ""
-                )}
-                <br />
-                {this.state.formval > 0 ? (
-                  <input
-                    className="changebut"
-                    type="button"
-                    onClick={this.togglePage}
-                    value="Back"
-                  />
-                ) : (
-                  ""
-                )}
+              {this.state.inputPage ? (
+                <div>
+                  {pageList}
 
-                {this.state.formval < this.state.maxpages - 1 ? (
+                  {!this.state.nextToggle ? (
+                    <span style={{ color: "red" }}>
+                      You are missing some parts. Please fill them in to
+                      continue
+                    </span>
+                  ) : (
+                    ""
+                  )}
+                  <br />
                   <input
-                    className="changebut"
                     type="button"
-                    onClick={this.togglePage}
+                    className="changebut"
                     value="Next"
+                    onClick={this.pageToggle}
                   />
-                ) : (
+                </div>
+              ) : (
+                <div>
+                  <ConfirmSubmission />
+
+                  <input
+                    type="button"
+                    className="changebut"
+                    value="Back"
+                    onClick={this.pageToggle}
+                  />
                   <input
                     className="changebut"
                     type="button"
                     onClick={this.onSubmit}
                     value="Submit"
                   />
-                )}
-              </div>
+                </div>
+              )}
             </form>
           )}
         </div>
       </div>
     );
-  }
-
-  togglePage(e) {
-    let temp = this.state.formval;
-    let validToggle = false;
-    if (e.target.value === "Next" && this.props.formCompleted) {
-      temp++;
-      validToggle = true;
-    } else if (e.target.value === "Back") {
-      temp--;
-      validToggle = true;
-    }
-
-    this.setState({
-      formval: temp,
-      nextToggle: validToggle,
-    });
   }
 }
 
@@ -202,7 +215,7 @@ const mapStateToProps = (state) => {
       loading: state.Loading.loading,
       formCompleted: state.Loading.formCompleted,
       calendarURL: state.Calendar.calendarURL,
-      booked: state.Calendar.booked
+      booked: state.Calendar.booked,
     };
   return {
     listingData: state.CreateListing,
