@@ -24,14 +24,14 @@ class CreateListing extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      formval: 0,
-      maxpages: 9,
+      inputPage: true,
       loading_spinner: false,
       nextToggle: true,
     };
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.postRequest = this.postRequest.bind(this);
+    this.pageToggle = this.pageToggle.bind(this);
   }
   componentDidMount() {
     this.props.updateInfo(this.state);
@@ -56,7 +56,22 @@ class CreateListing extends Component {
       [name]: e,
     });
   }
+  pageToggle(e) {
+    let nexttemp = true;
+    let inputtemp = true;
 
+    if (e.target.value === "next") {
+      if (this.props.formCompleted) {
+        inputtemp = false;
+      } else {
+        nexttemp = false;
+      }
+    }
+    this.setState({
+      inputPage: inputtemp,
+      nextToggle: nexttemp,
+    });
+  }
   onSubmit() {
     const dataToSend = this.props.listingData;
     let cur_photos = dataToSend.photos.pictures;
@@ -119,6 +134,7 @@ class CreateListing extends Component {
   async postRequest() {
     await new Promise((r) => setTimeout(r, 5000));
   }
+
   render() {
     const pages = [
       <LandingPageCL />,
@@ -129,7 +145,6 @@ class CreateListing extends Component {
       <PricesCL />,
       <PhotoUpload />,
       <DatesCL />,
-      <ConfirmSubmission />,
     ];
     const pageList = pages.map((page) => {
       return (
@@ -146,23 +161,44 @@ class CreateListing extends Component {
             <div id="spinner" />
           ) : (
             <form>
-              <div>{pageList}</div>
-              <div>
-                {!this.state.nextToggle ? (
-                  <span style={{ color: "red" }}>
-                    You are missing some parts. Please fill them in to continue
-                  </span>
-                ) : (
-                  ""
-                )}
-                <br />
-                <input
-                  className="changebut"
-                  type="button"
-                  onClick={this.onSubmit}
-                  value="Submit"
-                />
-              </div>
+              {this.state.inputPage ? (
+                <div>
+                  {pageList}
+
+                  {!this.state.nextToggle ? (
+                    <span style={{ color: "red" }}>
+                      You are missing some parts. Please fill them in to
+                      continue
+                    </span>
+                  ) : (
+                    ""
+                  )}
+                  <br />
+                  <input
+                    type="button"
+                    className="changebut"
+                    value="next"
+                    onClick={this.pageToggle}
+                  />
+                </div>
+              ) : (
+                <div>
+                  <ConfirmSubmission />
+
+                  <input
+                    type="button"
+                    className="changebut"
+                    value="back"
+                    onClick={this.pageToggle}
+                  />
+                  <input
+                    className="changebut"
+                    type="button"
+                    onClick={this.onSubmit}
+                    value="Submit"
+                  />
+                </div>
+              )}
             </form>
           )}
         </div>
