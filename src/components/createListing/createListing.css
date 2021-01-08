@@ -1,5 +1,5 @@
 .fullListingBackground {
-  background-image: white;
+  background-color: white;
   background-size: 100% 100%;
   width: 100%;
   height: 100%;
@@ -13,7 +13,7 @@
   background-color: white;
   display: inline-flex;
   padding: 60px;
-  border-radius: 2%;
+  border-radius: 25px;
   margin-bottom: 2% !important;
 }
 
@@ -27,17 +27,16 @@
 
 .questionText {
   color: #7e9388;
-  font-size: 140%;
+  font-size: 250%;
   padding-bottom: 2%;
 }
 
 .textInputBox {
   width: 98%;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 25px;
-  padding-right: 25px;
-  height: 100px;
+  padding-top: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+  height: auto;
   border-radius: 25px;
   border: 2px solid rgb(210 210 210 / 47%);
   background-color: white;
@@ -46,6 +45,10 @@
 }
 
 .textInputBox:hover {
+  background-color: #00b1821d;
+}
+
+.descriptionTextInputBox:hover {
   background-color: #00b1821d;
 }
 
@@ -78,6 +81,10 @@
   color: #4d4842;
   font-size: 15px;
   background-color: white;
+}
+
+.priceInputBox:hover {
+  background-color: #00b1821d;
 }
 
 .changebut {
@@ -149,4 +156,18 @@
 
 span.import-info {
     text-align: left;
+}
+
+.characters-left {
+  color: #7e9388;
+  margin-top: 5px;
+}
+
+.upload-file {
+  width: 50%;
+  margin: auto;
+}
+
+.bad-image {
+  color: red;
 }

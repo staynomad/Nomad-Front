@@ -45,9 +45,7 @@ class PricesCL extends Component {
     return (
       <div>
         <div>
-          <div className="startText">Price</div>
-          <br />
-          <div className="questionText">How much are you listing for?</div>
+          <div className="questionText">Price</div>
           <br />
           <input
             type="text"
@@ -67,6 +65,7 @@ class PricesCL extends Component {
             ""
           )}
         </div>
+        <div className="spacer_m"></div>
       </div>
     );
   }
