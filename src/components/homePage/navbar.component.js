@@ -30,6 +30,11 @@ const navbar = (props) => {
                 Reservations
               </NavLink>
             </li>
+            <li>
+              <NavLink to="/About" activeClassName="nav-active">
+                About Us
+              </NavLink>
+            </li>
             {props.userSession ? (
               <>
                 <li>
