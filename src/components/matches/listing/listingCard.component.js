@@ -33,14 +33,19 @@ const DeleteButton = withStyles((theme) => ({
 }))(Button);
 
 const ListingCard = (props) => {
+  const { listing } = props;
   const [rating, setRating] = useState("");
   const [numReviews, setNumReviews] = useState(0);
   const [confirmDelete, setConfirmDelete] = useState(false);
-  const { listing } = props;
+  const [coverPhoto, setCoverPhoto] = useState(listing.pictures[0])
 
   useEffect(() => {
     getAverageRating();
   });
+
+  const onPhotoError = () => {
+    setCoverPhoto("/images/default_listing.jpg")
+  }
 
   const handleDeleteListing = (e) => {
     e.stopPropagation();
@@ -84,7 +89,7 @@ const ListingCard = (props) => {
             <>
             <div className='listing-item wow fadeInUp' data-wow-delay="0.5s">
               <div className="list-card">
-                <img src={listing.pictures[0]} alt={listing.title} className="list-img" />
+                <img src={coverPhoto} alt={listing.title} className="list-img" onError={onPhotoError}/>
                     <div className="list-card-content">
                     <div className="list-title">{listing.title}</div>
                    <div className="icon-inline" >
