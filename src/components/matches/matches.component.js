@@ -5,6 +5,7 @@ import Roommates from "./roommate/roommates.component";
 import Listings from "./listing/listings.component";
 import Search from "../homePage/search.component"
 import "./matches.css";
+import "./listing/explore.css";
 
 const Matches = (props) => {
   const { history } = props
@@ -37,11 +38,19 @@ const Matches = (props) => {
 
   return (
     <div id='matches-page'>
-      <div className='container_s'>
-        <div className='matches-banner'>
-          <h1 className='banner-text'>Discover your next stay</h1>
+      <div className="spacer_l"></div>
+      <div class="spacer_xl"></div>
+        <div className="wow fadeInUp" data-wow-delay="0.4s">
+        <div className="row gap large" >
+        <div className="col-sm-12 col-md-12 col-lg-12" >
+           <div className=" wow fadeInUp" data-wow-delay="0.5s">
+            <img src="images/banner.svg" alt="banner" className="banner center-image" />
+          </div>
         </div>
-      <div className="spacer_s"></div>
+        </div>
+      </div>
+      <div className="spacer_s"> </div>
+      <div className="wow fadeInUp" data-wow-delay="0.5s">
       <Search history={history}/>
         {/*<button className="filter btn green" onClick={() => {
           setRoommateView(!roommateView);

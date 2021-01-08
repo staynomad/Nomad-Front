@@ -12,7 +12,7 @@ const Search = (props) => {
   };
 
   return (
-    <div className="overallsearch">
+    <div className="overallsearch wow fadeInUp" data-wow-delay="0.5s">
       <form onSubmit={handleSearch}>
         <input
           type="text"
