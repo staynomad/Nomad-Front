@@ -72,7 +72,7 @@ const ListingCard = (props) => {
 
   var stars = []
   for (let i = 0; i < parseInt(rating); i++) {
-    stars.push(<span className="fa fa-star checked"></span>)
+    stars.push(<span key={i} className="fa fa-star checked"></span>)
   }
   if (stars.length === 0) {
     stars = "No reviews yet. "
@@ -80,54 +80,54 @@ const ListingCard = (props) => {
 
   var empty_stars = []
   for (let i = 0; i < 5 - parseInt(rating); i++) {
-    empty_stars.push(<span className="fa fa-star"></span>)
+    empty_stars.push(<span key={i} className="fa fa-star"></span>)
   }
 
   return (
     <>
       <NavLink to={'/listing/' + listing._id}>
-            <>
-            <div className='listing-item wow fadeInUp' data-wow-delay="0.5s">
-              <div className="list-card">
-                <img src={coverPhoto} alt={listing.title} className="list-img" onError={onPhotoError}/>
-                    <div className="list-card-content">
-                    <div className="list-title">{listing.title}</div>
-                   <div className="icon-inline" >
-                    <img src = 'images/guest.svg' class="list-icon" alt="guests" />
-                    <span className="detail">{listing.details.maxpeople} Guest</span>
-                  </div>
-                   <div className="icon-inline">
-                    <img src = 'images/bed.svg' class="list-icon" alt="beds" />
-                      <span className="detail">{listing.details.beds} Beds</span>
-                  </div>
-                   <div className="icon-inline">
-                    <img src = 'images/bath.svg' className="list-icon" alt="baths" />
-                      <span className="detail">{listing.details.baths} Bath</span>
-                  </div>
-                  <div className="rating">
+        <>
+          <div className='listing-item wow fadeInUp' data-wow-delay="0.5s">
+            <div className="list-card">
+              <img src={coverPhoto} alt={listing.title} className="list-img" onError={onPhotoError} />
+              <div className="list-card-content">
+                <div className="list-title">{listing.title}</div>
+                <div className="icon-inline" >
+                  <img src='images/guest.svg' className="list-icon" alt="guests" />
+                  <span className="detail">{listing.details.maxpeople} Guest</span>
+                </div>
+                <div className="icon-inline">
+                  <img src='images/bed.svg' className="list-icon" alt="beds" />
+                  <span className="detail">{listing.details.beds} Beds</span>
+                </div>
+                <div className="icon-inline">
+                  <img src='images/bath.svg' className="list-icon" alt="baths" />
+                  <span className="detail">{listing.details.baths} Bath</span>
+                </div>
+                <div className="rating">
                   {stars}
                   {empty_stars}
-                   <span>({numReviews})</span>
-                   </div>
-                  <div className="price-inline" >
+                  <span>({numReviews})</span>
+                </div>
+                <div className="price-inline" >
                   <div className="price"> ${listing.price} <span className="list-text">/ night</span></div>
-                  </div>
-                  </div>
-                  <div>
-                  {confirmDelete ? (
+                </div>
+              </div>
+              <div>
+                {confirmDelete ? (
+                  <>
                     <>
-                      <>
-                        <CustomButton onClick={(e) => {
-                          e.stopPropagation();
-                          e.preventDefault();
-                          setConfirmDelete(false)
-                        }
-                        }>Cancel</CustomButton>
-                        <DeleteButton onClick={handleDeleteListing}>Confirm Delete</DeleteButton>
-                      </>
+                      <CustomButton onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        setConfirmDelete(false)
+                      }
+                      }>Cancel</CustomButton>
+                      <DeleteButton onClick={handleDeleteListing}>Confirm Delete</DeleteButton>
                     </>
-                  ) :
-                    <>
+                  </>
+                ) :
+                  <>
                     {props.userSession && props.userSession.userId === listing.userId ? (
                       <CustomButton onClick={(e) => {
                         e.stopPropagation();
@@ -142,12 +142,12 @@ const ListingCard = (props) => {
                         setConfirmDelete(true)
                       }}>Delete</CustomButton>
                     ) : null}
-                    </>
-                 }
-                </div>
-                </div>
+                  </>
+                }
               </div>
-            </>
+            </div>
+          </div>
+        </>
       </NavLink>
     </>
   )
