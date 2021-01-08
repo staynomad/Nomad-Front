@@ -107,11 +107,6 @@ const ListingCard = (props) => {
                   <div className="price-inline" >
                   <div className="price"> ${listing.price} <span className="list-text">/ night</span></div>
                   </div>
-                  <div className="price-inline" >
-                  <div className="button3">
-                    <button className="btn-hover color-5">Book Now</button>
-                  </div>
-                  </div>
                   </div>
                   <div>
                   {confirmDelete ? (
