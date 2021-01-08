@@ -132,7 +132,7 @@ class CreateListing extends Component {
     this.props.setLoadingFalse();
   }
   async postRequest() {
-    await new Promise((r) => setTimeout(r, 5000));
+    await new Promise((r) => setTimeout(r, 3000));
   }
 
   render() {
