@@ -60,7 +60,7 @@ class CreateListing extends Component {
     let nexttemp = true;
     let inputtemp = true;
 
-    if (e.target.value === "next") {
+    if (e.target.value === "Next") {
       if (this.props.formCompleted) {
         inputtemp = false;
       } else {
@@ -177,7 +177,7 @@ class CreateListing extends Component {
                   <input
                     type="button"
                     className="changebut"
-                    value="next"
+                    value="Next"
                     onClick={this.pageToggle}
                   />
                 </div>
@@ -188,7 +188,7 @@ class CreateListing extends Component {
                   <input
                     type="button"
                     className="changebut"
-                    value="back"
+                    value="Back"
                     onClick={this.pageToggle}
                   />
                   <input
