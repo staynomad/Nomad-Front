@@ -50,10 +50,7 @@ class DetailsCL extends Component {
   render() {
     return (
       <div>
-        <div className="startText">Details</div>
-        <br />
-        <div className="questionText">Any other important info?</div>
-        <br />
+        <div className="questionText">Details</div>
         <div className="details-wrapper">
           <div className="overall-details">
             <div className="beds">
@@ -98,6 +95,7 @@ class DetailsCL extends Component {
             </div>
           </div>
         </div>
+        <div className="spacer_s"></div>
       </div>
     );
   }

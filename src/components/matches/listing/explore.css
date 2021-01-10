@@ -1,0 +1,256 @@
+* {
+  box-sizing:border-box;
+}
+
+
+:root {
+  --color-darkgreen: #094a38;
+  --color-green: #00b183;
+  --color-darkgrey: #5a7184;
+  --color-black: #222222;
+  --color-white: #FFFFFF;
+   --color-orange: #EAB98F
+}
+
+body{
+  margin:0;
+  padding: 0;
+  font-family:  'Roboto', sans-serif;
+  background-color:#FFF;
+  animation: fadeIn 1s ease 0s 1 normal;
+  color: #191919;
+}
+
+header{
+  height: 70px;
+  width: 100%;
+  z-index: 9999;
+  transition:all 0.3s;
+  position: fixed;
+  background-color: rgba(252,252,252,0);
+}
+
+html{
+  min-height:100%;
+}
+
+.banner{
+  width: 80%;
+}
+/*search bar*/
+  .login_bar {
+     width: 500px;
+    height: 50px;
+    background: white;
+    border-radius: 10px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    border: 1px solid var(--color-green);
+    margin:auto;
+    max-width:500px
+}
+
+.login {
+  background: transparent;
+  position: absolute;
+  height: 100%;
+  width: 80%;
+  padding-left: 10px;
+  text-align: left;
+  line-height: 50px;
+  vertical-align: middle;
+  z-index: 10;
+  -webkit-transition: transform 0.2s ease-in-out 0s;
+     -moz-transition: transform 0.2s ease-in-out 0s;
+       -o-transition: transform 0.2s ease-in-out 0s;
+          transition: transform 0.2s ease-in-out 0s;
+}
+
+.login_active {
+  -webkit-transform: translateX(300px);
+     -moz-transform: translateX(300px);
+      -ms-transform: translateX(300px);
+       -o-transform: translateX(300px);
+          transform: translateX(300px);
+}
+
+.subscribe_button:hover{
+  background-color: #01c490;
+  cursor:pointer;
+}
+
+.subscribe_button {
+  font-size: 1rem;
+  background: var(--color-green);
+  position: absolute;
+  top: -50px;
+  right:0px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  height: 150px;
+  width: 100px;
+  text-align: center;
+  line-height: 150px;
+  vertical-align: middle;
+  color: white;
+  -webkit-transition: transform 0.5s ease 0s;
+     -moz-transition: transform 0.5s ease 0s;
+       -o-transition: transform 0.5s ease 0s;
+          transition: transform 0.5s ease 0s;
+}
+
+.subscribe_button_active{
+  -webkit-transform: translateY(50px);
+     -moz-transform: translateY(50px);
+      -ms-transform: translateY(50px);
+       -o-transform: translateY(50px);
+          transform: translateY(50px);
+}
+
+input {
+    font-size: 0.8rem;
+    border:none;
+    width: 100%;
+    border-radius: 5px;
+    height: 40px;
+    outline: none;
+      }
+
+.filter{
+  margin-left: 40px;
+   max-width: 65%;
+    vertical-align: middle;
+}
+
+/*cards*/
+.list-card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: row wrap;
+  text-align: center;
+}
+
+
+
+.list-card {
+    padding: 0px;
+    height: 515px;
+    box-shadow:0 4px 8px 0 rgba(0,0,0,0.2);
+    border-radius: 10px 10px 0 0;
+}
+
+.list-card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+
+.list-card-content {
+    text-align: left;
+    margin:20px;
+  }
+
+
+.list-card{
+ box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 100%;
+  border-radius: 10px 10px 0 0;}
+
+  .list-icon{
+    vertical-align: middle;
+    width: 30px;
+  }
+
+
+  /*rating*/
+  .rating{
+    margin: 10px 0;
+  }
+  .fa-star{
+color:grey;}
+
+.checked {
+  color: orange;}
+
+  .number{
+color: var(--color-darkgrey)
+  }
+.icon-inline{
+display:inline-block;
+width:30%;
+line-height: 20px;
+}
+
+.price-inline{
+  display:inline-block;
+width:45%;
+line-height: 20px;
+}
+
+.list-title{
+  font-family: PlayfairDisplay;
+    font-size: 1.4rem;
+    font-weight: 600;
+    line-height: 1.5rem;
+    letter-spacing: normal;
+    color: #00b183;
+    margin: 10px 0;
+}
+
+.list-img{
+ max-width: 100%;
+ vertical-align: middle;
+ border-radius: 10px 10px 0 0;
+ width: 1200px;
+ height: 300px;
+ object-fit: cover;
+}
+
+.price{
+  font-size: 2rem;
+  font-family: PlayfairDisplay;
+  font-weight: 600;
+  color: #00b183;
+
+}
+
+.list-text{
+font-size: 1.2rem;
+color: #808080;
+font-weight: 400;
+
+}
+
+.detail{
+  font-size: 1.1rem;
+  color: #494747;
+}
+
+
+.btn-hover.color-5 {
+  background-image: linear-gradient(
+    to right,
+    #0ba360,
+    #3cba92,
+    #30dd8a,
+    #2bb673
+  );
+  box-shadow: 0 4px 15px 0 rgba(23, 168, 108, 0.75);
+}
+
+
+
+
+@media screen and (max-width:768px) {
+.banner{
+  width: 100%;
+}
+
+
+.list-card {
+    height: auto;
+
+}
+}
