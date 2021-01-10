@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { app } from '../../utils/axiosConfig.js'
+import GoogleSignUp from "./GoogleSignUp.js";
 import "./signup.css";
 
 const Signup = () => {
@@ -44,6 +45,7 @@ const Signup = () => {
         <h1 style={{ color: "#31473b", fontSize: "48px" }}>
           Sign Up
         </h1>
+        <GoogleSignUp />
         <form className="form signup-form" onSubmit={handleSubmit} noValidate>
           <input
             type="email"
