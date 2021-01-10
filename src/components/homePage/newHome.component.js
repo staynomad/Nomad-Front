@@ -287,7 +287,7 @@ const NewHome = (props) => {
         <div className=" wow fadeInUp" data-wow-delay="0.5s">
       <div className="button3">
       <Link to="/createListing">
-        <button className="btn-hover color-5">Create a Listing</button>
+        <button className="btn-hover color-5 create-listing-button">Create a Listing</button>
       </Link>
       <div className="spacer_xl"></div>
       <h2>Subscribe to our mailing list</h2>

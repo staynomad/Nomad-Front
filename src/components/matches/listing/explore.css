@@ -229,59 +229,6 @@ font-weight: 400;
 }
 
 
-
-/*.align {
- float:left;
-}
-
-.clearfix::after {
-
-  content: "";
-  clear: both;
-  display: table;
-}*/
-
-
-
-
-
-
-
-/*button style 3*/
-.button3 {
-  text-align: center;
-}
-
-.btn-hover {
-  width: 200px;
-  font-size: 16px;
-  font-weight: 600;
-  color: #fff;
-  cursor: pointer;
-  margin: 0 0 0 90px;
-  height: 55px;
-  text-align: center;
-  border: none;
-  background-size: 300% 100%;
-  border-radius: 0.5rem;
-  moz-transition: all 0.4s ease-in-out;
-  -o-transition: all 0.4s ease-in-out;
-  -webkit-transition: all 0.4s ease-in-out;
-  transition: all 0.4s ease-in-out;
-}
-
-.btn-hover:hover {
-  background-position: 100% 0;
-  moz-transition: all 0.4s ease-in-out;
-  -o-transition: all 0.4s ease-in-out;
-  -webkit-transition: all 0.4s ease-in-out;
-  transition: all 0.4s ease-in-out;
-}
-
-.btn-hover:focus {
-  outline: none;
-}
-
 .btn-hover.color-5 {
   background-image: linear-gradient(
     to right,
@@ -302,29 +249,8 @@ font-weight: 400;
 }
 
 
-  .login_bar {
-     width: 250px;
-   height: 40px;
- }
-
-.subscribe_button {
-  font-size: 0.9rem;
-  width: 70px;
-  top: -55px;
-}
-
-.filter {
- margin-left: 10px;}
-
-
-.btn-hover {
-  width: 120px;
-  height: 45px;
-  margin: 0 0 0 10px;
-}
-
 .list-card {
-    height: 420px;
+    height: auto;
 
 }
 }
