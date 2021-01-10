@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import { submitLogin } from "../../redux/actions/authActions";
+import GoogleSignIn from './GoogleSignIn'
 import "./login.css";
 
 const useStyles = makeStyles((theme) => ({
@@ -38,6 +39,8 @@ const Login = (props) => {
               <h1 style={{ color: "#31473b", fontSize: "48px" }}>Welcome Back</h1>
               <div className="spacer_xs"></div>
             </div>
+            <GoogleSignIn />
+            <div className="spacer_s"></div>
             <div>
               <input
                 type='email'
