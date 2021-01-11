@@ -5,13 +5,19 @@ import Pagination from '@material-ui/lab/Pagination';
 
 import "./listings.css";
 import ListingCard from './listingCard.component'
-import { searchAllListings, searchForListings, searchFilteredListings } from "../../../redux/actions/searchListingActions";
+import {
+  searchAllListings,
+  searchForListings,
+  searchFilteredListings,
+  searchUserListings,
+} from "../../../redux/actions/searchListingActions";
 
 class Listings extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      hideExpired: true,
       itemsToDisplay: [],
       listings: [],
       page: 0,
@@ -23,8 +29,12 @@ class Listings extends Component {
   };
 
   handleSearch() {
-    const filter = this.props.listingFilterState;
-    var filterClicked = filter.minGuestsClicked || filter.minRatingClicked || filter.startingPriceClicked;
+    let filter;
+    let filterClicked;
+    if (this.props.listingFilterState) {
+      filter = this.props.listingFilterState;
+      filterClicked = filter.minGuestsClicked || filter.minRatingClicked || filter.startingPriceClicked;
+    }
 
     if (this.props.location.search) {
       /* Get listing using search term */
@@ -34,8 +44,9 @@ class Listings extends Component {
       /* Get listing using listing filter */
       this.props.searchFilteredListings(filter);
     } else {
-      /* Get all listings */
-      this.props.searchAllListings();
+      console.log(this.props.searchOnlyUser)
+      if (this.props.searchOnlyUser) this.props.searchUserListings(this.props.userSession.token);
+      else this.props.searchAllListings();
     }
   }
 
@@ -50,8 +61,9 @@ class Listings extends Component {
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.searchListings && nextProps.searchListings !== prevState.listings) {
-      const activeListings = nextProps.searchListings.filter((listing) => {
+    const listingType = nextProps.searchOnlyUser ? "userListings" : "searchListings";
+    if (nextProps[listingType] && nextProps[listingType] !== prevState.listings) {
+      const activeListings = nextProps[listingType].filter((listing) => {
         // Split string to Year (idx 0), Month (idx 1), Day (idx 2) then convert to num
         const expireDate = listing.available[1].split('-').map(date => {
           return Number.parseInt(date, 10)
@@ -61,7 +73,7 @@ class Listings extends Component {
         const curDate = new Date().getTime();
         // Compare to check if curDate is past expired
         let isExpired = curDate > expireDateConverted;
-        if (isExpired) return false;
+        if (isExpired && this.state.hideExpired) return false;
         else return true;
       });
 
@@ -72,7 +84,6 @@ class Listings extends Component {
 
       if (prevState && prevState.itemsToDisplay.length !== 0 && prevState.page !== 0) {
         const { itemsToDisplay, page } = prevState;
-        console.log(itemsToDisplay, page)
         return {
           itemsToDisplay: itemsToDisplay,
           listings: activeListings,
@@ -87,7 +98,7 @@ class Listings extends Component {
         page: 1,
         pageCount: pageCount
       }
-    }
+    } else return null;
   };
 
   handlePageChange(event, page) {
@@ -104,7 +115,6 @@ class Listings extends Component {
       <div className="wow fadeInUp" data-wow-delay="0.5s">
         {this.state.listings ? (listings.length <= 0 ? <div><div className="spacer_s"></div>No listings yet!</div> :
           <div id='listing-content'>
-            <div>Click on a listing to see more information!</div>
             {
               this.state.listings.map((listing, idx) => {
                 if (idx >= this.state.itemsToDisplay[0] && idx <= this.state.itemsToDisplay[1])
@@ -123,16 +133,19 @@ class Listings extends Component {
 };
 
 const mapStateToProps = state => {
-  return {
-    searchListings: state.Listing.searchListings,
-  };
+  const stateToReturn = { ...state };
+  if (state.Login.userInfo) stateToReturn["userSession"] = state.Login.userInfo.session;
+  if (state.Listing.userListings) stateToReturn["userListings"] = state.Listing.userListings;
+  if (state.Listing.searchListings) stateToReturn["searchListings"] = state.Listing.searchListings;
+  return stateToReturn;
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     searchAllListings: () => dispatch(searchAllListings()),
     searchForListings: (itemToSearch) => dispatch(searchForListings(itemToSearch)),
-    searchFilteredListings: (filter) => dispatch(searchFilteredListings(filter))
+    searchFilteredListings: (filter) => dispatch(searchFilteredListings(filter)),
+    searchUserListings: (token) => dispatch(searchUserListings(token)),
   };
 };
 

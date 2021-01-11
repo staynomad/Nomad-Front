@@ -40,18 +40,19 @@ const Matches = (props) => {
     <div id='matches-page'>
       <div className="spacer_l"></div>
       <div class="spacer_xl"></div>
-        <div className="wow fadeInUp" data-wow-delay="0.4s">
+      <div className="wow fadeInUp" data-wow-delay="0.4s">
         <div className="row gap large" >
-        <div className="col-sm-12 col-md-12 col-lg-12" >
-           <div className=" wow fadeInUp" data-wow-delay="0.5s">
-            <img src="images/banner.svg" alt="banner" className="banner center-image" />
+          <div className="col-sm-12 col-md-12 col-lg-12" >
+            <div className=" wow fadeInUp" data-wow-delay="0.5s">
+              <img src="images/banner.svg" alt="banner" className="banner center-image" />
+            </div>
           </div>
-        </div>
         </div>
       </div>
       <div className="spacer_s"> </div>
       <div className="wow fadeInUp" data-wow-delay="0.5s">
-      <Search history={history}/>
+        <Search history={history} />
+        <div>Click on a listing to see more information!</div>
         {/*<button className="filter btn green" onClick={() => {
           setRoommateView(!roommateView);
           setListingView(false)
