@@ -24,6 +24,7 @@ const initialLocation = {
     end_date: null,
     today: new Date(),
   },
+  amenities: [],
 };
 export default function (state = initialLocation, action) {
   switch (action.type) {
