@@ -49,12 +49,10 @@ class TitleCL extends Component {
   render() {
     return (
       <div>
-        <div className="startText">Title</div>
-        <br />
         <div className="questionText">
-          What do you want to call this listing?
+          Title
         </div>
-        <br />
+        <div className="spacer_xxs"></div>
         <textarea
           type="text"
           name="title"
@@ -64,7 +62,9 @@ class TitleCL extends Component {
           onChange={this.handleChange}
           required
         ></textarea>
-        <h3>{this.state.charleft} Characters Left</h3>
+        <div className="spacer_xxs"></div>
+        <div className="characters-left">{this.state.charleft} Characters Left</div>
+        <div className="spacer_m"></div>
       </div>
     );
   }
