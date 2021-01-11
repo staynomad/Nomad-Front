@@ -3,7 +3,7 @@ const getSignedURL = (file, fileName, bucket, setLoading) => {
   const xhr = new XMLHttpRequest();
   const production = process.env.NODE_ENV === "production";
   const apiBaseUrl = production
-    ? "http://vhomes-back-dev.us-west-2.elasticbeanstalk.com"
+    ? "https://nvestup.com"
     : "http://localhost:8080";
   xhr.open(
     "GET",

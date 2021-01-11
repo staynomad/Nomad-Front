@@ -1,12 +1,12 @@
 import React from "react";
 import { NavLink, withRouter } from "react-router-dom";
-import { removeUserSession } from "../../redux/actions/authActions";
+import { logoutUser } from "../../redux/actions/authActions";
 import { connect } from "react-redux";
 
 const navbar = (props) => {
   const handleLogout = () => {
     window.sessionStorage.removeItem("accessToken");
-    props.removeUserSession();
+    props.logoutUser();
     props.history.push("/");
   };
 
@@ -84,7 +84,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    removeUserSession: () => dispatch(removeUserSession()),
+    logoutUser: () => dispatch(logoutUser()),
   };
 };
 

@@ -7,6 +7,7 @@ import {
   completeForm,
 } from "../../../redux/actions/loadingActions";
 import { newListing } from "../../../redux/actions/createListingActions";
+import "../createListing.css"
 
 class PhotoUpload extends Component {
   constructor(props) {
@@ -77,21 +78,21 @@ class PhotoUpload extends Component {
   render() {
     return (
       <div>
-        <h1>Pictures</h1>
         <div className="questionText">
-          Share some images of your property!
+          Pictures
         </div>{" "}
         <br />
         <div>
           {this.state.invalid_type ? (
-            <h2 style={{ color: "red" }}>Must be PNG, JPG, or JPEG format</h2>
+            <div className="bad-image">Must be PNG, JPG, or JPEG format<div className="spacer_xxs"></div></div>
           ) : (
             ""
           )}
-          <input type="file" onChange={this.onClick} />
+          <input className="upload-file" type="file" onChange={this.onClick} />
           <br />
           <div>{this.currentImagesList()}</div>
         </div>
+        <div className="spacer_m"></div>
       </div>
     );
   }

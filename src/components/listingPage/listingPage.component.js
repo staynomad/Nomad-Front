@@ -10,9 +10,9 @@ import ImageGallery from 'react-image-gallery'
 import StarRatings from 'react-star-ratings';
 import 'react-day-picker/lib/style.css'
 import './listingPage.css'
+import handleReq from '../../utils/fetchRequest';
 import { submitReview } from '../../redux/actions/reviewActions';
-import { getCalendarURL } from "../../redux/actions/calendarSyncActions";
-import { importCalendar } from "../../redux/actions/calendarSyncActions";
+import { getCalendarURL, importCalendar } from "../../redux/actions/calendarSyncActions";
 
 const stripePublicKey =
   "pk_test_51HqRrRImBKNBYsooNTOTLagbqd8QUGaK6BeGwy6k2pQAJxkFF7NRwTT3ksBwyGVmq8UqhNVvKQS7Vlb69acFFCvq00hxgBuZhh";
@@ -42,10 +42,10 @@ class ListingPage extends Component {
     this.setState({
       outOfRange: false
     })
-    await this.props.getCalendarURL(this.props.match.params.id)
+    /* await this.props.getCalendarURL(this.props.match.params.id)
     if (this.props.Calendar.calendarURL) {
       await this.props.importCalendar(this.props.Calendar.calendarURL, this.props.match.params.id)
-    }
+    } */
     await app.get('/listings/byId/' + this.props.match.params.id)
       .then((res) => {
         this.setState({
@@ -99,7 +99,7 @@ class ListingPage extends Component {
         })
         this.setState({
           listingBookedDays: bookedDays,
-          today: today.setUTCHours(0,0,0,0)
+          today: today.setUTCHours(0, 0, 0, 0)
         })
         // Get host's email from their userId
         app.get(`/user/getUserInfo/${this.state.listingUser}`)
@@ -136,36 +136,28 @@ class ListingPage extends Component {
     };
 
     const stripe = await stripePromise;
-    const resDays =
-      parseInt((this.state.to - this.state.from) / (1000 * 3600 * 24)) + 1;
+    const resDays = parseInt((this.state.to - this.state.from) / (1000 * 3600 * 24)) + 1;
     const listingId = data.listing;
     let body = {
       listingId: listingId,
       days: resDays,
+      dates: [this.state.from, this.state.to]
     };
 
     // Wrap calls in try-catch block.  All errors handled by catch
     try {
-      const newReservation = await app.post("/reservation/createReservation", data, {
-        headers: {
-          Authorization: `Bearer ${this.props.userSession.token}`,
-        },
-      });
-
+      const newReservation = await handleReq("/reservation/createReservation", "POST", {
+        Authorization: `Bearer ${this.props.userSession.token}`,
+      }, data);
 
       // If the stripe call succeeds, create reservation
       if (newReservation.status === 201) {
         const { reservationId } = newReservation.data;
         body["reservationId"] = reservationId;
 
-        const response = await app({
-          url: '/payment/create-session',
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/json"
-          },
-          data: JSON.stringify(body)
-        });
+        const response = await handleReq('/payment/create-session', 'POST', {
+          "Content-Type": "application/json"
+        }, JSON.stringify(body));
         // Redirect to stripe session after inactive reservation is made
         if (response.status === 201) {
           const session = response.data; //json();
@@ -181,6 +173,7 @@ class ListingPage extends Component {
       };
     } catch (e) {
       console.log(e.response.data.errors)
+      console.log(e)
       this.setState({
         isLoading: false,
       });
@@ -197,19 +190,15 @@ class ListingPage extends Component {
 
   handleDayClick(day) {
     // Check listing availability dates separately
-    var startListingDate = new Date(this.state.listingBookedDays[0].before)
-    startListingDate.setDate(startListingDate.getDate() - 1)
-    var endListingDate = new Date(this.state.listingBookedDays[0].after)
-    endListingDate.setDate(endListingDate.getDate())
-    if (day < startListingDate || day > endListingDate || day < this.state.today) {
+    if (day < this.state.today) {
       this.setState({
         outOfRange: true
       })
       return
     }
-    for (let i = 1; i < this.state.listingBookedDays.length; i++) {
+    for (let i = 0; i < this.state.listingBookedDays.length; i++) {
       // Have to subtract one from end date of reservation because of offset
-      var endDate = new Date(this.state.listingBookedDays[i].before)
+      const endDate = new Date(this.state.listingBookedDays[i].before)
       endDate.setDate(endDate.getDate() - 1)
       // Check if selected day falls within any of the disabled days
       if (day < endDate && day > this.state.listingBookedDays[i].after) {
@@ -219,11 +208,14 @@ class ListingPage extends Component {
         return
       }
     }
+
     this.setState({
       outOfRange: false
     })
     const range = DateUtils.addDayToRange(day, this.state);
     this.setState(range);
+
+    console.log(this.state.from, this.state.to)
   };
 
   handleResetClick() {
@@ -252,10 +244,12 @@ class ListingPage extends Component {
     const { from, to } = this.state;
     const modifiers = { start: from, end: to };
 
+    const lessThanFourDays = parseInt((this.state.to - this.state.from) / (1000 * 3600 * 24)) + 1 < 4 ? true : false;
+
     return (
       <div className="container_s">
         {
-          !this.state.listingPictures || !this.state.listingTitle || !this.state.listingLocation || !this.state.listingDescription || !this.state.listingBeds || !this.state.listingBaths || !this.state.listingMaxPeople || !this.state.listingPrice
+          !this.state.listingPictures
             ? <div id="spinner"></div>
             : <div>
               <h2 className="listing-title">{this.state.listingTitle}</h2>
@@ -265,7 +259,7 @@ class ListingPage extends Component {
                 items={this.state.listingPictures}
                 showThumbnails={false}
                 showPlayButton={false}
-                onErrorImageURL={"Error loading images."}
+                onErrorImageURL={"/images/default_listing.jpg"}
                 originalAlt={`${this.state.listingTitle}`}
               />
 
@@ -291,11 +285,12 @@ class ListingPage extends Component {
                   {
                     this.state.outOfRange ?
                       'Selected day is not available.' :
-                      <div>{!from && !to && 'Please select the first day.'}
-                        {from && !to && 'Please select the last day.'}
-                        {from &&
-                          to &&
-                          `From ${from.toLocaleDateString()} to
+                      lessThanFourDays ? 'Minimum 4 days required for reservation' :
+                        <div>{!from && !to && 'Please select the first day.'}
+                          {from && !to && 'Please select the last day.'}
+                          {from &&
+                            to &&
+                            `From ${from.toLocaleDateString()} to
                     ${to.toLocaleDateString()}`}{" "}</div>
                   }
                 </div>
@@ -309,7 +304,7 @@ class ListingPage extends Component {
                 />
                 <div className="spacer_xs"></div>
                 <div className="reserve-now">
-                  {this.state.from && this.state.to ? (
+                  {this.state.from && this.state.to && !lessThanFourDays ? (
                     this.state.isLoading ?
                       <div id="spinner"></div> :
                       <input

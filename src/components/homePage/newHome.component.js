@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import Search from './search.component'
-import Subscribe from './subscribe.component'
+import Search from './search.component';
+import Subscribe from './subscribe.component';
+import { isMobile } from 'react-device-detect';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -19,8 +20,8 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "5%",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
-    width: "50%",
-    height: "50%",
+    width: "auto",
+    height: "auto",
   },
 }));
 
@@ -30,7 +31,7 @@ const NewHome = (props) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (!props.userSession) {
+    if (!props.userSession && !isMobile) {
       setTimeout(() => {
         setOpen(true)
       }, 1000)
@@ -62,8 +63,6 @@ const NewHome = (props) => {
           <div className={classes.paper}>
             <h2>Subscribe to our mailing list</h2>
             <p className="subscribe-text">Sign up now to get our latest news. You won't regret it.</p>
-            <img className="subscribe-img" src="images/subscribe.png" alt="subscription graphic" />
-            <div className="spacer_s"></div>
             <Subscribe/>
           </div>
         </Fade>

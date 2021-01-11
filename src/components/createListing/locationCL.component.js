@@ -18,7 +18,7 @@ class Location extends Component {
   oldData = () => {
     return this.props.listingData.location;
   };
-  /* 
+  /*
   componentDidMount() {
     const oldAddy = this.props.listingData.CreateListing.state.location.street;
     if (oldAddy === "") {
@@ -55,10 +55,7 @@ class Location extends Component {
     return (
       <div className="LocationForm">
         <div>
-          <div className="startText">Address</div>
-          <br />
-          <div className="questionText">Where is your home located?</div>
-          <br />
+          <div className="questionText">Location</div>
           <div className="listing-wrapper">
             <div className="listing-inputs">
               <div className="gen-subsec">
@@ -139,7 +136,7 @@ class Location extends Component {
             </div>
           </div>
         </div>
-        <br />
+        <div className="spacer_m"></div>
       </div>
     );
   }

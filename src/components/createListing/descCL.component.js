@@ -50,10 +50,8 @@ class Description extends Component {
   render() {
     return (
       <div>
-        <div className="startText">Description</div>
-        <br />
         <div className="questionText">
-          Tell us the details about your property.
+          Description
         </div>
         <br />
         <textarea
@@ -65,7 +63,8 @@ class Description extends Component {
           onChange={this.handleChange}
           required
         ></textarea>
-        <h3>{this.state.charleft} characters are left</h3>
+        <div className="characters-left">{this.state.charleft} Characters Left</div>
+        <div className="spacer_m"></div>
       </div>
     );
   }

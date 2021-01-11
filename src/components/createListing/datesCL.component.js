@@ -111,7 +111,9 @@ class DatesCL extends Component {
     const modifiers = { start: from, end: to };
     return (
       <>
-      <h1>Availability</h1>
+      <div className="questionText">
+        Availability
+      </div>
       {
         this.state.displayImport ?
 
@@ -146,12 +148,10 @@ class DatesCL extends Component {
           <p className="import-calendar" style={{textDecoration: "underline", cursor: "pointer", paddingLeft: "3%", paddingRight: "1%"}} onClick={this.handleImportToggle}>Select</p>
           <p className="import-calendar">dates instead</p>
           <br />
+          <div className="spacer_m"></div>
         </div> :
 
         <div>
-          <div className="questionText">
-            When is your property available?
-          </div>
           <div className="spacer_xs"></div>
           <div>
             {!from && !to && "Please select the first day."}
@@ -202,6 +202,7 @@ class DatesCL extends Component {
           <p className="import-calendar" style={{textDecoration: "underline", cursor: "pointer", paddingLeft: "3%", paddingRight: "1%"}} onClick={this.handleImportToggle}>Import</p>
           <p className="import-calendar">your calendar instead</p>
           <br />
+          <div className="spacer_m"></div>
         </div>
       }
       </>
