@@ -73,7 +73,7 @@ class Listings extends Component {
         const curDate = new Date().getTime();
         // Compare to check if curDate is past expired
         let isExpired = curDate > expireDateConverted;
-        if (isExpired && this.state.hideExpired) return false;
+        if (isExpired && prevState.hideExpired) return false;
         else return true;
       });
 
