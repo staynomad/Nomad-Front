@@ -63,8 +63,11 @@ export const importCalendar = (calendarURL, listingId) => async dispatch => {
         // Set blocked days from ical file as "booked"
         var booked = []
         for (let i = 0; i < availableStart.length; i++) {
-          if (availableEnd[i].getTime() === earliestEnd.getTime() || availableStart[i].getTime() === latestStart.getTime()) {
-            continue
+          if (!listingId)
+          {
+            if (availableEnd[i].getTime() === earliestEnd.getTime() || availableStart[i].getTime() === latestStart.getTime()) {
+              continue
+            }
           }
           booked.push({
             start: availableStart[i].toISOString().substring(0, availableStart[i].toISOString().indexOf("T")),
@@ -78,10 +81,6 @@ export const importCalendar = (calendarURL, listingId) => async dispatch => {
         }
         else {
           const data = {
-            available: [
-              earliestEnd.toISOString().substring(0, earliestEnd.toISOString().indexOf("T")),
-              latestStart.toISOString().substring(0, latestStart.toISOString().indexOf("T"))
-            ],
             booked: booked
           }
           await app.put('/listings/syncListing/' + listingId, data)
