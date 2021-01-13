@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import {
@@ -8,15 +8,27 @@ import {
 import { newListing } from "../../redux/actions/createListingActions";
 
 const Amenities = (props) => {
+  const [checkboxEnabled, checkboxChange] = useState(true);
+  let [prevAmenities, amenitiesChange] = useState([]);
   const handleChange = (e) => {
     const name = e.target.name;
-    const currentList = props.listingData.amenities;
-    if (currentList.includes(name)) {
-      currentList.pop(name);
+    let currentList = props.listingData.amenities;
+    if (name === "No Amenities") {
+      if (!checkboxEnabled) {
+        checkboxChange(true);
+        currentList = prevAmenities;
+      } else {
+        prevAmenities = amenitiesChange(currentList);
+        checkboxChange(!checkboxEnabled);
+        currentList = [];
+      }
     } else {
-      currentList.push(name);
+      if (currentList.includes(name)) {
+        currentList.splice(currentList.indexOf(name), 1);
+      } else {
+        currentList.push(name);
+      }
     }
-
     props.newListing({ name: "amenities", value: currentList });
   };
 
@@ -33,7 +45,12 @@ const Amenities = (props) => {
     return (
       <div>
         <span>{option}</span>
-        <input type="checkbox" name={option} onChange={handleChange} />
+        <input
+          type="checkbox"
+          disabled={!checkboxEnabled}
+          name={option}
+          onChange={handleChange}
+        />
       </div>
     );
   });
@@ -42,6 +59,8 @@ const Amenities = (props) => {
       <div className="questionText">Amenities</div>
       <br />
       {amenityList}
+      <span>No Amenities</span>
+      <input type="checkbox" name="No Amenities" onChange={handleChange} />
     </div>
   );
 };

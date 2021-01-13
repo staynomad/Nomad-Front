@@ -116,6 +116,7 @@ class CreateListing extends Component {
       price: parseFloat(dataToSend.price).toFixed(2),
       tax: (dataToSend.price * 0.1).toFixed(2),
       available: available,
+      amenities: dataToSend.amenities,
       pictures: photoURLS,
       calendarURL: this.props.calendarURL,
       booked: this.props.booked,
