@@ -144,31 +144,32 @@ class Listings extends Component {
     };
 
     return (
-      <div className="wow fadeInUp" data-wow-delay="0.5s">
+      <div className="wow fadeInUp listings-container" data-wow-delay="0.5s">
         {
           this.props.location.pathname === "/MyAccount" ?
-          <CustomButton>
-            <NavLink to="/CreateListing">Create Listing</NavLink>
-          </CustomButton>
+          <div>
+            <CustomButton>
+              <NavLink to="/CreateListing">Create Listing</NavLink>
+            </CustomButton>
+            {
+              !this.state.hideExpired ?
+              <CustomButton onClick={this.handleExpiredToggle}>Hide Expired</CustomButton> :
+              <CustomButton onClick={this.handleExpiredToggle}>Show Expired</CustomButton>
+            }
+            <MoreVertIcon onClick={handleClick} className="vert-menu"/>
+            <MaterialUIMenu
+              id="long-menu"
+              anchorEl={this.state.sortAnchorEl}
+              keepMounted
+              open={open}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose}>Sort by Created Date (Newest First)</MenuItem>
+              <MenuItem onClick={handleClose}>Sort by Created Date (Oldest First)</MenuItem>
+            </MaterialUIMenu>
+          </div>
           : null
         }
-        {
-          !this.state.hideExpired ?
-            <CustomButton onClick={this.handleExpiredToggle}>Hide Expired</CustomButton>
-            :
-            <CustomButton onClick={this.handleExpiredToggle}>Show Expired</CustomButton>
-        }
-        <MoreVertIcon onClick={handleClick} className="vert-menu"/>
-        <MaterialUIMenu
-          id="long-menu"
-          anchorEl={this.state.sortAnchorEl}
-          keepMounted
-          open={open}
-          onClose={handleClose}
-        >
-          <MenuItem onClick={handleClose}>Sort by Created Date (Newest First)</MenuItem>
-          <MenuItem onClick={handleClose}>Sort by Created Date (Oldest First)</MenuItem>
-        </MaterialUIMenu>
         {this.state.listings ? (listings.length <= 0 ? <div><div className="spacer_s"></div>No listings yet!</div> :
           <div id='listing-content'>
             {
