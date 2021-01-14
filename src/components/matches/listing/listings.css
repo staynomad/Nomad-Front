@@ -31,3 +31,8 @@
   align-items: center;
   height: -webkit-fill-available;
 }
+
+.vert-menu {
+  vertical-align: middle;
+  cursor: pointer;
+}
