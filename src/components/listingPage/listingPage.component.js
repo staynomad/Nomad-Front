@@ -42,10 +42,10 @@ class ListingPage extends Component {
     this.setState({
       outOfRange: false
     })
-    await this.props.getCalendarURL(this.props.match.params.id)
+    /*await this.props.getCalendarURL(this.props.match.params.id)
     if (this.props.Calendar.calendarURL) {
       await this.props.importCalendar(this.props.Calendar.calendarURL, this.props.match.params.id)
-    }
+    }*/
     await app.get('/listings/byId/' + this.props.match.params.id)
       .then((res) => {
         this.setState({
