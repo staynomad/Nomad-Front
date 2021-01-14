@@ -24,6 +24,7 @@ import ActivateReservation from "./components/reservations/activateReservation.c
 import ReviewPopup from "./components/review/reviewModal.component";
 import CalendarImportInfo from "./components/subpages/calendarImportInfo.component.js";
 import PageNotFound from "./components/subpages/404.component";
+import About from "./components/subpages/about.component"
 import "./App.css";
 
 //to add more items just copy the format and add the route path. look at navbar component to see where the path is currently set to
@@ -56,6 +57,7 @@ function App() {
             <Route path="/contact" exact component={Contact} />
             <Route path="/completeReservation/:listingId/:reservationId" exact component={ActivateReservation} />
             <Route path="/how-to-import-or-export-calendar" exact component={CalendarImportInfo} />
+            <Route path="/about" exact component={About} />
             <Route path="*" exact component={PageNotFound} />
           </Switch>
         </div>
