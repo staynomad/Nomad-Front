@@ -48,6 +48,7 @@ class DatesCL extends Component {
     }
     return initData;
   };
+
   handleDayClick(day) {
     let range = {};
     if (DateUtils.isDayBefore(this.state.today, day)) {
@@ -160,11 +161,11 @@ class DatesCL extends Component {
               to &&
               `Selected from ${from.toLocaleDateString()} to
                   ${to.toLocaleDateString()}`}{" "}
-            {from && to && (
+            {/*from && to && (
               <button className="link" onClick={this.handleResetClick}>
                 Reset
               </button>
-            )}
+            )*/}
           </div>
           {this.state.invalid_date ? (
             <div style={{ color: "red" }}>First selection must be after today</div>
