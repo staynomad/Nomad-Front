@@ -37,14 +37,22 @@ const Amenities = (props) => {
     "Kitchen",
     "TV",
     "Wifi",
-    "Heating",
+    "Heat",
     "Hair dryer",
     "Pool",
     "Towels",
   ];
   const amenityList = options.map((option) => {
     return (
-      <div>
+      <div className="amenity">
+        <img
+          src={`${process.env.PUBLIC_URL}/images/amenities/${option.replace(
+            / /g,
+            ""
+          )}.png`}
+          alt={option}
+          height="50px"
+        />
         <input
           type="checkbox"
           disabled={!checkboxEnabled}
