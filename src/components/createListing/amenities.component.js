@@ -34,13 +34,13 @@ const Amenities = (props) => {
   };
 
   const options = [
-    "Kitchen",
     "TV",
+    "Kitchen",
     "Wifi",
     "Heat",
-    "Hair dryer",
     "Pool",
     "Towels",
+    "Hair dryer",
   ];
   const amenityList = options.map((option) => {
     return (
@@ -49,7 +49,7 @@ const Amenities = (props) => {
           src={`${process.env.PUBLIC_URL}/images/amenities/${option.replace(
             / /g,
             ""
-          )}.png`}
+          )}.svg`}
           alt={option}
           height="50px"
         />
@@ -59,6 +59,7 @@ const Amenities = (props) => {
           name={option}
           onChange={handleChange}
           className="amenities-checkbox"
+          minWidth="10%"
         />
         <div>{option}</div>
       </div>
