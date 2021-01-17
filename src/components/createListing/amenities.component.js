@@ -6,6 +6,7 @@ import {
   completeForm,
 } from "../../redux/actions/loadingActions";
 import { newListing } from "../../redux/actions/createListingActions";
+import "./amenities.css";
 
 const Amenities = (props) => {
   const [checkboxEnabled, checkboxChange] = useState(true);
@@ -33,34 +34,42 @@ const Amenities = (props) => {
   };
 
   const options = [
+    "Kitchen",
+    "TV",
+    "Wifi",
+    "Heating",
+    "Hair dryer",
     "Pool",
-    "Gym",
-    "Spa",
-    "Gated Community",
-    "Home Theater",
-    "Balcony/Porch",
-    "Basement",
+    "Towels",
   ];
   const amenityList = options.map((option) => {
     return (
       <div>
-        <span>{option}</span>
         <input
           type="checkbox"
           disabled={!checkboxEnabled}
           name={option}
           onChange={handleChange}
+          className="amenities-checkbox"
         />
+        <div>{option}</div>
       </div>
     );
   });
   return (
     <div>
       <div className="questionText">Amenities</div>
-      <br />
-      {amenityList}
-      <span>No Amenities</span>
-      <input type="checkbox" name="No Amenities" onChange={handleChange} />
+      <div className="spacer_s"></div>
+      <div className="amenities-list">{amenityList}</div>
+      <div className="spacer_xs"></div>
+      <input
+        type="checkbox"
+        name="No Amenities"
+        onChange={handleChange}
+        className="amenities-checkbox no-amenities-check"
+      />
+      <div className="no-amenities-label">No Amenities</div>
+      <div className="spacer_l"></div>
     </div>
   );
 };

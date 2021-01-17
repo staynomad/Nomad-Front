@@ -1,8 +1,12 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import Pagination from '@material-ui/lab/Pagination';
-
+import Button from "@material-ui/core/Button";
+import { withStyles } from "@material-ui/core/styles";
+import MaterialUIMenu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import "./listings.css";
 import ListingCard from './listingCard.component'
 import {
@@ -11,6 +15,18 @@ import {
   searchFilteredListings,
   searchUserListings,
 } from "../../../redux/actions/searchListingActions";
+
+const CustomButton = withStyles((theme) => ({
+  root: {
+    color: "#00B183",
+    backgroundColor: "transparent",
+    border: "2px solid #00B183",
+    borderRadius: "8px",
+    font: "inherit",
+    fontSize: "16px",
+    fontWeight: "normal",
+  },
+}))(Button);
 
 class Listings extends Component {
   constructor(props) {
@@ -26,6 +42,7 @@ class Listings extends Component {
 
     this.handleSearch = this.handleSearch.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
+    this.handleExpiredToggle = this.handleExpiredToggle.bind(this);
   };
 
   handleSearch() {
@@ -44,7 +61,7 @@ class Listings extends Component {
       /* Get listing using listing filter */
       this.props.searchFilteredListings(filter);
     } else {
-      console.log(this.props.searchOnlyUser)
+      // console.log(this.props.searchOnlyUser)
       if (this.props.searchOnlyUser) this.props.searchUserListings(this.props.userSession.token);
       else this.props.searchAllListings();
     }
@@ -73,7 +90,7 @@ class Listings extends Component {
         const curDate = new Date().getTime();
         // Compare to check if curDate is past expired
         let isExpired = curDate > expireDateConverted;
-        if (isExpired && this.state.hideExpired) return false;
+        if (isExpired && prevState.hideExpired) return false;
         else return true;
       });
 
@@ -108,11 +125,50 @@ class Listings extends Component {
     this.setState({ itemsToDisplay: [startIdx, endIdx] });
   }
 
+  handleExpiredToggle() {
+    return this.state.hideExpired ? this.setState({ hideExpired: false }) : this.setState({ hideExpired: true });
+  };
+
   render() {
     let listings = this.state.listings || null
+    const open = Boolean(this.state.sortAnchorEl);
+
+    const handleClick = (event) => {
+      this.setState({ sortAnchorEl: event.currentTarget });
+      console.log(this.state.sortAnchorEl)
+    };
+
+    // Adjust this for sorting the listings -> TODO
+    const handleClose = () => {
+      this.setState({ sortAnchorEl: null });
+    };
 
     return (
       <div className="wow fadeInUp" data-wow-delay="0.5s">
+        {
+          this.props.location.pathname === "/MyAccount" ?
+          <CustomButton>
+            <NavLink to="/CreateListing">Create Listing</NavLink>
+          </CustomButton>
+          : null
+        }
+        {
+          !this.state.hideExpired ?
+            <CustomButton onClick={this.handleExpiredToggle}>Hide Expired</CustomButton>
+            :
+            <CustomButton onClick={this.handleExpiredToggle}>Show Expired</CustomButton>
+        }
+        <MoreVertIcon onClick={handleClick} className="vert-menu"/>
+        <MaterialUIMenu
+          id="long-menu"
+          anchorEl={this.state.sortAnchorEl}
+          keepMounted
+          open={open}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={handleClose}>Sort by Created Date (Newest First)</MenuItem>
+          <MenuItem onClick={handleClose}>Sort by Created Date (Oldest First)</MenuItem>
+        </MaterialUIMenu>
         {this.state.listings ? (listings.length <= 0 ? <div><div className="spacer_s"></div>No listings yet!</div> :
           <div id='listing-content'>
             {

@@ -272,10 +272,15 @@ class ListingPage extends Component {
                   Max Guests: {this.state.listingMaxPeople} <br />
                   Price: ${(this.state.listingPrice + this.state.listingTax).toFixed(2)}/Night
                 <div className="spacer_xs"></div>
-                  <a href={`mailto:${this.state.hostEmail}`}>
-                    <button className="btn green" type="button"> Contact Host </button>
-                  </a>{" "}
-                  <div className="spacer_xxl"></div>
+                {
+                  this.props.userSession ?
+                  <>
+                    <a href={`mailto:${this.state.hostEmail}`}>
+                      <button className="btn green" type="button"> Contact Host </button>
+                    </a>{" "}
+                  </> : null
+                }
+                <div className="spacer_xxl"></div>
                 </div>
               </div>
 
