@@ -11,6 +11,7 @@ import PricesCL from "./pricesCL.component";
 import TitleCL from "./titleCL.component";
 import LandingPageCL from "./landingPageCL.component";
 import PhotoUpload from "./photos/photoUpload.component";
+import Ameneties from "./amenities.component";
 import { getSignedURL } from "./photos/photoUploadRequests";
 import "./createListing.css";
 import ConfirmSubmission from "./confirmSubmission.component";
@@ -115,6 +116,7 @@ class CreateListing extends Component {
       price: parseFloat(dataToSend.price).toFixed(2),
       tax: (dataToSend.price * 0.1).toFixed(2),
       available: available,
+      amenities: dataToSend.amenities,
       pictures: photoURLS,
       calendarURL: this.props.calendarURL,
       booked: this.props.booked,
@@ -143,6 +145,7 @@ class CreateListing extends Component {
       <Description />,
       <DetailsCL />,
       <PricesCL />,
+      <Ameneties />,
       <PhotoUpload />,
       <DatesCL />,
     ];

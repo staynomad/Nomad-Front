@@ -1,0 +1,17 @@
+.amenities-checkbox {
+  height: auto;
+}
+
+.amenities-list {
+  display: flex;
+  justify-content: space-between;
+}
+
+.no-amenities-check {
+  float: left !important;
+  margin-top: 5px !important;
+}
+
+.amenity {
+  margin-right: 10px;
+}

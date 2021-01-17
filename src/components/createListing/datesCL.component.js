@@ -19,15 +19,15 @@ class DatesCL extends Component {
     this.handleDayClick = this.handleDayClick.bind(this);
     this.handleResetClick = this.handleResetClick.bind(this);
     this.handleImportToggle = this.handleImportToggle.bind(this);
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
     this.setState({
       displayImport: false,
       available: null,
-      booked: null
+      booked: null,
     });
   }
 
@@ -42,8 +42,10 @@ class DatesCL extends Component {
       today: oldData.today,
     };
     if (oldData.start_date && oldData.end_date) {
+      console.log("enter");
       this.props.completeForm();
     } else {
+      console.log("incomplete");
       this.props.incompleteForm();
     }
     return initData;
@@ -61,7 +63,7 @@ class DatesCL extends Component {
 
     const cleaned_dates = {
       start_date: range.from,
-      end_date: range.to
+      end_date: range.to,
     };
     this.props.newListing({ value: cleaned_dates, name: "dates" });
   }
@@ -78,33 +80,32 @@ class DatesCL extends Component {
 
   handleChange(e) {
     this.setState({
-      calendarURL: e.target.value
-    })
+      calendarURL: e.target.value,
+    });
   }
 
   async handleSubmit(e) {
     this.setState({
-      importLoading: true
-    })
-    e.preventDefault()
+      importLoading: true,
+    });
+    e.preventDefault();
     if (this.state.calendarURL.indexOf(".ics") === -1) {
-      alert("Invalid URL. Please try again.")
-    }
-    else {
-      await this.props.importCalendar(this.state.calendarURL, null)
+      alert("Invalid URL. Please try again.");
+    } else {
+      await this.props.importCalendar(this.state.calendarURL, null);
       const cleaned_dates = {
         start_date: this.props.available[0],
-        end_date: this.props.available[1]
-      }
+        end_date: this.props.available[1],
+      };
       this.props.newListing({ value: cleaned_dates, name: "dates" });
       this.props.completeForm();
       this.setState({
-        importDone: true
-      })
+        importDone: true,
+      });
     }
     this.setState({
-      importLoading: false
-    })
+      importLoading: false,
+    });
   }
 
   render() {
@@ -112,54 +113,64 @@ class DatesCL extends Component {
     const modifiers = { start: from, end: to };
     return (
       <>
-      <div className="questionText">
-        Availability
-      </div>
-      {
-        this.state.displayImport ?
-
-        <div>
-          <form onSubmit={this.handleSubmit}>
-            <input
-              className="input login-input"
-              style={{paddingBottom: "0", marginBottom: "0"}}
-              type="text"
-              placeholder="Calendar URL"
-              value={this.state.calendarURL}
-              onChange={this.handleChange}
-            />
-            <br />
-            {
-              this.state.importLoading ?
-              <div id="spinner"></div> :
-              <input
-                className="btn green"
-                style={{width: "auto"}}
-                type="submit"
-                value="import"
-              />
-            }
-            {
-              this.state.importDone === true ? <div style={{ color: "#00b183" }}>Import successful!</div> : null
-            }
-          </form>
-          <br />
-          <span className="import-info"><NavLink to="/how-to-import-or-export-calendar">&#9432;</NavLink> What's this?</span>
-          <br />
-          <p className="import-calendar" style={{textDecoration: "underline", cursor: "pointer", paddingLeft: "3%", paddingRight: "1%"}} onClick={this.handleImportToggle}>Select</p>
-          <p className="import-calendar">dates instead</p>
-          <br />
-          <div className="spacer_m"></div>
-        </div> :
-
-        <div>
-          <div className="spacer_xs"></div>
+        <div className="questionText">Availability</div>
+        {this.state.displayImport ? (
           <div>
-            {!from && !to && "Please select the first day."}
-            {from && !to && "Please select the last day."}
-            {from &&
-              to &&
-              `Selected from ${from.toLocaleDateString()} to
+            <form onSubmit={this.handleSubmit}>
+              <input
+                className="input login-input"
+                style={{ paddingBottom: "0", marginBottom: "0" }}
+                type="text"
+                placeholder="Calendar URL"
+                value={this.state.calendarURL}
+                onChange={this.handleChange}
+              />
+              <br />
+              {this.state.importLoading ? (
+                <div id="spinner"></div>
+              ) : (
+                <input
+                  className="btn green"
+                  style={{ width: "auto" }}
+                  type="submit"
+                  value="import"
+                />
+              )}
+              {this.state.importDone === true ? (
+                <div style={{ color: "#00b183" }}>Import successful!</div>
+              ) : null}
+            </form>
+            <br />
+            <span className="import-info">
+              <NavLink to="/how-to-import-or-export-calendar">&#9432;</NavLink>{" "}
+              What's this?
+            </span>
+            <br />
+            <p
+              className="import-calendar"
+              style={{
+                textDecoration: "underline",
+                cursor: "pointer",
+                paddingLeft: "3%",
+                paddingRight: "1%",
+              }}
+              onClick={this.handleImportToggle}
+            >
+              Select
+            </p>
+            <p className="import-calendar">dates instead</p>
+            <br />
+            <div className="spacer_m"></div>
+          </div>
+        ) : (
+          <div>
+            <div className="spacer_xs"></div>
+            <div>
+              {!from && !to && "Please select the first day."}
+              {from && !to && "Please select the last day."}
+              {from &&
+                to &&
+                `Selected from ${from.toLocaleDateString()} to
                   ${to.toLocaleDateString()}`}{" "}
             {/*from && to && (
               <button className="link" onClick={this.handleResetClick}>
@@ -198,14 +209,25 @@ class DatesCL extends Component {
               border-bottom-right-radius: 50% !important;
             }
           `}</style>
-          </Helmet>
-          <br />
-          <p className="import-calendar" style={{textDecoration: "underline", cursor: "pointer", paddingLeft: "3%", paddingRight: "1%"}} onClick={this.handleImportToggle}>Import</p>
-          <p className="import-calendar">your calendar instead</p>
-          <br />
-          <div className="spacer_m"></div>
-        </div>
-      }
+            </Helmet>
+            <br />
+            <p
+              className="import-calendar"
+              style={{
+                textDecoration: "underline",
+                cursor: "pointer",
+                paddingLeft: "3%",
+                paddingRight: "1%",
+              }}
+              onClick={this.handleImportToggle}
+            >
+              Import
+            </p>
+            <p className="import-calendar">your calendar instead</p>
+            <br />
+            <div className="spacer_m"></div>
+          </div>
+        )}
       </>
     );
   }
@@ -214,7 +236,7 @@ const mapStateToProps = (state) => {
   return {
     listingData: state.CreateListing,
     available: state.Calendar.available,
-    booked: state.Calendar.booked
+    booked: state.Calendar.booked,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -222,7 +244,8 @@ const mapDispatchToProps = (dispatch) => {
     newListing: (updatedData) => dispatch(newListing(updatedData)),
     completeForm: () => dispatch(completeForm()),
     incompleteForm: () => dispatch(incompleteForm()),
-    importCalendar: (calendarURL, listingId) => dispatch(importCalendar(calendarURL, listingId)),
+    importCalendar: (calendarURL, listingId) =>
+      dispatch(importCalendar(calendarURL, listingId)),
   };
 };
 export default withRouter(
