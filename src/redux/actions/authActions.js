@@ -13,7 +13,6 @@ const removeUserSession = () => ({ type: REMOVE_USER_SESSION })
 
 /* Fetch Calls and functions */
 export const submitLogin = userLogin => async dispatch => {
-    console.log('submit login action')
     dispatch(setLoadingTrue());
     const headers = {
         "Content-Type": "application/json",
@@ -32,7 +31,6 @@ export const submitLogin = userLogin => async dispatch => {
 };
 
 export const submitGoogleLogin = googleData => async dispatch => {
-    console.log('submit google login action')
     dispatch(setLoadingTrue())
     const headers = {
         "Content-Type": "application/json",
