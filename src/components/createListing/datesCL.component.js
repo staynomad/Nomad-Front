@@ -42,10 +42,10 @@ class DatesCL extends Component {
       today: oldData.today,
     };
     if (oldData.start_date && oldData.end_date) {
-      console.log("enter");
+      //console.log("enter");
       this.props.completeForm();
     } else {
-      console.log("incomplete");
+      //console.log("incomplete");
       this.props.incompleteForm();
     }
     return initData;
