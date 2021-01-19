@@ -49,7 +49,7 @@ const Amenities = (props) => {
           src={`${process.env.PUBLIC_URL}/images/amenities/${option.replace(
             / /g,
             ""
-          )}.svg`}
+          )}_.svg`}
           alt={option}
           height="50px"
         />
