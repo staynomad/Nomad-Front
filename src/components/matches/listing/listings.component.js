@@ -38,7 +38,7 @@ class Listings extends Component {
       listings: [],
       page: 0,
       pageCount: 0,
-      sorting: 'oldest',
+      sorting: 'newest',
     };
 
     this.handleSearch = this.handleSearch.bind(this);
