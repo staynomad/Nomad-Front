@@ -15,7 +15,7 @@ import { submitReview } from '../../redux/actions/reviewActions';
 import { getCalendarURL, importCalendar } from "../../redux/actions/calendarSyncActions";
 
 const stripePublicKey =
-  "pk_live_51HqRrRImBKNBYsooGx5nJRAeFCsFHTrCN8Nych2v6qhKZSA2czLKIKEy5WfobORK1vZPXeIpUOsqduHkDKA6g2Mg003GFj3QIG";
+  "pk_test_51HqRrRImBKNBYsooNTOTLagbqd8QUGaK6BeGwy6k2pQAJxkFF7NRwTT3ksBwyGVmq8UqhNVvKQS7Vlb69acFFCvq00hxgBuZhh";
 const stripePromise = loadStripe(stripePublicKey);
 
 class ListingPage extends Component {

@@ -119,7 +119,7 @@ class DatesCL extends Component {
             <form onSubmit={this.handleSubmit}>
               <input
                 className="input login-input"
-                style={{ paddingBottom: "0", marginBottom: "0", width: "100%" }}
+                style={{ paddingBottom: "0", marginBottom: "0" }}
                 type="text"
                 placeholder="Calendar URL"
                 value={this.state.calendarURL}

@@ -53,7 +53,7 @@ class Description extends Component {
         <div className="questionText">
           Description
         </div>
-        <div className="spacer_xs"></div>
+        <br />
         <textarea
           type="text"
           name="description"

@@ -16,7 +16,7 @@ const Search = (props) => {
       <form onSubmit={handleSearch}>
         <input
           type="text"
-          placeholder="type in a city, state, or zipcode"
+          placeholder="find your next stay"
           className="inputtextbox"
           onChange={(e) => setItemToSearch(e.target.value)}
           value={itemToSearch}
