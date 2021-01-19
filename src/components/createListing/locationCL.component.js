@@ -56,6 +56,7 @@ class Location extends Component {
       <div className="LocationForm">
         <div>
           <div className="questionText">Location</div>
+          <div className="spacer_xs"></div>
           <div className="listing-wrapper">
             <div className="listing-inputs">
               <div className="gen-subsec">
