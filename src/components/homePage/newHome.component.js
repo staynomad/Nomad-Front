@@ -97,7 +97,7 @@ const NewHome = (props) => {
       </div>
 
 
-      <div className="spacer_m"></div>
+      <div className="spacer_xs"></div>
         <div className="container">
         <h1 className="wow fadeInUp" data-wow-delay="0.5s">Why VHomes?</h1>
           <div className="spacer_s"></div>
