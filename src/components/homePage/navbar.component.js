@@ -60,11 +60,6 @@ const navbar = (props) => {
               )}
           </ul>
         </div>
-        <span className="navTrigger">
-          <i></i>
-          <i></i>
-          <i></i>
-        </span>
       </div>
     </nav>
   );
