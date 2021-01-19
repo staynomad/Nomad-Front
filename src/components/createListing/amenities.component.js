@@ -37,7 +37,7 @@ const Amenities = (props) => {
     "TV",
     "Kitchen",
     "Wifi",
-    "Heat",
+    "Heating",
     "Pool",
     "Towels",
     "Hair dryer",
