@@ -52,8 +52,8 @@ class TitleCL extends Component {
         <div className="questionText">
           Title
         </div>
-        <div className="spacer_xxs"></div>
-        <textarea
+        <div className="spacer_xs"></div>
+        <input
           type="text"
           name="title"
           className="textInputBox"
@@ -61,7 +61,7 @@ class TitleCL extends Component {
           placeholder="e.g. Beautiful apartment overlooking Central Park"
           onChange={this.handleChange}
           required
-        ></textarea>
+        ></input>
         <div className="spacer_xxs"></div>
         <div className="characters-left">{this.state.charleft} Characters Left</div>
         <div className="spacer_m"></div>
