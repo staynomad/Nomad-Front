@@ -91,17 +91,16 @@ const NewHome = (props) => {
           <div className="spacer_s"></div>
           <div className=" wow fadeInUp" data-wow-delay="0.5s">
           <Search history={history}/>
-          <div className="spacer_xs"></div>
-          <div className="intro_text">Search now to find your next dream vacation. </div>
+          <div className="intro_text">Find your dream stay without breaking the bank. </div>
         </div>
         </div>
       </div>
 
 
-      <div className="spacer_xl"></div>
+      <div className="spacer_m"></div>
         <div className="container">
-        <h2 className="wow fadeInUp" data-wow-delay="0.5s">Why VHomes?</h2>
-          <div className="spacer_l"></div>
+        <h1 className="wow fadeInUp" data-wow-delay="0.5s">Why VHomes?</h1>
+          <div className="spacer_s"></div>
 
         <div className="row gap large" >
                   <div className="col-sm-12 col-md-12 col-lg-4 " >
@@ -143,10 +142,10 @@ const NewHome = (props) => {
       </div>
 
 
-      <div className="spacer_xxl"></div>
+      <div className="spacer_xl"></div>
       <div className="container_wide">
         <div className="design">
-        <h2 className="wow fadeInUp" data-wow-delay="0.5s">Our amenities</h2>
+        <h1 className="wow fadeInUp" data-wow-delay="0.5s">Our Amenities</h1>
           <div className="spacer_l"></div>
         <div className="row gap large " >
             <div className="col-sm-6 col-md-6 col-lg-3" >
@@ -183,8 +182,7 @@ const NewHome = (props) => {
 
 
       <div className="container">
-        <div className="spacer_xl"></div>
-            <h2>Find your ideal home in 3 steps </h2>
+            <h1>Book and Save Your Money </h1>
             <div className="spacer_l"></div>
           <div className="row gap large" >
       <div className="col-sm-12 col-md-6 col-lg-6" >
@@ -193,7 +191,7 @@ const NewHome = (props) => {
 
 
       <div className="col-sm-12 col-md-6 col-lg-6" >
-        <div className="spacer_l"></div>
+        <div className="spacer_xl"></div>
         <div className="flex-card-container">
       <div className="number">
         <div className="number-sec">1</div>
@@ -230,9 +228,9 @@ const NewHome = (props) => {
       </div>
 
 
-      <div className="spacer_xl"></div>
+      <div className="spacer_l"></div>
         <div className=" wow fadeInUp" data-wow-delay="0.5s">
-      <h2>From our guests  </h2>
+      <h1>From our guests  </h1>
       </div>
 
         <div className=" wow fadeInUp" data-wow-delay="0.5s">
@@ -280,7 +278,7 @@ const NewHome = (props) => {
       </div>
 
 
-      <div className="spacer_xl"></div>
+      <div className="spacer_m"></div>
         <div className=" wow fadeInUp" data-wow-delay="0.5s">
       <h2>Want to host your property?</h2>
       </div>
@@ -289,7 +287,7 @@ const NewHome = (props) => {
       <Link to="/createListing">
         <button className="btn-hover color-5 create-listing-button">Create a Listing</button>
       </Link>
-      <div className="spacer_xl"></div>
+      <div className="spacer_m"></div>
       <h2>Subscribe to our mailing list</h2>
       <p className="subscribe-text">Subscribe to our mailing list to get our latest news.</p>
       <Subscribe />
@@ -297,7 +295,7 @@ const NewHome = (props) => {
       </div>
 
 
-      <div className="spacer_xl"></div>
+      <div className="spacer_l"></div>
 
       </div>
     </div>
