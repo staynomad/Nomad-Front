@@ -1,5 +1,5 @@
 .fullListingBackground {
-  background-color: white;
+  background-color: #d1d1d1;
   background-size: 100% 100%;
   width: 100%;
   height: 100%;
@@ -33,7 +33,9 @@
 
 .textInputBox {
   width: 98%;
-  padding: 15px;
+  padding-top: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
   height: auto;
   border-radius: 25px;
   border: 2px solid rgb(210 210 210 / 47%);

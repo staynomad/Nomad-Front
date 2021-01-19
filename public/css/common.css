@@ -2,10 +2,6 @@
 	box-sizing:border-box;
 }
 
-::placeholder {
-	color: #5a7184;
-	opacity: 0.6;
-}
 
 :root {
   --color-darkgreen: #094a38;
