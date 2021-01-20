@@ -13,8 +13,8 @@ class TitleCL extends Component {
     super(props);
     this.state = {
       title: "",
-      charleft: 40,
-      maxchars: 40,
+      charleft: 100,
+      maxchars: 100,
     };
   }
   componentDidMount() {
@@ -49,6 +49,7 @@ class TitleCL extends Component {
   render() {
     return (
       <div>
+
         <div className="questionText">
           Title
         </div>
@@ -63,7 +64,9 @@ class TitleCL extends Component {
           required
         ></input>
         <div className="spacer_xxs"></div>
-        <div className="characters-left">{this.state.charleft} Characters Left</div>
+        <div className="characters-left">
+          {this.state.charleft} Characters Left
+        </div>
         <div className="spacer_m"></div>
       </div>
     );

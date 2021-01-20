@@ -30,7 +30,7 @@ class DetailsCL extends Component {
   handleChange(e) {
     const { name, value } = e.target;
     if (!isNaN(value)) {
-      if (value < 10) {
+      if (value < 100) {
         this.props.completeForm();
         this.setState({
           invalidInput: false,
