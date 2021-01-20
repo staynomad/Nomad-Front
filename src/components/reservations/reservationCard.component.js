@@ -79,17 +79,20 @@ const ReservationCard = (props) => {
                         <b>Check-Out: </b> {reservation.days[1].substring(5)}
                       </div>
                       <div className="spacer_xxs" />
-                      {props.userSession && props.userSession.userId === reservation.user && !props.reservation.checkedIn ? (
-                        <CustomButton onClick={
-                          (e) => {
-                            e.stopPropagation();
-                            e.preventDefault();
-                            setConfirmCheck(true);
-                            setCheckState('in');
-                          }}>
-                          { !props.loading ? "Check-in" : <div id="spinner" />}
-                        </CustomButton>
-                      ) : (
+                      {props.userSession &&
+                        props.userSession.userId === reservation.user &&
+                        !props.reservation.checkedIn &&
+                        new Date() >= new Date(reservation.days[0]) ? (
+                          <CustomButton onClick={
+                            (e) => {
+                              e.stopPropagation();
+                              e.preventDefault();
+                              setConfirmCheck(true);
+                              setCheckState('in');
+                            }}>
+                            { !props.loading ? "Check-in" : <div id="spinner" />}
+                          </CustomButton>
+                        ) : (
                           <>
                             {/* Render an unclickable button */}
                           </>

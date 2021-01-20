@@ -77,7 +77,6 @@ class LeftMenu extends Component {
           expired: [],
         };
         const { userReservations } = this.props;
-        console.log(userReservations)
 
         if (this.props.userReservations) {
           userReservations.forEach(reservation => {
@@ -179,7 +178,12 @@ class LeftMenu extends Component {
                 name="my reservations"
                 active={activeItem === "my reservations"}
                 compname="my reservations"
-                onClick={this.handleItemClick}
+                onClick={(e, { name, compname }) => {
+                  this.handleItemClick(e, { name, compname });
+                  this.props.searchUserReservations(
+                    this.props.userSession.token
+                  );
+                }}
               />
               <Menu.Item
                 name="settings"
