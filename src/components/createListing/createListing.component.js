@@ -37,7 +37,7 @@ class CreateListing extends Component {
   componentDidMount() {
     this.props.updateInfo(this.state);
     this.props.setLoadingFalse();
-
+    window.scrollTo(0, 0);
     if (!this.props.userSession) {
       alert("Please log in to create a listing.");
       return this.props.history.push("/login");

@@ -13,8 +13,8 @@ class Description extends Component {
     super(props);
     this.state = {
       description: "",
-      maxchars: 500,
-      charleft: 500,
+      maxchars: 5000,
+      charleft: 5000,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -50,9 +50,7 @@ class Description extends Component {
   render() {
     return (
       <div>
-        <div className="questionText">
-          Description
-        </div>
+        <div className="questionText">Description</div>
         <br />
         <textarea
           type="text"
@@ -63,7 +61,9 @@ class Description extends Component {
           onChange={this.handleChange}
           required
         ></textarea>
-        <div className="characters-left">{this.state.charleft} Characters Left</div>
+        <div className="characters-left">
+          {this.state.charleft} Characters Left
+        </div>
         <div className="spacer_m"></div>
       </div>
     );
