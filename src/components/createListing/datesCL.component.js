@@ -42,10 +42,10 @@ class DatesCL extends Component {
       today: oldData.today,
     };
     if (oldData.start_date && oldData.end_date) {
-      console.log("enter");
+      //console.log("enter");
       this.props.completeForm();
     } else {
-      console.log("incomplete");
+      //console.log("incomplete");
       this.props.incompleteForm();
     }
     return initData;
@@ -119,7 +119,7 @@ class DatesCL extends Component {
             <form onSubmit={this.handleSubmit}>
               <input
                 className="input login-input"
-                style={{ paddingBottom: "0", marginBottom: "0" }}
+                style={{ paddingBottom: "0", marginBottom: "0", width: "100%" }}
                 type="text"
                 placeholder="Calendar URL"
                 value={this.state.calendarURL}
