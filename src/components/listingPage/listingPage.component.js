@@ -31,7 +31,7 @@ import PostReviewModal from "../review/PostReviewModal.component";
 import AllReviewsModal from "../review/AllReviewsModal.component";
 
 const stripePublicKey =
-  "pk_test_51HqRrRImBKNBYsooNTOTLagbqd8QUGaK6BeGwy6k2pQAJxkFF7NRwTT3ksBwyGVmq8UqhNVvKQS7Vlb69acFFCvq00hxgBuZhh";
+  "pk_live_51HqRrRImBKNBYsooGx5nJRAeFCsFHTrCN8Nych2v6qhKZSA2czLKIKEy5WfobORK1vZPXeIpUOsqduHkDKA6g2Mg003GFj3QIG";
 const stripePromise = loadStripe(stripePublicKey);
 
 class ListingPage extends Component {
