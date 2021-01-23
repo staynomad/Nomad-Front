@@ -121,11 +121,18 @@ class CreateListing extends Component {
       calendarURL: this.props.calendarURL,
       booked: this.props.booked,
     };
-    app
-      .post(`/listings/createListing`, newListing, {
+    app.post(`/listings/createListing`, newListing, {
         headers: {
           Authorization: `Bearer ${this.props.userSession.token}`,
         },
+      })
+      .then((res) => {
+        app.post("/listings/activateListing/", res.data._id, {
+          headers: {
+            Authorization: `Bearer ${this.props.userSession.token}`,
+          },
+        })
+        .catch(() => alert("Unable to create listing. Please try again."))
       })
       .then(() => this.postRequest())
       .then(() => (window.location = "/MyAccount"));
