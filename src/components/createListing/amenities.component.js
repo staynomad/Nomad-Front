@@ -44,7 +44,7 @@ const Amenities = (props) => {
   ];
   const amenityList = options.map((option) => {
     return (
-      <div className="amenity">
+      <div className="amenity" key={option}>
         <img
           src={`${process.env.PUBLIC_URL}/images/amenities/${option.replace(
             / /g,
@@ -59,7 +59,6 @@ const Amenities = (props) => {
           name={option}
           onChange={handleChange}
           className="amenities-checkbox"
-          minWidth="10%"
         />
         <div>{option}</div>
       </div>

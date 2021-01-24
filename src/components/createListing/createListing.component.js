@@ -75,7 +75,7 @@ class CreateListing extends Component {
   }
   onSubmit() {
     const dataToSend = this.props.listingData;
-    let cur_photos = dataToSend.photos.pictures;
+    let cur_photos = dataToSend.photos.image_files;
 
     let photoURLS = [];
 
@@ -139,7 +139,7 @@ class CreateListing extends Component {
 
   render() {
     const pages = [
-      <LandingPageCL />,
+      <LandingPageCL name="Landing Page" />,
       <TitleCL />,
       <Location />,
       <Description />,
@@ -151,7 +151,7 @@ class CreateListing extends Component {
     ];
     const pageList = pages.map((page) => {
       return (
-        <div>
+        <div key={pages.indexOf(page)}>
           {page}
           <br />
         </div>

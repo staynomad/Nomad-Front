@@ -17,7 +17,7 @@ const initialLocation = {
     maxpeople: "",
   },
   price: "",
-  photos: { pictures: [], temp_image_url: [] },
+  photos: { pictures: {}, image_files: [] },
   rules: "",
   dates: {
     start_date: null,
