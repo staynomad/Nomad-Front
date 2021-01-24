@@ -38,6 +38,7 @@ class Listings extends Component {
       listings: [],
       page: 0,
       pageCount: 0,
+      sorting: 'newest',
     };
 
     this.handleSearch = this.handleSearch.bind(this);
@@ -75,12 +76,14 @@ class Listings extends Component {
     if (this.props.location !== prevProps.location || this.props.listingFilterState !== prevProps.listingFilterState) {
       return this.handleSearch();
     };
+
   };
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    const listingType = nextProps.searchOnlyUser ? "userListings" : "searchListings";
-    if (nextProps[listingType] && nextProps[listingType] !== prevState.listings) {
-      const activeListings = nextProps[listingType].filter((listing) => {
+  static getDerivedStateFromProps(props, state) {
+    const listingType = props.searchOnlyUser ? "userListings" : "searchListings";
+
+    if (props[listingType] && props[listingType] !== state.listings) {
+      const activeListings = props[listingType].filter((listing) => {
         // Split string to Year (idx 0), Month (idx 1), Day (idx 2) then convert to num
         const expireDate = listing.available[1].split('-').map(date => {
           return Number.parseInt(date, 10)
@@ -90,17 +93,29 @@ class Listings extends Component {
         const curDate = new Date().getTime();
         // Compare to check if curDate is past expired
         let isExpired = curDate > expireDateConverted;
-        if (isExpired && prevState.hideExpired) return false;
+        if (isExpired && state.hideExpired) return false;
         else return true;
       });
+
+      if (state.sorting === 'oldest') {
+        activeListings.sort((listing1, listing2) => {
+          return listing1.createdAt > listing2.createdAt ? 1 : -1;
+        });
+      }
+
+      if (state.sorting === 'newest') {
+        activeListings.sort((listing1, listing2) => {
+          return listing1.createdAt > listing2.createdAt ? -1 : 1;
+        });
+      }
 
       // Divide by number of items per page
       const pageCount = Math.ceil(activeListings.length / 10);
       // Display first 10 else max shown
       const itemsToDisplay = activeListings.length > 10 ? [0, 9] : [0, activeListings.length - 1];
 
-      if (prevState && prevState.itemsToDisplay.length !== 0 && prevState.page !== 0) {
-        const { itemsToDisplay, page } = prevState;
+      if (state && state.itemsToDisplay.length !== 0 && state.page !== 0) {
+        const { itemsToDisplay, page } = state;
         return {
           itemsToDisplay: itemsToDisplay,
           listings: activeListings,
@@ -115,7 +130,7 @@ class Listings extends Component {
         page: 1,
         pageCount: pageCount
       }
-    } else return null;
+    } else return state;
   };
 
   handlePageChange(event, page) {
@@ -147,28 +162,34 @@ class Listings extends Component {
       <div className="wow fadeInUp listings-container" data-wow-delay="0.5s">
         {
           this.props.location.pathname === "/MyAccount" ?
-          <div>
-            <CustomButton>
-              <NavLink to="/CreateListing">Create Listing</NavLink>
-            </CustomButton>
-            {
-              !this.state.hideExpired ?
-              <CustomButton onClick={this.handleExpiredToggle}>Hide Expired</CustomButton> :
-              <CustomButton onClick={this.handleExpiredToggle}>Show Expired</CustomButton>
-            }
-            <MoreVertIcon onClick={handleClick} className="vert-menu"/>
-            <MaterialUIMenu
-              id="long-menu"
-              anchorEl={this.state.sortAnchorEl}
-              keepMounted
-              open={open}
-              onClose={handleClose}
-            >
-              <MenuItem onClick={handleClose}>Sort by Created Date (Newest First)</MenuItem>
-              <MenuItem onClick={handleClose}>Sort by Created Date (Oldest First)</MenuItem>
-            </MaterialUIMenu>
-          </div>
-          : null
+            <div>
+              <CustomButton>
+                <NavLink to="/CreateListing">Create Listing</NavLink>
+              </CustomButton>
+              {
+                !this.state.hideExpired ?
+                  <CustomButton onClick={this.handleExpiredToggle}>Hide Expired</CustomButton> :
+                  <CustomButton onClick={this.handleExpiredToggle}>Show Expired</CustomButton>
+              }
+              <MoreVertIcon onClick={handleClick} className="vert-menu" />
+              <MaterialUIMenu
+                id="long-menu"
+                anchorEl={this.state.sortAnchorEl}
+                keepMounted
+                open={open}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={() => {
+                  handleClose();
+                  this.setState({ sorting: 'newest' })
+                }}>Sort by Created Date (Newest First)</MenuItem>
+                <MenuItem onClick={() => {
+                  handleClose();
+                  this.setState({ sorting: 'oldest' })
+                }}>Sort by Created Date (Oldest First)</MenuItem>
+              </MaterialUIMenu>
+            </div>
+            : null
         }
         {this.state.listings ? (listings.length <= 0 ? <div><div className="spacer_s"></div>No listings yet!</div> :
           <div id='listing-content'>

@@ -50,8 +50,11 @@ class Description extends Component {
   render() {
     return (
       <div>
-        <div className="questionText">Description</div>
-        <br />
+        <div className="questionText">
+          Description
+        </div>
+        <div className="spacer_xs"></div>
+
         <textarea
           type="text"
           name="description"
