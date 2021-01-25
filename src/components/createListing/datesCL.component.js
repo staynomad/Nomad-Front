@@ -42,10 +42,8 @@ class DatesCL extends Component {
       today: oldData.today,
     };
     if (oldData.start_date && oldData.end_date) {
-      //console.log("enter");
       this.props.completeForm();
     } else {
-      //console.log("incomplete");
       this.props.incompleteForm();
     }
     return initData;
@@ -172,27 +170,29 @@ class DatesCL extends Component {
                 to &&
                 `Selected from ${from.toLocaleDateString()} to
                   ${to.toLocaleDateString()}`}{" "}
-            {/*from && to && (
+              {/*from && to && (
               <button className="link" onClick={this.handleResetClick}>
                 Reset
               </button>
             )*/}
-          </div>
-          {this.state.invalid_date ? (
-            <div style={{ color: "red" }}>First selection must be after today</div>
-          ) : (
-            ""
-          )}
-          <DatePicker
-            className="Selectable"
-            numberOfMonths={2}
-            selectedDays={[from, { from, to }]}
-            modifiers={modifiers}
-            onDayClick={this.handleDayClick}
-            inputProps={{ required: true }}
-          />
-          <Helmet>
-            <style>{`
+            </div>
+            {this.state.invalid_date ? (
+              <div style={{ color: "red" }}>
+                First selection must be after today
+              </div>
+            ) : (
+              ""
+            )}
+            <DatePicker
+              className="Selectable"
+              numberOfMonths={2}
+              selectedDays={[from, { from, to }]}
+              modifiers={modifiers}
+              onDayClick={this.handleDayClick}
+              inputProps={{ required: true }}
+            />
+            <Helmet>
+              <style>{`
             .Selectable .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
               background-color: #f0f8ff !important;
               color: #4a90e2;
