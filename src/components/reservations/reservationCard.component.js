@@ -32,7 +32,7 @@ const ReservationCard = (props) => {
         setListing(res.data.listing)
       })
       .catch((err) => {
-        alert('Unable to retrieve some reservations.')
+        // alert('Unable to retrieve some reservations.')
       })
   }, [reservation.listing])
 

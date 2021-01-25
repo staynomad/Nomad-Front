@@ -215,7 +215,7 @@ class ListingPage extends Component {
     const range = DateUtils.addDayToRange(day, this.state);
     this.setState(range);
 
-    console.log(this.state.from, this.state.to)
+    // console.log(this.state.from, this.state.to)
   };
 
   handleResetClick() {
@@ -290,7 +290,7 @@ class ListingPage extends Component {
                   {
                     this.state.outOfRange ?
                       'Selected day is not available.' :
-                      lessThanFourDays ? 'Minimum 4 days required for reservation' :
+                      lessThanFourDays ? 'Minimum 4 days required' :
                         <div>{!from && !to && 'Please select the first day.'}
                           {from && !to && 'Please select the last day.'}
                           {from &&
