@@ -50,7 +50,7 @@ class ListingPage extends Component {
     await app.get('/listings/byId/' + this.props.match.params.id)
       .then((res) => {
         // If the listing is a draft and the current user is not the host, redirect to 404
-        if (!res.data.listing.active && this.props.User.userInfo._id != res.data.listing.userId) {
+        if (!res.data.listing.active && (!this.props.User.userInfo || this.props.User.userInfo._id != res.data.listing.userId)) {
           window.location = "/page-not-found"
           return
         }
