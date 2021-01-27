@@ -293,7 +293,7 @@ class ListingPage extends Component {
                 <h2 className="listing-title">
                   [DRAFT] {this.state.listingTitle}
                 </h2>
-                This listing is not viewable to the public.
+                <div>This listing is not viewable to the public.</div>
               </div>
             ) : (
               <h2 className="listing-title">{this.state.listingTitle}</h2>

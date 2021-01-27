@@ -28,7 +28,7 @@ export const searchForListings = (itemToSearch) => async dispatch => {
 };
 
 export const searchAllListings = () => async dispatch => {
-    const searchAllRes = await handleReq("/listings", "GET");
+    const searchAllRes = await handleReq("/listings/active", "GET");
 
     if (searchAllRes.status === 200) {
         const { listings } = await searchAllRes.data;

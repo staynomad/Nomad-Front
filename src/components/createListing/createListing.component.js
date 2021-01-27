@@ -33,6 +33,7 @@ class CreateListing extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.postRequest = this.postRequest.bind(this);
     this.pageToggle = this.pageToggle.bind(this);
+    this.onSaveDraft = this.onSaveDraft.bind(this);
   }
   componentDidMount() {
     this.props.updateInfo(this.state);
@@ -72,6 +73,10 @@ class CreateListing extends Component {
       inputPage: inputtemp,
       nextToggle: nexttemp,
     });
+  }
+
+  onSaveDraft() {
+    this.onSubmit(true);
   }
 
   onSubmit(draft = false) {
@@ -151,6 +156,7 @@ class CreateListing extends Component {
         return;
       });
   }
+
   componentWillUnmount() {
     this.props.setLoadingFalse();
   }
@@ -232,6 +238,12 @@ class CreateListing extends Component {
                     type="button"
                     onClick={this.onSubmit}
                     value="Submit"
+                  />
+                  <input
+                    className="changebut"
+                    type="button"
+                    onClick={this.onSaveDraft}
+                    value="Save Draft"
                   />
                 </div>
               )}
