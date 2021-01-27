@@ -73,7 +73,9 @@ class CreateListing extends Component {
       nextToggle: nexttemp,
     });
   }
-  onSubmit() {
+
+
+  onSubmit(draft) {
     const dataToSend = this.props.listingData;
     let cur_photos = dataToSend.photos.image_files;
 
@@ -127,15 +129,27 @@ class CreateListing extends Component {
         },
       })
       .then((res) => {
-        app.post("/listings/activateListing/", res.data._id, {
-          headers: {
-            Authorization: `Bearer ${this.props.userSession.token}`,
-          },
-        })
-        .catch(() => alert("Unable to create listing. Please try again."))
+        if (!draft) {
+          app.post("/listings/activateListing/", res.data._id, {
+            headers: {
+              Authorization: `Bearer ${this.props.userSession.token}`,
+            },
+          })
+          .catch(() => alert("Unable to create listing. Please try again."))
+        }
+        else {
+          this.setState({
+            draftSavedText: true
+          })
+        }
       })
       .then(() => this.postRequest())
-      .then(() => (window.location = "/MyAccount"));
+      .then(() => (window.location = "/MyAccount"))
+      .catch(() => {
+        alert("Unable to create listing. Please try again.")
+        window.location = "/CreateListing"
+        return
+      })
   }
   componentWillUnmount() {
     this.props.setLoadingFalse();
@@ -204,7 +218,7 @@ class CreateListing extends Component {
                   <input
                     className="changebut"
                     type="button"
-                    onClick={this.onSubmit}
+                    onClick={this.onSubmit(false)}
                     value="Submit"
                   />
                 </div>
