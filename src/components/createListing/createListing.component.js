@@ -130,7 +130,7 @@ class CreateListing extends Component {
       })
       .then((res) => {
         if (!draft) {
-          app.post("/listings/activateListing/", res.data._id, {
+          app.put("/listings/activateListing/", res.data._id, {
             headers: {
               Authorization: `Bearer ${this.props.userSession.token}`,
             },
@@ -182,7 +182,14 @@ class CreateListing extends Component {
       <div className="fullListingBackground">
         <div className="overallListingForm">
           {this.props.loading ? (
-            <div id="spinner" />
+            <div>
+              <div id="spinner" />
+              {this.state.draftSavedText ? (
+                <div className="spacer_s">Draft is being saved. To edit/submit this listing, go to MyListings.</div>
+              ) : (
+                <div className="spacer_s">Your listing is being submitted. Thanks for choosing VHomes!</div>
+              )}
+            </div>
           ) : (
             <form>
               {this.state.inputPage ? (

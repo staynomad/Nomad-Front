@@ -42,12 +42,18 @@ class ListingPage extends Component {
     this.setState({
       outOfRange: false
     })
+    // Sync calendar with remote if listing calendar was imported
     await this.props.getCalendarURL(this.props.match.params.id)
     if (this.props.Calendar.calendarURL) {
       await this.props.importCalendar(this.props.Calendar.calendarURL, this.props.match.params.id)
     }
     await app.get('/listings/byId/' + this.props.match.params.id)
       .then((res) => {
+        // If the listing is a draft and the current user is not the host, redirect to 404
+        if (!res.data.listing.active && this.props.User.userInfo._id != res.data.listing.userId) {
+          window.location = "/page-not-found"
+          return
+        }
         this.setState({
           listingTitle: res.data.listing.title,
           listingDescription: res.data.listing.description,
@@ -63,7 +69,8 @@ class ListingPage extends Component {
           listingStartDate: res.data.listing.available[0],
           listingEndDate: res.data.listing.available[1],
           listingUser: res.data.listing.userId,
-          listingPictures: res.data.listing.pictures
+          listingPictures: res.data.listing.pictures,
+          isActive: res.data.listing.active,
         })
         let pictures = []
         for (let i = 0; i < this.state.listingPictures.length; i++) {
@@ -252,7 +259,14 @@ class ListingPage extends Component {
           !this.state.listingPictures
             ? <div id="spinner"></div>
             : <div>
-              <h2 className="listing-title">{this.state.listingTitle}</h2>
+              {
+                !this.state.isActive ?
+                  <div>
+                    <h2 className="listing-title">[DRAFT] {this.state.listingTitle}</h2>
+                    This listing is not viewable to the public.
+                  </div>:
+                  <h2 className="listing-title">{this.state.listingTitle}</h2>
+              }
               <h5 className="listing-location">{this.state.listingLocation}</h5> <br />
 
               <ImageGallery
