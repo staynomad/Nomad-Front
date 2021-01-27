@@ -120,7 +120,6 @@ class CreateListing extends Component {
       description: dataToSend.description,
       details: dataToSend.details,
       price: parseFloat(dataToSend.price).toFixed(2),
-      tax: (dataToSend.price * 0.1).toFixed(2),
       available: available,
       amenities: dataToSend.amenities,
       pictures: photoURLS,
