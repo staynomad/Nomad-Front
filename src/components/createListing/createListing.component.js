@@ -33,6 +33,7 @@ class CreateListing extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.postRequest = this.postRequest.bind(this);
     this.pageToggle = this.pageToggle.bind(this);
+    this.onSaveDraft = this.onSaveDraft.bind(this);
   }
   componentDidMount() {
     this.props.updateInfo(this.state);
@@ -73,7 +74,12 @@ class CreateListing extends Component {
       nextToggle: nexttemp,
     });
   }
-  onSubmit() {
+
+  onSaveDraft() {
+    this.onSubmit(true);
+  }
+
+  onSubmit(draft = false) {
     const dataToSend = this.props.listingData;
     let cur_photos = dataToSend.photos.image_files;
 
@@ -127,9 +133,30 @@ class CreateListing extends Component {
           Authorization: `Bearer ${this.props.userSession.token}`,
         },
       })
+      .then((res) => {
+        if (!draft) {
+          app
+            .put("/listings/activateListing/", res.data._id, {
+              headers: {
+                Authorization: `Bearer ${this.props.userSession.token}`,
+              },
+            })
+            .catch(() => alert("Unable to create listing. Please try again."));
+        } else {
+          this.setState({
+            draftSavedText: true,
+          });
+        }
+      })
       .then(() => this.postRequest())
-      .then(() => (window.location = "/MyAccount"));
+      .then(() => (window.location = "/MyAccount"))
+      .catch(() => {
+        alert("Unable to create listing. Please try again.");
+        window.location = "/CreateListing";
+        return;
+      });
   }
+
   componentWillUnmount() {
     this.props.setLoadingFalse();
   }
@@ -161,7 +188,19 @@ class CreateListing extends Component {
       <div className="fullListingBackground">
         <div className="overallListingForm">
           {this.props.loading ? (
-            <div id="spinner" />
+            <div>
+              <div id="spinner" />
+              {this.state.draftSavedText ? (
+                <div className="spacer_s">
+                  Draft is being saved. To edit/submit this listing, go to
+                  MyListings.
+                </div>
+              ) : (
+                <div className="spacer_s">
+                  Your listing is being submitted. Thanks for choosing VHomes!
+                </div>
+              )}
+            </div>
           ) : (
             <form>
               {this.state.inputPage ? (
@@ -199,6 +238,12 @@ class CreateListing extends Component {
                     type="button"
                     onClick={this.onSubmit}
                     value="Submit"
+                  />
+                  <input
+                    className="changebut"
+                    type="button"
+                    onClick={this.onSaveDraft}
+                    value="Save Draft"
                   />
                 </div>
               )}

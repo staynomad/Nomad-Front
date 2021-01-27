@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-
+import { app } from '../../utils/axiosConfig.js'
 import { CustomButton } from "../matches/listing/listingCard.component";
 import { getListingById } from "../../redux/actions/searchListingActions";
 import { submitEditListing } from "../../redux/actions/editListingActions";
@@ -17,8 +17,8 @@ class EditListing extends Component {
         this.state = {
             listingId: this.props.match.params.listingId,
             charleft: {
-                title: 40,
-                description: 500,
+                title: 100,
+                description: 5000,
             },
             title: "",
             location: {
@@ -37,11 +37,15 @@ class EditListing extends Component {
             },
             price: 0,
             rules: "",
+            active: null,
         }
     };
 
-    componentDidMount() {
-        this.props.getListingById(this.props.match.params.listingId);
+    async componentDidMount() {
+        await this.props.getListingById(this.props.match.params.listingId);
+        this.setState({
+          active: this.props.editListing.active
+        })
     }
 
     componentDidUpdate(prevProps) {
@@ -72,7 +76,7 @@ class EditListing extends Component {
 
     handleTitleChange = (e) => {
         const { name, value } = e.target;
-        const dif = 40 - value.length;
+        const dif = 100 - value.length;
         if (dif >= 0) {
             this.setState({
                 ...this.state,
@@ -102,7 +106,7 @@ class EditListing extends Component {
 
     handleDescriptionChange = (e) => {
         const { name, value } = e.target;
-        const dif = 500 - value.length;
+        const dif = 5000 - value.length;
         if (this.state.charleft.description >= 0) {
             this.setState({
                 ...this.state,
@@ -118,7 +122,7 @@ class EditListing extends Component {
     handleDetailsChange = (e) => {
         const { name, value } = e.target;
         if (!isNaN(value)) {
-            if (value > 0 && value < 10) {
+            if (value > 0 && value < 100) {
                 this.setState({
                     ...this.state,
                     details: {
@@ -157,6 +161,21 @@ class EditListing extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.submitEditListing(this.props.userSession.token, this.state);
+    };
+
+    handlePublish = (e) => {
+        e.preventDefault();
+        app.put("/listings/activateListing/" + this.state.listingId, null,  {
+          headers: {
+            Authorization: `Bearer ${this.props.userSession.token}`,
+          },
+        })
+        .then(() => {
+          this.setState({
+            active: true
+          });
+          this.props.submitEditListing(this.props.userSession.token, this.state)
+        })
     };
 
     render() {
@@ -341,7 +360,10 @@ class EditListing extends Component {
                                 </div>
                             </div>
                             <div className="spacer_s"></div>
-                            <CustomButton onClick={this.handleSubmit}>Submit</CustomButton>
+                            {
+                              !this.state.active ? <CustomButton onClick={this.handlePublish}>publish</CustomButton> : null
+                            }
+                            <CustomButton onClick={this.handleSubmit}>Save</CustomButton>
                         </form>
                           <div className="spacer_l"></div>
                     </div>

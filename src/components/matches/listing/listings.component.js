@@ -150,7 +150,7 @@ class Listings extends Component {
 
     const handleClick = (event) => {
       this.setState({ sortAnchorEl: event.currentTarget });
-      console.log(this.state.sortAnchorEl)
+      // console.log(this.state.sortAnchorEl)
     };
 
     // Adjust this for sorting the listings -> TODO
@@ -159,7 +159,7 @@ class Listings extends Component {
     };
 
     return (
-      <div className="wow fadeInUp listings-container" data-wow-delay="0.5s">
+      <div className="listings-container">
         {
           this.props.location.pathname === "/MyAccount" ?
             <div>
@@ -192,7 +192,7 @@ class Listings extends Component {
             : null
         }
         {this.state.listings ? (listings.length <= 0 ? <div><div className="spacer_s"></div>No listings yet!</div> :
-          <div id='listing-content'>
+          <div id='listing-content' className="wow fadeInUp" data-wow-delay="0.5s">
             {
               this.state.listings.map((listing, idx) => {
                 if (idx >= this.state.itemsToDisplay[0] && idx <= this.state.itemsToDisplay[1])

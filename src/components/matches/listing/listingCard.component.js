@@ -89,7 +89,9 @@ const ListingCard = (props) => {
         <div className="list-card">
           <img src={coverPhoto} alt={listing.title} className="list-img" onError={onPhotoError} />
           <div className="list-card-content">
-            <div className="list-title">{listing.title}</div>
+          {
+            !listing.active ? <div className="list-title">[DRAFT] {listing.title}</div> : <div className="list-title">{listing.title}</div>
+          }
             <div className="icon-inline" >
               <img src='images/guest.svg' className="list-icon" alt="guests" />
               <span className="detail">{listing.details.maxpeople} Guest</span>
