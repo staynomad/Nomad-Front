@@ -6,6 +6,15 @@ const production = process.env.NODE_ENV === "production";
 const apiBaseUrl = production ? 'https://nvestup.com' : 'http://localhost:8080';
 
 export default async function handleReq(endpoint, methodType, customHeaders, data) {
+  let token = null;
+  let curLoginState = store.getState().Login.userInfo;
+  if (curLoginState.session) token = curLoginState.session.token;
+  if (token) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  } else {
+    axios.defaults.headers.common['Authorization'] = null;
+  }
+
   try {
     const res = await axios({
       method: methodType,

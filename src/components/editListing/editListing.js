@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import { app } from '../../utils/axiosConfig.js'
 import { CustomButton } from "../matches/listing/listingCard.component";
 import { getListingById } from "../../redux/actions/searchListingActions";
+import { sendListingTranferRequest } from "../../redux/actions/transferListingActions";
 import { submitEditListing } from "../../redux/actions/editListingActions";
 import "../createListing/createListing.css";
 import "../createListing/detailsListing.css";
@@ -15,12 +16,12 @@ class EditListing extends Component {
         super(props);
 
         this.state = {
-            listingId: this.props.match.params.listingId,
+            active: null,
             charleft: {
                 title: 100,
                 description: 5000,
             },
-            title: "",
+            listingId: this.props.match.params.listingId,
             location: {
                 street: "",
                 city: "",
@@ -37,14 +38,15 @@ class EditListing extends Component {
             },
             price: 0,
             rules: "",
-            active: null,
+            title: "",
+            transferEmail: "",
         }
     };
 
     async componentDidMount() {
         await this.props.getListingById(this.props.match.params.listingId);
         this.setState({
-          active: this.props.editListing.active
+            active: this.props.editListing.active
         })
     }
 
@@ -149,7 +151,22 @@ class EditListing extends Component {
         if (value === '') this.setState({ ...this.state, [name]: 0 })
     };
 
-    handleRulesChange = (e) => {
+    handlePublish = (e) => {
+        e.preventDefault();
+        app.put("/listings/activateListing/" + this.state.listingId, null, {
+            headers: {
+                Authorization: `Bearer ${this.props.userSession.token}`,
+            },
+        })
+            .then(() => {
+                this.setState({
+                    active: true
+                });
+                this.props.submitEditListing(this.props.userSession.token, this.state)
+            })
+    };
+
+    handleNameValueChange = (e) => {
         const { name, value } = e.target;
 
         this.setState({
@@ -161,21 +178,6 @@ class EditListing extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.submitEditListing(this.props.userSession.token, this.state);
-    };
-
-    handlePublish = (e) => {
-        e.preventDefault();
-        app.put("/listings/activateListing/" + this.state.listingId, null,  {
-          headers: {
-            Authorization: `Bearer ${this.props.userSession.token}`,
-          },
-        })
-        .then(() => {
-          this.setState({
-            active: true
-          });
-          this.props.submitEditListing(this.props.userSession.token, this.state)
-        })
     };
 
     render() {
@@ -196,89 +198,89 @@ class EditListing extends Component {
                                 required
                                 type="text"
                                 value={this.state.title}
-                                style={{height: "40px", paddingLeft: "1.25%"}}
+                                style={{ height: "40px", paddingLeft: "1.25%" }}
                             ></input>
-                            <p style={{paddingLeft: "2.5%"}}>{this.state.charleft.title} characters are left</p>
+                            <p style={{ paddingLeft: "2.5%" }}>{this.state.charleft.title} characters are left</p>
 
                             {/* Location */}
                             <div className="label-text">Location:</div> <br />
                             <div className="listing-wrapper">
                                 <div className="listing-inputs">
                                     <div className="row1">
-                                      <div className="gen-subsec">
-                                          <div className="label-text spaceRight">Street:</div>
-                                          <input
-                                              type="text"
-                                              name="street"
-                                              className="inputBox"
-                                              value={this.state.location.street}
-                                              placeholder="5230 Newell Road"
-                                              onChange={this.handleLocationChange}
-                                              required
-                                          />
-                                      </div>
-                                      <div className="gen-subsec">
-                                          <div className="label-text spaceRight">City: </div>
-                                          <input
-                                              type="text"
-                                              name="city"
-                                              className="inputBox"
-                                              value={this.state.location.city}
-                                              placeholder="Palo Alto"
-                                              onChange={this.handleLocationChange}
-                                              required
-                                          />
-                                      </div>
-                                      <div className="gen-subsec">
-                                          <div className="label-text spaceRight">State: </div>
-                                          <input
-                                              type="text"
-                                              name="state"
-                                              className=" inputBox"
-                                              value={this.state.location.state}
-                                              placeholder="CA"
-                                              onChange={this.handleLocationChange}
-                                              required
-                                          />
-                                      </div>
+                                        <div className="gen-subsec">
+                                            <div className="label-text spaceRight">Street:</div>
+                                            <input
+                                                type="text"
+                                                name="street"
+                                                className="inputBox"
+                                                value={this.state.location.street}
+                                                placeholder="5230 Newell Road"
+                                                onChange={this.handleLocationChange}
+                                                required
+                                            />
+                                        </div>
+                                        <div className="gen-subsec">
+                                            <div className="label-text spaceRight">City: </div>
+                                            <input
+                                                type="text"
+                                                name="city"
+                                                className="inputBox"
+                                                value={this.state.location.city}
+                                                placeholder="Palo Alto"
+                                                onChange={this.handleLocationChange}
+                                                required
+                                            />
+                                        </div>
+                                        <div className="gen-subsec">
+                                            <div className="label-text spaceRight">State: </div>
+                                            <input
+                                                type="text"
+                                                name="state"
+                                                className=" inputBox"
+                                                value={this.state.location.state}
+                                                placeholder="CA"
+                                                onChange={this.handleLocationChange}
+                                                required
+                                            />
+                                        </div>
                                     </div>
 
                                     <div className="row1">
-                                      <div className="gen-subsec">
-                                          <div className="label-text spaceRight">Country: </div>
-                                          <input
-                                              type="text"
-                                              name="country"
-                                              className="inputBox"
-                                              value={this.state.location.country}
-                                              placeholder="USA"
-                                              onChange={this.handleLocationChange}
-                                              required
-                                          />
-                                      </div>
-                                      <div className="gen-subsec">
-                                          <div className="label-text spaceRight">Zipcode: </div>
-                                          <input
-                                              type="text"
-                                              name="zipcode"
-                                              className="inputBox"
-                                              value={this.state.location.zipcode}
-                                              placeholder="90210"
-                                              onChange={this.handleLocationChange}
-                                              required
-                                          />
-                                      </div>
-                                      <div className="gen-subsec">
-                                          <div className="label-text spaceRight">Apartment: </div>
-                                          <input
-                                              type="text"
-                                              name="apartment"
-                                              className="inputBox"
-                                              value={this.state.location.apartment}
-                                              placeholder="aptnum"
-                                              onChange={this.handleLocationChange}
-                                          />
-                                      </div>
+                                        <div className="gen-subsec">
+                                            <div className="label-text spaceRight">Country: </div>
+                                            <input
+                                                type="text"
+                                                name="country"
+                                                className="inputBox"
+                                                value={this.state.location.country}
+                                                placeholder="USA"
+                                                onChange={this.handleLocationChange}
+                                                required
+                                            />
+                                        </div>
+                                        <div className="gen-subsec">
+                                            <div className="label-text spaceRight">Zipcode: </div>
+                                            <input
+                                                type="text"
+                                                name="zipcode"
+                                                className="inputBox"
+                                                value={this.state.location.zipcode}
+                                                placeholder="90210"
+                                                onChange={this.handleLocationChange}
+                                                required
+                                            />
+                                        </div>
+                                        <div className="gen-subsec">
+                                            <div className="label-text spaceRight">Apartment: </div>
+                                            <input
+                                                type="text"
+                                                name="apartment"
+                                                className="inputBox"
+                                                value={this.state.location.apartment}
+                                                placeholder="aptnum"
+                                                onChange={this.handleLocationChange}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -296,44 +298,44 @@ class EditListing extends Component {
                                 onChange={this.handleDescriptionChange}
                                 required
                             ></textarea>
-                            <p style={{paddingLeft: "2.5%"}}>{this.state.charleft.description} characters are left</p>
+                            <p style={{ paddingLeft: "2.5%" }}>{this.state.charleft.description} characters are left</p>
                             <div className="spacer_m"></div>
 
                             {/* Details */}
                             <div className="listing-wrapper">
                                 <div className="listing-inputs">
-                                <div className="label-text">Details:</div>
+                                    <div className="label-text">Details:</div>
                                     <div className="row2">
-                                      <div className="detailLabel spaceRight">Beds: </div>
-                                      <input
-                                          type="number"
-                                          name="beds"
-                                          placeholder="e.g. 3"
-                                          className="input-box-details"
-                                          value={this.state.details.beds}
-                                          onChange={this.handleDetailsChange}
-                                          required
-                                      />
-                                      <div className="detailLabel spaceRight">Baths: </div>
-                                      <input
-                                          type="number"
-                                          name="baths"
-                                          className="input-box-details"
-                                          placeholder="e.g. 2"
-                                          value={this.state.details.baths}
-                                          onChange={this.handleDetailsChange}
-                                          required
-                                      />
-                                      <div className="detailLabel spaceRight">Max people: </div>
-                                      <input
-                                          type="number"
-                                          name="maxpeople"
-                                          placeholder="e.g. 5"
-                                          className="input-box-details"
-                                          value={this.state.details.maxpeople}
-                                          onChange={this.handleDetailsChange}
-                                          required
-                                      />
+                                        <div className="detailLabel spaceRight">Beds: </div>
+                                        <input
+                                            type="number"
+                                            name="beds"
+                                            placeholder="e.g. 3"
+                                            className="input-box-details"
+                                            value={this.state.details.beds}
+                                            onChange={this.handleDetailsChange}
+                                            required
+                                        />
+                                        <div className="detailLabel spaceRight">Baths: </div>
+                                        <input
+                                            type="number"
+                                            name="baths"
+                                            className="input-box-details"
+                                            placeholder="e.g. 2"
+                                            value={this.state.details.baths}
+                                            onChange={this.handleDetailsChange}
+                                            required
+                                        />
+                                        <div className="detailLabel spaceRight">Max people: </div>
+                                        <input
+                                            type="number"
+                                            name="maxpeople"
+                                            placeholder="e.g. 5"
+                                            className="input-box-details"
+                                            value={this.state.details.maxpeople}
+                                            onChange={this.handleDetailsChange}
+                                            required
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -342,30 +344,48 @@ class EditListing extends Component {
                             <div className="listing-wrapper">
                                 <div className="listing-inputs">
                                     <div className="row2">
-                                      <div className="detailLabel spaceRight">Price: </div>
-                                      <input
-                                          type="text"
-                                          name="price"
-                                          className="input-box-details"
-                                          value={this.state.price}
-                                          placeholder="$ per night"
-                                          onChange={this.handlePriceChange}
-                                          required
-                                      />
+                                        <div className="detailLabel spaceRight">Price: </div>
+                                        <input
+                                            type="text"
+                                            name="price"
+                                            className="input-box-details"
+                                            value={this.state.price}
+                                            placeholder="$ per night"
+                                            onChange={this.handlePriceChange}
+                                            required
+                                        />
                                     </div>
-                                    <div style={{textAlign: "center !important"}}>
-                                      List Price: ${this.state.price} per night <br />
+                                    <div style={{ textAlign: "center !important" }}>
+                                        List Price: ${this.state.price} per night <br />
                                       After taxes and fees: ${this.state.price} per night
                                     </div>
                                 </div>
                             </div>
                             <div className="spacer_s"></div>
                             {
-                              !this.state.active ? <CustomButton onClick={this.handlePublish}>publish</CustomButton> : null
+                                !this.state.active ? <CustomButton onClick={this.handlePublish}>publish</CustomButton> : null
                             }
                             <CustomButton onClick={this.handleSubmit}>Save</CustomButton>
+                            <div className="spacer_s" />
                         </form>
-                          <div className="spacer_l"></div>
+                        <div className="spacer_l"></div>
+                        <form>
+                            <label for="transferEmail">Email to Transfer to</label>
+                            <input
+                                type="text"
+                                name="transferEmail"
+                                id="transferEmail"
+                                placeholder="test@test.com"
+                                className="input-box-details"
+                                value={this.state.transferEmail}
+                                onChange={this.handleNameValueChange}
+                                required
+                            />
+                            <CustomButton onClick={() => {
+                                this.props.sendListingTranferRequest(this.state.transferEmail, this.state.listingId)
+                            }}>Transfer</CustomButton>
+                        </form>
+                        <div className="spacer_l"></div>
                     </div>
                 ) : (
                         <div className="spinner-container">
@@ -391,6 +411,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         getListingById: (listingId) => dispatch(getListingById(listingId)),
+        sendListingTranferRequest: (email, listingId) => dispatch(sendListingTranferRequest(email, listingId)),
         submitEditListing: (token, editedListing) => dispatch(submitEditListing(token, editedListing))
     };
 };
