@@ -21,7 +21,7 @@ const getSignedURL = (file, fileName, bucket, setLoading) => {
           setLoading
         );
       } else {
-        alert("could not get signed url. Please refresh and try again");
+        alert("Could not get signed url. Please refresh and try again");
       }
     }
   };

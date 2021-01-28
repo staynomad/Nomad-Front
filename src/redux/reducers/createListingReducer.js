@@ -17,13 +17,14 @@ const initialLocation = {
     maxpeople: "",
   },
   price: "",
-  photos: { pictures: [], temp_image_url: [] },
+  photos: { pictures: {}, image_files: [] },
   rules: "",
   dates: {
     start_date: null,
     end_date: null,
     today: new Date(),
   },
+  amenities: [],
 };
 export default function (state = initialLocation, action) {
   switch (action.type) {

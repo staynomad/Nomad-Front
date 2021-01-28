@@ -26,16 +26,14 @@
 }
 
 .questionText {
-  color: #7e9388;
+  color: #575759;
   font-size: 250%;
   padding-bottom: 2%;
 }
 
 .textInputBox {
   width: 98%;
-  padding-top: 15px;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding: 15px;
   height: auto;
   border-radius: 25px;
   border: 2px solid rgb(210 210 210 / 47%);
@@ -155,7 +153,7 @@
 }
 
 span.import-info {
-    text-align: left;
+  text-align: left;
 }
 
 .characters-left {

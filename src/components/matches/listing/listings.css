@@ -31,3 +31,13 @@
   align-items: center;
   height: -webkit-fill-available;
 }
+
+.vert-menu {
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.listings-container {
+  max-width:1200px;
+  margin: 0 auto;
+}

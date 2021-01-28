@@ -5,13 +5,13 @@ import { Grid, Menu, Segment } from "semantic-ui-react";
 import { NavLink, withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 
-import ListingCard from "../matches/listing/listingCard.component";
-import MaterialUIMenu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import ListingCard from '../matches/listing/listingCard.component'
+import ListingsComponent from "../matches/listing/listings.component";
 import Profile from "./profile.component";
 import ReservationCard from "../reservations/reservationCard.component";
 import Settings from "./settings.component";
+import { acceptListingTransfer } from '../../redux/actions/transferListingActions';
+import { getListingTranferRequests } from "../../redux/actions/transferListingActions";
 import { searchUserListings } from "../../redux/actions/searchListingActions";
 import { searchUserReservations } from "../../redux/actions/reservationActions";
 import "semantic-ui-css/semantic.min.css";
@@ -71,87 +71,8 @@ class LeftMenu extends Component {
           );
         } else return null;
       case "my listings":
-        let listings = {
-          active: [],
-          expired: [],
-        };
-        const { userListings } = this.props;
-        const open = Boolean(this.state.sortAnchorEl);
-
-        if (userListings) {
-          userListings.forEach(listing => {
-            // Split string to Year (idx 0), Month (idx 1), Day (idx 2) then convert to num
-            const expireDate = listing.available[1].split('-').map(date => {
-              return Number.parseInt(date, 10)
-            });
-            // Convert using to milliseconds
-            const expireDateConverted = new Date(expireDate[0], expireDate[1] - 1, expireDate[2]).getTime();
-            const curDate = new Date().getTime();
-            // Compare to check if curDate is past expired
-            let isExpired = curDate > expireDateConverted;
-
-            if (isExpired) return;
-            else listings.active.push(listing);
-          });
-        };
-
-        const handleClick = (event) => {
-          this.setState({ sortAnchorEl: event.currentTarget });
-          console.log(this.state.sortAnchorEl)
-        };
-
-        // Adjust this for sorting the listings -> TODO
-        const handleClose = () => {
-          this.setState({ sortAnchorEl: null });
-        };
-
         return (
-          <>
-            <div className="create-listing-container">
-              <CustomButton>
-                <NavLink to="/CreateListing">Create Listing</NavLink>
-              </CustomButton>
-              {
-                !this.state.hideExpired ?
-                  <CustomButton onClick={this.handleExpiredToggle}>Hide Expired</CustomButton>
-                  :
-                  <CustomButton onClick={this.handleExpiredToggle}>Show Expired</CustomButton>
-              }
-              <MoreVertIcon onClick={handleClick} className="vert-menu"/>
-              <MaterialUIMenu
-                id="long-menu"
-                anchorEl={this.state.sortAnchorEl}
-                keepMounted
-                open={open}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>Sort by Created Date (Newest First)</MenuItem>
-                <MenuItem onClick={handleClose}>Sort by Created Date (Oldest First)</MenuItem>
-              </MaterialUIMenu>
-            </div>
-            <div id="listing-content">
-              {
-                userListings && userListings.length > 0 ? (
-                  <>
-                    {!this.state.hideExpired ? (
-                      userListings.map((listing) => (
-                        <ListingCard
-                          key={listing._id}
-                          listing={listing}
-                        />
-                      ))
-                    ) : (
-                        listings.active.map((listing) => (
-                          <ListingCard
-                            key={listing._id}
-                            listing={listing}
-                          />
-                        ))
-                      )}
-                  </>
-                ) : <div><div className="spacer_xs"></div>No listings yet. Click "Create Listing" to start!</div>}
-            </div>
-          </>
+          <ListingsComponent searchOnlyUser={true} />
         );
       case "my reservations":
         let reservations = {
@@ -159,7 +80,6 @@ class LeftMenu extends Component {
           expired: [],
         };
         const { userReservations } = this.props;
-        console.log(userReservations)
 
         if (this.props.userReservations) {
           userReservations.forEach(reservation => {
@@ -223,6 +143,28 @@ class LeftMenu extends Component {
         );
       case "settings":
         return <Settings />;
+      case "my transfers":
+        return (
+          <>
+            {
+              this.props.listingsToTransfer && this.props.listingsToTransfer > 0 ? (
+                <>
+                  <CustomButton onClick={(e) => { this.props.acceptListingTransfer(true, undefined) }}>Accept All</CustomButton>
+                  <CustomButton onClick={(e) => { }}>Reject All</CustomButton>
+                  {
+                    this.props.listingsToTransfer.map((listing) => {
+                      return <ListingCard key={listing._id} listing={listing} transfer={true} />;
+                    })
+                  }
+                </>
+              ) : <p ref={(el) => {
+                if (el) {
+                  el.style.setProperty('text-align', 'center', 'important');
+                }
+              }}>There are no transfer request(s) at current time.</p>
+            }
+          </>
+        );
       default:
         return;
     }
@@ -244,17 +186,28 @@ class LeftMenu extends Component {
               />
               {this.props.userSession ? (
                 this.props.userSession.isHost ? (
-                  <Menu.Item
-                    name="my listings"
-                    active={activeItem === "my listings"}
-                    compname="my listings"
-                    onClick={(e, { name, compname }) => {
-                      this.handleItemClick(e, { name, compname });
-                      this.props.searchUserListings(
-                        this.props.userSession.token
-                      );
-                    }}
-                  />
+                  <>
+                    <Menu.Item
+                      name="my listings"
+                      active={activeItem === "my listings"}
+                      compname="my listings"
+                      onClick={(e, { name, compname }) => {
+                        this.handleItemClick(e, { name, compname });
+                        this.props.searchUserListings(
+                          this.props.userSession.token
+                        );
+                      }}
+                    />
+                    <Menu.Item
+                      name="my transfers"
+                      active={activeItem === "my transfers"}
+                      compname="my transfers"
+                      onClick={(e, { name, compname }) => {
+                        this.handleItemClick(e, { name, compname });
+                        this.props.getListingTranferRequests();
+                      }}
+                    />
+                  </>
                 ) : null
               ) : null}
               <Menu.Item
@@ -268,6 +221,7 @@ class LeftMenu extends Component {
                   );
                 }}
               />
+
               <Menu.Item
                 name="settings"
                 active={activeItem === "settings"}
@@ -287,17 +241,17 @@ class LeftMenu extends Component {
 
 const mapStateToProps = (state) => {
   const stateToReturn = { ...state };
-  if (state.Login.userInfo)
-    stateToReturn["userSession"] = state.Login.userInfo.session;
-  if (state.Listing.userListings)
-    stateToReturn["userListings"] = state.Listing.userListings;
-  if (state.Reservations.reservations)
-    stateToReturn["userReservations"] = state.Reservations.reservations;
+  if (state.Login.userInfo) stateToReturn["userSession"] = state.Login.userInfo.session;
+  if (state.Listing.userListings) stateToReturn["userListings"] = state.Listing.userListings;
+  if (state.Reservations.reservations) stateToReturn["userReservations"] = state.Reservations.reservations;
+  if (state.Transfer.listingsToTransfer) stateToReturn["listingsToTransfer"] = state.Transfer.listingsToTransfer;
   return stateToReturn;
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    acceptListingTransfer: (acceptAll, listingId) => dispatch(acceptListingTransfer(acceptAll, listingId)),
+    getListingTranferRequests: (token) => dispatch(getListingTranferRequests(token)),
     searchUserListings: (token) => dispatch(searchUserListings(token)),
     searchUserReservations: (token) => dispatch(searchUserReservations(token)),
   };

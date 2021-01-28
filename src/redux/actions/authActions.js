@@ -1,3 +1,4 @@
+import axios from 'axios';
 import handleReq from "../../utils/fetchRequest";
 import { push } from 'connected-react-router';
 import { setAuthError } from "./errorActions";
@@ -21,6 +22,7 @@ export const submitLogin = userLogin => async dispatch => {
 
     if (loginRes && loginRes.status === 200) {
         const { isHost, token, userId } = loginRes.data;
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         dispatch(setLoadingFalse());
         dispatch(setUserSession(isHost, token, userId));
     } else {
@@ -43,6 +45,7 @@ export const submitGoogleLogin = googleData => async dispatch => {
 }
 
 export const logoutUser = () => dispatch => {
+    axios.defaults.headers.common['Authorization'] = null;
     dispatch(removeUserSession());
     dispatch(push(`/`));
 }

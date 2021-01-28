@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { withStyles } from '@material-ui/core/styles';
 // import { Modal, DialogContent } from '@material-ui/core/';
 // import ListingsModal from './listingsmodal.component';
+import { acceptListingTransfer } from '../../../redux/actions/transferListingActions';
 import { deleteListingById } from '../../../redux/actions/searchListingActions';
 import "./explore.css"
 
@@ -33,7 +34,7 @@ const DeleteButton = withStyles((theme) => ({
 }))(Button);
 
 const ListingCard = (props) => {
-  const { listing } = props;
+  const { listing, transfer } = props;
   const [rating, setRating] = useState("");
   const [numReviews, setNumReviews] = useState(0);
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -72,7 +73,7 @@ const ListingCard = (props) => {
 
   var stars = []
   for (let i = 0; i < parseInt(rating); i++) {
-    stars.push(<span className="fa fa-star checked"></span>)
+    stars.push(<span key={i} className="fa fa-star checked"></span>)
   }
   if (stars.length === 0) {
     stars = "No reviews yet. "
@@ -80,54 +81,56 @@ const ListingCard = (props) => {
 
   var empty_stars = []
   for (let i = 0; i < 5 - parseInt(rating); i++) {
-    empty_stars.push(<span className="fa fa-star"></span>)
+    empty_stars.push(<span key={i} className="fa fa-star"></span>)
   }
 
   return (
     <>
-      <NavLink to={'/listing/' + listing._id}>
-            <>
-            <div className='listing-item wow fadeInUp' data-wow-delay="0.5s">
-              <div className="list-card">
-                <img src={coverPhoto} alt={listing.title} className="list-img" onError={onPhotoError}/>
-                    <div className="list-card-content">
-                    <div className="list-title">{listing.title}</div>
-                   <div className="icon-inline" >
-                    <img src = 'images/guest.svg' class="list-icon" alt="guests" />
-                    <span className="detail">{listing.details.maxpeople} Guest</span>
-                  </div>
-                   <div className="icon-inline">
-                    <img src = 'images/bed.svg' class="list-icon" alt="beds" />
-                      <span className="detail">{listing.details.beds} Beds</span>
-                  </div>
-                   <div className="icon-inline">
-                    <img src = 'images/bath.svg' className="list-icon" alt="baths" />
-                      <span className="detail">{listing.details.baths} Bath</span>
-                  </div>
-                  <div className="rating">
-                  {stars}
-                  {empty_stars}
-                   <span>({numReviews})</span>
-                   </div>
-                  <div className="price-inline" >
-                  <div className="price"> ${listing.price} <span className="list-text">/ night</span></div>
-                  </div>
-                  </div>
-                  <div>
-                  {confirmDelete ? (
+      <NavLink className='listing-item wow fadeInUp' data-wow-delay="0.5s" to={'/listing/' + listing._id}>
+        <div className="list-card">
+          <img src={coverPhoto} alt={listing.title} className="list-img" onError={onPhotoError} />
+          <div className="list-card-content">
+            {
+              !listing.active ? <div className="list-title">[DRAFT] {listing.title}</div> : <div className="list-title">{listing.title}</div>
+            }
+            <div className="icon-inline" >
+              <img src='images/guest.svg' className="list-icon" alt="guests" />
+              <span className="detail">{listing.details.maxpeople} Guest</span>
+            </div>
+            <div className="icon-inline">
+              <img src='images/bed.svg' className="list-icon" alt="beds" />
+              <span className="detail">{listing.details.beds} Beds</span>
+            </div>
+            <div className="icon-inline">
+              <img src='images/bath.svg' className="list-icon" alt="baths" />
+              <span className="detail">{listing.details.baths} Bath</span>
+            </div>
+            <div className="rating">
+              {stars}
+              {empty_stars}
+              <span>({numReviews})</span>
+            </div>
+            <div className="price-inline" >
+              <div className="price"> ${listing.price} <span className="list-text">/ night</span></div>
+            </div>
+          </div>
+          {
+            !transfer ? (
+              <div>
+                {confirmDelete ? (
+                  <>
                     <>
-                      <>
-                        <CustomButton onClick={(e) => {
-                          e.stopPropagation();
-                          e.preventDefault();
-                          setConfirmDelete(false)
-                        }
-                        }>Cancel</CustomButton>
-                        <DeleteButton onClick={handleDeleteListing}>Confirm Delete</DeleteButton>
-                      </>
+                      <CustomButton onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        setConfirmDelete(false)
+                      }
+                      }>Cancel</CustomButton>
+                      <DeleteButton onClick={handleDeleteListing}>Confirm Delete</DeleteButton>
                     </>
-                  ) :
-                    <>
+                  </>
+                ) :
+                  <>
                     {props.userSession && props.userSession.userId === listing.userId ? (
                       <CustomButton onClick={(e) => {
                         e.stopPropagation();
@@ -142,12 +145,26 @@ const ListingCard = (props) => {
                         setConfirmDelete(true)
                       }}>Delete</CustomButton>
                     ) : null}
-                    </>
-                 }
-                </div>
-                </div>
+                  </>
+                }
               </div>
-            </>
+            ) : (
+                <>
+                  <CustomButton onClick={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    props.acceptListingTransfer(false, listing._id);
+                  }
+                  }>Accept</CustomButton>
+                  <CustomButton onClick={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                  }
+                  }>Reject</CustomButton>
+                </>
+              )
+          }
+        </div>
       </NavLink>
     </>
   )
@@ -162,6 +179,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    acceptListingTransfer: (acceptAll, listingId) => dispatch(acceptListingTransfer(acceptAll, listingId)),
     deleteListingById: (token, listingId) => dispatch(deleteListingById(token, listingId)),
   };
 };

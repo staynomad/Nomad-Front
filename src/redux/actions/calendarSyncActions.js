@@ -63,12 +63,18 @@ export const importCalendar = (calendarURL, listingId) => async dispatch => {
         // Set blocked days from ical file as "booked"
         var booked = []
         for (let i = 0; i < availableStart.length; i++) {
-          if (availableEnd[i].getTime() === earliestEnd.getTime() || availableStart[i].getTime() === latestStart.getTime()) {
-            continue
+          if (!listingId)
+          {
+            if (availableEnd[i].getTime() === earliestEnd.getTime() || availableStart[i].getTime() === latestStart.getTime()) {
+              continue
+            }
           }
+          let bookedStart = new Date(availableStart[i])
+          let bookedEnd = new Date(availableEnd[i])
+          bookedEnd.setDate(bookedEnd.getDate() - 1)
           booked.push({
-            start: availableStart[i].toISOString().substring(0, availableStart[i].toISOString().indexOf("T")),
-            end: availableEnd[i].toISOString().substring(0, availableEnd[i].toISOString().indexOf("T")),
+            start: bookedStart.toISOString().substring(0, availableStart[i].toISOString().indexOf("T")),
+            end: bookedEnd.toISOString().substring(0, availableEnd[i].toISOString().indexOf("T")),
             reservationId: null
           })
         }
@@ -78,10 +84,6 @@ export const importCalendar = (calendarURL, listingId) => async dispatch => {
         }
         else {
           const data = {
-            available: [
-              earliestEnd.toISOString().substring(0, earliestEnd.toISOString().indexOf("T")),
-              latestStart.toISOString().substring(0, latestStart.toISOString().indexOf("T"))
-            ],
             booked: booked
           }
           await app.put('/listings/syncListing/' + listingId, data)

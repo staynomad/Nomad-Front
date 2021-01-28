@@ -24,7 +24,7 @@
   display: flex;
   align-items: center;
   font-weight: bold;
-  font-size: 120%;
+  font-size: 120% !important;
   padding: 5%;
   color: #4d4842;
 }

@@ -58,7 +58,7 @@ class PricesCL extends Component {
           />
           {this.state.price ? (
             <div className="price-details">
-              ${(parseFloat(this.state.price) + (this.state.price * .1)).toFixed(2)} per night including tax
+              Note: 1% host fee is collected from every booking
             </div>
           ) : (
             ""

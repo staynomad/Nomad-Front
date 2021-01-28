@@ -20,99 +20,112 @@ const CustomButton = withStyles((theme) => ({
   },
 }))(Button);
 
-const ReservationCard = (props) => {
-  const [listing, setListing] = useState(null);
-  const [confirmCheck, setConfirmCheck] = useState(false);
-  const [checkState, setCheckState] = useState(null);
-  const { reservation } = props;
+class ReservationCard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.loading = props.loading;
+    this.reservation = props.reservation;
+    this.state = {
+      checkState: false,
+      confirmCheck: false,
+      listing: null,
+    };
+  }
 
-  useEffect(() => {
-    app.get('/listings/byId/' + reservation.listing)
-      .then((res) => {
-        setListing(res.data.listing)
-      })
-      .catch((err) => {
-        alert('Unable to retrieve some reservations.')
-      })
-  }, [reservation.listing])
+  componentDidMount() {
+    if (this.reservation.active) {
+      app.get('/listings/byId/' + this.reservation.listing)
+        .then((res) => {
+          this.setState({ listing: res.data.listing })
+        })
+        .catch((err) => {
+          // alert('Unable to retrieve some reservations.')
+        })
+    }
+  }
 
-  const handleCheckConfirm = (e) => {
+  handleCheckConfirm = (e) => {
     e.stopPropagation();
     e.preventDefault();
-    setConfirmCheck(false);
-    if (checkState === 'out') {
-      props.setReviewListingId(reservation.listing);
-      props.setReviewModal(true);
-      props.checkOutOfReservation(props.userSession.token, reservation._id);
+    this.setState({ confirmCheck: false });
+    if (this.checkState === 'out') {
+      this.props.setReviewListingId(this.reservation.listing);
+      this.props.setReviewModal(true);
+      this.props.checkOutOfReservation(this.props.userSession.token, this.reservation._id);
       return;
     };
-    if (checkState === 'in') return props.checkInToReservation(props.userSession.token, reservation._id);
+    if (this.checkState === 'in') return this.props.checkInToReservation(this.props.userSession.token, this.reservation._id);
   };
 
-  return (
-    <>
-      { reservation.active ? (
-        !listing ? <div id="spinner"></div>
-          : (
-            <div className='listing-item'>
-              <NavLink to={'/listing/' + listing._id}>
-                {confirmCheck ? (
-                  <>
-                    <div>Confirm check in / out?</div>
+  render() {
+    return (
+      <>
+        { this.reservation.active ? (
+          !this.state.listing ? <div id="spinner"></div>
+            : (
+              <div className='listing-item'>
+                <NavLink to={'/listing/' + this.state.listing._id}>
+                  {this.confirmCheck ? (
                     <>
-                      <CustomButton onClick={(e) => {
-                        e.stopPropagation();
-                        e.preventDefault();
-                        setConfirmCheck(false)
-                      }
-                      }>Cancel</CustomButton>
-                      <CustomButton onClick={handleCheckConfirm}>Confirm</CustomButton>
+                      <div>Confirm check in / out?</div>
+                      <>
+                        <CustomButton onClick={(e) => {
+                          e.stopPropagation();
+                          e.preventDefault();
+                          this.setState({ confirmCheck: false });
+                        }
+                        }>Cancel</CustomButton>
+                        <CustomButton onClick={this.handleCheckConfirm}>Confirm</CustomButton>
+                      </>
                     </>
-                  </>
-                ) : (
-                    <div className='listing-information'>
-                      <img className='listing-image' src={listing.pictures[0]} alt={listing.title} />
-                      <b>{listing.title}</b>
-                      {listing.location.street}, {listing.location.city}, {listing.location.state}, {listing.location.zipcode}
-                      <div>
-                        <b>Check-In: </b> {reservation.days[0].substring(5)} <br />
-                        <b>Check-Out: </b> {reservation.days[1].substring(5)}
+                  ) : (
+                      <div className='listing-information'>
+                        <img className='listing-image' src={this.state.listing.pictures[0]} alt={this.state.listing.title} />
+                        <b>{this.state.listing.title}</b>
+                        {this.state.listing.location.street}, {this.state.listing.location.city}, {this.state.listing.location.state}, {this.state.listing.location.zipcode}
+                        <div>
+                          <b>Check-In: </b> {this.reservation.days[0].substring(5)} <br />
+                          <b>Check-Out: </b> {this.reservation.days[1].substring(5)}
+                        </div>
+                        <div className="spacer_xxs" />
+                        {this.props.userSession &&
+                          this.props.userSession.userId === this.reservation.user &&
+                          !this.props.reservation.checkedIn &&
+                          new Date() >= new Date(this.reservation.days[0]) ? (
+                            <CustomButton onClick={
+                              (e) => {
+                                e.stopPropagation();
+                                e.preventDefault();
+                                this.setState({ confirmCheck: true });
+                                this.setState({ checkState: 'in' });
+                              }}>
+                              { !this.loading ? "Check-in" : <div id="spinner" />}
+                            </CustomButton>
+                          ) : (
+                            <>
+                              {/* Render an unclickable button */}
+                            </>
+                          )}
+                        {this.props.userSession && this.props.userSession.userId === this.reservation.user && this.props.reservation.checkedIn ? (
+                          <CustomButton onClick={
+                            (e) => {
+                              e.stopPropagation();
+                              e.preventDefault();
+                              this.setState({ confirmCheck: true });
+                              this.setState({ checkState: 'out' });
+                            }}>
+                            { !this.loading ? "Check-Out" : <div id="spinner" />}
+                          </CustomButton>
+                        ) : null}
                       </div>
-                      <div className="spacer_xxs" />
-                      {props.userSession && props.userSession.userId === reservation.user && !props.reservation.checkedIn ? (
-                        <CustomButton onClick={
-                          (e) => {
-                            e.stopPropagation();
-                            e.preventDefault();
-                            setConfirmCheck(true);
-                            setCheckState('in');
-                          }}>
-                          { !props.loading ? "Check-in" : <div id="spinner" />}
-                        </CustomButton>
-                      ) : (
-                          <>
-                            {/* Render an unclickable button */}
-                          </>
-                        )}
-                      {props.userSession && props.userSession.userId === reservation.user && props.reservation.checkedIn ? (
-                        <CustomButton onClick={
-                          (e) => {
-                            e.stopPropagation();
-                            e.preventDefault();
-                            setConfirmCheck(true);
-                            setCheckState('out');
-                          }}>
-                          { !props.loading ? "Check-Out" : <div id="spinner" />}
-                        </CustomButton>
-                      ) : null}
-                    </div>
-                  )}
-              </NavLink>
-            </div>
-          )) : null}
-    </>
-  )
-};
+                    )}
+                </NavLink>
+              </div>
+            )) : null}
+      </>
+    )
+  };
+}
 
 const mapStateToProps = state => {
   const stateToReturn = { ...state, loading: state.Loading.loading };

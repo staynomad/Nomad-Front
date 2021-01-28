@@ -11,6 +11,7 @@ import PricesCL from "./pricesCL.component";
 import TitleCL from "./titleCL.component";
 import LandingPageCL from "./landingPageCL.component";
 import PhotoUpload from "./photos/photoUpload.component";
+import Ameneties from "./amenities.component";
 import { getSignedURL } from "./photos/photoUploadRequests";
 import "./createListing.css";
 import ConfirmSubmission from "./confirmSubmission.component";
@@ -32,11 +33,12 @@ class CreateListing extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.postRequest = this.postRequest.bind(this);
     this.pageToggle = this.pageToggle.bind(this);
+    this.onSaveDraft = this.onSaveDraft.bind(this);
   }
   componentDidMount() {
     this.props.updateInfo(this.state);
     this.props.setLoadingFalse();
-
+    window.scrollTo(0, 0);
     if (!this.props.userSession) {
       alert("Please log in to create a listing.");
       return this.props.history.push("/login");
@@ -72,9 +74,14 @@ class CreateListing extends Component {
       nextToggle: nexttemp,
     });
   }
-  onSubmit() {
+
+  onSaveDraft() {
+    this.onSubmit(true);
+  }
+
+  onSubmit(draft = false) {
     const dataToSend = this.props.listingData;
-    let cur_photos = dataToSend.photos.pictures;
+    let cur_photos = dataToSend.photos.image_files;
 
     let photoURLS = [];
 
@@ -113,8 +120,8 @@ class CreateListing extends Component {
       description: dataToSend.description,
       details: dataToSend.details,
       price: parseFloat(dataToSend.price).toFixed(2),
-      tax: (dataToSend.price * 0.1).toFixed(2),
       available: available,
+      amenities: dataToSend.amenities,
       pictures: photoURLS,
       calendarURL: this.props.calendarURL,
       booked: this.props.booked,
@@ -125,9 +132,30 @@ class CreateListing extends Component {
           Authorization: `Bearer ${this.props.userSession.token}`,
         },
       })
+      .then((res) => {
+        if (!draft) {
+          app
+            .put("/listings/activateListing/", res.data._id, {
+              headers: {
+                Authorization: `Bearer ${this.props.userSession.token}`,
+              },
+            })
+            .catch(() => alert("Unable to create listing. Please try again."));
+        } else {
+          this.setState({
+            draftSavedText: true,
+          });
+        }
+      })
       .then(() => this.postRequest())
-      .then(() => (window.location = "/MyAccount"));
+      .then(() => (window.location = "/MyAccount"))
+      .catch(() => {
+        alert("Unable to create listing. Please try again.");
+        window.location = "/CreateListing";
+        return;
+      });
   }
+
   componentWillUnmount() {
     this.props.setLoadingFalse();
   }
@@ -137,18 +165,19 @@ class CreateListing extends Component {
 
   render() {
     const pages = [
-      <LandingPageCL />,
+      <LandingPageCL name="Landing Page" />,
       <TitleCL />,
       <Location />,
       <Description />,
       <DetailsCL />,
       <PricesCL />,
+      <Ameneties />,
       <PhotoUpload />,
       <DatesCL />,
     ];
     const pageList = pages.map((page) => {
       return (
-        <div>
+        <div key={pages.indexOf(page)}>
           {page}
           <br />
         </div>
@@ -158,7 +187,19 @@ class CreateListing extends Component {
       <div className="fullListingBackground">
         <div className="overallListingForm">
           {this.props.loading ? (
-            <div id="spinner" />
+            <div>
+              <div id="spinner" />
+              {this.state.draftSavedText ? (
+                <div className="spacer_s">
+                  Draft is being saved. To edit/submit this listing, go to
+                  MyListings.
+                </div>
+              ) : (
+                <div className="spacer_s">
+                  Your listing is being submitted. Thanks for choosing VHomes!
+                </div>
+              )}
+            </div>
           ) : (
             <form>
               {this.state.inputPage ? (
@@ -196,6 +237,12 @@ class CreateListing extends Component {
                     type="button"
                     onClick={this.onSubmit}
                     value="Submit"
+                  />
+                  <input
+                    className="changebut"
+                    type="button"
+                    onClick={this.onSaveDraft}
+                    value="Save Draft"
                   />
                 </div>
               )}
