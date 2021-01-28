@@ -146,14 +146,22 @@ class LeftMenu extends Component {
       case "my transfers":
         return (
           <>
-            <CustomButton onClick={(e) => { this.props.acceptListingTransfer(true, undefined) }}>Accept All</CustomButton>
-            <CustomButton onClick={(e) => { }}>Reject All</CustomButton>
             {
-              this.props.listingsToTransfer ? (
-                this.props.listingsToTransfer.map((listing) => {
-                  return <ListingCard key={listing._id} listing={listing} transfer={true} />;
+              this.props.listingsToTransfer && this.props.listingsToTransfer > 0 ? (
+                <>
+                  <CustomButton onClick={(e) => { this.props.acceptListingTransfer(true, undefined) }}>Accept All</CustomButton>
+                  <CustomButton onClick={(e) => { }}>Reject All</CustomButton>
+                  {
+                    this.props.listingsToTransfer.map((listing) => {
+                      return <ListingCard key={listing._id} listing={listing} transfer={true} />;
+                    })
+                  }
+                </>
+              ) : <p ref={(el) => {
+                if (el) {
+                  el.style.setProperty('text-align', 'center', 'important');
                 }
-                )) : null
+              }}>There are no transfer request(s) at current time.</p>
             }
           </>
         );
