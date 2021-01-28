@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { withStyles } from '@material-ui/core/styles';
 // import { Modal, DialogContent } from '@material-ui/core/';
 // import ListingsModal from './listingsmodal.component';
+import { acceptListingTransfer } from '../../../redux/actions/transferListingActions';
 import { deleteListingById } from '../../../redux/actions/searchListingActions';
 import "./explore.css"
 
@@ -33,7 +34,7 @@ const DeleteButton = withStyles((theme) => ({
 }))(Button);
 
 const ListingCard = (props) => {
-  const { listing } = props;
+  const { listing, transfer } = props;
   const [rating, setRating] = useState("");
   const [numReviews, setNumReviews] = useState(0);
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -89,9 +90,9 @@ const ListingCard = (props) => {
         <div className="list-card">
           <img src={coverPhoto} alt={listing.title} className="list-img" onError={onPhotoError} />
           <div className="list-card-content">
-          {
-            !listing.active ? <div className="list-title">[DRAFT] {listing.title}</div> : <div className="list-title">{listing.title}</div>
-          }
+            {
+              !listing.active ? <div className="list-title">[DRAFT] {listing.title}</div> : <div className="list-title">{listing.title}</div>
+            }
             <div className="icon-inline" >
               <img src='images/guest.svg' className="list-icon" alt="guests" />
               <span className="detail">{listing.details.maxpeople} Guest</span>
@@ -113,38 +114,56 @@ const ListingCard = (props) => {
               <div className="price"> ${listing.price} <span className="list-text">/ night</span></div>
             </div>
           </div>
-          <div>
-            {confirmDelete ? (
-              <>
+          {
+            !transfer ? (
+              <div>
+                {confirmDelete ? (
+                  <>
+                    <>
+                      <CustomButton onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        setConfirmDelete(false)
+                      }
+                      }>Cancel</CustomButton>
+                      <DeleteButton onClick={handleDeleteListing}>Confirm Delete</DeleteButton>
+                    </>
+                  </>
+                ) :
+                  <>
+                    {props.userSession && props.userSession.userId === listing.userId ? (
+                      <CustomButton onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        props.history.push(`/editListing/${listing._id}`)
+                      }}>Edit</CustomButton>
+                    ) : null}
+                    {props.userSession && props.userSession.userId === listing.userId ? (
+                      <CustomButton onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        setConfirmDelete(true)
+                      }}>Delete</CustomButton>
+                    ) : null}
+                  </>
+                }
+              </div>
+            ) : (
                 <>
                   <CustomButton onClick={(e) => {
                     e.stopPropagation();
                     e.preventDefault();
-                    setConfirmDelete(false)
+                    props.acceptListingTransfer(false, listing._id);
                   }
-                  }>Cancel</CustomButton>
-                  <DeleteButton onClick={handleDeleteListing}>Confirm Delete</DeleteButton>
+                  }>Accept</CustomButton>
+                  <CustomButton onClick={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                  }
+                  }>Reject</CustomButton>
                 </>
-              </>
-            ) :
-              <>
-                {props.userSession && props.userSession.userId === listing.userId ? (
-                  <CustomButton onClick={(e) => {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    props.history.push(`/editListing/${listing._id}`)
-                  }}>Edit</CustomButton>
-                ) : null}
-                {props.userSession && props.userSession.userId === listing.userId ? (
-                  <CustomButton onClick={(e) => {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    setConfirmDelete(true)
-                  }}>Delete</CustomButton>
-                ) : null}
-              </>
-            }
-          </div>
+              )
+          }
         </div>
       </NavLink>
     </>
@@ -160,6 +179,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    acceptListingTransfer: (acceptAll, listingId) => dispatch(acceptListingTransfer(acceptAll, listingId)),
     deleteListingById: (token, listingId) => dispatch(deleteListingById(token, listingId)),
   };
 };

@@ -5,10 +5,13 @@ import { Grid, Menu, Segment } from "semantic-ui-react";
 import { NavLink, withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 
+import ListingCard from '../matches/listing/listingCard.component'
 import ListingsComponent from "../matches/listing/listings.component";
 import Profile from "./profile.component";
 import ReservationCard from "../reservations/reservationCard.component";
 import Settings from "./settings.component";
+import { acceptListingTransfer } from '../../redux/actions/transferListingActions';
+import { getListingTranferRequests } from "../../redux/actions/transferListingActions";
 import { searchUserListings } from "../../redux/actions/searchListingActions";
 import { searchUserReservations } from "../../redux/actions/reservationActions";
 import "semantic-ui-css/semantic.min.css";
@@ -140,6 +143,28 @@ class LeftMenu extends Component {
         );
       case "settings":
         return <Settings />;
+      case "my transfers":
+        return (
+          <>
+            {
+              this.props.listingsToTransfer && this.props.listingsToTransfer > 0 ? (
+                <>
+                  <CustomButton onClick={(e) => { this.props.acceptListingTransfer(true, undefined) }}>Accept All</CustomButton>
+                  <CustomButton onClick={(e) => { }}>Reject All</CustomButton>
+                  {
+                    this.props.listingsToTransfer.map((listing) => {
+                      return <ListingCard key={listing._id} listing={listing} transfer={true} />;
+                    })
+                  }
+                </>
+              ) : <p ref={(el) => {
+                if (el) {
+                  el.style.setProperty('text-align', 'center', 'important');
+                }
+              }}>There are no transfer request(s) at current time.</p>
+            }
+          </>
+        );
       default:
         return;
     }
@@ -161,17 +186,28 @@ class LeftMenu extends Component {
               />
               {this.props.userSession ? (
                 this.props.userSession.isHost ? (
-                  <Menu.Item
-                    name="my listings"
-                    active={activeItem === "my listings"}
-                    compname="my listings"
-                    onClick={(e, { name, compname }) => {
-                      this.handleItemClick(e, { name, compname });
-                      this.props.searchUserListings(
-                        this.props.userSession.token
-                      );
-                    }}
-                  />
+                  <>
+                    <Menu.Item
+                      name="my listings"
+                      active={activeItem === "my listings"}
+                      compname="my listings"
+                      onClick={(e, { name, compname }) => {
+                        this.handleItemClick(e, { name, compname });
+                        this.props.searchUserListings(
+                          this.props.userSession.token
+                        );
+                      }}
+                    />
+                    <Menu.Item
+                      name="my transfers"
+                      active={activeItem === "my transfers"}
+                      compname="my transfers"
+                      onClick={(e, { name, compname }) => {
+                        this.handleItemClick(e, { name, compname });
+                        this.props.getListingTranferRequests();
+                      }}
+                    />
+                  </>
                 ) : null
               ) : null}
               <Menu.Item
@@ -185,6 +221,7 @@ class LeftMenu extends Component {
                   );
                 }}
               />
+
               <Menu.Item
                 name="settings"
                 active={activeItem === "settings"}
@@ -207,11 +244,14 @@ const mapStateToProps = (state) => {
   if (state.Login.userInfo) stateToReturn["userSession"] = state.Login.userInfo.session;
   if (state.Listing.userListings) stateToReturn["userListings"] = state.Listing.userListings;
   if (state.Reservations.reservations) stateToReturn["userReservations"] = state.Reservations.reservations;
+  if (state.Transfer.listingsToTransfer) stateToReturn["listingsToTransfer"] = state.Transfer.listingsToTransfer;
   return stateToReturn;
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    acceptListingTransfer: (acceptAll, listingId) => dispatch(acceptListingTransfer(acceptAll, listingId)),
+    getListingTranferRequests: (token) => dispatch(getListingTranferRequests(token)),
     searchUserListings: (token) => dispatch(searchUserListings(token)),
     searchUserReservations: (token) => dispatch(searchUserReservations(token)),
   };
