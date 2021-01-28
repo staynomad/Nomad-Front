@@ -9,13 +9,13 @@ export default function reducer(state = {}, action) {
         case REMOVE_ALL_TRANSFERS_FROM_STORE: {
             return {
                 ...state,
-                listingsToTransfer: state.listingsToTransfer.filter(listing => false),
+                listingsToTransfer: state.listingsToTransfer.filter(() => false),
             }
         }
         case REMOVE_TRANSFER_FROM_STORE: {
             return {
                 ...state,
-                listingsToTransfer: state.listingsToTransfer.filter(listing => listing._id != action.listingId)
+                listingsToTransfer: state.listingsToTransfer.filter(listing => listing._id !== action.listingId)
             }
         }
         case SET_LISTING_TRANSFER_REQUESTS: {

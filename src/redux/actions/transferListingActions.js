@@ -1,7 +1,6 @@
 import handleReq from "../../utils/fetchRequest";
 import { push } from 'connected-react-router';
 import { setAuthError } from "./errorActions";
-import { setLoadingFalse, setLoadingTrue } from "./loadingActions";
 
 /* Types */
 export const SET_LISTING_TRANSFER_REQUESTS = 'VHomes/transfer/SET_LISTING_TRANSFER_REQUESTS';

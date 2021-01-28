@@ -147,7 +147,7 @@ class LeftMenu extends Component {
         return (
           <>
             {
-              this.props.listingsToTransfer && this.props.listingsToTransfer > 0 ? (
+              this.props.listingsToTransfer && this.props.listingsToTransfer.length > 0 ? (
                 <>
                   <CustomButton onClick={(e) => { this.props.acceptListingTransfer(true, undefined) }}>Accept All</CustomButton>
                   <CustomButton onClick={(e) => { }}>Reject All</CustomButton>
