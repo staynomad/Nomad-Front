@@ -108,6 +108,6 @@ export const importCalendar = (calendarURL, listingId) => async (dispatch) => {
       }
     })
     .catch((err) => {
-      alert("Unable to sync calendar. Please try again.");
-    });
-};
+      // alert("Unable to sync calendar. Please try again.")
+    })
+}
