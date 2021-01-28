@@ -277,131 +277,134 @@ class ListingPage extends Component {
     const { from, to } = this.state;
     const modifiers = { start: from, end: to };
 
-    const lessThanFourDays =
-      parseInt((this.state.to - this.state.from) / (1000 * 3600 * 24)) + 1 < 4
-        ? true
-        : false;
+    // const lessThanFourDays =
+    //   parseInt((this.state.to - this.state.from) / (1000 * 3600 * 24)) + 1 < 4
+    //     ? true
+    //     : false;
 
     return (
       <div className="container_s">
         {!this.state.listingPictures ? (
           <div id="spinner"></div>
         ) : (
-          <div>
-            {!this.state.isActive ? (
-              <div>
-                <h2 className="listing-title">
-                  [DRAFT] {this.state.listingTitle}
-                </h2>
-                <div>This listing is not viewable to the public.</div>
-              </div>
-            ) : (
-              <h2 className="listing-title">{this.state.listingTitle}</h2>
-            )}
-            <h5 className="listing-location">{this.state.listingLocation}</h5>{" "}
-            <br />
-            <ImageGallery
-              items={this.state.listingPictures}
-              showThumbnails={false}
-              showPlayButton={false}
-              onErrorImageURL={"/images/default_listing.jpg"}
-              originalAlt={`${this.state.listingTitle}`}
-            />
-            <div className="spacer_s"></div>
-            <div className="listing-details">
-              <p className="listing-description">
-                {this.state.listingDescription}
-              </p>{" "}
+            <div>
+              {!this.state.isActive ? (
+                <div>
+                  <h2 className="listing-title">
+                    [DRAFT] {this.state.listingTitle}
+                  </h2>
+                  <div>This listing is not viewable to the public.</div>
+                </div>
+              ) : (
+                  <h2 className="listing-title">{this.state.listingTitle}</h2>
+                )}
+              <h5 className="listing-location">{this.state.listingLocation}</h5>{" "}
               <br />
-              <div className="details">
-                Beds: {this.state.listingBeds} <br />
+              <ImageGallery
+                items={this.state.listingPictures}
+                showThumbnails={false}
+                showPlayButton={false}
+                onErrorImageURL={"/images/default_listing.jpg"}
+                originalAlt={`${this.state.listingTitle}`}
+              />
+              <div className="spacer_s"></div>
+              <div className="listing-details">
+                <p className="listing-description">
+                  {this.state.listingDescription}
+                </p>{" "}
+                <br />
+                <div className="details">
+                  Beds: {this.state.listingBeds} <br />
                 Baths: {this.state.listingBaths} <br />
                 Max Guests: {this.state.listingMaxPeople} <br />
                 Price: $
                 {(this.state.listingPrice + this.state.listingTax).toFixed(2)}
                 /Night
                 <div className="spacer_xs"></div>
-                {this.props.userSession ? (
-                  <>
-                    <a href={`mailto:${this.state.hostEmail}`}>
-                      <button className="btn green" type="button">
-                        {" "}
+                  {this.props.userSession ? (
+                    <>
+                      <a href={`mailto:${this.state.hostEmail}`}>
+                        <button className="btn green" type="button">
+                          {" "}
                         Contact Host{" "}
-                      </button>
-                    </a>{" "}
-                  </>
-                ) : null}
-                <div className="spacer_xxl"></div>
+                        </button>
+                      </a>{" "}
+                    </>
+                  ) : null}
+                  <div className="spacer_xxl"></div>
+                </div>
               </div>
-            </div>
-            <div className="listing-calendar">
-              <div className="spacer_xs"></div>
-              <div style={{ alignText: "center" }}>
-                {this.state.outOfRange ? (
-                  "Selected day is not available."
-                ) : lessThanFourDays ? (
-                  "Minimum 4 days required"
-                ) : (
-                  <div>
-                    {!from && !to && "Please select the first day."}
-                    {from && !to && "Please select the last day."}
-                    {from &&
-                      to &&
-                      `From ${from.toLocaleDateString()} to
+              <div className="listing-calendar">
+                <div className="spacer_xs"></div>
+                <div style={{ alignText: "center" }}>
+                  {this.state.outOfRange ? (
+                    "Selected day is not available."
+                  ) : // lessThanFourDays ? (
+                    //   "Minimum 4 days required"
+                    // ) : 
+                    (
+                      <div>
+                        {!from && !to && "Please select the first day."}
+                        {from && !to && "Please select the last day."}
+                        {from &&
+                          to &&
+                          `From ${from.toLocaleDateString()} to
                     ${to.toLocaleDateString()}`}{" "}
-                  </div>
-                )}
+                      </div>
+                    )}
+                </div>
+                <DayPicker
+                  className="Selectable"
+                  selectedDays={[from, { from, to }]}
+                  modifiers={modifiers}
+                  onDayClick={this.handleDayClick}
+                  disabledDays={this.state.listingBookedDays}
+                  inputProps={{ required: true }}
+                />
+                <div className="spacer_xs"></div>
+                <div className="reserve-now">
+                  {this.state.from && this.state.to
+                    // && !lessThanFourDays
+                    ? (
+                      this.state.isLoading ? (
+                        <div id="spinner"></div>
+                      ) : (
+                          <input
+                            className="btn green"
+                            type="button"
+                            value="reserve now"
+                            onClick={this.handleSessionRedirect}
+                          />
+                        )
+                    ) : null}
+                </div>
               </div>
-              <DayPicker
-                className="Selectable"
-                selectedDays={[from, { from, to }]}
-                modifiers={modifiers}
-                onDayClick={this.handleDayClick}
-                disabledDays={this.state.listingBookedDays}
-                inputProps={{ required: true }}
-              />
-              <div className="spacer_xs"></div>
-              <div className="reserve-now">
-                {this.state.from && this.state.to && !lessThanFourDays ? (
-                  this.state.isLoading ? (
-                    <div id="spinner"></div>
-                  ) : (
-                    <input
-                      className="btn green"
-                      type="button"
-                      value="reserve now"
-                      onClick={this.handleSessionRedirect}
+              {this.props.review ? (
+                <>
+                  <form onSubmit={this.handleReviewSubmit}>
+                    <StarRatings
+                      rating={this.state.rating}
+                      changeRating={this.handleChangeRating}
+                      starHoverColor="#00B183"
+                      starRatedColor="#00B183"
+                      name="rating"
                     />
-                  )
-                ) : null}
-              </div>
-            </div>
-            {this.props.review ? (
-              <>
-                <form onSubmit={this.handleReviewSubmit}>
-                  <StarRatings
-                    rating={this.state.rating}
-                    changeRating={this.handleChangeRating}
-                    starHoverColor="#00B183"
-                    starRatedColor="#00B183"
-                    name="rating"
-                  />
-                  <input
-                    type="text"
-                    name="review"
-                    placeholder="e.g. This was a great place to stay!"
-                    value={this.state.review}
-                    onChange={this.handleReviewChange}
-                    required
-                  />
-                  <button className="btn green" type="submit">
-                    Submit Review
+                    <input
+                      type="text"
+                      name="review"
+                      placeholder="e.g. This was a great place to stay!"
+                      value={this.state.review}
+                      onChange={this.handleReviewChange}
+                      required
+                    />
+                    <button className="btn green" type="submit">
+                      Submit Review
                   </button>
-                </form>
-              </>
-            ) : null}
-          </div>
-        )}
+                  </form>
+                </>
+              ) : null}
+            </div>
+          )}
       </div>
     );
   }

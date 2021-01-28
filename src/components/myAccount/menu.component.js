@@ -5,10 +5,12 @@ import { Grid, Menu, Segment } from "semantic-ui-react";
 import { NavLink, withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 
+import ListingCard from '../matches/listing/listingCard.component'
 import ListingsComponent from "../matches/listing/listings.component";
 import Profile from "./profile.component";
 import ReservationCard from "../reservations/reservationCard.component";
 import Settings from "./settings.component";
+import { acceptListingTransfer } from '../../redux/actions/transferListingActions';
 import { getListingTranferRequests } from "../../redux/actions/transferListingActions";
 import { searchUserListings } from "../../redux/actions/searchListingActions";
 import { searchUserReservations } from "../../redux/actions/reservationActions";
@@ -142,7 +144,19 @@ class LeftMenu extends Component {
       case "settings":
         return <Settings />;
       case "my transfers":
-        return null;
+        return (
+          <>
+            <CustomButton onClick={(e) => { this.props.acceptListingTransfer(true, undefined) }}>Accept All</CustomButton>
+            <CustomButton onClick={(e) => { }}>Reject All</CustomButton>
+            {
+              this.props.listingsToTransfer ? (
+                this.props.listingsToTransfer.map((listing) => {
+                  return <ListingCard key={listing._id} listing={listing} transfer={true} />;
+                }
+                )) : null
+            }
+          </>
+        );
       default:
         return;
     }
@@ -228,6 +242,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    acceptListingTransfer: (acceptAll, listingId) => dispatch(acceptListingTransfer(acceptAll, listingId)),
     getListingTranferRequests: (token) => dispatch(getListingTranferRequests(token)),
     searchUserListings: (token) => dispatch(searchUserListings(token)),
     searchUserReservations: (token) => dispatch(searchUserReservations(token)),
