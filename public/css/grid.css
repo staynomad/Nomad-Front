@@ -25,7 +25,7 @@
   padding: 0rem 1rem;
 }
 
-@media (max-width: 1338px) {
+@media (max-width: 1149px) {
   .row-one {
     justify-content: center;
   }
@@ -63,6 +63,10 @@
   .row.gap {
     grid-gap: calc(var(--gap-size) * 0.5);
   }
+}
+
+.why-container {
+  max-width: 1400px;
 }
 
 .display-sm-block {
