@@ -47,7 +47,7 @@ html {
   position: fixed;
   line-height: 65px;
   text-align: center;
-  padding: 0rem 1rem;
+  padding: 0rem 3rem;
 }
 
 .nav-container {
@@ -76,6 +76,17 @@ html {
   height: 100%;
   width: 30%;
   float: right;
+}
+
+@media screen and (max-width: 1280px) {
+  .nav div.main_list {
+    width: 40%;
+  }
+}
+@media screen and (max-width: 960px) {
+  .nav div.main_list {
+    width: 50%;
+  }
 }
 
 .nav div.main_list ul {
@@ -448,6 +459,7 @@ h5 {
   font-size: 2rem;
   font-weight: 500;
   padding: 10px 0;
+  line-height: 30px;
 }
 
 @media screen and (max-width: 620px) {

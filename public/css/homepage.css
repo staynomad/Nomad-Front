@@ -48,6 +48,12 @@ body {
   width: 150px;
 }
 
+@media screen and (max-width: 896px) {
+  .AM-graphic {
+    width: 100px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .illustration {
     width: 350px;
@@ -70,6 +76,13 @@ body {
 
 .amenities-header {
   margin-bottom: 50px;
+  font-size: 3rem !important;
+}
+
+@media screen and (max-width: 896px) {
+  .amenities-header {
+    font-size: 2rem !important;
+  }
 }
 
 .subtitle2 {
@@ -80,12 +93,24 @@ body {
   line-height: 30px;
 }
 
+@media screen and (max-width: 896px) {
+  .subtitle2 {
+    font-size: 1.5rem;
+  }
+}
+
 .home-card {
   text-align: center;
   padding: 10px;
   background-color: white;
   display: block;
   position: relative;
+}
+
+@media screen and (max-width: 1424px) {
+  .home-card {
+    padding: 0rem 3rem;
+  }
 }
 
 .design {
