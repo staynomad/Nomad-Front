@@ -18,14 +18,19 @@ const Search = (props) => {
       data-wow-delay="0.5s"
     >
       <form
-        style={{ display: "flex", alignItems: "center" }}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          flexWrap: "wrap",
+          justifyContent: "center",
+        }}
         onSubmit={handleSearch}
       >
         <input
           type="text"
           placeholder="type in a city, state, or zipcode"
           className="inputtextbox"
-          style={{ margin: "1rem 0rem", fontSize: "1.5rem" }}
+          style={{ margin: "1rem 0rem" }}
           onChange={(e) => setItemToSearch(e.target.value)}
           value={itemToSearch}
         />
