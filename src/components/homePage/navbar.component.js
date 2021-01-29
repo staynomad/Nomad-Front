@@ -14,7 +14,7 @@ const navbar = (props) => {
     <nav className="nav">
       <div className="nav-container">
         <div className="logo">
-          <NavLink to="/">
+          <NavLink to="/" className="logo-container">
             <img src="/images/logo.png" alt="logo" />
           </NavLink>
         </div>
@@ -26,7 +26,7 @@ const navbar = (props) => {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/" onClick={e => props.setReservationModal(true)}>
+              <NavLink to="/" onClick={(e) => props.setReservationModal(true)}>
                 Reservations
               </NavLink>
             </li>
@@ -48,16 +48,16 @@ const navbar = (props) => {
                 </li>
               </>
             ) : (
-                <li className="nav-item xl-ml-40">
-                  <NavLink
-                    className="button button-outline-primary"
-                    to="/Login"
-                    activeClassName="nav-active"
-                  >
-                    Login
+              <li className="nav-item xl-ml-40">
+                <NavLink
+                  className="button button-outline-primary"
+                  to="/Login"
+                  activeClassName="nav-active"
+                >
+                  Login
                 </NavLink>
-                </li>
-              )}
+              </li>
+            )}
           </ul>
         </div>
       </div>
