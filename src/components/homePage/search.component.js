@@ -28,7 +28,7 @@ const Search = (props) => {
       >
         <input
           type="text"
-          placeholder="type in a city, state, or zipcode"
+          placeholder="Type in a city, state, or zipcode"
           className="inputtextbox"
           style={{ margin: "1rem 0rem" }}
           onChange={(e) => setItemToSearch(e.target.value)}
@@ -38,7 +38,7 @@ const Search = (props) => {
           className="booknowbutton"
           style={{ marginLeft: "1rem", fontSize: "1.5rem" }}
           type="button"
-          value="search"
+          value="Search"
           onClick={handleSearch}
         />
       </form>
