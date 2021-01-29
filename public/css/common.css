@@ -715,15 +715,11 @@ p {
 .spacer_xl {
   padding-top: 100px;
 }
-.spacer_l {
-  padding-top: 50px;
-}
+
 .spacer_m {
   padding-top: 30px;
 }
-.spacer_s {
-  padding-top: 20px;
-}
+
 .spacer_xs {
   padding-top: 10px;
 }
