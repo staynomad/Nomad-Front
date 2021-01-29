@@ -85,7 +85,6 @@ const NewHome = (props) => {
             </div>
 
             <div className="search-container">
-              <div className="spacer_l"></div>
               <div className="search-header wow fadeInUp" data-wow-delay="0.5s">
                 <h1 className="search-logo">VHomes</h1>
                 <div className="intro_text">
@@ -93,7 +92,6 @@ const NewHome = (props) => {
                 </div>
               </div>
 
-              <div className="spacer_s"></div>
               <div className=" wow fadeInUp" data-wow-delay="0.5s">
                 <Search history={history} />
                 <div className="intro_text">

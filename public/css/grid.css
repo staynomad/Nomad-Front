@@ -21,6 +21,14 @@
 .row-one {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 0rem 1rem;
+}
+
+@media (max-width: 1338px) {
+  .row-one {
+    justify-content: center;
+  }
 }
 
 .search-container {
@@ -33,6 +41,17 @@
 .search-logo {
   display: inline;
   font-size: 5rem !important;
+}
+
+@media screen and (max-width: 465px) {
+  .search-logo {
+    font-size: 4rem !important;
+  }
+}
+@media screen and (max-width: 374px) {
+  .search-logo {
+    font-size: 3rem !important;
+  }
 }
 
 .search-header {

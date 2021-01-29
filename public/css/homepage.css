@@ -28,6 +28,12 @@ body {
   display: inline;
 }
 
+@media screen and (max-width: 374px) {
+  .intro_text {
+    font-size: 1.2rem;
+  }
+}
+
 .why-graphic {
   width: 150px;
 }

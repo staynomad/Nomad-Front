@@ -28,7 +28,7 @@
 
 .booknowbutton {
   font-size: 16px;
-  margin-left: .5%;
+  margin-left: 0.5%;
   height: 50px;
   width: 100px;
   color: white;
@@ -37,27 +37,34 @@
   border-color: #02b188;
   color: white;
   -webkit-transition: transform 0.5s ease 0s;
-     -moz-transition: transform 0.5s ease 0s;
-       -o-transition: transform 0.5s ease 0s;
-          transition: transform 0.5s ease 0s;
+  -moz-transition: transform 0.5s ease 0s;
+  -o-transition: transform 0.5s ease 0s;
+  transition: transform 0.5s ease 0s;
 }
 
 .booknowbutton:hover {
   transform: scale(1.01);
   background-color: #01c490;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .inputtextbox {
   height: 50px;
   width: 350px;
   background-color: white;
-  font-size: 16px;
+  font-size: 1.5rem;
   border-radius: 8px;
   border-color: white;
   border-radius: 10px;
   border: 1px solid var(--color-green);
   padding-left: 15px;
+}
+
+@media screen and (max-width: 360px) {
+  .inputtextbox {
+    font-size: 16px;
+    width: 300px;
+  }
 }
 
 .overall-subscribe {
@@ -79,6 +86,6 @@
 }
 
 .footer-item {
-  padding-left: .3%;
-  padding-right: .3%;
+  padding-left: 0.3%;
+  padding-right: 0.3%;
 }
