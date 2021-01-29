@@ -56,3 +56,20 @@ export const acceptListingTransfer = (acceptAll, listingId) => async dispatch =>
         console.log(errors);
     };
 }
+
+export const rejectListingTransfer = (rejectAll, listingId) => async dispatch => {
+    const transferInfo = { rejectAll, listingId }
+    const rejectTransferRes = await handleReq("/listings/rejectListingTransfer", "PUT", undefined, transferInfo);
+
+    if (rejectTransferRes && rejectTransferRes.status === 200) {
+        console.log('Successfully transferred.')
+        if (rejectAll) {
+            dispatch(removeAllTransfersFromStore());
+        } else {
+            dispatch(removeTransferFromStore(listingId));
+        }
+    } else {
+        const { errors } = rejectTransferRes.data;
+        console.log(errors);
+    };
+}

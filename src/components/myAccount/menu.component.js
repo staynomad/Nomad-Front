@@ -10,7 +10,7 @@ import ListingsComponent from "../matches/listing/listings.component";
 import Profile from "./profile.component";
 import ReservationCard from "../reservations/reservationCard.component";
 import Settings from "./settings.component";
-import { acceptListingTransfer } from '../../redux/actions/transferListingActions';
+import { acceptListingTransfer, rejectListingTransfer } from '../../redux/actions/transferListingActions';
 import { getListingTranferRequests } from "../../redux/actions/transferListingActions";
 import { searchUserListings } from "../../redux/actions/searchListingActions";
 import { searchUserReservations } from "../../redux/actions/reservationActions";
@@ -150,7 +150,7 @@ class LeftMenu extends Component {
               this.props.listingsToTransfer && this.props.listingsToTransfer.length > 0 ? (
                 <>
                   <CustomButton onClick={(e) => { this.props.acceptListingTransfer(true, undefined) }}>Accept All</CustomButton>
-                  <CustomButton onClick={(e) => { }}>Reject All</CustomButton>
+                  <CustomButton onClick={(e) => { this.props.rejectListingTransfer(true, undefined) }}>Reject All</CustomButton>
                   {
                     this.props.listingsToTransfer.map((listing) => {
                       return <ListingCard key={listing._id} listing={listing} transfer={true} />;
@@ -252,6 +252,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     acceptListingTransfer: (acceptAll, listingId) => dispatch(acceptListingTransfer(acceptAll, listingId)),
     getListingTranferRequests: (token) => dispatch(getListingTranferRequests(token)),
+    rejectListingTransfer: (rejectAll, listingId) => dispatch(rejectListingTransfer(rejectAll, listingId)),
     searchUserListings: (token) => dispatch(searchUserListings(token)),
     searchUserReservations: (token) => dispatch(searchUserReservations(token)),
   };
