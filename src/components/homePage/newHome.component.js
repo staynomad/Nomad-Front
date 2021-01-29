@@ -103,11 +103,11 @@ const NewHome = (props) => {
 
           <div className="spacer_xs"></div>
           <div className="container">
-            <h1 className="wow fadeInUp" data-wow-delay="0.5s">
+            <h1 className="why-title wow fadeInUp" data-wow-delay="0.5s">
               Why VHomes?
             </h1>
 
-            <div className="row gap large">
+            <div className="why-container row gap large">
               <div className="col-sm-12 col-md-12 col-lg-4 ">
                 <div className="home-card">
                   <div className=" wow fadeInUp" data-wow-delay="0.5s">
@@ -119,7 +119,7 @@ const NewHome = (props) => {
                   </div>
                   <div className=" wow fadeInUp" data-wow-delay="0.5s">
                     <div className="subtitle">No more overpaying</div>
-                    <p>
+                    <p className="why-caption">
                       We are committed to finding you the best deal. With VHomes
                       you'll find the best stay possible for less than $60 per
                       room per night.{" "}
@@ -139,7 +139,7 @@ const NewHome = (props) => {
                   </div>
                   <div className=" wow fadeInUp" data-wow-delay="0.5s">
                     <div className="subtitle">Spaces designed for living</div>
-                    <p>
+                    <p className="why-caption">
                       Every property is ideal for both working and relaxing. Our
                       spaces have high-speed WiFi, artisan coffee, and everyday
                       amenities.{" "}
@@ -159,7 +159,7 @@ const NewHome = (props) => {
                   </div>
                   <div className=" wow fadeInUp" data-wow-delay="0.5s">
                     <div className="subtitle">Prioritize your safety</div>
-                    <p>
+                    <p className="why-caption">
                       Our homes meet CDC standards. Our average turnover is 3
                       months—unlike hotels which churn & churn. And, yes, we
                       offer single family homes and self check in.
@@ -173,7 +173,10 @@ const NewHome = (props) => {
           <div className="spacer_xl"></div>
           <div className="container_wide">
             <div className="design">
-              <h1 className="wow fadeInUp" data-wow-delay="0.5s">
+              <h1
+                className="amenities-header wow fadeInUp"
+                data-wow-delay="0.5s"
+              >
                 Our Amenities
               </h1>
               <div className="spacer_l"></div>

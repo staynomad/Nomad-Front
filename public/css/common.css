@@ -445,9 +445,15 @@ h5 {
 
 .subtitle {
   color: var(--color-green);
-  font-size: 1.3rem;
+  font-size: 2rem;
   font-weight: 500;
   padding: 10px 0;
+}
+
+@media screen and (max-width: 620px) {
+  .subtitle {
+    font-size: 1.7rem;
+  }
 }
 
 p {
@@ -475,7 +481,7 @@ p {
 
 .container {
   margin-top: 10%;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 .container_s {

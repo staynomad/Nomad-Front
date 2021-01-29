@@ -35,11 +35,17 @@ body {
 }
 
 .why-graphic {
-  width: 150px;
+  width: 250px;
+}
+
+@media screen and (max-width: 620px) {
+  .why-graphic {
+    width: 200px;
+  }
 }
 
 .AM-graphic {
-  width: 100px;
+  width: 150px;
 }
 
 @media screen and (max-width: 768px) {
@@ -49,11 +55,29 @@ body {
   }
 }
 
+.why-caption {
+  font-size: 1.5rem !important;
+}
+
+@media screen and (max-width: 620px) {
+  .why-title {
+    font-size: 3rem !important;
+  }
+  .why-caption {
+    font-size: 1.2rem !important;
+  }
+}
+
+.amenities-header {
+  margin-bottom: 50px;
+}
+
 .subtitle2 {
   color: var(--color-darkgrey);
-  font-size: 1.2rem;
+  font-size: 1.8rem;
   font-weight: 500;
   padding: 10px 0;
+  line-height: 30px;
 }
 
 .home-card {
