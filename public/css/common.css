@@ -47,6 +47,7 @@ html {
   position: fixed;
   line-height: 65px;
   text-align: center;
+  padding: 0rem 1rem;
 }
 
 .nav-container {
