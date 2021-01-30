@@ -76,7 +76,6 @@ class ListingPage extends Component {
           listingBeds: res.data.listing.details.beds,
           listingMaxPeople: res.data.listing.details.maxpeople,
           listingPrice: res.data.listing.price,
-          listingTax: res.data.listing.tax,
           listingStartDate: res.data.listing.available[0],
           listingEndDate: res.data.listing.available[1],
           listingUser: res.data.listing.userId,
@@ -317,9 +316,7 @@ class ListingPage extends Component {
                   Beds: {this.state.listingBeds} <br />
                 Baths: {this.state.listingBaths} <br />
                 Max Guests: {this.state.listingMaxPeople} <br />
-                Price: $
-                {(this.state.listingPrice + this.state.listingTax).toFixed(2)}
-                /Night
+                Price: ${this.state.listingPrice.toFixed(2)}/Night
                 <div className="spacer_xs"></div>
                   {this.props.userSession ? (
                     <>
