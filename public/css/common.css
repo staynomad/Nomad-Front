@@ -43,7 +43,7 @@ html {
 .nav {
   z-index: 9999;
   width: 100%;
-  height: 120px;
+  height: 90px;
   position: fixed;
   line-height: 65px;
   text-align: center;
@@ -60,7 +60,7 @@ html {
 }
 
 .nav div.logo img {
-  height: 96px;
+  height: 78px;
 }
 
 .logo-container {
