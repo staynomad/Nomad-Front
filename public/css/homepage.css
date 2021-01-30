@@ -99,6 +99,26 @@ body {
   }
 }
 
+.book-header {
+  margin-bottom: 5rem;
+}
+
+@media screen and (max-width: 620px) {
+  .book-header {
+    font-size: 3rem !important;
+  }
+}
+
+.book-caption {
+  font-size: 1.5rem !important;
+}
+
+@media screen and (max-width: 620px) {
+  .book-caption {
+    font-size: 1.2rem !important;
+  }
+}
+
 .home-card {
   text-align: center;
   padding: 10px;
@@ -117,6 +137,22 @@ body {
   padding: 70px 0;
   text-align: center;
   background-color: rgba(222, 238, 236, 0.6);
+}
+
+.book-container {
+  display: flex;
+}
+
+@media screen and (max-width: 1480px) {
+  .book-container {
+    padding: 0rem 3rem;
+  }
+}
+@media screen and (max-width: 1096px) {
+  .book-container {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
 
 .number {
@@ -141,6 +177,7 @@ body {
   color: white;
   font-family: "Roboto", sans-serif;
   font-weight: bold;
+  font-size: 1.7rem;
 }
 
 /*testimonial*/
