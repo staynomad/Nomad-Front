@@ -229,14 +229,14 @@ const NewHome = (props) => {
           </div>
 
           <div className="container">
-            <h1>Book and Save Your Money </h1>
+            <h1 className="book-header">Book and Save Your Money </h1>
             <div className="spacer_l"></div>
-            <div className="row gap large">
+            <div className="book-container row gap large">
               <div className="col-sm-12 col-md-6 col-lg-6">
                 <img
                   src="./images/step.png"
                   alt="step"
-                  className="media-image"
+                  className="media-image book-image"
                 />
               </div>
 
@@ -248,7 +248,7 @@ const NewHome = (props) => {
                   </div>
                   &nbsp;
                   <div className="subtitle">Search for a location</div>
-                  <p>
+                  <p className="book-caption">
                     Find beautiful properties from hosts all over the world.
                     Can't decide where you want to go? Hit "Explore" and
                     discover some of our most popular stays.{" "}
@@ -263,7 +263,7 @@ const NewHome = (props) => {
                   </div>
                   &nbsp;
                   <div className="subtitle">Browse recommended stays</div>
-                  <p>
+                  <p className="book-caption">
                     Booking a vacation has never been so easy. We tailor search
                     results specifically to your liking and make it easy for you
                     to find you dream stay.{" "}
@@ -278,7 +278,7 @@ const NewHome = (props) => {
                   </div>
                   &nbsp;
                   <div className="subtitle">Save your money </div>
-                  <p>
+                  <p className="book-caption">
                     We guarantee that you'll never pay more than $60 per room
                     per night. On top of that, use our roommate feature to meet
                     new people and split the cost!{" "}

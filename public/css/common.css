@@ -580,6 +580,17 @@ p {
   }
 }
 
+@media screen and (max-width: 1096px) {
+  .book-image {
+    width: 30rem;
+  }
+}
+@media screen and (max-width: 708px) {
+  .book-image {
+    width: 20rem;
+  }
+}
+
 .center-image {
   display: block;
   margin-left: auto;
@@ -826,6 +837,16 @@ a:checked {
   .spacer_l {
     padding-top: 50px;
   }
+
+  @media screen and (max-width: 1094px) {
+    .spacer_l {
+      padding-top: 10px !important;
+    }
+    .spacer_xl {
+      padding-top: 10px !important;
+    }
+  }
+
   .spacer_m {
     padding-top: 30px;
   }
