@@ -243,11 +243,13 @@ const NewHome = (props) => {
               <div className="col-sm-12 col-md-6 col-lg-6">
                 <div className="spacer_xl"></div>
                 <div className="flex-card-container">
-                  <div className="number">
-                    <div className="number-sec">1</div>
+                  <div className="book-header-container">
+                    <div className="number">
+                      <div className="number-sec">1</div>
+                    </div>
+                    &nbsp;
+                    <div className="subtitle">Search for a location</div>
                   </div>
-                  &nbsp;
-                  <div className="subtitle">Search for a location</div>
                   <p className="book-caption">
                     Find beautiful properties from hosts all over the world.
                     Can't decide where you want to go? Hit "Explore" and
@@ -258,11 +260,13 @@ const NewHome = (props) => {
                 <div className="spacer_s"></div>
 
                 <div className="flex-card-container">
-                  <div className="number">
-                    <div className="number-sec">2</div>
+                  <div className="book-header-container">
+                    <div className="number">
+                      <div className="number-sec">2</div>
+                    </div>
+                    &nbsp;
+                    <div className="subtitle">Browse recommended stays</div>
                   </div>
-                  &nbsp;
-                  <div className="subtitle">Browse recommended stays</div>
                   <p className="book-caption">
                     Booking a vacation has never been so easy. We tailor search
                     results specifically to your liking and make it easy for you
@@ -273,11 +277,13 @@ const NewHome = (props) => {
                 <div className="spacer_s"></div>
 
                 <div className="flex-card-container">
-                  <div className="number">
-                    <div className="number-sec">3</div>
+                  <div className="book-header-container">
+                    <div className="number">
+                      <div className="number-sec">3</div>
+                    </div>
+                    &nbsp;
+                    <div className="subtitle">Save your money </div>
                   </div>
-                  &nbsp;
-                  <div className="subtitle">Save your money </div>
                   <p className="book-caption">
                     We guarantee that you'll never pay more than $60 per room
                     per night. On top of that, use our roommate feature to meet
@@ -290,7 +296,7 @@ const NewHome = (props) => {
 
           <div className="spacer_l"></div>
           <div className=" wow fadeInUp" data-wow-delay="0.5s">
-            <h1>From our guests </h1>
+            <h1 className="quotes-title">From our guests </h1>
           </div>
 
           <div className=" wow fadeInUp" data-wow-delay="0.5s">
@@ -314,7 +320,7 @@ const NewHome = (props) => {
                         It's a great place to stay!! Close to everything, clean,
                         and great value.
                       </p>
-                      <div className="spacer_xxs">June 2020</div>
+                      <div className="spacer_xxs quote-date">June 2020</div>
                     </article>
                   </div>
                 </div>
@@ -337,7 +343,7 @@ const NewHome = (props) => {
                         Our family would like to first and foremost thank you
                         for making us feel safe and comfortable.
                       </p>
-                      <div className="spacer_xxs">June 2020</div>
+                      <div className="spacer_xxs quote-date">June 2020</div>
                     </article>
                   </div>
                 </div>
@@ -347,7 +353,7 @@ const NewHome = (props) => {
 
           <div className="spacer_m"></div>
           <div className=" wow fadeInUp" data-wow-delay="0.5s">
-            <h2>Want to host your property?</h2>
+            <h2 className="host-header">Want to host your property?</h2>
           </div>
           <div className=" wow fadeInUp" data-wow-delay="0.5s">
             <div className="button3">
@@ -357,7 +363,9 @@ const NewHome = (props) => {
                 </button>
               </Link>
               <div className="spacer_m"></div>
-              <h2>Subscribe to our mailing list</h2>
+              <h2 className="subscribe-header">
+                Subscribe to our mailing list
+              </h2>
               <p className="subscribe-text">
                 Subscribe to our mailing list to get our latest news.
               </p>
