@@ -1,7 +1,6 @@
 import handleReq from "../../utils/fetchRequest";
 import { push } from 'connected-react-router';
 import { setAuthError } from "./errorActions";
-import { setLoadingFalse, setLoadingTrue } from "./loadingActions";
 
 /* Types */
 export const SET_LISTING_TRANSFER_REQUESTS = 'VHomes/transfer/SET_LISTING_TRANSFER_REQUESTS';
@@ -54,6 +53,23 @@ export const acceptListingTransfer = (acceptAll, listingId) => async dispatch =>
         }
     } else {
         const { errors } = acceptTransferRes.data;
+        console.log(errors);
+    };
+}
+
+export const rejectListingTransfer = (rejectAll, listingId) => async dispatch => {
+    const transferInfo = { rejectAll, listingId }
+    const rejectTransferRes = await handleReq("/listings/rejectListingTransfer", "PUT", undefined, transferInfo);
+
+    if (rejectTransferRes && rejectTransferRes.status === 200) {
+        console.log('Successfully transferred.')
+        if (rejectAll) {
+            dispatch(removeAllTransfersFromStore());
+        } else {
+            dispatch(removeTransferFromStore(listingId));
+        }
+    } else {
+        const { errors } = rejectTransferRes.data;
         console.log(errors);
     };
 }

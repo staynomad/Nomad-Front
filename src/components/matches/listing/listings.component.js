@@ -191,7 +191,17 @@ class Listings extends Component {
             </div>
             : null
         }
-        {this.state.listings ? (listings.length <= 0 ? <div><div className="spacer_s"></div>No listings yet!</div> :
+        {this.state.listings ? (listings.length <= 0 ?
+          <>
+            <div className="spacer_s" />
+            <p ref={(el) => {
+              if (el) {
+                el.style.setProperty('text-align', 'center', 'important');
+              }
+            }}>
+              No listings yet!
+          </p>
+          </> :
           <div id='listing-content' className="wow fadeInUp" data-wow-delay="0.5s">
             {
               this.state.listings.map((listing, idx) => {
@@ -201,9 +211,10 @@ class Listings extends Component {
               })
             }
           </div>
-        ) : null}
+        ) : null
+        }
         <Pagination count={this.state.pageCount} onChange={this.handlePageChange} />
-      </div>
+      </div >
     );
   }
 

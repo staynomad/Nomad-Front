@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { withStyles } from '@material-ui/core/styles';
 // import { Modal, DialogContent } from '@material-ui/core/';
 // import ListingsModal from './listingsmodal.component';
-import { acceptListingTransfer } from '../../../redux/actions/transferListingActions';
+import { acceptListingTransfer, rejectListingTransfer } from '../../../redux/actions/transferListingActions';
 import { deleteListingById } from '../../../redux/actions/searchListingActions';
 import "./explore.css"
 
@@ -159,6 +159,7 @@ const ListingCard = (props) => {
                   <CustomButton onClick={(e) => {
                     e.stopPropagation();
                     e.preventDefault();
+                    props.rejectListingTransfer(false, listing._id);
                   }
                   }>Reject</CustomButton>
                 </>
@@ -181,6 +182,7 @@ const mapDispatchToProps = dispatch => {
   return {
     acceptListingTransfer: (acceptAll, listingId) => dispatch(acceptListingTransfer(acceptAll, listingId)),
     deleteListingById: (token, listingId) => dispatch(deleteListingById(token, listingId)),
+    rejectListingTransfer: (rejectAll, listingId) => dispatch(rejectListingTransfer(rejectAll, listingId)),
   };
 };
 
