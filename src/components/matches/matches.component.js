@@ -37,7 +37,7 @@ const Matches = (props) => {
   }, [location.search]);
 
   return (
-    <div id="matches-page">
+    <div className="matches-page">
       <div className="spacer_l"></div>
       <div class="spacer_xl"></div>
       <div className="wow fadeInUp" data-wow-delay="0.4s">
