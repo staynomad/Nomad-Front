@@ -69,7 +69,7 @@ class Subscribe extends Component {
             type="button"
             value="Subscribe"
             onClick={this.handleSubscribe}
-            style={{ marginBottom: 10 }}
+            style={{ marginBottom: 40 }}
           />
         )}
         {this.state.emailSent ? (
