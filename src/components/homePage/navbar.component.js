@@ -1,63 +1,109 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink, withRouter } from "react-router-dom";
 import { logoutUser } from "../../redux/actions/authActions";
 import { connect } from "react-redux";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
-const navbar = (props) => {
+const Navbar = (props) => {
+  const [dropdownActive, setDropdownActive] = useState(false);
+
   const handleLogout = () => {
     window.sessionStorage.removeItem("accessToken");
     props.logoutUser();
     props.history.push("/");
   };
 
+  const handleRedirect = () => {
+    setTimeout(() => {
+      setDropdownActive(false);
+    }, 100);
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOff);
+  }, []);
+
+  const handleClickOff = (e) => {
+    if (e.target.id === "dropref") return;
+    if (e.target.className === "profile-dropdown button button-outline-primary")
+      return;
+    setDropdownActive(false);
+  };
+
   return (
     <nav className="nav">
       <div className="nav-container">
         <div className="logo">
-          <NavLink to="/">
+          <NavLink to="/" className="logo-container">
             <img src="/images/logo.png" alt="logo" />
           </NavLink>
         </div>
         <div id="mainListDiv" className="main_list">
           <ul className="navlinks">
-            <li>
-              <NavLink to="/Matches" activeClassName="nav-active">
-                Explore
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/" onClick={e => props.setReservationModal(true)}>
-                Reservations
-              </NavLink>
-            </li>
+            <NavLink
+              className="nav-item"
+              style={{ fontSize: "1.5rem" }}
+              to="/Matches"
+              activeClassName="nav-active"
+            >
+              Explore
+            </NavLink>
+
+            <NavLink
+              className="nav-item"
+              style={{ fontSize: "1.5rem" }}
+              to="/"
+              onClick={(e) => props.setReservationModal(true)}
+            >
+              Reservations
+            </NavLink>
+
             {props.userSession ? (
               <>
-                <li>
-                  <a onClick={handleLogout} href="/">
-                    Log Out
-                  </a>
-                </li>
-                <li className="nav-item xl-ml-40">
-                  <NavLink
-                    className="button button-outline-primary"
+                <div style={{ position: "relative" }}>
+                  <div
+                    onClick={() => setDropdownActive(!dropdownActive)}
+                    className="profile-dropdown button button-outline-primary"
                     to="/MyAccount"
                     activeClassName="nav-active"
                   >
                     Profile
-                  </NavLink>
-                </li>
+                    <ArrowDropDownIcon className="dropdown-icon" />
+                  </div>
+                  {dropdownActive && (
+                    <div className="dropdown" id="dropref">
+                      <NavLink
+                        activeStyle={{ display: "inline" }}
+                        className="account-a"
+                        id="dropref"
+                        to="/MyAccount"
+                        onClick={handleRedirect}
+                      >
+                        Account
+                      </NavLink>
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "2px",
+                          background: "#00b183",
+                        }}
+                      ></div>
+                      <h3 onClick={handleLogout} id="dropref">
+                        Logout
+                      </h3>
+                    </div>
+                  )}
+                </div>
               </>
             ) : (
-                <li className="nav-item xl-ml-40">
-                  <NavLink
-                    className="button button-outline-primary"
-                    to="/Login"
-                    activeClassName="nav-active"
-                  >
-                    Login
-                </NavLink>
-                </li>
-              )}
+              <NavLink
+                className="profile-dropdown button button-outline-primary"
+                to="/Login"
+                activeClassName="nav-active"
+              >
+                Login
+              </NavLink>
+            )}
           </ul>
         </div>
       </div>
@@ -78,4 +124,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(navbar));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));
