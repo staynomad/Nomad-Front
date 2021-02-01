@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { app } from '../../utils/axiosConfig.js'
 import Button from '@material-ui/core/Button';
 import { NavLink, withRouter } from 'react-router-dom';
