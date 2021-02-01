@@ -79,7 +79,7 @@ const Navbar = (props) => {
                         to="/MyAccount"
                         onClick={handleRedirect}
                       >
-                        Account settings
+                        Account
                       </NavLink>
                       <div
                         style={{
