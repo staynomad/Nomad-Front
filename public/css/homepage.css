@@ -186,11 +186,20 @@ body {
 .testimonial-reel {
   margin-bottom: 4rem !important;
   margin-top: 4rem;
+  display: flex;
+  justify-content: space-between;
 }
 
-@media screen and (max-width: 1440px) {
+@media screen and (max-width: 1470px) {
   .testimonial-reel {
     padding: 0rem 3rem;
+  }
+}
+
+@media screen and (max-width: 1180px) {
+  .testimonial-reel {
+    flex-direction: column;
+    align-items: center;
   }
 }
 
@@ -214,6 +223,22 @@ body {
   min-height: 200px;
   border-radius: 10px;
 }
+
+.box {
+  width: 47%;
+}
+
+@media screen and (max-width: 1180px) {
+  .box {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 620px) {
+  .box {
+    width: 95%;
+  }
+}
+
 .testimonial-reel .box .test-title {
   font-size: 2.5rem;
   color: var(--color-orange);

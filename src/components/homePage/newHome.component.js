@@ -301,51 +301,48 @@ const NewHome = (props) => {
 
           <div className=" wow fadeInUp" data-wow-delay="0.5s">
             <div className="testimonial-reel">
-              <div>
-                <div className="box">
-                  <figure className="image">
-                    <img
-                      className="img-fluid rounded-circle"
-                      src="./images/woman.png"
-                      alt="woman"
-                    />
-                  </figure>
+              <div className="box">
+                <figure className="image">
+                  <img
+                    className="img-fluid rounded-circle"
+                    src="./images/woman.png"
+                    alt="woman"
+                  />
+                </figure>
 
-                  <div className="test-component">
-                    <article className="test-title">
-                      <div>Dalia</div>
-                    </article>
-                    <article className="test-content">
-                      <p className="quote">
-                        It's a great place to stay!! Close to everything, clean,
-                        and great value.
-                      </p>
-                      <div className="spacer_xxs quote-date">June 2020</div>
-                    </article>
-                  </div>
+                <div className="test-component">
+                  <article className="test-title">
+                    <div>Dalia</div>
+                  </article>
+                  <article className="test-content">
+                    <p className="quote">
+                      It's a great place to stay!! Close to everything, clean,
+                      and great value.
+                    </p>
+                    <div className="spacer_xxs quote-date">June 2020</div>
+                  </article>
                 </div>
               </div>
-              <div>
-                <div className="box">
-                  <figure className="image">
-                    <img
-                      className="img-fluid rounded-circle"
-                      src="./images/man.png"
-                      alt="man"
-                    />
-                  </figure>
-                  <div className="test-component">
-                    <article className="test-title">
-                      <div> Larry</div>
-                    </article>
-                    <article className="test-content">
-                      <p className="quote">
-                        Our family would like to first and foremost thank you
-                        for making us feel safe and comfortable.
-                      </p>
-                      <div className="spacer_xxs quote-date">June 2020</div>
-                    </article>
-                  </div>
+
+              <div className="box">
+                <figure className="image">
+                  <img
+                    className="img-fluid rounded-circle"
+                    src="./images/man.png"
+                    alt="man"
+                  />
+                </figure>
+                <div className="test-component">
+                  <article className="test-title">
+                    <div> Larry</div>
+                  </article>
+                  <article className="test-content">
+                    <p className="quote">
+                      Our family would like to first and foremost thank you for
+                      making us feel safe and comfortable.
+                    </p>
+                    <div className="spacer_xxs quote-date">June 2020</div>
+                  </article>
                 </div>
               </div>
             </div>
