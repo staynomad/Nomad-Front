@@ -37,9 +37,9 @@ const Matches = (props) => {
   }, [location.search]);
 
   return (
-    <div className="matches-page">
+    <div id="matches-page">
       <div className="spacer_l"></div>
-      <div class="spacer_xl"></div>
+      <div className="spacer_xl"></div>
       <div className="wow fadeInUp" data-wow-delay="0.4s">
         <div className="row gap large">
           <div className="col-sm-12 col-md-12 col-lg-12">
