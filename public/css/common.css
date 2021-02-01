@@ -196,6 +196,48 @@ html {
   }
 }
 
+.profile-dropdown {
+  display: flex !important;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-darkgreen) !important;
+  font-weight: 400;
+  font-size: 1.5rem !important;
+  position: relative;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  width: 131px;
+  height: 100px;
+  background: white;
+  border: 3px solid #00b183;
+  border-radius: 0.5rem;
+}
+
+.account-a {
+  font-size: 1rem !important;
+  display: inline !important;
+}
+
+.dropdown h3 {
+  margin: 0;
+}
+
+.profile-dropdown:hover {
+  color: var(--color-green) !important;
+}
+
+.dropdown-icon {
+  font-size: 30px;
+}
+
+.nav-item:hover {
+  color: var(--color-green);
+}
+
 .navTrigger {
   cursor: pointer;
   width: 30px;

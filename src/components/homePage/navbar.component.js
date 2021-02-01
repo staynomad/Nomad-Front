@@ -1,13 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink, withRouter } from "react-router-dom";
 import { logoutUser } from "../../redux/actions/authActions";
 import { connect } from "react-redux";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
-const navbar = (props) => {
+const Navbar = (props) => {
+  const [dropdownActive, setDropdownActive] = useState(false);
+
   const handleLogout = () => {
     window.sessionStorage.removeItem("accessToken");
     props.logoutUser();
     props.history.push("/");
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOff);
+  }, []);
+
+  const handleClickOff = (e) => {
+    if (e.target.id === "dropref") return;
+    if (e.target.className === "profile-dropdown button button-outline-primary")
+      return;
+    setDropdownActive(false);
   };
 
   return (
@@ -20,43 +34,63 @@ const navbar = (props) => {
         </div>
         <div id="mainListDiv" className="main_list">
           <ul className="navlinks">
-            <li>
-              <NavLink to="/Matches" activeClassName="nav-active">
-                Explore
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/" onClick={(e) => props.setReservationModal(true)}>
-                Reservations
-              </NavLink>
-            </li>
+            <NavLink
+              className="nav-item"
+              style={{ fontSize: "1.5rem" }}
+              to="/Matches"
+              activeClassName="nav-active"
+            >
+              Explore
+            </NavLink>
+
+            <NavLink
+              className="nav-item"
+              style={{ fontSize: "1.5rem" }}
+              to="/"
+              onClick={(e) => props.setReservationModal(true)}
+            >
+              Reservations
+            </NavLink>
+
             {props.userSession ? (
               <>
-                <li>
+                {/* <li>
                   <a onClick={handleLogout} href="/">
                     Log Out
                   </a>
-                </li>
-                <li className="nav-item xl-ml-40">
-                  <NavLink
-                    className="button button-outline-primary"
+                </li> */}
+                <div>
+                  <div
+                    onClick={() => setDropdownActive(!dropdownActive)}
+                    className="profile-dropdown button button-outline-primary"
                     to="/MyAccount"
                     activeClassName="nav-active"
                   >
                     Profile
-                  </NavLink>
-                </li>
+                    <ArrowDropDownIcon className="dropdown-icon" />
+                  </div>
+                  {dropdownActive && (
+                    <div className="dropdown" id="dropref">
+                      <NavLink
+                        className="account-a"
+                        id="dropref"
+                        to="/MyAccount"
+                      >
+                        Account settings
+                      </NavLink>
+                      <h3>Logout</h3>
+                    </div>
+                  )}
+                </div>
               </>
             ) : (
-              <li className="nav-item xl-ml-40">
-                <NavLink
-                  className="button button-outline-primary"
-                  to="/Login"
-                  activeClassName="nav-active"
-                >
-                  Login
-                </NavLink>
-              </li>
+              <NavLink
+                className="profile-dropdown button button-outline-primary"
+                to="/Login"
+                activeClassName="nav-active"
+              >
+                Login
+              </NavLink>
             )}
           </ul>
         </div>
@@ -78,4 +112,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(navbar));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));
