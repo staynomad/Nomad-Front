@@ -76,10 +76,11 @@ class CreateListing extends Component {
   }
 
   onSaveDraft() {
-    this.onSubmit(true);
+    this.onSubmit({draft: true});
   }
 
-  onSubmit(draft = false) {
+  onSubmit() {
+    var draft = false;
     const dataToSend = this.props.listingData;
     let cur_photos = dataToSend.photos.image_files;
 
@@ -126,16 +127,14 @@ class CreateListing extends Component {
       calendarURL: this.props.calendarURL,
       booked: this.props.booked,
     };
-    app
-      .post(`/listings/createListing`, newListing, {
+    app.post(`/listings/createListing`, newListing, {
         headers: {
           Authorization: `Bearer ${this.props.userSession.token}`,
         },
       })
       .then((res) => {
-        if (!draft) {
-          app
-            .put("/listings/activateListing/", res.data._id, {
+        if (draft === false) {
+          app.put("/listings/activateListing/" + res.data.newListing._id, null, {
               headers: {
                 Authorization: `Bearer ${this.props.userSession.token}`,
               },
