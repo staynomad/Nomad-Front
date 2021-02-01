@@ -13,6 +13,12 @@ const Navbar = (props) => {
     props.history.push("/");
   };
 
+  const handleRedirect = () => {
+    setTimeout(() => {
+      setDropdownActive(false);
+    }, 100);
+  };
+
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOff);
   }, []);
@@ -54,12 +60,7 @@ const Navbar = (props) => {
 
             {props.userSession ? (
               <>
-                {/* <li>
-                  <a onClick={handleLogout} href="/">
-                    Log Out
-                  </a>
-                </li> */}
-                <div>
+                <div style={{ position: "relative" }}>
                   <div
                     onClick={() => setDropdownActive(!dropdownActive)}
                     className="profile-dropdown button button-outline-primary"
@@ -72,13 +73,24 @@ const Navbar = (props) => {
                   {dropdownActive && (
                     <div className="dropdown" id="dropref">
                       <NavLink
+                        activeStyle={{ display: "inline" }}
                         className="account-a"
                         id="dropref"
                         to="/MyAccount"
+                        onClick={handleRedirect}
                       >
                         Account settings
                       </NavLink>
-                      <h3>Logout</h3>
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "2px",
+                          background: "#00b183",
+                        }}
+                      ></div>
+                      <h3 onClick={handleLogout} id="dropref">
+                        Logout
+                      </h3>
                     </div>
                   )}
                 </div>

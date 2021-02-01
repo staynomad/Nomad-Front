@@ -201,7 +201,7 @@ html {
   height: 50px;
   align-items: center;
   justify-content: center;
-  color: var(--color-darkgreen) !important;
+  color: #1e2120 !important;
   font-weight: 400;
   font-size: 1.5rem !important;
   position: relative;
@@ -209,21 +209,43 @@ html {
 
 .dropdown {
   position: absolute;
-  top: 100%;
+  top: 105%;
   width: 131px;
   height: 100px;
   background: white;
   border: 3px solid #00b183;
   border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .account-a {
-  font-size: 1rem !important;
-  display: inline !important;
+  font-size: 1.1rem !important;
+  height: 45%;
+  display: flex !important;
+  align-items: center;
+  font-weight: 600;
+  color: #1e2120;
+}
+
+.account-a:hover {
+  color: var(--color-green);
 }
 
 .dropdown h3 {
   margin: 0;
+  font-size: 1.1rem !important;
+  height: 45%;
+  display: flex;
+  align-items: center;
+  color: #1e2120;
+  cursor: pointer;
+}
+
+.dropdown h3:hover {
+  color: var(--color-green);
 }
 
 .profile-dropdown:hover {
