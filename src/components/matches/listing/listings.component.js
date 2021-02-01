@@ -135,8 +135,9 @@ class Listings extends Component {
 
   handlePageChange(event, page) {
     const startIdx = ((page - 1) * 10);
-    const endIdx = ((page * 10) - 1) > this.state.listings.length ? this.state.listings.length : ((this.state.page * 10) - 1);
-
+    const endIdx = ((page * 10) - 1) > this.state.listings.length - 1 ? this.state.listings.length - 1 : ((this.state.page * 10) - 1);
+    console.log(endIdx)
+    console.log(this.state.listings.length)
     this.setState({ itemsToDisplay: [startIdx, endIdx] });
   }
 
