@@ -13,6 +13,7 @@ import PlacesAutocomplete, {
 } from "react-places-autocomplete";
 
 import { newListing } from "../../redux/actions/createListingActions";
+import { CustomButton } from "../matches/listing/listingCard.component";
 
 class Location extends Component {
   constructor(props) {
@@ -67,7 +68,9 @@ class Location extends Component {
     const results = await geocodeByAddress(value);
     const latLng = await getLatLng(results[0]);
     const [street, city, stateZip, country] = results[0].formatted_address.split(', ');
-    const [state, zipcode] = stateZip.split(' ');;
+    const [state, zipcode] = stateZip.split(' ');
+
+    console.log(results)
 
     this.setState({
       address: value,
@@ -196,6 +199,18 @@ class Location extends Component {
             </div>
           </div>
         </div>
+        <CustomButton onClick={() => this.setState({
+          address: "",
+          coordinates: {
+            lat: null,
+            lng: null,
+          },
+          street: "",
+          city: "",
+          state: "",
+          country: "",
+          zipcode: ""
+        })}>Clear</CustomButton>
         <div className="spacer_m"></div>
       </div>
     );
