@@ -7,12 +7,24 @@ import {
   incompleteForm,
   completeForm,
 } from "../../redux/actions/loadingActions";
+import PlacesAutocomplete, {
+  geocodeByAddress,
+  getLatLng,
+} from "react-places-autocomplete";
+
 import { newListing } from "../../redux/actions/createListingActions";
 
 class Location extends Component {
   constructor(props) {
     super(props);
-    this.state = this.oldData();
+    this.state = {
+      ...this.oldData(),
+      address: "",
+      coordinates: {
+        lat: null,
+        lng: null
+      },
+    };
     this.handleChange = this.handleChange.bind(this);
   }
   oldData = () => {
@@ -51,6 +63,23 @@ class Location extends Component {
     this.props.newListing({ name: "location", value: updatedData });
   }
 
+  handleSelect = async (value) => {
+    const results = await geocodeByAddress(value);
+    const latLng = await getLatLng(results[0]);
+    const [street, city, stateZip, country] = results[0].formatted_address.split(', ');
+    const [state, zipcode] = stateZip.split(' ');;
+
+    this.setState({
+      address: value,
+      coordinates: latLng,
+      street: street ? street : "",
+      city: city ? city : "",
+      state: state ? state : "",
+      country: country ? country : "",
+      zipcode: zipcode ? zipcode : ""
+    });
+  };
+
   render() {
     return (
       <div className="LocationForm">
@@ -59,6 +88,36 @@ class Location extends Component {
           <div className="spacer_xs"></div>
           <div className="listing-wrapper">
             <div className="listing-inputs">
+              <PlacesAutocomplete
+                value={this.state.address}
+                onChange={(address) => this.setState({ address })}
+                onSelect={this.handleSelect}
+              >
+                {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                  <div>
+                    <input {...getInputProps({ placeholder: "Search for address" })} />
+                    <p>Invalid addresses may cause autocomplete to fail.</p>
+                    <p>Latitude: {this.state.coordinates.lat}</p>
+                    <p>Longitude: {this.state.coordinates.lng}</p>
+
+                    <div>
+                      {loading ? <div>...loading</div> : null}
+
+                      {suggestions.map((suggestion, idx) => {
+                        const style = {
+                          backgroundColor: suggestion.active ? "#41b6e6" : "#fff"
+                        };
+
+                        return (
+                          <div {...getSuggestionItemProps(suggestion, { style })} key={`suggestion_${idx}`}>
+                            {suggestion.description}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </PlacesAutocomplete>
               <div className="gen-subsec">
                 <div className="label-text">Street:</div>
                 <input
@@ -89,8 +148,8 @@ class Location extends Component {
                 <div className="stateInputBox">
                   <select
                     onChange={this.handleChange}
-                    defaultValue={this.state.street}
                     name="state"
+                    value={this.state.state}
                   >
                     {stateDropDown}
                   </select>

@@ -65,7 +65,6 @@ const Navbar = (props) => {
                     onClick={() => setDropdownActive(!dropdownActive)}
                     className="profile-dropdown button button-outline-primary"
                     to="/MyAccount"
-                    activeClassName="nav-active"
                   >
                     Profile
                     <ArrowDropDownIcon className="dropdown-icon" />
@@ -96,14 +95,14 @@ const Navbar = (props) => {
                 </div>
               </>
             ) : (
-              <NavLink
-                className="profile-dropdown button button-outline-primary"
-                to="/Login"
-                activeClassName="nav-active"
-              >
-                Login
-              </NavLink>
-            )}
+                <NavLink
+                  className="profile-dropdown button button-outline-primary"
+                  to="/Login"
+                  activeClassName="nav-active"
+                >
+                  Login
+                </NavLink>
+              )}
           </ul>
         </div>
       </div>
