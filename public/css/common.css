@@ -673,9 +673,32 @@ p {
 }
 
 .center-image {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+  width: 70%;
+  margin-top: 110px;
+}
+
+@media screen and (max-width: 1199px) {
+  .center-image {
+    margin-top: 55px;
+  }
+}
+@media screen and (max-width: 1093px) {
+  .center-image {
+    margin-top: 100px;
+    width: 80%;
+  }
+}
+@media screen and (max-width: 768px) {
+  .center-image {
+    margin-top: 90px !important;
+    width: 80% !important;
+  }
+}
+@media screen and (max-width: 530px) {
+  .center-image {
+    margin-top: 90px !important;
+    width: 90% !important;
+  }
 }
 
 .icon {

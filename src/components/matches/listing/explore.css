@@ -41,6 +41,44 @@
   box-shadow: none;
 }
 
+@media screen and (max-width: 670px) {
+  .listing-item {
+    max-width: 450px;
+    margin: 35px 0;
+  }
+}
+@media screen and (max-width: 530px) {
+  .listing-item {
+    max-width: 400px;
+  }
+}
+@media screen and (max-width: 464px) {
+  .listing-item {
+    max-width: 350px;
+  }
+}
+@media screen and (max-width: 420px) {
+  .listing-item {
+    max-width: 325px;
+  }
+}
+@media screen and (max-width: 394px) {
+  .listing-item {
+    max-width: 310px;
+  }
+}
+@media screen and (max-width: 372px) {
+  .listing-item {
+    max-width: 300px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .listing-item {
+    max-width: 275px;
+  }
+}
+
 .list-card {
   transition: 0.3s;
   width: 100%;

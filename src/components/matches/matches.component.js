@@ -39,7 +39,6 @@ const Matches = (props) => {
   return (
     <div id="matches-page">
       <div className="spacer_l"></div>
-      <div className="spacer_xl"></div>
       <div className="wow fadeInUp" data-wow-delay="0.4s">
         <div className="row gap large">
           <div className="col-sm-12 col-md-12 col-lg-12">
@@ -53,7 +52,6 @@ const Matches = (props) => {
           </div>
         </div>
       </div>
-      <div className="spacer_s"> </div>
       <div className="wow fadeInUp" data-wow-delay="0.5s">
         <Search history={history} />
         <div className="click-for-more">
