@@ -8,7 +8,7 @@ import CloseIcon from "@material-ui/icons/Close";
 
 const Navbar = (props) => {
   const [dropdownActive, setDropdownActive] = useState(false);
-  const [mobileNav, setMobileNav] = useState(true);
+  const [mobileNav, setMobileNav] = useState(false);
 
   useEffect(() => {
     if (mobileNav) {
@@ -54,13 +54,6 @@ const Navbar = (props) => {
           onClick={() => setMobileNav(false)}
           className="mobile-close"
         />
-        <NavLink
-          className="mobile-nav-link"
-          onClick={() => setMobileNav(false)}
-          to="/"
-        >
-          Home
-        </NavLink>
         <NavLink
           className="mobile-nav-link"
           onClick={() => setMobileNav(false)}

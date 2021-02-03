@@ -93,6 +93,10 @@ html {
   cursor: pointer;
 }
 
+.mobile-nav-link:hover {
+  color: var(--color-green);
+}
+
 .burger {
   display: none !important;
   pointer-events: none;
