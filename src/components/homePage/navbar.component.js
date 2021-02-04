@@ -3,9 +3,26 @@ import { NavLink, withRouter } from "react-router-dom";
 import { logoutUser } from "../../redux/actions/authActions";
 import { connect } from "react-redux";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import MenuIcon from "@material-ui/icons/Menu";
+import CloseIcon from "@material-ui/icons/Close";
+import SearchIcon from "@material-ui/icons/Search";
+import EventAvailableIcon from "@material-ui/icons/EventAvailable";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 const Navbar = (props) => {
   const [dropdownActive, setDropdownActive] = useState(false);
+  const [mobileNav, setMobileNav] = useState(false);
+
+  useEffect(() => {
+    if (mobileNav) {
+      document.body.style.overflow = "hidden";
+      document.body.style.position = "relative";
+    } else {
+      document.body.style.overflow = "unset";
+      document.body.style.position = "static";
+    }
+  }, [mobileNav]);
 
   const handleLogout = () => {
     window.sessionStorage.removeItem("accessToken");
@@ -32,6 +49,69 @@ const Navbar = (props) => {
 
   return (
     <nav className="nav">
+      <div
+        className={
+          mobileNav ? "mobile-nav-container active" : "mobile-nav-container"
+        }
+      >
+        <CloseIcon
+          onClick={() => setMobileNav(false)}
+          className="mobile-close"
+        />
+        <NavLink
+          className="mobile-nav-link"
+          onClick={() => setMobileNav(false)}
+          to="/matches"
+          activeClassName="mobile-nav-link-active"
+        >
+          <SearchIcon className="mobile-nav-icon" />
+          Explore
+        </NavLink>
+        <NavLink
+          className="mobile-nav-link"
+          onClick={(e) => {
+            props.setReservationModal(true);
+            setMobileNav(false);
+          }}
+          to="/"
+        >
+          <EventAvailableIcon className="mobile-nav-icon" />
+          Reservations
+        </NavLink>
+        {props.userSession ? (
+          <div>
+            <NavLink
+              onClick={() => setMobileNav(false)}
+              className="mobile-nav-link"
+              to="/MyAccount"
+              activeClassName="mobile-nav-link-active"
+            >
+              <AccountCircleIcon className="mobile-nav-icon" />
+              Account
+            </NavLink>
+            <a
+              className="mobile-nav-link"
+              onClick={() => {
+                handleLogout();
+                setMobileNav(false);
+              }}
+            >
+              <ExitToAppIcon className="mobile-nav-icon" />
+              Logout
+            </a>
+          </div>
+        ) : (
+          <NavLink
+            className="mobile-nav-link"
+            onClick={() => setMobileNav(false)}
+            to="/Login"
+          >
+            {" "}
+            <AccountCircleIcon className="mobile-nav-icon" />
+            Login
+          </NavLink>
+        )}
+      </div>
       <div className="nav-container">
         <div className="logo">
           <NavLink to="/" className="logo-container">
@@ -106,6 +186,9 @@ const Navbar = (props) => {
             )}
           </ul>
         </div>
+        {!mobileNav && (
+          <MenuIcon onClick={() => setMobileNav(true)} className="burger" />
+        )}
       </div>
     </nav>
   );
