@@ -97,6 +97,11 @@ html {
   color: var(--color-green);
 }
 
+.mobile-nav-link-active {
+  width: 100%;
+  background: rgba(138, 219, 189, 0.8);
+}
+
 .burger {
   display: none !important;
   pointer-events: none;

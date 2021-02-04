@@ -58,6 +58,7 @@ const Navbar = (props) => {
           className="mobile-nav-link"
           onClick={() => setMobileNav(false)}
           to="/matches"
+          activeClassName="mobile-nav-link-active"
         >
           Explore
         </NavLink>
@@ -77,6 +78,7 @@ const Navbar = (props) => {
               onClick={() => setMobileNav(false)}
               className="mobile-nav-link"
               to="/MyAccount"
+              activeClassName="mobile-nav-link-active"
             >
               Account
             </NavLink>
