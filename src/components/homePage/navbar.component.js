@@ -5,6 +5,10 @@ import { connect } from "react-redux";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import MenuIcon from "@material-ui/icons/Menu";
 import CloseIcon from "@material-ui/icons/Close";
+import SearchIcon from "@material-ui/icons/Search";
+import EventAvailableIcon from "@material-ui/icons/EventAvailable";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 const Navbar = (props) => {
   const [dropdownActive, setDropdownActive] = useState(false);
@@ -60,6 +64,7 @@ const Navbar = (props) => {
           to="/matches"
           activeClassName="mobile-nav-link-active"
         >
+          <SearchIcon className="mobile-nav-icon" />
           Explore
         </NavLink>
         <NavLink
@@ -70,34 +75,39 @@ const Navbar = (props) => {
           }}
           to="/"
         >
+          <EventAvailableIcon className="mobile-nav-icon" />
           Reservations
         </NavLink>
         {props.userSession ? (
-          <>
+          <div>
             <NavLink
               onClick={() => setMobileNav(false)}
               className="mobile-nav-link"
               to="/MyAccount"
               activeClassName="mobile-nav-link-active"
             >
+              <AccountCircleIcon className="mobile-nav-icon" />
               Account
             </NavLink>
-            <h3
+            <a
               className="mobile-nav-link"
               onClick={() => {
                 handleLogout();
                 setMobileNav(false);
               }}
             >
+              <ExitToAppIcon className="mobile-nav-icon" />
               Logout
-            </h3>
-          </>
+            </a>
+          </div>
         ) : (
           <NavLink
             className="mobile-nav-link"
             onClick={() => setMobileNav(false)}
             to="/Login"
           >
+            {" "}
+            <AccountCircleIcon className="mobile-nav-icon" />
             Login
           </NavLink>
         )}
