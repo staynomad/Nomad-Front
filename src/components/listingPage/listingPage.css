@@ -32,13 +32,24 @@
   text-align: left !important;
 }
 
-.listing-location {
-  font-size: 18px !important;
+.listing-location-text {
+  font-size: 16px !important;
   font-weight: bold !important;
+  color: #373737 !important;
+  font-family: "Roboto", sans-serif !important;
+  font-weight: 300 !important;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+
+.listing-location-icon {
+  color: var(--color-green);
 }
 
 .listing-description {
   font-size: 16px !important;
+  color: #373737 !important;
 }
 
 .listing-details {
@@ -47,13 +58,9 @@
 }
 
 .listing-calendar {
-}
-
-.reserve-now {
-  float: right !important;
-  width: auto;
-  padding-right: 13% !important;
-  padding-top: 0 !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .details {
@@ -66,10 +73,11 @@
   display: flex;
   justify-content: space-between;
   margin-top: 2rem;
+  margin-bottom: 6rem;
 }
 
 .listing-divider {
-  width: 0.5px;
+  width: 1px;
   height: 95%;
   background: rgb(138, 138, 138);
   position: absolute;
@@ -129,6 +137,9 @@
 
 .image-gallery-thumbnail {
   width: 10rem;
+}
+.image-gallery-thumbnail-image {
+  height: 6rem;
 }
 
 .image-gallery-thumbnail:hover,
@@ -204,4 +215,71 @@
 .rating-number {
   display: inline;
   margin: 0rem 0.5rem !important;
+}
+
+.listing-subtitle {
+  text-align: left;
+  font-size: 1.5rem !important;
+}
+
+.listing-info-container {
+  display: flex;
+  align-items: center;
+}
+
+.listing-info {
+  display: flex;
+  align-items: center;
+  margin-right: 1.5rem;
+}
+
+.listing-info-icon {
+  font-size: 40px !important;
+  color: #b8bfbf;
+  width: 40px;
+  margin-right: 0.1rem;
+}
+
+.listing-info-container h2 {
+  margin: 0;
+  font-family: "Roboto", sans-serif !important;
+  font-weight: 200 !important;
+  color: #808080 !important;
+}
+
+.listing-price {
+  font-size: 1.5rem !important;
+  color: #b8bfbf !important;
+}
+
+.listing-price span {
+  font-size: 2rem;
+  color: var(--color-green);
+}
+
+.listing-contact {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.listing-contact-info {
+  display: flex;
+  align-items: center;
+}
+
+.listing-contact-info h2 {
+  color: black !important;
+  font-size: 1.2rem !important;
+}
+
+.listing-contact img {
+  width: 40px;
+  border-radius: 50%;
+}
+
+.listing-contact h2 {
+  margin: 0 0 0 0.5rem;
+  display: inline;
 }

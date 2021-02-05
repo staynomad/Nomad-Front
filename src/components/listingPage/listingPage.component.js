@@ -16,11 +16,15 @@ import {
   getCalendarURL,
   importCalendar,
 } from "../../redux/actions/calendarSyncActions";
-
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import StarIcon from "@material-ui/icons/Star";
+import PermIdentityIcon from "@material-ui/icons/PermIdentity";
+import bath from "../../../src/assets/svg/bath.svg";
+import bed from "../../../src/assets/svg/bed.svg";
+import defaultProfile from "../../../src/assets/img/default-profile.png";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
 
 const stripePublicKey =
   "pk_test_51HqRrRImBKNBYsooNTOTLagbqd8QUGaK6BeGwy6k2pQAJxkFF7NRwTT3ksBwyGVmq8UqhNVvKQS7Vlb69acFFCvq00hxgBuZhh";
@@ -87,6 +91,7 @@ class ListingPage extends Component {
           listingPictures: res.data.listing.pictures,
           listingAmenities: res.data.listing.amenities,
           listingRatings: res.data.listing.rating,
+          listingId: res.data.listing.userId,
           isActive: res.data.listing.active,
         });
         let pictures = [];
@@ -135,6 +140,11 @@ class ListingPage extends Component {
             isLoading: false,
           })
         );
+
+        const userId = this.state.listingId;
+        app.get(`/user/getUserInfo/${userId}`).then((res) => {
+          this.setState({ listingUserName: res.data });
+        });
       })
       .catch((err) => {
         console.log(err.response);
@@ -297,9 +307,9 @@ class ListingPage extends Component {
       }
       for (let i = 1; i <= 5; i++) {
         if (i <= average) {
-          stars.push(<StarIcon className="star-icon" />);
+          stars.push(<StarIcon className="star-icon" alt={i} />);
         } else {
-          stars.push(<StarBorderIcon className="star-icon" />);
+          stars.push(<StarBorderIcon className="star-icon" alt={i} />);
         }
       }
       stars.push(<p className="rating-number">({n})</p>);
@@ -365,19 +375,43 @@ class ListingPage extends Component {
                 {this.state.listingRatings && (
                   <div className="rating-container">{getRating()}</div>
                 )}
-                <br />
-                <p className="listing-description">
-                  {this.state.listingDescription}
-                </p>{" "}
-                <br />
                 <div className="details">
-                  Beds: {this.state.listingBeds} <br />
-                  Baths: {this.state.listingBaths} <br />
-                  Max Guests: {this.state.listingMaxPeople} <br />
-                  Price: ${this.state.listingPrice.toFixed(2)}/Night
+                  <div className="listing-info-container">
+                    <div className="listing-info">
+                      <PermIdentityIcon className="listing-info-icon" />
+                      <h2>
+                        {this.state.listingMaxPeople} Guest
+                        {this.state.listingMaxPeople > 1 ? "s" : ""}
+                      </h2>
+                    </div>
+                    <div className="listing-info">
+                      <img src={bed} alt="bed" className="listing-info-icon" />
+                      <h2>
+                        {this.state.listingBeds} Bed
+                        {this.state.listingBeds > 1 ? "s" : ""}
+                      </h2>
+                    </div>
+                    <div className="listing-info">
+                      <img
+                        src={bath}
+                        alt="bath"
+                        className="listing-info-icon"
+                      />
+                      <h2>
+                        {this.state.listingBaths} Bath
+                        {this.state.listingBaths > 1 ? "s" : ""}
+                      </h2>
+                    </div>
+                  </div>
                   <div className="spacer_xs"></div>
                   {this.props.userSession ? (
-                    <>
+                    <div className="listing-contact">
+                      <div className="listing-contact-info">
+                        <img src={defaultProfile} alt="profile" />
+                        {this.state.listingUserName && (
+                          <h2>{this.state.listingUserName.name}</h2>
+                        )}
+                      </div>
                       <a href={`mailto:${this.state.hostEmail}`}>
                         <button
                           className="listing-button btn green"
@@ -387,10 +421,18 @@ class ListingPage extends Component {
                           Contact Host{" "}
                         </button>
                       </a>{" "}
-                    </>
+                    </div>
                   ) : null}
                 </div>
-                <h5 className="listing-location">
+                <h4 className="listing-subtitle">Details</h4>
+                <p className="listing-description">
+                  {this.state.listingDescription}
+                </p>{" "}
+                <br />
+                <div className="listing-location"></div>
+                <h4 className="listing-subtitle">Location</h4>
+                <h5 className="listing-location-text">
+                  <LocationOnIcon className="listing-location-icon" />
                   {this.state.listingLocation}
                 </h5>{" "}
                 <div className="listing-divider"></div>
@@ -423,6 +465,9 @@ class ListingPage extends Component {
                   inputProps={{ required: true }}
                 />
                 <div className="spacer_xs"></div>
+                <h2 className="listing-price">
+                  <span>${this.state.listingPrice.toFixed(2)}</span> / night
+                </h2>
                 <div className="reserve-now">
                   {this.state.from && this.state.to ? (
                     // && !lessThanFourDays
@@ -440,7 +485,7 @@ class ListingPage extends Component {
                 </div>
               </div>
             </div>
-            {/* {this.props.review ? (
+            {this.props.review ? (
               <>
                 <form onSubmit={this.handleReviewSubmit}>
                   <StarRatings
@@ -463,7 +508,7 @@ class ListingPage extends Component {
                   </button>
                 </form>
               </>
-            ) : null} */}
+            ) : null}
           </div>
         )}
       </div>
