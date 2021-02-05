@@ -145,7 +145,7 @@ const Navbar = (props) => {
                     onClick={() => setDropdownActive(!dropdownActive)}
                     className="profile-dropdown button button-outline-primary"
                     to="/MyAccount"
-                    activeClassName="nav-active"
+                    activeclassname="nav-active"
                   >
                     Profile
                     <ArrowDropDownIcon className="dropdown-icon" />
