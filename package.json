@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.21.1",
     "connected-react-router": "^6.8.0",
+    "google-map-react": "^2.1.9",
     "ical": "^0.8.0",
     "react": "^16.13.1",
     "react-day-picker": "^7.4.8",

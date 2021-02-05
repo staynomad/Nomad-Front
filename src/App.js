@@ -24,7 +24,8 @@ import ActivateReservation from "./components/reservations/activateReservation.c
 import ReviewPopup from "./components/review/reviewModal.component";
 import CalendarImportInfo from "./components/subpages/calendarImportInfo.component.js";
 import PageNotFound from "./components/subpages/404.component";
-import About from "./components/subpages/about.component"
+import About from "./components/subpages/about.component";
+import ListingMap from "./components/map/maps.component";
 import "./App.css";
 
 //to add more items just copy the format and add the route path. look at navbar component to see where the path is currently set to
@@ -46,6 +47,7 @@ function App() {
             <Route path="/SignUp" exact component={Signup} />
             <Route path="/CreateListing" exact component={CreateListing} />
             <Route path="/Matches" exact component={Matches} history={history} />
+            <Route path="/Map" exact component={ListingMap} />
             <Route path="/MyAccount" exact component={() => <MyAccount setReviewModal={setReviewModal} setReviewListingId={setReviewListingId} />} />
             <Route path="/Questionnaire" exact component={Questionnaire} />
             <Route path="/Listing/:id" exact component={() => <ListingPage review={false} />} />

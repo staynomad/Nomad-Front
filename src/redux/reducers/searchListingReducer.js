@@ -2,7 +2,8 @@ import {
     DELETE_LISTING,
     SET_SEARCH_LISTINGS,
     SET_USER_LISTINGS,
-    SET_EDIT_LISTING
+    SET_EDIT_LISTING,
+    SET_MAP_LISTINGS
 } from '../actions/searchListingActions';
 
 export default function reducer(state = {}, action) {
@@ -29,6 +30,12 @@ export default function reducer(state = {}, action) {
             return {
                 ...state,
                 editListing: action.listing,
+            }
+        }
+        case SET_MAP_LISTINGS: {
+            return {
+                ...state,
+                mapListings: action.listings,
             }
         }
         default: return state;
