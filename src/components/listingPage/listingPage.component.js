@@ -482,7 +482,7 @@ class ListingPage extends Component {
                         return (
                           <div className="amenities-div">
                             <img src={imagepath} />
-                            <h1>{amenity}</h1>
+                            <h1 className="amenities-title">{amenity}</h1>
                           </div>
                         );
                       })}
@@ -534,12 +534,13 @@ class ListingPage extends Component {
                     this.state.isLoading ? (
                       <div id="spinner"></div>
                     ) : (
-                      <input
+                      <button
                         className="listing-button btn green"
                         type="button"
-                        value="Book Now"
                         onClick={this.handleSessionRedirect}
-                      />
+                      >
+                        Book Now
+                      </button>
                     )
                   ) : null}
                 </div>
