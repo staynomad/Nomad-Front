@@ -19,6 +19,8 @@ import {
 
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
+import StarIcon from "@material-ui/icons/Star";
 
 const stripePublicKey =
   "pk_test_51HqRrRImBKNBYsooNTOTLagbqd8QUGaK6BeGwy6k2pQAJxkFF7NRwTT3ksBwyGVmq8UqhNVvKQS7Vlb69acFFCvq00hxgBuZhh";
@@ -84,12 +86,14 @@ class ListingPage extends Component {
           listingUser: res.data.listing.userId,
           listingPictures: res.data.listing.pictures,
           listingAmenities: res.data.listing.amenities,
+          listingRatings: res.data.listing.rating,
           isActive: res.data.listing.active,
         });
         let pictures = [];
         for (let i = 0; i < this.state.listingPictures.length; i++) {
           pictures.push({
             original: String(this.state.listingPictures[i]),
+            thumbnail: String(this.state.listingPictures[i]),
           });
         }
         this.setState({
@@ -284,7 +288,24 @@ class ListingPage extends Component {
     //   parseInt((this.state.to - this.state.from) / (1000 * 3600 * 24)) + 1 < 4
     //     ? true
     //     : false;
-    console.log(this.state);
+    const getRating = () => {
+      let n = Object.keys(this.state.listingRatings).length;
+      let average = 0;
+      const stars = [];
+      for (let props in this.state.listingRatings) {
+        average = average + this.state.listingRatings[props].stars / n;
+      }
+      for (let i = 1; i <= 5; i++) {
+        if (i <= average) {
+          stars.push(<StarIcon className="star-icon" />);
+        } else {
+          stars.push(<StarBorderIcon className="star-icon" />);
+        }
+      }
+      stars.push(<p className="rating-number">({n})</p>);
+      return stars;
+    };
+
     return (
       <div className="individual-listing-container">
         {!this.state.listingPictures ? (
@@ -293,7 +314,7 @@ class ListingPage extends Component {
           <div>
             <ImageGallery
               items={this.state.listingPictures}
-              showThumbnails={false}
+              showThumbnails={true}
               showPlayButton={false}
               showBullets={true}
               showFullscreenButton={false}
@@ -329,88 +350,97 @@ class ListingPage extends Component {
                 );
               }}
             />
-            <div className="spacer_s"></div>
-            <div className="listing-details">
-              {!this.state.isActive ? (
-                <div>
-                  <h2 className="listing-title">
-                    [DRAFT] {this.state.listingTitle}
-                  </h2>
-                  <div>This listing is not viewable to the public.</div>
-                </div>
-              ) : (
-                <h2 className="listing-title">{this.state.listingTitle}</h2>
-              )}
-              <h5 className="listing-location">{this.state.listingLocation}</h5>{" "}
-              <br />
-              <p className="listing-description">
-                {this.state.listingDescription}
-              </p>{" "}
-              <br />
-              <div className="details">
-                Beds: {this.state.listingBeds} <br />
-                Baths: {this.state.listingBaths} <br />
-                Max Guests: {this.state.listingMaxPeople} <br />
-                Price: ${this.state.listingPrice.toFixed(2)}/Night
-                <div className="spacer_xs"></div>
-                {this.props.userSession ? (
-                  <>
-                    <a href={`mailto:${this.state.hostEmail}`}>
-                      <button className="btn green" type="button">
-                        {" "}
-                        Contact Host{" "}
-                      </button>
-                    </a>{" "}
-                  </>
-                ) : null}
-                <div className="spacer_xxl"></div>
-              </div>
-            </div>
-            <div className="listing-calendar">
-              <div className="spacer_xs"></div>
-              <div style={{ alignText: "center" }}>
-                {this.state.outOfRange ? (
-                  "Selected day is not available."
-                ) : (
-                  // lessThanFourDays ? (
-                  //   "Minimum 4 days required"
-                  // ) :
+            <div className="details-container">
+              <div className="listing-details">
+                {!this.state.isActive ? (
                   <div>
-                    {!from && !to && "Please select the first day."}
-                    {from && !to && "Please select the last day."}
-                    {from &&
-                      to &&
-                      `From ${from.toLocaleDateString()} to
-                    ${to.toLocaleDateString()}`}{" "}
+                    <h2 className="listing-title">
+                      [DRAFT] {this.state.listingTitle}
+                    </h2>
+                    <div>This listing is not viewable to the public.</div>
                   </div>
+                ) : (
+                  <h2 className="listing-title">{this.state.listingTitle}</h2>
                 )}
+                {this.state.listingRatings && (
+                  <div className="rating-container">{getRating()}</div>
+                )}
+                <br />
+                <p className="listing-description">
+                  {this.state.listingDescription}
+                </p>{" "}
+                <br />
+                <div className="details">
+                  Beds: {this.state.listingBeds} <br />
+                  Baths: {this.state.listingBaths} <br />
+                  Max Guests: {this.state.listingMaxPeople} <br />
+                  Price: ${this.state.listingPrice.toFixed(2)}/Night
+                  <div className="spacer_xs"></div>
+                  {this.props.userSession ? (
+                    <>
+                      <a href={`mailto:${this.state.hostEmail}`}>
+                        <button
+                          className="listing-button btn green"
+                          type="button"
+                        >
+                          {" "}
+                          Contact Host{" "}
+                        </button>
+                      </a>{" "}
+                    </>
+                  ) : null}
+                </div>
+                <h5 className="listing-location">
+                  {this.state.listingLocation}
+                </h5>{" "}
+                <div className="listing-divider"></div>
               </div>
-              <DayPicker
-                className="Selectable"
-                selectedDays={[from, { from, to }]}
-                modifiers={modifiers}
-                onDayClick={this.handleDayClick}
-                disabledDays={this.state.listingBookedDays}
-                inputProps={{ required: true }}
-              />
-              <div className="spacer_xs"></div>
-              <div className="reserve-now">
-                {this.state.from && this.state.to ? (
-                  // && !lessThanFourDays
-                  this.state.isLoading ? (
-                    <div id="spinner"></div>
+              <div className="listing-calendar">
+                <div className="spacer_xs"></div>
+                <div style={{ alignText: "center" }}>
+                  {this.state.outOfRange ? (
+                    "Selected day is not available."
                   ) : (
-                    <input
-                      className="btn green"
-                      type="button"
-                      value="reserve now"
-                      onClick={this.handleSessionRedirect}
-                    />
-                  )
-                ) : null}
+                    // lessThanFourDays ? (
+                    //   "Minimum 4 days required"
+                    // ) :
+                    <div>
+                      {!from && !to && "Please select the first day."}
+                      {from && !to && "Please select the last day."}
+                      {from &&
+                        to &&
+                        `From ${from.toLocaleDateString()} to
+                    ${to.toLocaleDateString()}`}{" "}
+                    </div>
+                  )}
+                </div>
+                <DayPicker
+                  className="Selectable"
+                  selectedDays={[from, { from, to }]}
+                  modifiers={modifiers}
+                  onDayClick={this.handleDayClick}
+                  disabledDays={this.state.listingBookedDays}
+                  inputProps={{ required: true }}
+                />
+                <div className="spacer_xs"></div>
+                <div className="reserve-now">
+                  {this.state.from && this.state.to ? (
+                    // && !lessThanFourDays
+                    this.state.isLoading ? (
+                      <div id="spinner"></div>
+                    ) : (
+                      <input
+                        className="listing-button btn green"
+                        type="button"
+                        value="Book Now"
+                        onClick={this.handleSessionRedirect}
+                      />
+                    )
+                  ) : null}
+                </div>
               </div>
             </div>
-            {this.props.review ? (
+            {/* {this.props.review ? (
               <>
                 <form onSubmit={this.handleReviewSubmit}>
                   <StarRatings
@@ -433,7 +463,7 @@ class ListingPage extends Component {
                   </button>
                 </form>
               </>
-            ) : null}
+            ) : null} */}
           </div>
         )}
       </div>
