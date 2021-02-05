@@ -4,7 +4,8 @@
   margin-top: 8% !important;
 }
 
-.Selectable .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
+.Selectable
+  .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
   background-color: #f0f8ff !important;
   color: #4a90e2;
 }
@@ -70,11 +71,89 @@
 }
 
 .Mui-selected {
-  background-color: #10B68B !important;
+  background-color: #10b68b !important;
   color: white !important;
 }
 
 .MuiPaginationItem-page:hover {
-  background-color: #10B68B !important;
+  background-color: #10b68b !important;
   color: white !important;
+}
+
+.individual-listing-container {
+  max-width: 964px;
+  margin: 0 auto;
+  margin-top: 8rem;
+}
+
+@media screen and (max-width: 1015px) {
+  .individual-listing-container {
+    width: 95%;
+  }
+}
+@media screen and (max-width: 768px) {
+  .individual-listing-container {
+    margin-top: 6rem;
+  }
+}
+
+.image-gallery-image {
+  max-height: 43rem !important;
+}
+
+@media screen and (max-width: 990px) {
+  .image-gallery-image {
+    width: 95% !important;
+  }
+}
+
+.image-gallery-left-nav,
+.image-gallery-right-nav {
+  padding: 0;
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+  background: var(--color-green);
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 800px) {
+  .image-gallery-left-nav,
+  .image-gallery-right-nav {
+    height: 40px;
+    width: 40px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .image-gallery-arrow-icon {
+    width: 25px !important;
+    height: 25px !important;
+  }
+}
+
+.image-gallery-arrow-icon:hover {
+  transform: scale(1.1);
+  color: inherit;
+}
+
+.image-gallery-icon {
+  filter: none;
+}
+
+.image-gallery-icon:hover {
+  color: white;
+}
+
+.image-gallery-bullet {
+  background: #c4c4c4 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.image-gallery-bullet.active {
+  background: var(--color-green) !important;
 }
