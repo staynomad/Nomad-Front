@@ -21,8 +21,6 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import StarIcon from "@material-ui/icons/Star";
 import PermIdentityIcon from "@material-ui/icons/PermIdentity";
-import bath from "../../../src/assets/svg/bath.svg";
-import bed from "../../../src/assets/svg/bed.svg";
 import defaultProfile from "../../../src/assets/img/default-profile.png";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 
@@ -385,7 +383,11 @@ class ListingPage extends Component {
                       </h2>
                     </div>
                     <div className="listing-info">
-                      <img src={bed} alt="bed" className="listing-info-icon" />
+                      <img
+                        src="/images/bed.svg"
+                        alt="bed"
+                        className="listing-info-icon"
+                      />
                       <h2>
                         {this.state.listingBeds} Bed
                         {this.state.listingBeds > 1 ? "s" : ""}
@@ -393,7 +395,7 @@ class ListingPage extends Component {
                     </div>
                     <div className="listing-info">
                       <img
-                        src={bath}
+                        src="/images/bath.svg"
                         alt="bath"
                         className="listing-info-icon"
                       />
@@ -429,6 +431,64 @@ class ListingPage extends Component {
                   {this.state.listingDescription}
                 </p>{" "}
                 <br />
+                {this.state.listingAmenities.length > 0 && (
+                  <div className="listing-amenities">
+                    <h4 className="listing-subtitle">Amenities</h4>
+                    <div className="listing-amenities-container">
+                      {this.state.listingAmenities.map((amenity) => {
+                        let imagepath;
+                        switch (amenity) {
+                          case "TV": {
+                            imagepath = "/images/amenities/TV_.svg";
+                            break;
+                          }
+                          case "Kitchen": {
+                            imagepath = "/images/amenities/Kitchen_.svg";
+                            break;
+                          }
+                          case "Wifi": {
+                            imagepath = "/images/amenities/Wifi_.svg";
+                            break;
+                          }
+                          case "Heating": {
+                            imagepath = "/images/amenities/Heating_.svg";
+                            break;
+                          }
+                          case "Kitchen": {
+                            imagepath = "/images/amenities/Kitchen_.svg";
+                            break;
+                          }
+                          case "Pool": {
+                            imagepath = "/images/amenities/Pool_.svg";
+                            break;
+                          }
+                          case "Towels": {
+                            imagepath = "/images/amenities/Towels_.svg";
+                            break;
+                          }
+                          case "Hair dryer": {
+                            imagepath = "/images/amenities/Hairdryer_.svg";
+                            break;
+                          }
+                          case "Heat": {
+                            imagepath = "/images/amenities/Heating_.svg";
+                            break;
+                          }
+                          case "AC": {
+                            imagepath = "/images/amenities/ac_.svg";
+                            break;
+                          }
+                        }
+                        return (
+                          <div className="amenities-div">
+                            <img src={imagepath} />
+                            <h1>{amenity}</h1>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
                 <div className="listing-location"></div>
                 <h4 className="listing-subtitle">Location</h4>
                 <h5 className="listing-location-text">
