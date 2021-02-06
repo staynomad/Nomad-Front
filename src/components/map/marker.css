@@ -1,0 +1,26 @@
+.marker, .marker-active {
+    background-color: rgba(255,255,255, 0.7);
+    border: 1px solid #00B183;
+    border-radius: 10%;
+    position: absolute;
+    width: 48px;
+    height: 24px;
+    transition: all 0.2s ease-in-out;
+    user-select: none;
+}
+
+.marker:hover {
+    cursor: pointer;
+    transform: scale(1.25);
+}
+
+.marker-active {
+    background-color: rgba(0,0,0, 0.7);
+    color: white;
+}
+
+.marker-text {
+    font-weight: 900;
+    height: 100%;
+    vertical-align: middle;
+}

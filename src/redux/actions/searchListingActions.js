@@ -2,6 +2,7 @@ import handleReq from "../../utils/fetchRequest.js";
 import { setLoadingTrue, setLoadingFalse } from "./loadingActions";
 
 /* Types */
+export const SET_MAP_LISTINGS = 'VHomes/listings/SET_MAP_LISTINGS';
 export const SET_SEARCH_LISTINGS = 'VHomes/listings/SET_SEARCH_LISTINGS';
 export const SET_USER_LISTINGS = 'VHomes/listings/SET_USER_LISTINGS';
 export const DELETE_LISTING = 'VHomes/listings/DELETE_LISTING';
@@ -10,8 +11,9 @@ export const SET_EDIT_LISTING = 'VHomes/listings/SET_EDIT_LISTING';
 /* Actions */
 const setSearchListings = listings => ({ type: SET_SEARCH_LISTINGS, listings });
 const setUserListings = listings => ({ type: SET_USER_LISTINGS, listings });
-const deleteListing = listingId => ({ type: DELETE_LISTING, listingId })
-const setEditListing = listing => ({ type: SET_EDIT_LISTING, listing })
+const deleteListing = listingId => ({ type: DELETE_LISTING, listingId });
+const setEditListing = listing => ({ type: SET_EDIT_LISTING, listing });
+const setMapListings = listings => ({ type: SET_MAP_LISTINGS, listings });
 
 /* Fetch Calls */
 export const searchForListings = (itemToSearch) => async dispatch => {
@@ -75,3 +77,20 @@ export const deleteListingById = (token, listingId) => async dispatch => {
         dispatch(deleteListing(listingId));
     };
 };
+
+export const getListingInRadius = (lat, lng, radius) => async dispatch => {
+    // Radius in miles -> converting to km
+    const radiusInKilometers = radius * 1.609344;
+    const locationData = {
+        lat,
+        lng,
+        radiusInKilometers
+    };
+
+    const searchListingRes = await handleReq(`/listings/byRadius`, "GET", undefined, undefined, locationData)
+
+    if (searchListingRes.status === 200) {
+        const { listingsInRadius } = await searchListingRes.data;
+        dispatch(setMapListings(listingsInRadius));
+    };
+}

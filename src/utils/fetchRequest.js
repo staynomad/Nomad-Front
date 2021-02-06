@@ -5,7 +5,7 @@ import { store } from '../index';
 const production = process.env.NODE_ENV === "production";
 const apiBaseUrl = production ? 'https://nvestup.com' : 'http://localhost:8080';
 
-export default async function handleReq(endpoint, methodType, customHeaders, data) {
+export default async function handleReq(endpoint, methodType, customHeaders, data, params) {
   let token = null;
   let curLoginState = store.getState().Login.userInfo;
   if (curLoginState && curLoginState.session) token = curLoginState.session.token;
@@ -22,6 +22,7 @@ export default async function handleReq(endpoint, methodType, customHeaders, dat
       headers: customHeaders,
       redirect: "follow",
       data: data,
+      params: params,
     });
 
     return res;
