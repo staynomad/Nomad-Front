@@ -128,14 +128,14 @@ const Navbar = (props) => {
             >
               Explore
             </NavLink>
-            <NavLink
+            {/*<NavLink
               className="nav-item"
               style={{ fontSize: "1.5rem" }}
               to="/Map"
               activeClassName="nav-active"
             >
               Map
-            </NavLink>
+            </NavLink>*/}
             <NavLink
               className="nav-item"
               style={{ fontSize: "1.5rem" }}
