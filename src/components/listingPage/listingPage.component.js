@@ -129,7 +129,7 @@ class ListingPage extends Component {
         );
       })
       .catch((err) => {
-        console.log(err.response);
+        // console.log(err.response);
       });
   }
 
@@ -338,7 +338,7 @@ class ListingPage extends Component {
                     "Selected day is not available."
                   ) : // lessThanFourDays ? (
                     //   "Minimum 4 days required"
-                    // ) : 
+                    // ) :
                     (
                       <div>
                         {!from && !to && "Please select the first day."}

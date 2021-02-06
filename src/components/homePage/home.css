@@ -48,6 +48,14 @@
   cursor: pointer;
 }
 
+@media screen and (max-width: 372px) {
+  .booknowbutton {
+    font-size: 16px !important;
+    height: 40px;
+    width: 90px;
+  }
+}
+
 .book-header-container {
   display: flex;
 }
@@ -74,7 +82,7 @@
   padding-left: 15px;
 }
 
-@media screen and (max-width: 360px) {
+@media screen and (max-width: 372px) {
   .inputtextbox {
     font-size: 16px;
     width: 300px;
