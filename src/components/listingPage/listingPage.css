@@ -32,6 +32,10 @@
   text-align: left !important;
 }
 
+.listing-location {
+  margin: 2rem 0rem;
+}
+
 .listing-location-text {
   font-size: 16px !important;
   font-weight: bold !important;
@@ -168,6 +172,7 @@
 
 .image-gallery-thumbnail {
   width: 10rem;
+  cursor: pointer;
 }
 .image-gallery-thumbnail-image {
   height: 6rem;
@@ -301,7 +306,7 @@
 }
 
 .listing-contact-info h2 {
-  color: black !important;
+  color: #373737 !important;
   font-size: 1.2rem !important;
 }
 
@@ -338,6 +343,54 @@
 .amenities-div img {
   width: 2.5rem;
   height: 3rem;
+}
+
+.rating-no-reviews {
+  text-align: left !important;
+  font-size: 16px !important;
+  color: #373737 !important;
+}
+
+.listing-reviews-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-top: 2rem;
+}
+
+.listing-reviews-container h4 {
+  margin-bottom: 0rem !important;
+}
+
+.listing-review {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+  background-color: var(--color-green);
+}
+.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside):hover {
+  background-color: var(--color-darkgreen);
+}
+
+.Selectable
+  .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
+  color: var(--color-darkgreen);
+  font-weight: bold;
+}
+
+.Selectable
+  .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
+  background-color: #e1f5e1 !important;
+}
+
+.DayPicker:not(.DayPicker--interactionDisabled)
+  .DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
+  background-color: #e1f5e1 !important;
 }
 
 @media screen and (max-width: 820px) {

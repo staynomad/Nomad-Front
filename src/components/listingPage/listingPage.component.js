@@ -92,6 +92,7 @@ class ListingPage extends Component {
           listingId: res.data.listing.userId,
           isActive: res.data.listing.active,
         });
+
         let pictures = [];
         for (let i = 0; i < this.state.listingPictures.length; i++) {
           pictures.push({
@@ -99,6 +100,7 @@ class ListingPage extends Component {
             thumbnail: String(this.state.listingPictures[i]),
           });
         }
+
         this.setState({
           listingPictures: pictures,
         });
@@ -138,7 +140,7 @@ class ListingPage extends Component {
             isLoading: false,
           })
         );
-
+        //get host's name from their userId
         const userId = this.state.listingId;
         app.get(`/user/getUserInfo/${userId}`).then((res) => {
           this.setState({ listingUserName: res.data });
@@ -296,7 +298,8 @@ class ListingPage extends Component {
     //   parseInt((this.state.to - this.state.from) / (1000 * 3600 * 24)) + 1 < 4
     //     ? true
     //     : false;
-    const getRating = () => {
+
+    const getStars = () => {
       let n = Object.keys(this.state.listingRatings).length;
       let average = 0;
       const stars = [];
@@ -370,8 +373,10 @@ class ListingPage extends Component {
                 ) : (
                   <h2 className="listing-title">{this.state.listingTitle}</h2>
                 )}
-                {this.state.listingRatings && (
-                  <div className="rating-container">{getRating()}</div>
+                {this.state.listingRatings ? (
+                  <div className="rating-container">{getStars()}</div>
+                ) : (
+                  <h2 className="rating-no-reviews">No reviews yet</h2>
                 )}
                 <div className="details">
                   <div className="listing-info-container">
@@ -425,6 +430,13 @@ class ListingPage extends Component {
                       </a>{" "}
                     </div>
                   ) : null}
+                </div>
+                <div className="listing-location">
+                  <h4 className="listing-subtitle">Location</h4>
+                  <h5 className="listing-location-text">
+                    <LocationOnIcon className="listing-location-icon" />
+                    {this.state.listingLocation}
+                  </h5>
                 </div>
                 <h4 className="listing-subtitle">Details</h4>
                 <p className="listing-description">
@@ -489,12 +501,37 @@ class ListingPage extends Component {
                     </div>
                   </div>
                 )}
-                <div className="listing-location"></div>
-                <h4 className="listing-subtitle">Location</h4>
-                <h5 className="listing-location-text">
-                  <LocationOnIcon className="listing-location-icon" />
-                  {this.state.listingLocation}
-                </h5>{" "}
+                {this.state.listingRatings && (
+                  <div className="listing-reviews-container">
+                    <h4 className="listing-subtitle">Reviews</h4>
+                    {Object.keys(this.state.listingRatings).map(([key]) => {
+                      //Check if the review has a message
+                      if (this.state.listingRatings[key].review) {
+                        const rating = [];
+                        for (let i = 1; i <= 5; i++) {
+                          if (i <= this.state.listingRatings[key].stars) {
+                            rating.push(
+                              <StarIcon className="star-icon" alt={i} />
+                            );
+                          } else {
+                            rating.push(
+                              <StarBorderIcon className="star-icon" alt={i} />
+                            );
+                          }
+                        }
+
+                        return (
+                          <div className="listing-review">
+                            <div> {rating}</div>
+                            {this.state.listingRatings[key].review}
+                          </div>
+                        );
+                      } else {
+                        return;
+                      }
+                    })}
+                  </div>
+                )}
                 <div className="listing-divider"></div>
               </div>
               <div className="listing-calendar">
