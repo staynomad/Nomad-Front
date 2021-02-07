@@ -554,10 +554,29 @@ footer {
   padding-top: 20px;
 }
 
-.footer-social-media img {
+.footer-social-media {
+  display: flex;
+  justify-content: center;
+}
+
+.footer-icon-circle {
+  margin: 0 10px;
   width: 50px;
-  margin-left: 10px;
-  margin-right: 10px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-icon-circle:hover {
+  background: #009c73;
+}
+
+.footer-icon {
+  width: 20px;
+  height: 20px;
 }
 
 @media screen and (max-width: 768px) {
