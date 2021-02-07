@@ -454,10 +454,6 @@ class ListingPage extends Component {
                             imagepath = "/images/amenities/TV_.svg";
                             break;
                           }
-                          case "Kitchen": {
-                            imagepath = "/images/amenities/Kitchen_.svg";
-                            break;
-                          }
                           case "Wifi": {
                             imagepath = "/images/amenities/Wifi_.svg";
                             break;
@@ -490,10 +486,13 @@ class ListingPage extends Component {
                             imagepath = "/images/amenities/ac_.svg";
                             break;
                           }
+                          default: {
+                            return null;
+                          }
                         }
                         return (
                           <div className="amenities-div">
-                            <img src={imagepath} />
+                            <img alt="amenity" src={imagepath} />
                             <h1 className="amenities-title">{amenity}</h1>
                           </div>
                         );
@@ -527,7 +526,7 @@ class ListingPage extends Component {
                           </div>
                         );
                       } else {
-                        return;
+                        return null;
                       }
                     })}
                   </div>
