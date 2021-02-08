@@ -18,9 +18,13 @@ const Navbar = (props) => {
     if (mobileNav) {
       document.body.style.overflow = "hidden";
       document.body.style.position = "relative";
+      document.getElementsByTagName("HTML")[0].style.overflow = "hidden";
+      document.getElementsByTagName("HTML")[0].style.position = "relative";
     } else {
       document.body.style.overflow = "unset";
       document.body.style.position = "static";
+      document.getElementsByTagName("HTML")[0].style.overflow = "unset";
+      document.getElementsByTagName("HTML")[0].style.position = "static";
     }
   }, [mobileNav]);
 
