@@ -168,15 +168,16 @@ class ListingPage extends Component {
       1,
       JSON.stringify(this.state.to).indexOf("T")
     );
+    const resDays =
+      parseInt((this.state.to - this.state.from) / (1000 * 3600 * 24)) + 1;
     const data = {
       user: this.props.userSession.userId, // get userId from redux store
       listing: this.props.match.params.id,
       days: [selectedStartDay, selectedEndDay],
+      numDays: resDays,
     };
 
     const stripe = await stripePromise;
-    const resDays =
-      parseInt((this.state.to - this.state.from) / (1000 * 3600 * 24)) + 1;
     const listingId = data.listing;
     let body = {
       listingId: listingId,
@@ -222,7 +223,7 @@ class ListingPage extends Component {
         }
       }
     } catch (e) {
-      console.log(e.response.data.errors);
+      // console.log(e.response.data.errors);
       console.log(e);
       this.setState({
         isLoading: false,
