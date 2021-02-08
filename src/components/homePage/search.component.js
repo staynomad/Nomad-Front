@@ -8,7 +8,7 @@ const Search = (props) => {
   const handleSearch = (event) => {
     event.preventDefault();
     history.push(`/matches?${itemToSearch}`);
-    setItemToSearch("");
+    setItemToSearch(itemToSearch);
   };
 
   return (
