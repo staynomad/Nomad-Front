@@ -228,7 +228,7 @@ class ListingPage extends Component {
       this.setState({
         isLoading: false,
       });
-      // alert(e.response.data.errors); //response.data
+      alert(e.response.data.errors); //response.data
     }
   }
 
