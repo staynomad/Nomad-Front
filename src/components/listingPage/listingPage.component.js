@@ -16,6 +16,13 @@ import {
   getCalendarURL,
   importCalendar,
 } from "../../redux/actions/calendarSyncActions";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
+import StarIcon from "@material-ui/icons/Star";
+import PermIdentityIcon from "@material-ui/icons/PermIdentity";
+import defaultProfile from "../../../src/assets/img/default-profile.png";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
 
 const stripePublicKey =
   "pk_test_51HqRrRImBKNBYsooNTOTLagbqd8QUGaK6BeGwy6k2pQAJxkFF7NRwTT3ksBwyGVmq8UqhNVvKQS7Vlb69acFFCvq00hxgBuZhh";
@@ -80,14 +87,20 @@ class ListingPage extends Component {
           listingEndDate: res.data.listing.available[1],
           listingUser: res.data.listing.userId,
           listingPictures: res.data.listing.pictures,
+          listingAmenities: res.data.listing.amenities,
+          listingRatings: res.data.listing.rating,
+          listingId: res.data.listing.userId,
           isActive: res.data.listing.active,
         });
+
         let pictures = [];
         for (let i = 0; i < this.state.listingPictures.length; i++) {
           pictures.push({
             original: String(this.state.listingPictures[i]),
+            thumbnail: String(this.state.listingPictures[i]),
           });
         }
+
         this.setState({
           listingPictures: pictures,
         });
@@ -127,6 +140,11 @@ class ListingPage extends Component {
             isLoading: false,
           })
         );
+        //get host's name from their userId
+        const userId = this.state.listingId;
+        app.get(`/user/getUserInfo/${userId}`).then((res) => {
+          this.setState({ listingUserName: res.data });
+        });
       })
       .catch((err) => {
         // console.log(err.response);
@@ -281,74 +299,258 @@ class ListingPage extends Component {
     //     ? true
     //     : false;
 
+    const getStars = () => {
+      let n = Object.keys(this.state.listingRatings).length;
+      let average = 0;
+      const stars = [];
+      for (let props in this.state.listingRatings) {
+        average = average + this.state.listingRatings[props].stars / n;
+      }
+      for (let i = 1; i <= 5; i++) {
+        if (i <= average) {
+          stars.push(<StarIcon className="star-icon" alt={i} />);
+        } else {
+          stars.push(<StarBorderIcon className="star-icon" alt={i} />);
+        }
+      }
+      stars.push(<p className="rating-number">({n})</p>);
+      return stars;
+    };
+
     return (
-      <div className="container_s">
+      <div className="individual-listing-container">
         {!this.state.listingPictures ? (
           <div id="spinner"></div>
         ) : (
-            <div>
-              {!this.state.isActive ? (
-                <div>
-                  <h2 className="listing-title">
-                    [DRAFT] {this.state.listingTitle}
-                  </h2>
-                  <div>This listing is not viewable to the public.</div>
-                </div>
-              ) : (
+          <div>
+            <ImageGallery
+              items={this.state.listingPictures}
+              showThumbnails={true}
+              showPlayButton={false}
+              showBullets={true}
+              showFullscreenButton={false}
+              bulletClass="image-gallery-bullet"
+              onErrorImageURL={"/images/default_listing.jpg"}
+              originalAlt={`${this.state.listingTitle}`}
+              renderLeftNav={(onClick, disabled) => {
+                return (
+                  <button
+                    disabled={disabled}
+                    onClick={onClick}
+                    className="image-gallery-left-nav image-gallery-icon"
+                  >
+                    <ArrowBackIcon
+                      style={{ width: 40, height: 40 }}
+                      className="image-gallery-arrow-icon"
+                    />
+                  </button>
+                );
+              }}
+              renderRightNav={(onClick, disabled) => {
+                return (
+                  <button
+                    disabled={disabled}
+                    onClick={onClick}
+                    className="image-gallery-right-nav image-gallery-icon"
+                  >
+                    <ArrowForwardIcon
+                      style={{ width: 40, height: 40 }}
+                      className="image-gallery-arrow-icon"
+                    />
+                  </button>
+                );
+              }}
+            />
+            <div className="details-container">
+              <div className="listing-details">
+                {!this.state.isActive ? (
+                  <div>
+                    <h2 className="listing-title">
+                      [DRAFT] {this.state.listingTitle}
+                    </h2>
+                    <div>This listing is not viewable to the public.</div>
+                  </div>
+                ) : (
                   <h2 className="listing-title">{this.state.listingTitle}</h2>
                 )}
-              <h5 className="listing-location">{this.state.listingLocation}</h5>{" "}
-              <br />
-              <ImageGallery
-                items={this.state.listingPictures}
-                showThumbnails={false}
-                showPlayButton={false}
-                onErrorImageURL={"/images/default_listing.jpg"}
-                originalAlt={`${this.state.listingTitle}`}
-              />
-              <div className="spacer_s"></div>
-              <div className="listing-details">
+                {this.state.listingRatings ? (
+                  <div className="rating-container">{getStars()}</div>
+                ) : (
+                  <h2 className="rating-no-reviews">No reviews yet</h2>
+                )}
+                <div className="details">
+                  <div className="listing-info-container">
+                    <div className="listing-info">
+                      <PermIdentityIcon className="listing-info-icon" />
+                      <h2>
+                        {this.state.listingMaxPeople} Guest
+                        {this.state.listingMaxPeople > 1 ? "s" : ""}
+                      </h2>
+                    </div>
+                    <div className="listing-info">
+                      <img
+                        src="/images/bed.svg"
+                        alt="bed"
+                        className="listing-info-icon"
+                      />
+                      <h2>
+                        {this.state.listingBeds} Bed
+                        {this.state.listingBeds > 1 ? "s" : ""}
+                      </h2>
+                    </div>
+                    <div className="listing-info">
+                      <img
+                        src="/images/bath.svg"
+                        alt="bath"
+                        className="listing-info-icon"
+                      />
+                      <h2>
+                        {this.state.listingBaths} Bath
+                        {this.state.listingBaths > 1 ? "s" : ""}
+                      </h2>
+                    </div>
+                  </div>
+                  <div className="spacer_xs"></div>
+                  {this.props.userSession ? (
+                    <div className="listing-contact">
+                      <div className="listing-contact-info">
+                        <img src={defaultProfile} alt="profile" />
+                        {this.state.listingUserName && (
+                          <h2>{this.state.listingUserName.name}</h2>
+                        )}
+                      </div>
+                      <a href={`mailto:${this.state.hostEmail}`}>
+                        <button
+                          className="listing-button btn green"
+                          type="button"
+                        >
+                          {" "}
+                          Contact Host{" "}
+                        </button>
+                      </a>{" "}
+                    </div>
+                  ) : null}
+                </div>
+                <div className="listing-location">
+                  <h4 className="listing-subtitle">Location</h4>
+                  <h5 className="listing-location-text">
+                    <LocationOnIcon className="listing-location-icon" />
+                    {this.state.listingLocation}
+                  </h5>
+                </div>
+                <h4 className="listing-subtitle">Details</h4>
                 <p className="listing-description">
                   {this.state.listingDescription}
                 </p>{" "}
                 <br />
-                <div className="details">
-                  Beds: {this.state.listingBeds} <br />
-                Baths: {this.state.listingBaths} <br />
-                Max Guests: {this.state.listingMaxPeople} <br />
-                Price: ${this.state.listingPrice.toFixed(2)}/Night
-                <div className="spacer_xs"></div>
-                  {this.props.userSession ? (
-                    <>
-                      <a href={`mailto:${this.state.hostEmail}`}>
-                        <button className="btn green" type="button">
-                          {" "}
-                        Contact Host{" "}
-                        </button>
-                      </a>{" "}
-                    </>
-                  ) : null}
-                  <div className="spacer_xxl"></div>
-                </div>
+                {this.state.listingAmenities.length > 0 && (
+                  <div className="listing-amenities">
+                    <h4 className="listing-subtitle">Amenities</h4>
+                    <div className="listing-amenities-container">
+                      {this.state.listingAmenities.map((amenity) => {
+                        let imagepath;
+                        switch (amenity) {
+                          case "TV": {
+                            imagepath = "/images/amenities/TV_.svg";
+                            break;
+                          }
+                          case "Wifi": {
+                            imagepath = "/images/amenities/Wifi_.svg";
+                            break;
+                          }
+                          case "Heating": {
+                            imagepath = "/images/amenities/Heating_.svg";
+                            break;
+                          }
+                          case "Kitchen": {
+                            imagepath = "/images/amenities/Kitchen_.svg";
+                            break;
+                          }
+                          case "Pool": {
+                            imagepath = "/images/amenities/Pool_.svg";
+                            break;
+                          }
+                          case "Towels": {
+                            imagepath = "/images/amenities/Towels_.svg";
+                            break;
+                          }
+                          case "Hair dryer": {
+                            imagepath = "/images/amenities/Hairdryer_.svg";
+                            break;
+                          }
+                          case "Heat": {
+                            imagepath = "/images/amenities/Heating_.svg";
+                            break;
+                          }
+                          case "AC": {
+                            imagepath = "/images/amenities/ac_.svg";
+                            break;
+                          }
+                          default: {
+                            return null;
+                          }
+                        }
+                        return (
+                          <div className="amenities-div">
+                            <img alt="amenity" src={imagepath} />
+                            <h1 className="amenities-title">{amenity}</h1>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+                {this.state.listingRatings && (
+                  <div className="listing-reviews-container">
+                    <h4 className="listing-subtitle">Reviews</h4>
+                    {Object.keys(this.state.listingRatings).map(([key]) => {
+                      //Check if the review has a message
+                      if (this.state.listingRatings[key].review) {
+                        const rating = [];
+                        for (let i = 1; i <= 5; i++) {
+                          if (i <= this.state.listingRatings[key].stars) {
+                            rating.push(
+                              <StarIcon className="star-icon" alt={i} />
+                            );
+                          } else {
+                            rating.push(
+                              <StarBorderIcon className="star-icon" alt={i} />
+                            );
+                          }
+                        }
+
+                        return (
+                          <div className="listing-review">
+                            <div> {rating}</div>
+                            {this.state.listingRatings[key].review}
+                          </div>
+                        );
+                      } else {
+                        return null;
+                      }
+                    })}
+                  </div>
+                )}
+                <div className="listing-divider"></div>
               </div>
               <div className="listing-calendar">
                 <div className="spacer_xs"></div>
                 <div style={{ alignText: "center" }}>
                   {this.state.outOfRange ? (
                     "Selected day is not available."
-                  ) : // lessThanFourDays ? (
+                  ) : (
+                    // lessThanFourDays ? (
                     //   "Minimum 4 days required"
                     // ) :
-                    (
-                      <div>
-                        {!from && !to && "Please select the first day."}
-                        {from && !to && "Please select the last day."}
-                        {from &&
-                          to &&
-                          `From ${from.toLocaleDateString()} to
+                    <div>
+                      {!from && !to && "Please select the first day."}
+                      {from && !to && "Please select the last day."}
+                      {from &&
+                        to &&
+                        `From ${from.toLocaleDateString()} to
                     ${to.toLocaleDateString()}`}{" "}
-                      </div>
-                    )}
+                    </div>
+                  )}
                 </div>
                 <DayPicker
                   className="Selectable"
@@ -359,49 +561,53 @@ class ListingPage extends Component {
                   inputProps={{ required: true }}
                 />
                 <div className="spacer_xs"></div>
+                <h2 className="listing-price">
+                  <span>${this.state.listingPrice.toFixed(2)}</span> / night
+                </h2>
                 <div className="reserve-now">
-                  {this.state.from && this.state.to
+                  {this.state.from && this.state.to ? (
                     // && !lessThanFourDays
-                    ? (
-                      this.state.isLoading ? (
-                        <div id="spinner"></div>
-                      ) : (
-                          <input
-                            className="btn green"
-                            type="button"
-                            value="reserve now"
-                            onClick={this.handleSessionRedirect}
-                          />
-                        )
-                    ) : null}
+                    this.state.isLoading ? (
+                      <div id="spinner"></div>
+                    ) : (
+                      <button
+                        className="listing-button btn green"
+                        type="button"
+                        onClick={this.handleSessionRedirect}
+                      >
+                        Book Now
+                      </button>
+                    )
+                  ) : null}
                 </div>
               </div>
-              {this.props.review ? (
-                <>
-                  <form onSubmit={this.handleReviewSubmit}>
-                    <StarRatings
-                      rating={this.state.rating}
-                      changeRating={this.handleChangeRating}
-                      starHoverColor="#00B183"
-                      starRatedColor="#00B183"
-                      name="rating"
-                    />
-                    <input
-                      type="text"
-                      name="review"
-                      placeholder="e.g. This was a great place to stay!"
-                      value={this.state.review}
-                      onChange={this.handleReviewChange}
-                      required
-                    />
-                    <button className="btn green" type="submit">
-                      Submit Review
-                  </button>
-                  </form>
-                </>
-              ) : null}
             </div>
-          )}
+            {this.props.review ? (
+              <>
+                <form onSubmit={this.handleReviewSubmit}>
+                  <StarRatings
+                    rating={this.state.rating}
+                    changeRating={this.handleChangeRating}
+                    starHoverColor="#00B183"
+                    starRatedColor="#00B183"
+                    name="rating"
+                  />
+                  <input
+                    type="text"
+                    name="review"
+                    placeholder="e.g. This was a great place to stay!"
+                    value={this.state.review}
+                    onChange={this.handleReviewChange}
+                    required
+                  />
+                  <button className="btn green" type="submit">
+                    Submit Review
+                  </button>
+                </form>
+              </>
+            ) : null}
+          </div>
+        )}
       </div>
     );
   }
