@@ -99,6 +99,7 @@ const Navbar = (props) => {
                 handleLogout();
                 setMobileNav(false);
               }}
+              href
             >
               <ExitToAppIcon className="mobile-nav-icon" />
               Logout
