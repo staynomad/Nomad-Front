@@ -105,16 +105,16 @@ const Navbar = (props) => {
             </a>
           </div>
         ) : (
-          <NavLink
-            className="mobile-nav-link"
-            onClick={() => setMobileNav(false)}
-            to="/Login"
-          >
-            {" "}
-            <AccountCircleIcon className="mobile-nav-icon" />
+            <NavLink
+              className="mobile-nav-link"
+              onClick={() => setMobileNav(false)}
+              to="/Login"
+            >
+              {" "}
+              <AccountCircleIcon className="mobile-nav-icon" />
             Login
-          </NavLink>
-        )}
+            </NavLink>
+          )}
       </div>
       <div className="nav-container">
         <div className="logo">
@@ -132,7 +132,14 @@ const Navbar = (props) => {
             >
               Explore
             </NavLink>
-
+            {/*<NavLink
+              className="nav-item"
+              style={{ fontSize: "1.5rem" }}
+              to="/Map"
+              activeClassName="nav-active"
+            >
+              Map
+            </NavLink>*/}
             <NavLink
               className="nav-item"
               style={{ fontSize: "1.5rem" }}
@@ -149,7 +156,6 @@ const Navbar = (props) => {
                     onClick={() => setDropdownActive(!dropdownActive)}
                     className="profile-dropdown button button-outline-primary"
                     to="/MyAccount"
-                    activeclassname="nav-active"
                   >
                     Profile
                     <ArrowDropDownIcon className="dropdown-icon" />
@@ -180,14 +186,14 @@ const Navbar = (props) => {
                 </div>
               </>
             ) : (
-              <NavLink
-                className="profile-dropdown button button-outline-primary"
-                to="/Login"
-                activeClassName="nav-active"
-              >
-                Login
-              </NavLink>
-            )}
+                <NavLink
+                  className="profile-dropdown button button-outline-primary"
+                  to="/Login"
+                  activeClassName="nav-active"
+                >
+                  Login
+                </NavLink>
+              )}
           </ul>
         </div>
         {!mobileNav && (

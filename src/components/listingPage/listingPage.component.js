@@ -147,7 +147,7 @@ class ListingPage extends Component {
         });
       })
       .catch((err) => {
-        console.log(err.response);
+        // console.log(err.response);
       });
   }
 

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+
 import { newListing } from "../../redux/actions/createListingActions";
 import { app } from "../../utils/axiosConfig.js";
 import DatesCL from "./datesCL.component";
@@ -21,6 +22,7 @@ import {
   incompleteForm,
   completeForm,
 } from "../../redux/actions/loadingActions";
+
 class CreateListing extends Component {
   constructor(props) {
     super(props);
@@ -76,7 +78,7 @@ class CreateListing extends Component {
   }
 
   onSaveDraft() {
-    this.onSubmit({draft: true});
+    this.onSubmit({ draft: true });
   }
 
   onSubmit() {
@@ -128,17 +130,17 @@ class CreateListing extends Component {
       booked: this.props.booked,
     };
     app.post(`/listings/createListing`, newListing, {
-        headers: {
-          Authorization: `Bearer ${this.props.userSession.token}`,
-        },
-      })
+      headers: {
+        Authorization: `Bearer ${this.props.userSession.token}`,
+      },
+    })
       .then((res) => {
         if (draft === false) {
           app.put("/listings/activateListing/" + res.data.newListing._id, null, {
-              headers: {
-                Authorization: `Bearer ${this.props.userSession.token}`,
-              },
-            })
+            headers: {
+              Authorization: `Bearer ${this.props.userSession.token}`,
+            },
+          })
             .catch(() => alert("Unable to create listing. Please try again."));
         } else {
           this.setState({
@@ -194,59 +196,59 @@ class CreateListing extends Component {
                   MyListings.
                 </div>
               ) : (
-                <div className="spacer_s">
-                  Your listing is being submitted. Thanks for choosing VHomes!
-                </div>
-              )}
+                  <div className="spacer_s">
+                    Your listing is being submitted. Thanks for choosing VHomes!
+                  </div>
+                )}
             </div>
           ) : (
-            <form>
-              {this.state.inputPage ? (
-                <div>
-                  {pageList}
+              <form>
+                {this.state.inputPage ? (
+                  <div>
+                    {pageList}
 
-                  {!this.state.nextToggle ? (
-                    <span style={{ color: "red" }}>
-                      You are missing some parts. Please fill them in to
-                      continue
-                    </span>
-                  ) : (
-                    ""
+                    {!this.state.nextToggle ? (
+                      <span style={{ color: "red" }}>
+                        You are missing some parts. Please fill them in to
+                        continue
+                      </span>
+                    ) : (
+                        ""
+                      )}
+                    <br />
+                    <input
+                      type="button"
+                      className="changebut"
+                      value="Next"
+                      onClick={this.pageToggle}
+                    />
+                  </div>
+                ) : (
+                    <div>
+                      <ConfirmSubmission />
+
+                      <input
+                        type="button"
+                        className="changebut"
+                        value="Back"
+                        onClick={this.pageToggle}
+                      />
+                      <input
+                        className="changebut"
+                        type="button"
+                        onClick={this.onSubmit}
+                        value="Submit"
+                      />
+                      <input
+                        className="changebut"
+                        type="button"
+                        onClick={this.onSaveDraft}
+                        value="Save Draft"
+                      />
+                    </div>
                   )}
-                  <br />
-                  <input
-                    type="button"
-                    className="changebut"
-                    value="Next"
-                    onClick={this.pageToggle}
-                  />
-                </div>
-              ) : (
-                <div>
-                  <ConfirmSubmission />
-
-                  <input
-                    type="button"
-                    className="changebut"
-                    value="Back"
-                    onClick={this.pageToggle}
-                  />
-                  <input
-                    className="changebut"
-                    type="button"
-                    onClick={this.onSubmit}
-                    value="Submit"
-                  />
-                  <input
-                    className="changebut"
-                    type="button"
-                    onClick={this.onSaveDraft}
-                    value="Save Draft"
-                  />
-                </div>
-              )}
-            </form>
-          )}
+              </form>
+            )}
         </div>
       </div>
     );
