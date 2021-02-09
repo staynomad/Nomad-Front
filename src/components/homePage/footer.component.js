@@ -59,7 +59,7 @@ class navbar extends Component {
             About Us
           </NavLink>
           <h5 className="wow fadeInUp" data-wow-delay="0.2s">
-            © 2020 Vhomes - All Rights Reserved.{" "}
+            © 2020 NomΛd - All Rights Reserved.{" "}
           </h5>
         </div>
       </footer>
