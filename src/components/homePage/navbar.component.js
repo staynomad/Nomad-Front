@@ -93,29 +93,28 @@ const Navbar = (props) => {
               <AccountCircleIcon className="mobile-nav-icon" />
               Account
             </NavLink>
-            <a
+            <h4
               className="mobile-nav-link"
               onClick={() => {
                 handleLogout();
                 setMobileNav(false);
               }}
-              href
             >
               <ExitToAppIcon className="mobile-nav-icon" />
               Logout
-            </a>
+            </h4>
           </div>
         ) : (
-            <NavLink
-              className="mobile-nav-link"
-              onClick={() => setMobileNav(false)}
-              to="/Login"
-            >
-              {" "}
-              <AccountCircleIcon className="mobile-nav-icon" />
+          <NavLink
+            className="mobile-nav-link"
+            onClick={() => setMobileNav(false)}
+            to="/Login"
+          >
+            {" "}
+            <AccountCircleIcon className="mobile-nav-icon" />
             Login
-            </NavLink>
-          )}
+          </NavLink>
+        )}
       </div>
       <div className="nav-container">
         <div className="logo">
@@ -187,14 +186,14 @@ const Navbar = (props) => {
                 </div>
               </>
             ) : (
-                <NavLink
-                  className="profile-dropdown button button-outline-primary"
-                  to="/Login"
-                  activeClassName="nav-active"
-                >
-                  Login
-                </NavLink>
-              )}
+              <NavLink
+                className="profile-dropdown button button-outline-primary"
+                to="/Login"
+                activeClassName="nav-active"
+              >
+                Login
+              </NavLink>
+            )}
           </ul>
         </div>
         {!mobileNav && (

@@ -33,6 +33,10 @@ const Matches = (props) => {
   const { location } = props;
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (location.search) setListingView(true);
   }, [location.search]);
 

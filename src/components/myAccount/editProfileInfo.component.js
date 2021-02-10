@@ -106,6 +106,7 @@ const EditProfileInfo = (props) => {
               placeholder={profileState.description}
               onChange={handleChange}
               rows="5"
+              maxLength="700"
             />
           </label>
           <div className="spacer_s"></div>
