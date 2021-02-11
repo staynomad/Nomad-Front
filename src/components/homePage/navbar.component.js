@@ -106,21 +106,21 @@ const Navbar = (props) => {
             </a>
           </div>
         ) : (
-            <NavLink
-              className="mobile-nav-link"
-              onClick={() => setMobileNav(false)}
-              to="/Login"
-            >
-              {" "}
-              <AccountCircleIcon className="mobile-nav-icon" />
+          <NavLink
+            className="mobile-nav-link"
+            onClick={() => setMobileNav(false)}
+            to="/Login"
+          >
+            {" "}
+            <AccountCircleIcon className="mobile-nav-icon" />
             Login
-            </NavLink>
-          )}
+          </NavLink>
+        )}
       </div>
       <div className="nav-container">
         <div className="logo">
           <NavLink to="/" className="logo-container">
-            <img src="/images/logo.png" alt="logo" />
+            <img src="/images/nomad.svg" alt="logo" />
           </NavLink>
         </div>
         <div id="mainListDiv" className="main_list">
@@ -187,14 +187,14 @@ const Navbar = (props) => {
                 </div>
               </>
             ) : (
-                <NavLink
-                  className="profile-dropdown button button-outline-primary"
-                  to="/Login"
-                  activeClassName="nav-active"
-                >
-                  Login
-                </NavLink>
-              )}
+              <NavLink
+                className="profile-dropdown button button-outline-primary"
+                to="/Login"
+                activeClassName="nav-active"
+              >
+                Login
+              </NavLink>
+            )}
           </ul>
         </div>
         {!mobileNav && (
