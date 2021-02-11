@@ -7,6 +7,7 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import Search from "./search.component";
 import Subscribe from "./subscribe.component";
+import FeaturedListings from "./featuredListings.component"
 import { isMobile } from "react-device-detect";
 
 const useStyles = makeStyles((theme) => ({
@@ -373,6 +374,7 @@ const NewHome = (props) => {
           </div>
 
           <div className="spacer_l"></div>
+          <FeaturedListings />
         </div>
       </div>
     </div>
