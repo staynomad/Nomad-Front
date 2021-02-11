@@ -31,9 +31,10 @@ const NewHome = (props) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (!props.userSession && !isMobile) {
+    if (!props.userSession && !isMobile && !localStorage.getItem('popupSeen')) {
       setTimeout(() => {
         setOpen(true);
+        localStorage.setItem('popupSeen', true)
       }, 1000);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
