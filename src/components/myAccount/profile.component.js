@@ -66,9 +66,9 @@ const Profile = () => {
         <form action="/EditProfileInfo">
           <button className="btn green edit-profile-btn"> Edit Profile </button>
         </form>
-        <NavLink className="profile-roommate-form" to="/Questionnaire">
+        {/* <NavLink className="profile-roommate-form" to="/Questionnaire">
           <p>Roommate Preference Form</p>
-        </NavLink>
+        </NavLink> */}
       </div>
     </div>
   );

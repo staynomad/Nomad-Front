@@ -1,32 +1,20 @@
 import React, { Component } from "react";
 import { NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import Pagination from '@material-ui/lab/Pagination';
+import Pagination from "@material-ui/lab/Pagination";
 import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
-import MaterialUIMenu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import MaterialUIMenu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 import "./listings.css";
-import ListingCard from './listingCard.component'
+import ListingCard from "./listingCard.component";
 import {
   searchAllListings,
   searchForListings,
   searchFilteredListings,
   searchUserListings,
 } from "../../../redux/actions/searchListingActions";
-
-const CustomButton = withStyles((theme) => ({
-  root: {
-    color: "#00B183",
-    backgroundColor: "transparent",
-    border: "2px solid #00B183",
-    borderRadius: "8px",
-    font: "inherit",
-    fontSize: "16px",
-    fontWeight: "normal",
-  },
-}))(Button);
 
 class Listings extends Component {
   constructor(props) {
@@ -38,20 +26,23 @@ class Listings extends Component {
       listings: [],
       page: 0,
       pageCount: 0,
-      sorting: 'newest',
+      sorting: "newest",
     };
 
     this.handleSearch = this.handleSearch.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
     this.handleExpiredToggle = this.handleExpiredToggle.bind(this);
-  };
+  }
 
   handleSearch() {
     let filter;
     let filterClicked;
     if (this.props.listingFilterState) {
       filter = this.props.listingFilterState;
-      filterClicked = filter.minGuestsClicked || filter.minRatingClicked || filter.startingPriceClicked;
+      filterClicked =
+        filter.minGuestsClicked ||
+        filter.minRatingClicked ||
+        filter.startingPriceClicked;
     }
 
     if (this.props.location.search) {
@@ -63,33 +54,42 @@ class Listings extends Component {
       this.props.searchFilteredListings(filter);
     } else {
       // console.log(this.props.searchOnlyUser)
-      if (this.props.searchOnlyUser) this.props.searchUserListings(this.props.userSession.token);
+      if (this.props.searchOnlyUser)
+        this.props.searchUserListings(this.props.userSession.token);
       else this.props.searchAllListings();
     }
   }
 
   componentDidMount() {
     this.handleSearch();
-  };
+  }
 
   componentDidUpdate(prevProps) {
-    if (this.props.location !== prevProps.location || this.props.listingFilterState !== prevProps.listingFilterState) {
+    if (
+      this.props.location !== prevProps.location ||
+      this.props.listingFilterState !== prevProps.listingFilterState
+    ) {
       return this.handleSearch();
-    };
-
-  };
+    }
+  }
 
   static getDerivedStateFromProps(props, state) {
-    const listingType = props.searchOnlyUser ? "userListings" : "searchListings";
+    const listingType = props.searchOnlyUser
+      ? "userListings"
+      : "searchListings";
 
     if (props[listingType] && props[listingType] !== state.listings) {
       const activeListings = props[listingType].filter((listing) => {
         // Split string to Year (idx 0), Month (idx 1), Day (idx 2) then convert to num
-        const expireDate = listing.available[1].split('-').map(date => {
-          return Number.parseInt(date, 10)
+        const expireDate = listing.available[1].split("-").map((date) => {
+          return Number.parseInt(date, 10);
         });
         // Convert using to milliseconds
-        const expireDateConverted = new Date(expireDate[0], expireDate[1] - 1, expireDate[2]).getTime();
+        const expireDateConverted = new Date(
+          expireDate[0],
+          expireDate[1] - 1,
+          expireDate[2]
+        ).getTime();
         const curDate = new Date().getTime();
         // Compare to check if curDate is past expired
         let isExpired = curDate > expireDateConverted;
@@ -97,13 +97,13 @@ class Listings extends Component {
         else return true;
       });
 
-      if (state.sorting === 'oldest') {
+      if (state.sorting === "oldest") {
         activeListings.sort((listing1, listing2) => {
           return listing1.createdAt > listing2.createdAt ? 1 : -1;
         });
       }
 
-      if (state.sorting === 'newest') {
+      if (state.sorting === "newest") {
         activeListings.sort((listing1, listing2) => {
           return listing1.createdAt > listing2.createdAt ? -1 : 1;
         });
@@ -112,7 +112,8 @@ class Listings extends Component {
       // Divide by number of items per page
       const pageCount = Math.ceil(activeListings.length / 10);
       // Display first 10 else max shown
-      const itemsToDisplay = activeListings.length > 10 ? [0, 9] : [0, activeListings.length - 1];
+      const itemsToDisplay =
+        activeListings.length > 10 ? [0, 9] : [0, activeListings.length - 1];
 
       if (state && state.itemsToDisplay.length !== 0 && state.page !== 0) {
         const { itemsToDisplay, page } = state;
@@ -120,33 +121,38 @@ class Listings extends Component {
           itemsToDisplay: itemsToDisplay,
           listings: activeListings,
           page: page,
-          pageCount: pageCount
-        }
+          pageCount: pageCount,
+        };
       }
 
       return {
         itemsToDisplay: itemsToDisplay,
         listings: activeListings,
         page: 1,
-        pageCount: pageCount
-      }
+        pageCount: pageCount,
+      };
     } else return state;
-  };
+  }
 
   handlePageChange(event, page) {
-    const startIdx = ((page - 1) * 10);
-    const endIdx = ((page * 10) - 1) > this.state.listings.length - 1 ? this.state.listings.length - 1 : ((this.state.page * 10) - 1);
-    console.log(endIdx)
-    console.log(this.state.listings.length)
+    const startIdx = (page - 1) * 10;
+    const endIdx =
+      page * 10 - 1 > this.state.listings.length - 1
+        ? this.state.listings.length - 1
+        : this.state.page * 10 - 1;
+    console.log(endIdx);
+    console.log(this.state.listings.length);
     this.setState({ itemsToDisplay: [startIdx, endIdx] });
   }
 
   handleExpiredToggle() {
-    return this.state.hideExpired ? this.setState({ hideExpired: false }) : this.setState({ hideExpired: true });
-  };
+    return this.state.hideExpired
+      ? this.setState({ hideExpired: false })
+      : this.setState({ hideExpired: true });
+  }
 
   render() {
-    let listings = this.state.listings || null
+    let listings = this.state.listings || null;
     const open = Boolean(this.state.sortAnchorEl);
 
     const handleClick = (event) => {
@@ -161,87 +167,118 @@ class Listings extends Component {
 
     return (
       <div className="listings-container">
-        {
-          this.props.location.pathname === "/MyAccount" ?
-            <div>
-              <CustomButton>
-                <NavLink to="/CreateListing">Create Listing</NavLink>
-              </CustomButton>
-              {
-                !this.state.hideExpired ?
-                  <CustomButton onClick={this.handleExpiredToggle}>Hide Expired</CustomButton> :
-                  <CustomButton onClick={this.handleExpiredToggle}>Show Expired</CustomButton>
-              }
-              <MoreVertIcon onClick={handleClick} className="vert-menu" />
-              <MaterialUIMenu
-                id="long-menu"
-                anchorEl={this.state.sortAnchorEl}
-                keepMounted
-                open={open}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={() => {
-                  handleClose();
-                  this.setState({ sorting: 'newest' })
-                }}>Sort by Created Date (Newest First)</MenuItem>
-                <MenuItem onClick={() => {
-                  handleClose();
-                  this.setState({ sorting: 'oldest' })
-                }}>Sort by Created Date (Oldest First)</MenuItem>
-              </MaterialUIMenu>
+        {this.props.location.pathname === "/MyAccount" ? (
+          <div className="account-listing-buttons-container">
+            <div className="account-listing-button">
+              <NavLink to="/CreateListing">Create Listing</NavLink>
             </div>
-            : null
-        }
-        {this.state.listings ? (listings.length <= 0 ?
-          <>
-            <div className="spacer_s" />
-            <p ref={(el) => {
-              if (el) {
-                el.style.setProperty('text-align', 'center', 'important');
-              }
-            }}>
-              No listings yet!
-          </p>
-          </> :
-          <div id='listing-content' className="wow fadeInUp" data-wow-delay="0.5s">
-            {
-              this.state.listings.map((listing, idx) => {
-                if (idx >= this.state.itemsToDisplay[0] && idx <= this.state.itemsToDisplay[1])
+            {!this.state.hideExpired ? (
+              <div
+                className="account-listing-button"
+                onClick={this.handleExpiredToggle}
+              >
+                Hide Expired
+              </div>
+            ) : (
+              <div
+                className="account-listing-button"
+                onClick={this.handleExpiredToggle}
+              >
+                Show Expired
+              </div>
+            )}
+            <MoreVertIcon
+              onClick={handleClick}
+              className="vert-menu account-listing-menu-button"
+            />
+            <MaterialUIMenu
+              id="long-menu"
+              anchorEl={this.state.sortAnchorEl}
+              keepMounted
+              open={open}
+              onClose={handleClose}
+            >
+              <MenuItem
+                onClick={() => {
+                  handleClose();
+                  this.setState({ sorting: "newest" });
+                }}
+              >
+                Sort by Created Date (Newest First)
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleClose();
+                  this.setState({ sorting: "oldest" });
+                }}
+              >
+                Sort by Created Date (Oldest First)
+              </MenuItem>
+            </MaterialUIMenu>
+          </div>
+        ) : null}
+        {this.state.listings ? (
+          listings.length <= 0 ? (
+            <>
+              <p
+                className="account-listing-no-listing"
+                ref={(el) => {
+                  if (el) {
+                    el.style.setProperty("text-align", "center", "important");
+                  }
+                }}
+              >
+                No listings yet!
+              </p>
+            </>
+          ) : (
+            <div
+              id="listing-content"
+              className="wow fadeInUp"
+              data-wow-delay="0.5s"
+            >
+              {this.state.listings.map((listing, idx) => {
+                if (
+                  idx >= this.state.itemsToDisplay[0] &&
+                  idx <= this.state.itemsToDisplay[1]
+                )
                   return <ListingCard key={listing._id} listing={listing} />;
                 else return null;
-              })
-            }
-          </div>
-        ) : null
-        }
-        <Pagination count={this.state.pageCount} onChange={this.handlePageChange} />
-      </div >
+              })}
+            </div>
+          )
+        ) : null}
+        <Pagination
+          count={this.state.pageCount}
+          onChange={this.handlePageChange}
+        />
+      </div>
     );
   }
+}
 
-
-};
-
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const stateToReturn = { ...state };
-  if (state.Login.userInfo) stateToReturn["userSession"] = state.Login.userInfo.session;
-  if (state.Listing.userListings) stateToReturn["userListings"] = state.Listing.userListings;
-  if (state.Listing.searchListings) stateToReturn["searchListings"] = state.Listing.searchListings;
+  if (state.Login.userInfo)
+    stateToReturn["userSession"] = state.Login.userInfo.session;
+  if (state.Listing.userListings)
+    stateToReturn["userListings"] = state.Listing.userListings;
+  if (state.Listing.searchListings)
+    stateToReturn["searchListings"] = state.Listing.searchListings;
   return stateToReturn;
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     searchAllListings: () => dispatch(searchAllListings()),
-    searchForListings: (itemToSearch) => dispatch(searchForListings(itemToSearch)),
-    searchFilteredListings: (filter) => dispatch(searchFilteredListings(filter)),
+    searchForListings: (itemToSearch) =>
+      dispatch(searchForListings(itemToSearch)),
+    searchFilteredListings: (filter) =>
+      dispatch(searchFilteredListings(filter)),
     searchUserListings: (token) => dispatch(searchUserListings(token)),
   };
 };
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(
-  Listings
-));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Listings)
+);
