@@ -119,7 +119,7 @@ const Navbar = (props) => {
       <div className="nav-container">
         <div className="logo">
           <NavLink to="/" className="logo-container">
-            <img src="/images/logo.png" alt="logo" />
+            <img src="/images/nomad.svg" alt="logo" />
           </NavLink>
         </div>
         <div id="mainListDiv" className="main_list">

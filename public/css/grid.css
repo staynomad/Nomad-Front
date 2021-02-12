@@ -46,6 +46,8 @@
 .search-logo {
   display: inline;
   font-size: 5rem !important;
+  font-family: sans-serif !important;
+  font-weight: 200 !important;
 }
 
 @media screen and (max-width: 465px) {
@@ -68,6 +70,11 @@
   .row.gap {
     grid-gap: calc(var(--gap-size) * 0.5);
   }
+}
+
+.why-title {
+  font-family: sans-serif !important;
+  font-weight: 200 !important;
 }
 
 .why-container {

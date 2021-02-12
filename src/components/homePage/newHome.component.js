@@ -31,9 +31,10 @@ const NewHome = (props) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (!props.userSession && !isMobile) {
+    if (!props.userSession && !isMobile && !localStorage.getItem('popupSeen')) {
       setTimeout(() => {
         setOpen(true);
+        localStorage.setItem('popupSeen', true)
       }, 1000);
     }
     window.scrollTo(0, 0);
@@ -87,7 +88,7 @@ const NewHome = (props) => {
 
             <div className="search-container">
               <div className="search-header wow fadeInUp" data-wow-delay="0.5s">
-                <h1 className="search-logo">VHomes</h1>
+                <h1 className="search-logo">NomΛd</h1>
                 <div className="intro_text">
                   The future of flexible rentals.
                 </div>
@@ -105,7 +106,7 @@ const NewHome = (props) => {
           <div className="spacer_xs"></div>
           <div className="container">
             <h1 className="why-title wow fadeInUp" data-wow-delay="0.5s">
-              Why VHomes?
+              Why NomΛd?
             </h1>
 
             <div className="why-container row gap large">
@@ -121,7 +122,7 @@ const NewHome = (props) => {
                   <div className=" wow fadeInUp" data-wow-delay="0.5s">
                     <div className="subtitle">No more overpaying</div>
                     <p className="why-caption">
-                      We are committed to finding you the best deal. With VHomes
+                      We are committed to finding you the best deal. With NomΛd
                       you'll find the best stay possible for less than $60 per
                       room per night.{" "}
                     </p>
