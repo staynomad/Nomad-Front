@@ -1,9 +1,6 @@
 import { SET_LOADING_TRUE, SET_LOADING_FALSE } from "../actions/loadingActions";
-import { COMPLETE_FORM, INCOMPLETE_FORM } from "../reducers/createListingTypes";
-export default function (
-  state = { loading: false, formCompleted: true },
-  action
-) {
+
+export default function (state = { loading: false }, action) {
   switch (action.type) {
     case SET_LOADING_TRUE:
       return {
@@ -14,16 +11,6 @@ export default function (
       return {
         ...state,
         loading: false,
-      };
-    case INCOMPLETE_FORM:
-      return {
-        ...state,
-        formCompleted: false,
-      };
-    case COMPLETE_FORM:
-      return {
-        ...state,
-        formCompleted: true,
       };
     default:
       return state;

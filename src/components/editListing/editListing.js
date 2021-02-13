@@ -7,8 +7,6 @@ import { getListingById } from "../../redux/actions/searchListingActions";
 import { sendListingTranferRequest } from "../../redux/actions/transferListingActions";
 import { submitEditListing } from "../../redux/actions/editListingActions";
 import "../createListing/createListing.css";
-import "../createListing/detailsListing.css";
-import "../createListing/locationListing.css";
 import "./editListing.css";
 
 class EditListing extends Component {

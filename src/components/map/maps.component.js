@@ -21,7 +21,7 @@ class ListingMap extends Component {
         this.findLocationFail = this.findLocationFail.bind(this);
         this.findLocationSuccess = this.findLocationSuccess.bind(this);
         this.setCurrentListing = this.setCurrentListing.bind(this);
-    }
+    };
 
     componentDidMount() {
         // Get browser lat and lng for current user
@@ -30,11 +30,23 @@ class ListingMap extends Component {
         } else {
             navigator.geolocation.getCurrentPosition(this.findLocationSuccess, this.findLocationFail);
         }
-    }
+    };
+
+    shouldComponentUpdate(nextProps, nextState) {
+        if (
+            nextState.currentListing !== this.state.currentListing ||
+            nextState.center.lat !== this.state.center.lat ||
+            nextState.center.lng !== this.state.center.lng ||
+            nextState.radius !== this.state.radius ||
+            nextState.zoom !== this.state.zoom ||
+            nextProps.mapListings !== this.props.mapListings
+        ) return true;
+        else return false
+    };
 
     findLocationFail() {
         alert('Unable to retrieve your location');
-    }
+    };
 
     findLocationSuccess(position) {
         const { latitude, longitude } = position.coords;
@@ -50,7 +62,7 @@ class ListingMap extends Component {
 
     setCurrentListing(listingId) {
         this.setState({ currentListing: listingId })
-    }
+    };
 
     render() {
         return (
@@ -61,7 +73,7 @@ class ListingMap extends Component {
                         e.target.className !== "marker" &&
                         e.target.className !== "marker-active"
                     ) {
-                        this.setCurrentListing(null)
+                        this.setCurrentListing(null);
                     };
 
                 }}

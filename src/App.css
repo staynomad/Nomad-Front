@@ -53,6 +53,17 @@ a, a:hover {
   flex-grow: 1;
 }
 
+/* Remove number input scroll arrows */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
