@@ -9,17 +9,18 @@ const getSignedURL = (file, fileName, bucket, setLoading) => {
     "GET",
     `${apiBaseUrl}/photos/sign-s3?file-name=${fileName}&file-type=${file.type}&file-bucket=${bucket}`
   );
-  xhr.onreadystatechange = () => {
+  xhr.onreadystatechange = async () => {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
+        // console.log(file.name) this is printing all filenames
         response = JSON.parse(xhr.responseText);
-        uploadFile(
+        await uploadFile(
           file,
           response.signedReq,
           response.url,
           file.name,
           setLoading
-        );
+        )
       } else {
         alert("Could not get signed url. Please refresh and try again");
       }
@@ -43,6 +44,7 @@ const uploadFile = (file, signedRequest, url, fileName, setLoading) => {
       }
     }
   };
+  // console.log(fileName) this is printing all fileNames
   xhr.send(file);
 };
 

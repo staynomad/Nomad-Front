@@ -81,7 +81,7 @@ class CreateListing extends Component {
     this.onSubmit({ draft: true });
   }
 
-  onSubmit() {
+  async onSubmit() {
     var draft = false;
     const dataToSend = this.props.listingData;
     let cur_photos = dataToSend.photos.image_files;
@@ -97,7 +97,7 @@ class CreateListing extends Component {
       /*if (i === cur_photos.length - 1) { just forcing it to stay loading as long as 5 sec timeout is there. otherwise it sets then unsets then sets then unsets
         action = this.props.setLoadingFalse;
       }*/
-      getSignedURL(
+      await getSignedURL(
         cur_photos[i],
         updatedFileName,
         "vhomes-images-bucket",
@@ -191,7 +191,7 @@ class CreateListing extends Component {
             <div>
               <div id="spinner" />
               {this.state.draftSavedText ? (
-                <div className="spacer_s">
+                <div className="spacer_m">
                   Draft is being saved. To edit/submit this listing, go to
                   MyListings.
                 </div>
