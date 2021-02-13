@@ -4,8 +4,10 @@ import { withRouter } from "react-router-dom";
 import "./createListing.css";
 class ConfirmSubmission extends Component {
   render() {
-    const start = new Date(this.props.data.dates.start_date)
-    const end = new Date(this.props.data.dates.end_date)
+    const start = new Date(this.props.data.dates.start_date);
+    const end = new Date(this.props.data.dates.end_date);
+    console.log(this.props);
+
     return (
       <div>
         <h1>Review Your Listing</h1>
@@ -39,7 +41,9 @@ class ConfirmSubmission extends Component {
           </p>
 
           <h2 className="header-text">Price</h2>
-          <p className="confirm-text">${parseFloat(this.props.data.price).toFixed(2)} per night</p>
+          <p className="confirm-text">
+            ${parseFloat(this.props.data.price).toFixed(2)} per night
+          </p>
 
           <h2 className="header-text">Dates</h2>
           <p className="confirm-text">

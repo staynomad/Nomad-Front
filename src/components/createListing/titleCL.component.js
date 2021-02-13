@@ -49,15 +49,12 @@ class TitleCL extends Component {
   render() {
     return (
       <div>
-
-        <div className="questionText">
-          Title
-        </div>
+        <div className="questionText">Title</div>
         <div className="spacer_xs"></div>
         <input
           type="text"
           name="title"
-          className="textInputBox"
+          className="create-listing-title-input"
           value={this.state.title}
           placeholder="e.g. Beautiful apartment overlooking Central Park"
           onChange={this.handleChange}

@@ -3,18 +3,24 @@
   background-size: 100% 100%;
   width: 100%;
   height: 100%;
-  padding-top: 150px;
+  padding-top: 10rem;
 }
 
 .overallListingForm {
-  box-shadow: 1px 1px 7px 2px #787878;
+  box-shadow: 0px 35px 60px rgba(132, 132, 132, 0.25);
   margin: auto;
-  max-width: fit-content;
+  width: 60rem;
   background-color: white;
   display: inline-flex;
-  padding: 60px;
-  border-radius: 25px;
+  border-radius: 5px;
   margin-bottom: 2% !important;
+  overflow: hidden;
+}
+
+.create-listing-content {
+  padding: 10px 8rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .startText {
@@ -51,7 +57,7 @@
 }
 
 .descriptionTextInputBox {
-  width: 98%;
+  width: 98% !important;
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 25px;
@@ -173,4 +179,101 @@ span.import-info {
 .price-details {
   text-align: center !important;
   margin-top: -3%;
+}
+
+.create-listing-header {
+  background: var(--color-green);
+  position: relative;
+  height: 5rem;
+  width: 100%;
+}
+
+.create-listing-header h1 {
+  color: white !important;
+  font-weight: 500 !important;
+  font-size: 2.5rem !important;
+  padding: 0;
+  margin: 0;
+}
+
+.create-listing-back {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 10px;
+  color: white;
+  cursor: pointer;
+}
+
+.create-listing-back svg {
+  font-size: 3rem !important;
+}
+
+.create-listing-back:hover {
+  color: white !important;
+}
+
+.create-listing-title-input {
+  width: 100%;
+  padding: 15px;
+  height: auto;
+  border-radius: 10px;
+  border: 2px solid rgb(210 210 210 / 47%);
+  background-color: white;
+  color: #4d4842;
+  font-size: 15px;
+}
+
+.create-listing-input.autofill {
+  width: 100% !important;
+  padding: 7px 15px;
+  height: auto;
+  border-radius: 10px;
+  border: 2px solid rgb(210 210 210 / 47%);
+  background-color: white;
+  color: #4d4842;
+  font-size: 16px;
+}
+
+.create-listing-input {
+  width: 80%;
+  padding: 7px 15px;
+  height: auto;
+  border-radius: 10px;
+  border: 2px solid rgb(210 210 210 / 47%);
+  background-color: white;
+  color: #4d4842;
+  font-size: 16px;
+}
+
+.create-listing-input:focus {
+  border: 2px solid var(--color-green);
+}
+
+.create-listing-input-container {
+  padding-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  height: 40px;
+}
+
+.create-listing-clear-address-button {
+  background: var(--color-green);
+  padding: 5px 20px;
+  margin: 0 auto;
+  border: none;
+  border-radius: 20px;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.create-listing-clear-address-button:hover {
+  transform: scale(1.05);
+}
+
+.create-listing-clear-address-button h4 {
+  color: white !important;
+  margin: 0 !important;
+  font-weight: 500 !important;
 }

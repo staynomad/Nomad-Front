@@ -129,18 +129,20 @@ class CreateListing extends Component {
       calendarURL: this.props.calendarURL,
       booked: this.props.booked,
     };
-    app.post(`/listings/createListing`, newListing, {
-      headers: {
-        Authorization: `Bearer ${this.props.userSession.token}`,
-      },
-    })
+    app
+      .post(`/listings/createListing`, newListing, {
+        headers: {
+          Authorization: `Bearer ${this.props.userSession.token}`,
+        },
+      })
       .then((res) => {
         if (draft === false) {
-          app.put("/listings/activateListing/" + res.data.newListing._id, null, {
-            headers: {
-              Authorization: `Bearer ${this.props.userSession.token}`,
-            },
-          })
+          app
+            .put("/listings/activateListing/" + res.data.newListing._id, null, {
+              headers: {
+                Authorization: `Bearer ${this.props.userSession.token}`,
+              },
+            })
             .catch(() => alert("Unable to create listing. Please try again."));
         } else {
           this.setState({
@@ -167,14 +169,16 @@ class CreateListing extends Component {
   render() {
     const pages = [
       <LandingPageCL name="Landing Page" />,
-      <TitleCL />,
-      <Location />,
-      <Description />,
-      <DetailsCL />,
-      <PricesCL />,
-      <Ameneties />,
-      <PhotoUpload />,
-      <DatesCL />,
+      <div className="create-listing-content">
+        <TitleCL />
+        <Location />
+        <Description />
+        <DetailsCL />
+        <PricesCL />
+        <Ameneties />
+        <PhotoUpload />
+        <DatesCL />
+      </div>,
     ];
     const pageList = pages.map((page) => {
       return (
@@ -196,59 +200,59 @@ class CreateListing extends Component {
                   MyListings.
                 </div>
               ) : (
-                  <div className="spacer_s">
-                    Your listing is being submitted. Thanks for choosing VHomes!
-                  </div>
-                )}
+                <div className="spacer_s">
+                  Your listing is being submitted. Thanks for choosing VHomes!
+                </div>
+              )}
             </div>
           ) : (
-              <form>
-                {this.state.inputPage ? (
-                  <div>
-                    {pageList}
+            <form style={{ width: "100%" }}>
+              {this.state.inputPage ? (
+                <>
+                  {pageList}
 
-                    {!this.state.nextToggle ? (
-                      <span style={{ color: "red" }}>
-                        You are missing some parts. Please fill them in to
-                        continue
-                      </span>
-                    ) : (
-                        ""
-                      )}
-                    <br />
-                    <input
-                      type="button"
-                      className="changebut"
-                      value="Next"
-                      onClick={this.pageToggle}
-                    />
-                  </div>
-                ) : (
-                    <div>
-                      <ConfirmSubmission />
-
-                      <input
-                        type="button"
-                        className="changebut"
-                        value="Back"
-                        onClick={this.pageToggle}
-                      />
-                      <input
-                        className="changebut"
-                        type="button"
-                        onClick={this.onSubmit}
-                        value="Submit"
-                      />
-                      <input
-                        className="changebut"
-                        type="button"
-                        onClick={this.onSaveDraft}
-                        value="Save Draft"
-                      />
-                    </div>
+                  {!this.state.nextToggle ? (
+                    <span style={{ color: "red" }}>
+                      You are missing some parts. Please fill them in to
+                      continue
+                    </span>
+                  ) : (
+                    ""
                   )}
-              </form>
-            )}
+                  <br />
+                  <input
+                    type="button"
+                    className="changebut"
+                    value="Next"
+                    onClick={this.pageToggle}
+                  />
+                </>
+              ) : (
+                <div>
+                  <ConfirmSubmission />
+
+                  <input
+                    type="button"
+                    className="changebut"
+                    value="Back"
+                    onClick={this.pageToggle}
+                  />
+                  <input
+                    className="changebut"
+                    type="button"
+                    onClick={this.onSubmit}
+                    value="Submit"
+                  />
+                  <input
+                    className="changebut"
+                    type="button"
+                    onClick={this.onSaveDraft}
+                    value="Save Draft"
+                  />
+                </div>
+              )}
+            </form>
+          )}
         </div>
       </div>
     );
