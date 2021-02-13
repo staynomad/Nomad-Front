@@ -166,7 +166,7 @@ class Listings extends Component {
     };
 
     return (
-      <div className="listings-container">
+      <>
         {this.props.location.pathname === "/MyAccount" ? (
           <div className="account-listing-buttons-container">
             <div className="account-listing-button">
@@ -232,19 +232,21 @@ class Listings extends Component {
               </p>
             </>
           ) : (
-            <div
-              id="listing-content"
-              className="wow fadeInUp"
-              data-wow-delay="0.5s"
-            >
-              {this.state.listings.map((listing, idx) => {
-                if (
-                  idx >= this.state.itemsToDisplay[0] &&
-                  idx <= this.state.itemsToDisplay[1]
-                )
-                  return <ListingCard key={listing._id} listing={listing} />;
-                else return null;
-              })}
+            <div className="listings-container">
+              <div
+                id="listing-content"
+                className="wow fadeInUp"
+                data-wow-delay="0.5s"
+              >
+                {this.state.listings.map((listing, idx) => {
+                  if (
+                    idx >= this.state.itemsToDisplay[0] &&
+                    idx <= this.state.itemsToDisplay[1]
+                  )
+                    return <ListingCard key={listing._id} listing={listing} />;
+                  else return null;
+                })}
+              </div>
             </div>
           )
         ) : null}
@@ -252,7 +254,7 @@ class Listings extends Component {
           count={this.state.pageCount}
           onChange={this.handlePageChange}
         />
-      </div>
+      </>
     );
   }
 }
