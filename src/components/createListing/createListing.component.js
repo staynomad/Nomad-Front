@@ -5,7 +5,7 @@ import PlacesAutocomplete, {
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import DatePicker, { DateUtils } from "react-day-picker";
-import Helmet from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { NavLink, withRouter } from "react-router-dom";
 
 import { CustomButton } from "../matches/listing/listingCard.component";
@@ -88,6 +88,7 @@ class CreateListing extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      attemptSubmit: false,
       importDone: false,
       importLoading: false,
       isCompleted: false,
@@ -359,6 +360,7 @@ class CreateListing extends Component {
         isFormValid = false;
       }
       /* Check if beds, baths, and maxpeople are 0 or more and less than 99 */
+      /* Check if price is under $1000 */
 
       /* After passing all checks, return from loop and set isCompleted to isFormValid (which should be true) */
       return this.setState({ isCompleted: isFormValid });
@@ -728,7 +730,7 @@ class CreateListing extends Component {
                                   type="text"
                                   name="aptnum"
                                   className="inputBox aptnumInputBox"
-                                  value={this.state.form.location.aptnum}
+                                  value={this.state.form.location.aptnum || ''}
                                   placeholder="aptnum"
                                   onChange={this.handleChange}
                                 />
@@ -1044,7 +1046,7 @@ class CreateListing extends Component {
 
 
                         { /* User hit next and form is incomplete */
-                          this.state.isReviewingListing && !this.state.isCompleted ? (
+                          this.state.attemptSubmit && !this.state.isCompleted ? (
                             <div>
                               <span style={{ color: "red" }}>
                                 You are missing some parts. Please fill them in to
@@ -1059,13 +1061,15 @@ class CreateListing extends Component {
                           type="button"
                           className="changebut"
                           value="Next"
-                          onClick={() => this.setState({ isReviewingListing: true })}
+                          onClick={() => this.setState({ attemptSubmit: true }, () => {
+                            if (this.state.isCompleted) this.setState({ isReviewingListing: true })
+                          })}
                         />
                       </>
                     ) : (
                         <>
                           { /* User hit next (if else from above) and form is complete */
-                            this.state.isCompleted ? (
+                            this.state.isCompleted && this.state.isReviewingListing ? (
                               <div>
                                 {/* {
                           
