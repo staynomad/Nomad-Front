@@ -100,7 +100,7 @@ class PhotoUpload extends Component {
 
   render() {
     return (
-      <div>
+      <div className="create-listing-photos-container">
         <div className="questionText">Pictures</div> <br />
         <div>
           {this.state.invalid_type ? (

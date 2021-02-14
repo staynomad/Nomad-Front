@@ -222,7 +222,7 @@ class CreateListing extends Component {
                   <br />
                   <input
                     type="button"
-                    className="changebut"
+                    className="create-listing-next-button"
                     value="Next"
                     onClick={this.pageToggle}
                   />

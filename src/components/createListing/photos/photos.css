@@ -19,3 +19,7 @@
 .single-img-container .delete-btn:hover {
   background-color: red;
 }
+
+.create-listing-photos-container {
+  margin-bottom: 20px;
+}

@@ -5,6 +5,7 @@
 .amenities-list {
   display: flex;
   justify-content: space-between;
+  margin: 20px 0;
 }
 
 .no-amenities-check {
@@ -14,4 +15,31 @@
 
 .amenity {
   margin-right: 10px;
+}
+
+.create-listing-amenities-container {
+  margin-bottom: 50px;
+}
+
+#create-listing-amenity {
+  cursor: pointer;
+}
+
+#create-listing-amenity:hover {
+  transform: scale(1.2);
+}
+
+.create-listing-amenity-text {
+  font-size: 16px !important;
+  font-weight: normal !important;
+}
+
+.create-listing-no-amenities {
+  pointer-events: none;
+  font-size: 25px !important;
+  color: #dbdbdb;
+}
+
+.create-listing-no-amenities.active {
+  color: var(--color-green);
 }
