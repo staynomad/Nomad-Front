@@ -14,6 +14,7 @@ import {
   setLoadingTrue,
   setLoadingFalse,
 } from "../../redux/actions/loadingActions";
+import { createNewListing } from "../../redux/actions/createListingActions";
 import "./createListing.css";
 
 const stateDropDown = (
@@ -124,6 +125,7 @@ class CreateListing extends Component {
           pictures: {},
         },
         rules: "",
+        calendarURL: "",
         dateInit: {
           date_range: {
             from: null,
@@ -340,7 +342,10 @@ class CreateListing extends Component {
 
     if (name === 'Calendar') {
       this.setState({
-        calendarURL: e.target.value,
+        form: {
+          ...this.state.form,
+          calendarURL: e.target.value,
+        }
       });
     }
 
@@ -349,7 +354,7 @@ class CreateListing extends Component {
     while (isFormValid) {
       /* Check if title and description are not empty */
       /* Check if valid zipCode */
-      if (!/^\d{5}(-\d{4})?$/.test(this.state.form.location.zipCode)) {
+      if (!/^\d{5}(-\d{4})?$/.test(this.state.form.location.zipcode)) {
         this.setState({ isCompleted: false });
         isFormValid = false;
       }
@@ -387,7 +392,7 @@ class CreateListing extends Component {
     this.setState({
       importLoading: false,
     });
-  }
+  };
 
   handleDayClick(day) {
     let range = {};
@@ -423,7 +428,7 @@ class CreateListing extends Component {
         },
       });
     };
-  }
+  };
 
   /* Round price to 2 decimal places -> used onBlur */
   handlePriceRound() {
@@ -526,74 +531,39 @@ class CreateListing extends Component {
   };
 
   onSubmit() {
-    // let cur_photos = dataToSend.photos.image_files;
-    // for (let i = 0; i < cur_photos.length; i++) {
-    //   const updatedFileName = encodeURIComponent(
-    //     cur_photos[i].name + Math.random() * 1000
-    //   );
-    //   let action = this.props.setLoadingTrue;
-    //   /*if (i === cur_photos.length - 1) { just forcing it to stay loading as long as 5 sec timeout is there. otherwise it sets then unsets then sets then unsets
-    //     action = this.props.setLoadingFalse;
-    //   }*/
-    //   getSignedURL(
-    //     cur_photos[i],
-    //     updatedFileName,
-    //     "vhomes-images-bucket",
-    //     action
-    //   );
-    //   const picURL =
-    //     "https://vhomes-images-bucket.s3.amazonaws.com/" + updatedFileName;
-    //   photoURLS.push(picURL);
-    // };
+    let newListingData = new FormData();
+    for (let i = 0; i < this.state.form.photos.image_files.length; i++) {
+      newListingData.append('image', this.state.form.photos.image_files[i]);
+    };
 
-    // const availableDates = [
-    //   dataToSend.dates.start_date
-    //     .toISOString()
-    //     .substring(0, dataToSend.dates.start_date.toISOString().indexOf("T")),
-    //   dataToSend.dates.end_date
-    //     .toISOString()
-    //     .substring(0, dataToSend.dates.end_date.toISOString().indexOf("T")),
-    // ];
+    const availableDates = [
+      this.state.form.dates.start_date
+        .toISOString()
+        .substring(0, this.state.form.dates.start_date.toISOString().indexOf("T")),
+      this.state.form.dates.end_date
+        .toISOString()
+        .substring(0, this.state.form.dates.end_date.toISOString().indexOf("T")),
+    ];
 
-    // const newListing = {
-    //   title: dataToSend.title,
-    //   location: dataToSend.location,
-    //   description: dataToSend.description,
-    //   details: dataToSend.details,
-    //   price: parseFloat(dataToSend.price).toFixed(2),
-    //   available: availableDates,
-    //   amenities: dataToSend.amenities,
-    //   pictures: photoURLS,
-    //   calendarURL: this.props.calendarURL,
-    //   booked: this.props.booked,
-    // };
+    const newListing = {
+      title: this.state.form.title,
+      location: this.state.form.location,
+      description: this.state.form.description,
+      details: this.state.form.details,
+      price: parseFloat(this.state.form.price).toFixed(2),
+      available: availableDates,
+      amenities: this.state.form.amenities,
+      calendarURL: this.state.form.calendarURL,
+      booked: this.props.booked,
+    };
 
-    // app.post(`/listings/createListing`, newListing, {
-    //   headers: {
-    //     Authorization: `Bearer ${this.props.userSession.token}`,
-    //   },
-    // })
-    //   .then((res) => {
-    //     if (draft === false) {
-    //       app.put("/listings/activateListing/" + res.data.newListing._id, null, {
-    //         headers: {
-    //           Authorization: `Bearer ${this.props.userSession.token}`,
-    //         },
-    //       })
-    //         .catch(() => alert("Unable to create listing. Please try again."));
-    //     } else {
-    //       this.setState({
-    //         draftSavedText: true,
-    //       });
-    //     }
-    //   })
-    //   .then(() => this.postRequest())
-    //   .then(() => (window.location = "/MyAccount"))
-    //   .catch(() => {
-    //     alert("Unable to create listing. Please try again.");
-    //     window.location = "/CreateListing";
-    //     return;
-    //   });
+    newListingData.append('listingData', new Blob([JSON.stringify({
+      newListing,
+    })], {
+      type: 'application/json'
+    }));
+
+    this.props.createNewListing(this.state.isDraft, newListingData);
   }
 
   render() {
@@ -940,7 +910,7 @@ class CreateListing extends Component {
                             multiple
                             onChange={this.onPhotoClick}
                           />
-                          <label for="upload-file" className="upload-file" >
+                          <label htmlFor="upload-file" className="upload-file" >
                             Choose Files
                             </label>
 
@@ -1095,7 +1065,7 @@ class CreateListing extends Component {
                     ) : (
                         <>
                           { /* User hit next (if else from above) and form is complete */
-                            this.state.isComplete ? (
+                            this.state.isCompleted ? (
                               <div>
                                 {/* {
                           
@@ -1118,7 +1088,9 @@ class CreateListing extends Component {
                                 <input
                                   type="button"
                                   className="changebut"
-                                  onClick={this.onSaveDraft}
+                                  onClick={() => {
+                                    this.setState({ isDraft: true }, () => this.onSubmit());
+                                  }}
                                   value="Save Draft"
                                 />
                               </div>
@@ -1146,6 +1118,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
+    createNewListing: (...args) => dispatch(createNewListing(...args)),
     importCalendar: (calendarURL, listingId) => dispatch(importCalendar(calendarURL, listingId)),
     setLoadingFalse: () => dispatch(setLoadingFalse()),
     setLoadingTrue: () => dispatch(setLoadingTrue()),
