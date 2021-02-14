@@ -1071,11 +1071,47 @@ class CreateListing extends Component {
                           { /* User hit next (if else from above) and form is complete */
                             this.state.isCompleted && this.state.isReviewingListing ? (
                               <div>
-                                {/* {
-                          
-                              Render the page review here -> Confirm listing
-                          
-                            } */}
+                                <h1>Review Your Listing</h1>
+                                <div className="spacer_s"></div>
+                                <div className="confirm-container">
+                                  <h2 className="header-text">Title</h2>
+                                  <p className="confirm-text">{this.state.form.title}</p>
+
+                                  <h2 className="header-text">Address</h2>
+                                  <p className="confirm-text">
+                                    <span>Street: </span>
+                                    {this.state.form.location.street} <br />
+                                    <span>City: </span>
+                                    {this.state.form.location.city} <br />
+                                    <span>State: </span>
+                                    {this.state.form.location.state} <br />
+                                    <span>Country: </span>
+                                    {this.state.form.location.country} <br />
+                                    <span>Zipcode: </span>
+                                    {this.state.form.location.zipcode} <br />
+                                  </p>
+
+                                  <h2 className="header-text">Description</h2>
+                                  <p className="confirm-text">{this.state.form.description}</p>
+
+                                  <h2 className="header-text">Details</h2>
+                                  <p className="confirm-text">
+                                    <span>Beds:</span> {this.state.form.details.beds} <br />
+                                    <span>Baths:</span> {this.state.form.details.baths} <br />
+                                    <span>Max people:</span> {this.state.form.details.maxpeople} <br />
+                                  </p>
+
+                                  <h2 className="header-text">Price</h2>
+                                  <p className="confirm-text">${parseFloat(this.state.form.price).toFixed(2)} per night</p>
+
+                                  <h2 className="header-text">Dates</h2>
+                                  <p className="confirm-text">
+                                    <span>Start date: </span>
+                                    {this.state.form.dates.start_date.toLocaleDateString()} <br />
+                                    <span>End date: </span>
+                                    {this.state.form.dates.end_date.toLocaleDateString()} <br />
+                                  </p>
+                                </div>
 
                                 <input
                                   type="button"
