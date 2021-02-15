@@ -13,8 +13,8 @@
   margin-top: 5px !important;
 }
 
-.amenity {
-  margin-right: 10px;
+.create-listing-amenity-container {
+  margin: 0 10px;
 }
 
 .create-listing-amenities-container {
@@ -42,4 +42,27 @@
 
 .create-listing-no-amenities.active {
   color: var(--color-green);
+}
+
+@media screen and (max-width: 650px) {
+  #create-listing-amenity {
+    height: 35px;
+  }
+  #create-listing-amenity-disabled {
+    height: 35px;
+  }
+  .create-listing-amenity-text {
+    font-size: 12px !important;
+    margin-top: 0;
+  }
+}
+
+@media screen and (max-width: 530px) {
+  .amenities-list {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .create-listing-amenity-container {
+    margin: 0 20px;
+  }
 }

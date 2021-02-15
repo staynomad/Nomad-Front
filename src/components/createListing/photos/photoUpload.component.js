@@ -81,6 +81,7 @@ class PhotoUpload extends Component {
       return (
         <div key={image} className="single-img-container">
           <img
+            className="create-listing-image"
             style={{ maxHeight: 200, maxwidth: 200 }}
             id="target"
             src={this.props.photoData.pictures[image]}

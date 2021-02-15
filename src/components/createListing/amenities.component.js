@@ -47,7 +47,7 @@ const Amenities = (props) => {
   ];
   const amenityList = options.map((option) => {
     return (
-      <div className="amenity" key={option}>
+      <div className="create-listing-amenity-container" key={option}>
         {checkboxEnabled ? (
           <img
             src={`${process.env.PUBLIC_URL}/images/amenities/${option.replace(
@@ -73,6 +73,7 @@ const Amenities = (props) => {
             )}_.svg`}
             alt={option}
             className={option}
+            id="create-listing-amenity-disabled"
             height="50px"
             style={{
               filter:

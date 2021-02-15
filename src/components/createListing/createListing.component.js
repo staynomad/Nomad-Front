@@ -233,18 +233,18 @@ class CreateListing extends Component {
 
                   <input
                     type="button"
-                    className="changebut"
+                    className="confirm-listing-button"
                     value="Back"
                     onClick={this.pageToggle}
                   />
                   <input
-                    className="changebut"
+                    className="confirm-listing-button"
                     type="button"
                     onClick={this.onSubmit}
                     value="Submit"
                   />
                   <input
-                    className="changebut"
+                    className="confirm-listing-button"
                     type="button"
                     onClick={this.onSaveDraft}
                     value="Save Draft"

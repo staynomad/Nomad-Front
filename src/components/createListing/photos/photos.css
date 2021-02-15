@@ -23,3 +23,12 @@
 .create-listing-photos-container {
   margin-bottom: 20px;
 }
+
+@media screen and (max-width: 490px) {
+  .create-listing-image {
+    max-height: 150px !important;
+  }
+  .upload-file {
+    width: 80%;
+  }
+}

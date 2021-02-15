@@ -6,6 +6,7 @@
   padding-top: 10rem;
   display: flex;
   justify-content: center;
+  overflow-y: hidden;
 }
 
 .overallListingForm {
@@ -15,7 +16,7 @@
   background-color: white;
   display: inline-flex;
   border-radius: 5px;
-  margin-bottom: 2% !important;
+  margin-bottom: 5rem !important;
   overflow: hidden;
 }
 
@@ -191,6 +192,9 @@ span.import-info {
   position: relative;
   height: 5rem;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .create-listing-header h1 {
@@ -313,4 +317,135 @@ span.import-info {
 }
 .create-listing-next-button:focus {
   outline: none;
+}
+
+.confirm-container {
+  padding: 0 10px;
+}
+
+.confirm-listing-header {
+  background: var(--color-green);
+  color: white !important;
+  font-size: 2.5rem !important;
+}
+
+.confirm-listing-subtitle {
+  font-size: 2.5rem !important;
+}
+
+.confirm-listing-text-container {
+  margin-bottom: 1rem;
+}
+.confirm-listing-text-container span {
+  font-weight: bold;
+}
+
+.confirm-listing-text {
+  text-align: center !important;
+  font-size: 1.7rem !important;
+  display: flex;
+  flex-direction: column;
+}
+.confirm-listing-text.dates {
+  display: block;
+}
+.confirm-listing-text.dates span {
+  font-weight: bold;
+}
+
+.confirm-listing-button {
+  color: var(--color-green);
+  font-size: 20px;
+  background: white;
+  margin: 5px;
+  margin: 2rem 0.5rem;
+  height: 50px;
+  width: 150px;
+  border-radius: 25px;
+  border: 2px solid var(--color-green);
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.confirm-listing-button:hover {
+  color: white;
+  background-color: #00b183;
+}
+
+@media screen and (max-width: 870px) {
+  .overallListingForm {
+    margin: 0 1rem;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .create-listing-content {
+    padding: 10px 2rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .fullListingBackground {
+    padding-top: 7rem;
+  }
+}
+
+@media screen and (max-width: 670px) {
+  .create-listing-input {
+    width: 65%;
+  }
+  .css-18ozde5-container {
+    width: 65% !important;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .details-wrapper {
+    width: 85% !important;
+  }
+}
+
+@media screen and (max-width: 530px) {
+  .create-listing-header {
+    height: 3rem;
+  }
+  .create-listing-header h1 {
+    font-size: 2rem !important;
+  }
+  .confirm-listing-button {
+    font-size: 16px;
+    height: 40px;
+    width: 100px;
+  }
+}
+
+@media screen and (max-width: 440px) {
+  .create-listing-content {
+    padding: 10px 0.7rem;
+  }
+  .create-listing-title-input {
+    font-size: 12px;
+  }
+  .confirm-listing-header {
+    font-size: 1.9rem !important;
+  }
+  .confirm-listing-subtitle {
+    font-size: 1.8rem !important;
+  }
+  .confirm-listing-text {
+    font-size: 1.2rem !important;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .create-listing-input {
+    width: 60%;
+  }
+  .css-18ozde5-container {
+    width: 60% !important;
+  }
+  .confirm-listing-button {
+    width: 90px;
+    margin: 2rem 2px;
+  }
 }
