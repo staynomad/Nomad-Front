@@ -115,6 +115,51 @@
   background: rgb(233, 89, 89);
 }
 
+.reservation-card-container {
+  margin: 5px auto 35px auto;
+  width: 400px;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0px 35px 60px rgba(187, 187, 187, 0.25);
+  overflow: hidden;
+  transition: box-shadow 0.3s;
+}
+
+.reservation-card-container a {
+  width: 100%;
+}
+
+.reservation-card-container:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.reservation-card-information {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.reservation-card-information h2 {
+  margin: 10px;
+  font-size: 20px !important;
+}
+
+.reservation-card-image {
+  width: 100%;
+}
+
+@media screen and (max-width: 465px) {
+  .reservation-card-container {
+    width: 90%;
+  }
+  .reservation-card-information h2 {
+    font-size: 16px !important;
+  }
+}
+
 @media screen and (max-width: 420px) {
   .account-listing-button {
     font-size: 12px !important;

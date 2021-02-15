@@ -75,7 +75,7 @@ class ReservationCard extends React.Component {
           !this.state.listing ? (
             <div id="spinner"></div>
           ) : (
-            <div className="listing-item">
+            <div className="reservation-card-container">
               <NavLink to={"/listing/" + this.state.listing._id}>
                 {this.confirmCheck ? (
                   <>
@@ -96,13 +96,13 @@ class ReservationCard extends React.Component {
                     </>
                   </>
                 ) : (
-                  <div className="listing-information">
+                  <div className="reservation-card-information">
                     <img
-                      className="listing-image"
+                      className="reservation-card-image"
                       src={this.state.listing.pictures[0]}
                       alt={this.state.listing.title}
                     />
-                    <b>{this.state.listing.title}</b>
+                    <h2>{this.state.listing.title}</h2>
                     {this.state.listing.location.street},{" "}
                     {this.state.listing.location.city},{" "}
                     {this.state.listing.location.state},{" "}
