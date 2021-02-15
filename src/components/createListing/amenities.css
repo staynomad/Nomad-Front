@@ -23,6 +23,7 @@
 
 #create-listing-amenity {
   cursor: pointer;
+  transition: transform 0.2s;
 }
 
 #create-listing-amenity:hover {

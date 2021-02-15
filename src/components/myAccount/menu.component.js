@@ -104,7 +104,7 @@ class LeftMenu extends Component {
           <div className="reservations-container">
             {reservations.active.length === 0 &&
             reservations.expired.length === 0 ? (
-              <div>No reservations yet!</div>
+              <h2>No reservations yet!</h2>
             ) : (
               <div>
                 <div className="reservations-active">
@@ -124,7 +124,7 @@ class LeftMenu extends Component {
                         />
                       ))
                   ) : (
-                    <div>No active reservations</div>
+                    <h2>No active reservations</h2>
                   )}
                 </div>
                 <div className="reservations-expired">
@@ -349,7 +349,7 @@ class LeftMenu extends Component {
               </div>
             </div>
           </div>
-          <>{this._renderSubComp()}</>
+          <div className="account-content-scroll">{this._renderSubComp()}</div>
         </div>
       </div>
     );

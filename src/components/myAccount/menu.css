@@ -9,6 +9,17 @@
   box-shadow: 0px 35px 60px rgba(132, 132, 132, 0.25);
 }
 
+.account-content-scroll {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.account-content-scroll::webkit-scrollbar {
+  display: none;
+}
 .account-container {
   display: flex;
   justify-content: center;
@@ -186,6 +197,21 @@
 
 .profile-roommate-form:hover {
   transform: scale(1.1);
+}
+
+.reservations-container {
+  display: flex;
+  justify-content: center;
+}
+
+.listing-information {
+  box-shadow: 0px 35px 60px rgba(187, 187, 187, 0.25);
+  border-radius: 10px;
+  transition: all 0.3s;
+}
+
+.listing-information:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
 @media screen and (max-width: 1040px) {

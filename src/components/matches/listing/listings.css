@@ -53,8 +53,8 @@
 .account-listing-buttons-container {
   position: relative;
   display: flex;
-  justify-content: center;
   margin-top: 2rem;
+  margin: 2rem auto;
 }
 
 .account-listing-button {
@@ -85,6 +85,34 @@
 .account-listing-no-listing {
   font-size: 20px !important;
   margin-top: 2rem !important;
+}
+
+.listing-card-button {
+  color: var(--color-green);
+  background: transparent;
+  border: 2px solid var(--color-green);
+  border-radius: 20px;
+  font: inherit;
+  padding: 5px 1.5rem;
+  font-size: 16px;
+  font-weight: normal;
+  margin: 1rem 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.listing-card-button.delete {
+  color: rgb(233, 89, 89);
+  border: 2px solid rgb(233, 89, 89);
+}
+
+.listing-card-button:hover {
+  color: white;
+  background: var(--color-green);
+}
+
+.listing-card-button.delete:hover {
+  background: rgb(233, 89, 89);
 }
 
 @media screen and (max-width: 420px) {
