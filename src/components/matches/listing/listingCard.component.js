@@ -73,12 +73,15 @@ const ListingCard = (props) => {
   for (let i = 0; i < 5 - parseInt(rating); i++) {
     empty_stars.push(<span key={i} className="fa fa-star"></span>);
   }
-
   return (
     <>
       <NavLink
-        className="listing-item wow fadeInUp"
-        data-wow-delay="0.5s"
+        className={
+          props.location.pathname === "/MyAccount"
+            ? "listing-item"
+            : "listing-item wow fadeInUp"
+        }
+        data-wow-delay={props.location.pathname === "/MyAccount" ? "" : "0.5s"}
         to={"/listing/" + listing._id}
       >
         <div className="list-card">

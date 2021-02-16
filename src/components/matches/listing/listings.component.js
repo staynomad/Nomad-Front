@@ -162,7 +162,6 @@ class Listings extends Component {
     const handleClose = () => {
       this.setState({ sortAnchorEl: null });
     };
-
     return (
       <>
         {this.props.location.pathname === "/MyAccount" ? (
@@ -233,7 +232,11 @@ class Listings extends Component {
             <div className="listings-container">
               <div
                 id="listing-content"
-                className="wow fadeInUp"
+                className={
+                  this.props.location.pathname === "/MyAccount"
+                    ? ""
+                    : "wow fadeInUp"
+                }
                 data-wow-delay="0.5s"
               >
                 {this.state.listings.map((listing, idx) => {
