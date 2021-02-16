@@ -1,17 +1,23 @@
 import React from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { withRouter, NavLink } from "react-router-dom";
 import {
   incompleteForm,
   completeForm,
 } from "../../redux/actions/loadingActions";
+
+import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
+
 class LandingPageCL extends React.Component {
   componentDidMount() {
     this.props.completeForm();
   }
   render() {
     return (
-      <div>
+      <div className="create-listing-header">
+        <NavLink className="create-listing-back" to="/MyAccount">
+          <KeyboardBackspaceIcon />
+        </NavLink>
         <h1 className="startText">Get Started!</h1>
       </div>
     );

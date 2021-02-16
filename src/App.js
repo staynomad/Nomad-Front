@@ -6,14 +6,10 @@ import Login from "./components/authentication/login.component";
 import Signup from "./components/authentication/signup.component";
 import Contact from "./components/subpages/contact.component.js";
 import Matches from "./components/matches/matches.component.js";
-import Questionnaire from "./components/matches/questionnaire.component";
+// import Questionnaire from "./components/matches/questionnaire.component";
 import EditProfileInfo from "./components/myAccount/editProfileInfo.component";
-import ReservationLookup from './components/reservations/reservationLookupModal.component';
-import {
-  Route,
-  Switch,
-  useHistory,
-} from "react-router-dom";
+import ReservationLookup from "./components/reservations/reservationLookupModal.component";
+import { Route, Switch, useHistory } from "react-router-dom";
 import CreateListing from "./components/createListing/createListing.component";
 import MyAccount from "./components/myAccount/menu.component";
 import ListingPage from "./components/listingPage/listingPage.component";
@@ -37,34 +33,92 @@ function App() {
 
   return (
     <>
-      <Navbar history={history} setReservationModal={setReservationModal} reservationModal={reservationModal} />
+      <Navbar
+        history={history}
+        setReservationModal={setReservationModal}
+        reservationModal={reservationModal}
+      />
       <div className="App">
         <div className="body-container">
           <Switch>
-            <Route path="/" exact component={() => <Home isBlurred={reservationModal} history={history} />} />
+            <Route
+              path="/"
+              exact
+              component={() => (
+                <Home isBlurred={reservationModal} history={history} />
+              )}
+            />
             <Route path="/ContactUs" exact component={Contact} />
             <Route path="/Login" exact component={Login} />
             <Route path="/SignUp" exact component={Signup} />
             <Route path="/CreateListing" exact component={CreateListing} />
-            <Route path="/Matches" exact component={Matches} history={history} />
+            <Route
+              path="/Matches"
+              exact
+              component={Matches}
+              history={history}
+            />
             <Route path="/Map" exact component={ListingMap} />
-            <Route path="/MyAccount" exact component={() => <MyAccount setReviewModal={setReviewModal} setReviewListingId={setReviewListingId} />} />
-            <Route path="/Questionnaire" exact component={Questionnaire} />
-            <Route path="/Listing/:id" exact component={() => <ListingPage review={false} />} />
-            <Route path="/Listing/:id/review" exact component={() => <ListingPage review={true} />} />
-            <Route path="/EditListing/:listingId" exact component={EditListing} />
+            <Route
+              path="/MyAccount"
+              exact
+              component={() => (
+                <MyAccount
+                  setReviewModal={setReviewModal}
+                  setReviewListingId={setReviewListingId}
+                />
+              )}
+            />
+            {/* <Route path="/Questionnaire" exact component={Questionnaire} /> */}
+            <Route
+              path="/Listing/:id"
+              exact
+              component={() => <ListingPage review={false} />}
+            />
+            <Route
+              path="/Listing/:id/review"
+              exact
+              component={() => <ListingPage review={true} />}
+            />
+            <Route
+              path="/EditListing/:listingId"
+              exact
+              component={EditListing}
+            />
             <Route path="/PaymentSuccess" exact component={PaymentSuccess} />
-            <Route path="/AccountVerification/:userId" exact component={AccountVerification} />
+            <Route
+              path="/AccountVerification/:userId"
+              exact
+              component={AccountVerification}
+            />
             <Route path="/EditProfileInfo" exact component={EditProfileInfo} />
             <Route path="/contact" exact component={Contact} />
-            <Route path="/completeReservation/:listingId/:reservationId" exact component={ActivateReservation} />
-            <Route path="/how-to-import-or-export-calendar" exact component={CalendarImportInfo} />
+            <Route
+              path="/completeReservation/:listingId/:reservationId"
+              exact
+              component={ActivateReservation}
+            />
+            <Route
+              path="/how-to-import-or-export-calendar"
+              exact
+              component={CalendarImportInfo}
+            />
             <Route path="/about" exact component={About} />
             <Route path="*" exact component={PageNotFound} />
           </Switch>
         </div>
-        {reservationModal ? <ReservationLookup reservationModal={reservationModal} setReservationModal={setReservationModal} /> : null}
-        {reviewModal ? <ReviewPopup setReviewModal={setReviewModal} reviewListingId={reviewListingId} /> : null}
+        {reservationModal ? (
+          <ReservationLookup
+            reservationModal={reservationModal}
+            setReservationModal={setReservationModal}
+          />
+        ) : null}
+        {reviewModal ? (
+          <ReviewPopup
+            setReviewModal={setReviewModal}
+            reviewListingId={reviewListingId}
+          />
+        ) : null}
         <Footer />
       </div>
     </>

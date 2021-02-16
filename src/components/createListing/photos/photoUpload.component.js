@@ -81,6 +81,7 @@ class PhotoUpload extends Component {
       return (
         <div key={image} className="single-img-container">
           <img
+            className="create-listing-image"
             style={{ maxHeight: 200, maxwidth: 200 }}
             id="target"
             src={this.props.photoData.pictures[image]}
@@ -100,7 +101,7 @@ class PhotoUpload extends Component {
 
   render() {
     return (
-      <div>
+      <div className="create-listing-photos-container">
         <div className="questionText">Pictures</div> <br />
         <div>
           {this.state.invalid_type ? (

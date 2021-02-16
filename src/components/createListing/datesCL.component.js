@@ -116,8 +116,7 @@ class DatesCL extends Component {
           <div>
             <form onSubmit={this.handleSubmit}>
               <input
-                className="input login-input"
-                style={{ paddingBottom: "0", marginBottom: "0", width: "100%" }}
+                className="create-listing-calendarURL"
                 type="text"
                 placeholder="Calendar URL"
                 value={this.state.calendarURL}
@@ -131,7 +130,7 @@ class DatesCL extends Component {
                   className="btn green"
                   style={{ width: "auto" }}
                   type="submit"
-                  value="import"
+                  value="Import"
                 />
               )}
               {this.state.importDone === true ? (
@@ -194,8 +193,8 @@ class DatesCL extends Component {
             <Helmet>
               <style>{`
             .Selectable .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
-              background-color: #f0f8ff !important;
-              color: #4a90e2;
+              background-color: #e1f5e1 !important;
+              color: 'black';
             }
             .Selectable .DayPicker-Day {
               border-radius: 0 !important;
@@ -211,21 +210,21 @@ class DatesCL extends Component {
           `}</style>
             </Helmet>
             <br />
-            <p
-              className="import-calendar"
-              style={{
-                textDecoration: "underline",
-                cursor: "pointer",
-                paddingLeft: "3%",
-                paddingRight: "1%",
-              }}
-              onClick={this.handleImportToggle}
-            >
-              Import
-            </p>
-            <p className="import-calendar">your calendar instead</p>
-            <br />
-            <div className="spacer_m"></div>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <p
+                className="import-calendar"
+                style={{
+                  textDecoration: "underline",
+                  cursor: "pointer",
+                  paddingLeft: "3%",
+                  paddingRight: "1%",
+                }}
+                onClick={this.handleImportToggle}
+              >
+                Import
+              </p>
+              <p className="import-calendar">your calendar instead</p>
+            </div>
           </div>
         )}
       </>

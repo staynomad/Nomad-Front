@@ -1,23 +1,26 @@
 .details-wrapper {
   display: inline-block;
-  width: 200px;
+  width: 50%;
   align-content: center;
-}
-
-.overall-details {
-  margin-bottom: 8%;
+  margin: 20px 0;
 }
 
 .beds {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .baths {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .maxppl {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .input-label-details {
@@ -30,18 +33,27 @@
 }
 
 .input-box-details {
-  width: 100%;
-  padding-left: 6%;
+  width: 50%;
+  padding: 7px 15px;
   background-color: white;
-  border-radius: 5px;
-  height: 35px;
-  border-radius: 20px;
-  margin-top: 3%;
-  margin-bottom: 3%;
+  border-radius: 10px;
+  margin: 8px 0;
   border: 2px solid rgb(210 210 210 / 47%);
   color: #4d4842;
+  text-align: center;
+  font-size: 20px;
 }
 
 .input-box-details:hover {
-  background-color: #00b1821d;
+  background-color: inherit;
+}
+
+.input-box-details:focus {
+  border: 2px solid var(--color-green);
+}
+
+.create-listing-details-label {
+  font-size: 120% !important;
+  color: #4d4842;
+  font-weight: bold;
 }

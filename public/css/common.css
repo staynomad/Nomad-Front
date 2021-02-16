@@ -93,7 +93,8 @@ html {
 
 .mobile-nav-link {
   font-size: 40px !important;
-  color: var(--color-green);
+  color: var(--color-green) !important;
+  font-family: "Playfair Display", sans-serif !important;
   padding: 1rem 0rem;
   font-weight: bolder;
   cursor: pointer;

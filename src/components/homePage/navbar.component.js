@@ -93,17 +93,16 @@ const Navbar = (props) => {
               <AccountCircleIcon className="mobile-nav-icon" />
               Account
             </NavLink>
-            <a
+            <h4
               className="mobile-nav-link"
               onClick={() => {
                 handleLogout();
                 setMobileNav(false);
               }}
-              href
             >
               <ExitToAppIcon className="mobile-nav-icon" />
               Logout
-            </a>
+            </h4>
           </div>
         ) : (
           <NavLink
