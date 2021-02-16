@@ -67,7 +67,7 @@ export default function Questionnaire(props) {
 
   // const [hobbies, setHobbies] = useState({});
   const [successfulPost, setSuccessfulPost] = useState(false);
-  const [notLoggedIn, setNotLoggedIn] = useState(props.userId === "");
+  // const [notLoggedIn, setNotLoggedIn] = useState(props.userId === "");
   const [error, setError] = useState(false);
   const [totalState, setTotalState] = useState({
     numberOfRoommates: "",
@@ -92,6 +92,7 @@ export default function Questionnaire(props) {
       return props.history.push("/login");
     }
     window.scrollTo(0, 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = (event) => {

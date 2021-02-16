@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setUserInfo } from "../../redux/actions/userActions";
 import { app } from "../../utils/axiosConfig.js";
-import { NavLink } from "react-router-dom";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
 
 const Profile = () => {

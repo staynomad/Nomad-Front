@@ -264,7 +264,6 @@ export const stateStyles = {
     ...provided,
     minHeight: "100%",
     height: "100%",
-    minHeight: "100%",
     cursor: "pointer",
     padding: 0,
     border: "none",

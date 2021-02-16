@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { withStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
 import { useSelector, useDispatch } from "react-redux";
 import { app } from "../../utils/axiosConfig.js";
 import { setUserInfo } from "../../redux/actions/userActions";

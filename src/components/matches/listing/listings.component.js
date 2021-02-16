@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import Pagination from "@material-ui/lab/Pagination";
-import Button from "@material-ui/core/Button";
-import { withStyles } from "@material-ui/core/styles";
 import MaterialUIMenu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
