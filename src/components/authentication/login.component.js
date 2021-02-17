@@ -34,7 +34,7 @@ const Login = (props) => {
   ) : (
     <div className="login-content">
       <div className="login-form-container">
-        <form action="/login" className="form">
+        <form action="/login" className="form login-form-width">
           <div>
             <h1 style={{ color: "#31473b", fontSize: "48px" }}>Welcome Back</h1>
             <div className="spacer_xs"></div>

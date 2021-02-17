@@ -15,7 +15,6 @@
 
 .login-form-container {
   background-color: white;
-  max-width: fit-content;
   display: inline-flex;
   border-radius: 10px;
   padding: 2% 5%;
@@ -23,10 +22,23 @@
   top: calc(45px + 50%);
   left: 50%;
   transform: translate(-50%, -50%);
+  min-width: 40rem;
 }
 
 form.form {
   padding: 20px;
+}
+
+.login-form-width {
+  width: 100%;
+}
+
+.login-form {
+  background-color: white;
+  display: inline-flex;
+  border-radius: 10px;
+  padding: 2% 5%;
+  margin-top: 5%;
 }
 
 .login-input {
