@@ -2,9 +2,9 @@
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)),
     url("../../assets/img/background/horseshoe.jpg");
   background-size: cover;
-  padding-bottom: 10%;
   text-align: -webkit-center;
   height: 100%;
+  position: relative;
 }
 
 @media (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
@@ -13,26 +13,49 @@
   }
 }
 
-.login-form {
+.login-form-container {
   background-color: white;
-  max-width: fit-content;
   display: inline-flex;
   border-radius: 10px;
   padding: 2% 5%;
-  margin-top: 5%;
+  position: absolute;
+  top: calc(45px + 50%);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 40rem;
 }
 
 form.form {
   padding: 20px;
 }
 
+.login-form-width {
+  width: 100%;
+}
+
+.login-form-width h1 {
+  padding-bottom: 2rem;
+}
+
+.login-form {
+  background-color: white;
+  display: inline-flex;
+  border-radius: 10px;
+  padding: 2% 5%;
+  margin-top: 5%;
+}
+
 .login-input {
   margin: 2% 0;
-  width: 350px;
+  width: 100%;
   border: 2px solid rgb(210 210 210 / 47%);
   border-radius: 20px !important;
   padding-left: 3%;
   font-size: 16px;
+}
+
+.login-input:focus {
+  border: 2px solid var(--color-green);
 }
 
 .btn {
@@ -42,4 +65,59 @@ form.form {
 .botText {
   font-size: 18px;
   color: #31473b;
+}
+
+.sign-up-a:hover {
+  text-decoration: underline !important;
+}
+
+.google-sign-in-container {
+  padding-bottom: 1.2rem;
+}
+
+@media screen and (max-width: 768px) {
+  .login-form-container {
+    top: calc(35px + 50%);
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .login-form-container {
+    min-width: unset;
+    width: 90%;
+  }
+  .login-form-width h1 {
+    font-size: 3rem !important;
+  }
+}
+@media screen and (max-width: 490px) {
+  .login-form-container {
+    padding: 2% 0;
+  }
+}
+
+@media screen and (max-width: 370px) {
+  .login-form-width h1 {
+    font-size: 2.5rem !important;
+  }
+}
+
+@media screen and (max-height: 800px) {
+  .login-form-container {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .login-form-width {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+  }
+}
+@media screen and (max-height: 710px) {
+  .login-form-width {
+    padding-top: 0 !important;
+  }
+  .login-form-width h1 {
+    padding-bottom: 0 !important;
+    font-size: 2.5rem !important;
+  }
 }
