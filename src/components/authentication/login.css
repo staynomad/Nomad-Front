@@ -33,6 +33,10 @@ form.form {
   width: 100%;
 }
 
+.login-form-width h1 {
+  padding-bottom: 2rem;
+}
+
 .login-form {
   background-color: white;
   display: inline-flex;
@@ -69,4 +73,51 @@ form.form {
 
 .google-sign-in-container {
   padding-bottom: 1.2rem;
+}
+
+@media screen and (max-width: 768px) {
+  .login-form-container {
+    top: calc(35px + 50%);
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .login-form-container {
+    min-width: unset;
+    width: 90%;
+  }
+  .login-form-width h1 {
+    font-size: 3rem !important;
+  }
+}
+@media screen and (max-width: 490px) {
+  .login-form-container {
+    padding: 2% 0;
+  }
+}
+
+@media screen and (max-width: 370px) {
+  .login-form-width h1 {
+    font-size: 2.5rem !important;
+  }
+}
+
+@media screen and (max-height: 800px) {
+  .login-form-container {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .login-form-width {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+  }
+}
+@media screen and (max-height: 710px) {
+  .login-form-width {
+    padding-top: 0 !important;
+  }
+  .login-form-width h1 {
+    padding-bottom: 0 !important;
+    font-size: 2.5rem !important;
+  }
 }

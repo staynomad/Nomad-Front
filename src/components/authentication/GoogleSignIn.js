@@ -20,7 +20,6 @@ const GoogleSignIn = (props) => {
         onFailure={handleLogin}
         cookiePolicy={"single_host_origin"}
       />
-      <div className="spacer_s"></div>
     </>
   );
 };

@@ -87,8 +87,6 @@ const Signup = () => {
             }
           />
           {validationError === "" ? null : <p>{validationError}</p>}
-
-          <div className="spacer_xxs"></div>
           <div className="signup-checkbox-container">
             {userSignup.isHost ? (
               <div
@@ -111,15 +109,12 @@ const Signup = () => {
             )}
             {"  Are you a host?"}
           </div>
-          <div className="spacer_xxs"></div>
           {loading ? (
             <div id="spinner"></div>
           ) : (
-            <input
-              type="submit"
-              value="Create your account"
-              className="btn green"
-            />
+            <button type="submit" className="btn green signup-button">
+              <p>Create your account</p>
+            </button>
           )}
         </form>
         <div className="botText">

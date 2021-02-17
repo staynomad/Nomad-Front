@@ -37,9 +37,7 @@ const Login = (props) => {
         <form action="/login" className="form login-form-width">
           <div>
             <h1 style={{ color: "#31473b", fontSize: "48px" }}>Welcome Back</h1>
-            <div className="spacer_xs"></div>
           </div>
-          <div className="spacer_s"></div>
           <div>
             <input
               type="email"

@@ -65,7 +65,7 @@
   flex-direction: column;
   border-radius: 10px;
   padding: 2% 5%;
-  margin-top: 5%;
+
   width: 100%;
 }
 
@@ -102,4 +102,70 @@
 
 .sign-up-checkbox.active svg {
   color: var(--color-green);
+}
+
+.signup-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.signup-button p {
+  color: white !important;
+  font-size: 18px !important;
+}
+
+@media screen and (max-width: 768px) {
+  .signup-form-container {
+    top: calc(35px + 50%);
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .signup-form-container {
+    min-width: unset;
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .signup-form-container {
+    padding: 1rem;
+  }
+  .signup-form {
+    padding: 20px 0 !important;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .signup-form-container h1 {
+    font-size: 2.5rem !important;
+    margin: 0;
+  }
+  .signup-form {
+    padding-top: 0 !important;
+  }
+}
+
+@media screen and (max-width: 730px) {
+  .signup-input {
+    margin: 4px 0;
+  }
+}
+
+@media screen and (max-height: 790px) {
+  .signup-form-container {
+    padding-top: 0;
+    padding-bottom: 3px;
+  }
+  .signup-form {
+    padding-bottom: 5px !important;
+  }
+  .signup-button {
+    margin: 1px 0;
+    height: 30px !important;
+  }
+  .signup-form-container h1 {
+    font-size: 2.5rem !important;
+    margin: 0;
+  }
 }
