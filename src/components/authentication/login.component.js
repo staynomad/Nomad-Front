@@ -33,7 +33,7 @@ const Login = (props) => {
     <Redirect to={{ pathname: "/" }} />
   ) : (
     <div className="login-content">
-      <div className="login-form container">
+      <div className="login-form-container">
         <form action="/login" className="form">
           <div>
             <h1 style={{ color: "#31473b", fontSize: "48px" }}>Welcome Back</h1>
@@ -44,8 +44,8 @@ const Login = (props) => {
             <input
               type="email"
               name="email"
-              placeholder="your email"
-              className="input login-input"
+              placeholder="Email"
+              className="login-input"
               onChange={(e) =>
                 setUserLogin({ ...userLogin, email: e.target.value })
               }
@@ -56,8 +56,8 @@ const Login = (props) => {
             <input
               type="password"
               name="password"
-              placeholder="your password"
-              className="input login-input"
+              placeholder="Password"
+              className="login-input"
               onChange={(e) =>
                 setUserLogin({ ...userLogin, password: e.target.value })
               }
@@ -84,18 +84,21 @@ const Login = (props) => {
                   handleLogin(e);
                 }}
               >
-                log in
+                Login
               </button>
             </div>
           )}
-          <GoogleSignIn />
+          <div className="google-sign-in-container">
+            <GoogleSignIn />
+          </div>
           <div className="botText">
-            <span>don't have an account? </span>
+            <span>Don't have an account? </span>
             <a
+              className="sign-up-a"
               href="/SignUp"
               style={{ color: "#02b188", textDecoration: "none" }}
             >
-              sign up
+              Sign up
             </a>
           </div>
         </form>
