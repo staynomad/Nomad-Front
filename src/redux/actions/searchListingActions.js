@@ -7,6 +7,7 @@ export const SET_SEARCH_LISTINGS = 'VHomes/listings/SET_SEARCH_LISTINGS';
 export const SET_USER_LISTINGS = 'VHomes/listings/SET_USER_LISTINGS';
 export const DELETE_LISTING = 'VHomes/listings/DELETE_LISTING';
 export const SET_EDIT_LISTING = 'VHomes/listings/SET_EDIT_LISTING';
+export const SET_POPULAR_LISTINGS = 'VHomes/listings/SET_POPULAR_LISTINGS';
 
 /* Actions */
 const setSearchListings = listings => ({ type: SET_SEARCH_LISTINGS, listings });
@@ -14,6 +15,7 @@ const setUserListings = listings => ({ type: SET_USER_LISTINGS, listings });
 const deleteListing = listingId => ({ type: DELETE_LISTING, listingId });
 const setEditListing = listing => ({ type: SET_EDIT_LISTING, listing });
 const setMapListings = listings => ({ type: SET_MAP_LISTINGS, listings });
+const setPopularListings = listings => ({ type: SET_POPULAR_LISTINGS, listings });
 
 /* Fetch Calls */
 export const searchForListings = (itemToSearch) => async dispatch => {
@@ -93,4 +95,15 @@ export const getListingInRadius = (lat, lng, radius) => async dispatch => {
         const { listingsInRadius } = await searchListingRes.data;
         dispatch(setMapListings(listingsInRadius));
     };
+}
+
+export const getPopularListings = (count) => async dispatch => {
+    // Return count listings sorted by popularity
+    const searchListingRes = await handleReq(`/listings/popularListings/${count}`, "GET")
+
+    if (searchListingRes.status === 200) {
+      const { popularListings } = await searchListingRes.data.listings;
+      dispatch(setPopularListings(popularListings));
+    }
+
 }

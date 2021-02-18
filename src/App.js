@@ -22,6 +22,7 @@ import CalendarImportInfo from "./components/subpages/calendarImportInfo.compone
 import PageNotFound from "./components/subpages/404.component";
 import About from "./components/subpages/about.component";
 import ListingMap from "./components/map/maps.component";
+import test from "./components/homePage/featuredListings.component"
 import "./App.css";
 
 //to add more items just copy the format and add the route path. look at navbar component to see where the path is currently set to
@@ -104,6 +105,7 @@ function App() {
               component={CalendarImportInfo}
             />
             <Route path="/about" exact component={About} />
+            <Route path="/test" exact component={test} />
             <Route path="*" exact component={PageNotFound} />
           </Switch>
         </div>
