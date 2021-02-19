@@ -3,7 +3,7 @@
     url("../../assets/img/background/horseshoe.jpg");
   background-size: cover;
   text-align: -webkit-center;
-  height: 100%;
+  height: calc(100vh - 150px);
   position: relative;
 }
 

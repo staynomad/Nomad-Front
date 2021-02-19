@@ -4,7 +4,7 @@
   background-size: cover;
   text-align: -webkit-center;
   display: block;
-  height: 100%;
+  height: calc(100vh - 150px);
   position: relative;
 }
 
@@ -155,17 +155,24 @@
 @media screen and (max-height: 790px) {
   .signup-form-container {
     padding-top: 0;
-    padding-bottom: 3px;
+    padding-bottom: 8px;
   }
   .signup-form {
     padding-bottom: 5px !important;
   }
-  .signup-button {
-    margin: 1px 0;
-    height: 30px !important;
-  }
+
   .signup-form-container h1 {
     font-size: 2.5rem !important;
     margin: 0;
+  }
+  .signup-input {
+    margin: 4px 0;
+  }
+}
+
+@media screen and (max-height: 600px) {
+  .signup-button {
+    margin: 1px 0;
+    height: 30px !important;
   }
 }
