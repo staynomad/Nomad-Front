@@ -81,6 +81,7 @@ class ListingMap extends Component {
                 <GoogleMapReact
                     defaultCenter={this.state.center}
                     defaultZoom={this.state.zoom}
+                    options={{ maxZoom: 10 }}
                 >
                     {this.props.mapListings && this.props.mapListings.length > 0 ? (
                         this.props.mapListings.map((listing, idx) => {
