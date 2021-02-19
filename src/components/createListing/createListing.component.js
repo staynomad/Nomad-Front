@@ -574,9 +574,6 @@ class CreateListing extends Component {
 
     return (
       <div className="fullListingBackground">
-        <div>
-          <h1 className="startText">Get Started!</h1>
-        </div>
         <div className="overallListingForm">
           {this.props.loading ? (
             <div>
@@ -598,7 +595,9 @@ class CreateListing extends Component {
                   { /* User did not hit the next button or hit back button -> Don't need to check if form is completed */
                     !this.state.isReviewingListing || !this.state.isCompleted ? (
                       <>
-                        {/* Title */}
+                        <div>
+                          <h1 className="startText">Get Started!</h1>
+                        </div>
                         <div className="questionText">
                           Title
                           </div>
@@ -984,7 +983,7 @@ class CreateListing extends Component {
                                   `Selected from ${from.toLocaleDateString()} to
                                     ${to.toLocaleDateString()}`}{" "}
                                 {/*from && to && (
-                                
+
                                 )*/}
                               </div>
                               {this.state.form.dateInit.invalidDate ? (
