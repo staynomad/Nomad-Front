@@ -102,8 +102,7 @@ export const getPopularListings = (count) => async dispatch => {
     const searchListingRes = await handleReq(`/listings/popularListings/${count}`, "GET")
 
     if (searchListingRes.status === 200) {
-      const { popularListings } = await searchListingRes.data.listings;
-      dispatch(setPopularListings(popularListings));
+      dispatch(setPopularListings(await searchListingRes.data.listings));
     }
 
 }
