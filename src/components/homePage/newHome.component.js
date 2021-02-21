@@ -7,7 +7,7 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import Search from "./search.component";
 import Subscribe from "./subscribe.component";
-import FeaturedListings from "./featuredListings.component"
+import FeaturedListings from "./featuredListings.component";
 import { isMobile } from "react-device-detect";
 
 const useStyles = makeStyles((theme) => ({
@@ -32,10 +32,10 @@ const NewHome = (props) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (!props.userSession && !isMobile && !localStorage.getItem('popupSeen')) {
+    if (!props.userSession && !isMobile && !localStorage.getItem("popupSeen")) {
       setTimeout(() => {
         setOpen(true);
-        localStorage.setItem('popupSeen', true)
+        localStorage.setItem("popupSeen", true);
       }, 1000);
     }
     window.scrollTo(0, 0);
@@ -103,7 +103,7 @@ const NewHome = (props) => {
               </div>
             </div>
           </div>
-
+          <FeaturedListings />
           <div className="spacer_xs"></div>
           <div className="container">
             <h1 className="why-title wow fadeInUp" data-wow-delay="0.5s">
@@ -374,7 +374,6 @@ const NewHome = (props) => {
           </div>
 
           <div className="spacer_l"></div>
-          <FeaturedListings />
         </div>
       </div>
     </div>
