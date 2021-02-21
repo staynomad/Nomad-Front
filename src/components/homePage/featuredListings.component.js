@@ -66,11 +66,10 @@ const ArrowRight = Arrow({ text: '>', className: 'arrow-next' });
 const selected = true;
 
 class FeaturedListings extends Component {
-  constructor(props) {
-    super(props);
-    // getPopularListings is not storing popular listings in redux store
-    this.props.getPopularListings(5);
+  async componentDidMount() {
+    await this.props.getPopularListings(5);
     const list = this.props.Listing.popularListings;
+    console.log(list)
     this.menuItems = Menu(list, selected);
   }
 

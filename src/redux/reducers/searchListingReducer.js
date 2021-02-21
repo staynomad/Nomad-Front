@@ -40,7 +40,6 @@ export default function reducer(state = {}, action) {
             }
         }
         case SET_POPULAR_LISTINGS: {
-          console.log(action.listings)
             return {
                 ...state,
                 popularListings: action.listings,

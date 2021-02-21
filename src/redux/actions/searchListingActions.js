@@ -105,7 +105,7 @@ export const getPopularListings = (count) => async dispatch => {
       let popularListings = []
       for (let i = 0; i < searchListingRes.data.listings.length; i++) {
         const listingData = await handleReq(`/listings/byId/${searchListingRes.data.listings[i].listingId}`, "GET")
-        if (listingData.status == 200) {
+        if (listingData.status === 200) {
           popularListings.push(listingData.data.listing)
         }
       }
