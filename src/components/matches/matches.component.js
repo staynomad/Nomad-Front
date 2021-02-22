@@ -6,6 +6,7 @@ import Listings from "./listing/listings.component";
 import Search from "../homePage/search.component";
 import "./matches.css";
 import "./listing/explore.css";
+import FeaturedListings from "../homePage/featuredListings.component";
 
 const Matches = (props) => {
   const { history } = props;
@@ -60,6 +61,9 @@ const Matches = (props) => {
         <Search history={history} />
         <div className="click-for-more">
           Click on a listing to see more information!
+        </div>
+        <div className="featured-listings-matches-container">
+          <FeaturedListings />
         </div>
         {/*<button className="filter btn green" onClick={() => {
           setRoommateView(!roommateView);

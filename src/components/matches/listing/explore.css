@@ -41,6 +41,11 @@
   box-shadow: none;
 }
 
+.featured-listings-matches-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
 @media screen and (max-width: 670px) {
   .listing-item {
     max-width: 450px;
