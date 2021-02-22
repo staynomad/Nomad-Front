@@ -20,6 +20,7 @@
     "react-dom": "^16.13.1",
     "react-google-login": "^5.2.2",
     "react-helmet": "^6.1.0",
+    "react-horizontal-scrolling-menu": "^0.7.9",
     "react-image-gallery": "^1.0.8",
     "react-numeric-input": "^2.2.3",
     "react-places-autocomplete": "^7.3.0",

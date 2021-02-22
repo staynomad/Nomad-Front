@@ -3,7 +3,8 @@ import {
     SET_SEARCH_LISTINGS,
     SET_USER_LISTINGS,
     SET_EDIT_LISTING,
-    SET_MAP_LISTINGS
+    SET_MAP_LISTINGS,
+    SET_POPULAR_LISTINGS,
 } from '../actions/searchListingActions';
 
 export default function reducer(state = {}, action) {
@@ -36,6 +37,12 @@ export default function reducer(state = {}, action) {
             return {
                 ...state,
                 mapListings: action.listings,
+            }
+        }
+        case SET_POPULAR_LISTINGS: {
+            return {
+                ...state,
+                popularListings: action.listings,
             }
         }
         default: return state;
