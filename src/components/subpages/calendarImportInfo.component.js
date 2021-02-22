@@ -13,7 +13,7 @@ export default class CalendarImportInfo extends Component {
           <ol className="instructions" type="1">
             <li><b>Create a Listing: </b>Navigate to your Profile and select the My Listings tab on the side menu. At the top of the screen, click on "Create Listing"</li>
             <img className="calendar-image" src="images/calendarImport1.png" alt="create a listing" />
-            <li><b>Enter Your Information: </b>Once you reach the Availability page, click on "Import your calendar instead" and enter your calendar URL. For help finding this, click <a className="underline" href="https://www.airbnb.com/help/article/99/how-do-i-sync-my-airbnb-calendar-with-another-calendar">here</a>. Then, click "import" to sync your data.</li>
+            <li><b>Enter Your Information: </b>Scroll to the bottom of the page until you reach the Availability section. Click on "Import your calendar instead" and enter your calendar URL. For help finding this, click <a className="underline" href="https://www.airbnb.com/help/article/99/how-do-i-sync-my-airbnb-calendar-with-another-calendar">here</a>. Then, click "import" to sync your data.</li>
             <img className="calendar-image" src="images/calendarImport2.png" alt="import your calendar" />
             <li><b>Submit Your Listing: </b>Fill out the rest of the information about your listing and submit. Now, your listing is live and synced with your calendar!</li>
           </ol>
