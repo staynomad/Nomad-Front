@@ -13,7 +13,7 @@
 }
 
 .featured-listings-container {
-  margin: 10rem 7rem 0 7rem;
+  margin: 0 7rem;
 }
 
 .featured-listings-container h1 {
@@ -132,7 +132,7 @@
 
 @media screen and (max-width: 1250px) {
   .featured-listings-container {
-    margin: 10rem 5rem 0 5rem;
+    margin: 0 5rem;
   }
 }
 
@@ -193,7 +193,7 @@
 
 @media screen and (max-width: 795px) {
   .featured-listings-container {
-    margin: 10rem 3.5rem 0 3.5rem;
+    margin: 0 3.5rem;
   }
   .horizontal-listing-card {
     height: 325px;
@@ -202,7 +202,7 @@
 
 @media screen and (max-width: 768px) {
   .featured-listings-container {
-    margin: 10rem 2rem 0 2rem;
+    margin: 0 2rem;
   }
   .featured-listings-header h1 {
     font-size: 30px !important;
@@ -254,7 +254,7 @@
 
 @media screen and (max-width: 565px) {
   .featured-listings-container {
-    margin: 10rem 1rem 0 1rem;
+    margin: 0 1rem;
   }
 }
 
