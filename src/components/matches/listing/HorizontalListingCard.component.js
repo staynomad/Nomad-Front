@@ -10,7 +10,7 @@ const HorizontalListingCard = ({ listing }) => {
             ? "/images/default_listing.jpg"
             : listing.pictures[0]
         }
-        alt="cover-image"
+        alt="cover"
       />
       <div className="horizontal-listing-card-content">
         <h3>{listing.title}</h3>
@@ -18,19 +18,19 @@ const HorizontalListingCard = ({ listing }) => {
           <div>
             <img src="images/guest.svg" alt="guest" />
             <h4>{`${listing.details.maxpeople} Guest${
-              listing.details.maxpeople == 1 ? "" : "s"
+              listing.details.maxpeople === "1" ? "" : "s"
             }`}</h4>
           </div>
           <div>
             <img src="images/bed.svg" alt="bed" />
             <h4>{`${listing.details.beds} Bed${
-              listing.details.beds == 1 ? "" : "s"
+              listing.details.beds === "1" ? "" : "s"
             }`}</h4>
           </div>
           <div>
             <img src="images/bath.svg" alt="bath" />
             <h4>{`${listing.details.baths} Bath${
-              listing.details.baths == 1 ? "" : "s"
+              listing.details.baths === "1" ? "" : "s"
             }`}</h4>
           </div>
         </div>
