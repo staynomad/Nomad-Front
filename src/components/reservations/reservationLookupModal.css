@@ -111,3 +111,30 @@
 .reservation-input:focus {
   border: 2px solid var(--color-green);
 }
+
+@media screen and (max-width: 585px) {
+  .reservation-modal-content {
+    min-width: 400px;
+    padding: 40px;
+  }
+}
+
+@media screen and (max-width: 440px) {
+  .reservation-modal-content {
+    min-width: 350px;
+    padding: 20px;
+  }
+}
+
+@media screen and (max-width: 370px) {
+  .reservation-modal-content {
+    min-width: 300px;
+    padding: 10px;
+  }
+}
+
+@media screen and (max-height: 670px) {
+  .reservation-modal-content {
+    margin-top: 7rem;
+  }
+}
