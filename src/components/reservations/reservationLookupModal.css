@@ -13,9 +13,9 @@
   height: -webkit-fill-available;
 }
 
-
-.modal-content {
-  box-shadow: 1px 1px 7px 2px #787878;
+.reservation-modal-content {
+  box-shadow: 0px 5px 20px 1px rgba(107, 101, 101, 0.2);
+  border-radius: 10px;
   margin: auto;
   max-width: fit-content;
   min-width: 500px;
@@ -23,6 +23,27 @@
   min-height: 400px;
   background-color: white;
   padding: 60px;
+  margin: 20px;
+}
+
+.reservation-modal-p {
+  text-align: center !important;
+}
+
+.reservation-modal-p.error {
+  color: rgb(192, 36, 36) !important;
+}
+
+.reservation-modal-exit {
+  color: var(--color-green) !important;
+  font-weight: 600;
+  font-size: 18px !important;
+  display: inline;
+  cursor: pointer;
+}
+
+.reservation-modal-exit:hover {
+  color: #2a9761 !important;
 }
 
 .modal-content:target {
@@ -40,14 +61,14 @@
   border-color: #02b188;
   color: white;
   -webkit-transition: transform 0.5s ease 0s;
-     -moz-transition: transform 0.5s ease 0s;
-       -o-transition: transform 0.5s ease 0s;
+  -moz-transition: transform 0.5s ease 0s;
+  -o-transition: transform 0.5s ease 0s;
 }
 
 .searchbutton:hover {
   transform: scale(1.01);
   background-color: #01c490;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .exit {
@@ -74,4 +95,19 @@
 
 .listingInfo {
   text-align: center !important;
+}
+
+.reservation-input {
+  width: 300px;
+  height: 50px;
+  background: white;
+  border-radius: 10px;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  border: 2px solid rgb(210 210 210 / 47%);
+}
+
+.reservation-input:focus {
+  border: 2px solid var(--color-green);
 }
