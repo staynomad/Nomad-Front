@@ -15,6 +15,7 @@ const FeaturedListings = (props) => {
       await props.getPopularListings(10);
     };
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
