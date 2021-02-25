@@ -193,6 +193,11 @@ class EditListing extends Component {
         booked: this.props.Listing.editListing.booked
       }
     })
+    .then((res) => {
+      this.setState({
+        exportURL: res.data.url
+      })
+    })
   }
 
   render() {
@@ -402,7 +407,18 @@ class EditListing extends Component {
                   >
                     Export
                   </button>
-                  <div className="spacer_s" />
+                  <div className="edit-listing-export-url">
+                    {this.state.exportURL ? (
+                      <div>
+                        <span style={{textAlign: "right"}}>
+                          <NavLink to="/how-to-import-or-export-calendar">&#9432;</NavLink>{" "}
+                          What's this?
+                        </span>
+                        <div className="spacer_xs" />
+                        <a href={this.state.exportURL} download>{this.state.exportURL}</a>
+                      </div>
+                    ) : null}
+                  </div>
                 </form>
                 <div className="spacer_l"></div>
                 <form className="edit-listing-transfer-container">
