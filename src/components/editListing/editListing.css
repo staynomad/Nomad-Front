@@ -154,6 +154,8 @@
   cursor: pointer;
   transition: all 0.2s;
   margin-bottom: 3rem;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
 }
 
 .edit-listing-save-button:hover {
