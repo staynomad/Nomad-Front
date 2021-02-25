@@ -507,7 +507,7 @@ class ListingPage extends Component {
                     <h4 className="listing-subtitle">Reviews</h4>
                     {Object.keys(this.state.listingRatings).map(([key]) => {
                       //Check if the review has a message
-                      if (this.state.listingRatings[key].review) {
+                      if (this.state.listingRatings[key] && this.state.listingRatings[key].review) {
                         const rating = [];
                         for (let i = 1; i <= 5; i++) {
                           if (i <= this.state.listingRatings[key].stars) {

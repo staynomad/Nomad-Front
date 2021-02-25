@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter, NavLink } from "react-router-dom";
 import { app } from "../../utils/axiosConfig.js";
-import { CustomButton } from "../matches/listing/listingCard.component";
 import { getListingById } from "../../redux/actions/searchListingActions";
 import { sendListingTranferRequest } from "../../redux/actions/transferListingActions";
 import { submitEditListing } from "../../redux/actions/editListingActions";
@@ -182,6 +181,19 @@ class EditListing extends Component {
     e.preventDefault();
     this.props.submitEditListing(this.props.userSession.token, this.state);
   };
+
+  handleExport = (e) => {
+    e.preventDefault();
+    this.props.getListingById(this.state.listingId)
+    app.post("/listings/exportListing", {
+      userId: this.props.Listing.editListing.userId,
+      listingId: this.state.listingId,
+      listingCalendar: {
+        available: this.props.Listing.editListing.available,
+        booked: this.props.Listing.editListing.booked
+      }
+    })
+  }
 
   render() {
     return (
@@ -374,15 +386,21 @@ class EditListing extends Component {
                   </div>
                   <div className="spacer_s"></div>
                   {!this.state.active ? (
-                    <CustomButton onClick={this.handlePublish}>
-                      publish
-                    </CustomButton>
+                    <button className="edit-listing-save-button" onClick={this.handlePublish}>
+                      Publish
+                    </button>
                   ) : null}
                   <button
                     className="edit-listing-save-button"
                     onClick={this.handleSubmit}
                   >
                     Save
+                  </button>
+                  <button
+                    className="edit-listing-save-button"
+                    onClick={this.handleExport}
+                  >
+                    Export
                   </button>
                   <div className="spacer_s" />
                 </form>
