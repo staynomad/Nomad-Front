@@ -153,9 +153,13 @@
   background: var(--color-green);
   cursor: pointer;
   transition: all 0.2s;
-  margin-bottom: 3rem;
+  margin-bottom: 1.5rem;
   margin-left: 0.25rem;
   margin-right: 0.25rem;
+}
+
+.edit-listing-export-url {
+  margin-bottom: 3rem;
 }
 
 .edit-listing-save-button:hover {

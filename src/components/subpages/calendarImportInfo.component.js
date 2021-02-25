@@ -18,8 +18,18 @@ export default class CalendarImportInfo extends Component {
             <li><b>Submit Your Listing: </b>Fill out the rest of the information about your listing and submit. Now, your listing is live and synced with your calendar!</li>
           </ol>
         </p>
+        <br />
+        <hr />
         <h3 className="left underline">Exporting: </h3>
-        <p>This feature is coming soon.</p>
+        <p>
+          <ol className="instructions" type="1">
+            <li><b>Find your Listing: </b>Navigate to your Profile and select the My Listings tab on the side menu. Find the listing you want to export and select "Edit Listing."</li>
+            <img className="calendar-image" src="images/calendarExport1.png" alt="create a listing" />
+            <li><b>Generate a Link: </b>Scroll to the bottom of the page and click "Export." This will generate an ical file for you to download or inport. </li>
+            <img className="calendar-image" src="images/calendarExport2.png" alt="import your calendar" />
+            <li><b>Use the Export: </b>The way to import your newly exported listing calendar may vary depending on the site you are using. Please see the import instructions on the site you are exporting to for more instructions. </li>
+          </ol>
+        </p>
         <div className="spacer_xl"></div>
       </div>
     )
