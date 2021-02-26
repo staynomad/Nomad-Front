@@ -990,6 +990,9 @@ class CreateListing extends Component {
                                     {/*from && to && (
 
                                 )*/}
+                                  <button className="link" type='button' onClick={this.handleResetClick}>
+                                    Reset
+                                  </button>
                                   </div>
                                   {this.state.form.dateInit.invalidDate ? (
                                     <div style={{ color: "red" }}>
@@ -1040,9 +1043,6 @@ class CreateListing extends Component {
                                     Import
                               </p>
                                   <p className="import-calendar">your calendar instead</p>
-                                  <button className="link" type='button' onClick={this.handleResetClick}>
-                                    Reset
-                              </button>
                                   <br />
                                   <div className="spacer_m"></div>
                                 </div>
