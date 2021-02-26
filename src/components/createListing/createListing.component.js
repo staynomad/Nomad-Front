@@ -7,8 +7,10 @@ import { connect } from "react-redux";
 import DatePicker, { DateUtils } from "react-day-picker";
 import { Helmet } from "react-helmet-async";
 import { NavLink, withRouter } from "react-router-dom";
+import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@material-ui/icons/CheckBox";
+import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 
-import { CustomButton } from "../matches/listing/listingCard.component";
 import { importCalendar } from "../../redux/actions/calendarSyncActions";
 import {
   setLoadingTrue,
@@ -596,414 +598,454 @@ class CreateListing extends Component {
                     !this.state.isReviewingListing || !this.state.isCompleted ? (
                       <>
                         <div>
-                          <h1 className="startText">Get Started!</h1>
+                          <div className="create-listing-header">
+                            <NavLink className="create-listing-back" to="/MyAccount">
+                              <KeyboardBackspaceIcon />
+                            </NavLink>
+                            <h1 className="startText">Get Started!</h1>
+                          </div>
                         </div>
-                        <div className="questionText">
-                          Title
+                        <div>
+                          <div className="create-listing-content">
+                            <div className="questionText">
+                              Title
                           </div>
-                        <div className="spacer_m"></div>
-                        <input
-                          type="text"
-                          name="title"
-                          className="textInputBox"
-                          value={this.state.form.title}
-                          placeholder="e.g. Beautiful apartment overlooking Central Park"
-                          onChange={this.handleChange}
-                          required
-                        ></input>
-                        <div className="spacer_xxs"></div>
-                        <div className="characters-left">
-                          {this.state.form.charLeft.title} Characters Left
+                            <div className="spacer_m"></div>
+                            <input
+                              type="text"
+                              name="title"
+                              className="create-listing-title-input"
+                              value={this.state.form.title}
+                              placeholder="e.g. Beautiful apartment overlooking Central Park"
+                              onChange={this.handleChange}
+                              required
+                            ></input>
+                            <div className="spacer_xxs"></div>
+                            <div className="characters-left">
+                              {this.state.form.charLeft.title} Characters Left
                           </div>
-                        <div className="spacer_m"></div>
+                            <div className="spacer_m"></div>
 
-                        {/* Location */}
-                        <div className="LocationForm">
-                          <div className="questionText">Location</div>
-                          <div className="spacer_xs"></div>
-                          <div className="listing-wrapper">
-                            <div className="listing-inputs">
-                              <PlacesAutocomplete
-                                value={this.state.form.location.address}
-                                onChange={(address) => this.setState({
+                            {/* Location */}
+                            <div className="LocationForm">
+                              <div className="questionText">Location</div>
+                              <div className="spacer_xs"></div>
+                              <div className="listing-wrapper">
+                                <div className="listing-inputs">
+                                  <PlacesAutocomplete
+                                    value={this.state.form.location.address}
+                                    onChange={(address) => this.setState({
+                                      form: {
+                                        ...this.state.form,
+                                        location: {
+                                          ...this.state.form.location,
+                                          address: address
+                                        }
+                                      }
+                                    })}
+                                    onSelect={this.handleSelect}
+                                  >
+                                    {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                                      <div>
+                                        <div>
+                                          {loading ? <div>...loading</div> : null}
+                                          <input className="create-listing-input autofill" {...getInputProps({ placeholder: "Search for address" })} />
+                                          <p>Invalid addresses may cause autocomplete to fail.</p>
+
+                                          {suggestions.map((suggestion, idx) => {
+                                            const style = {
+                                              backgroundColor: suggestion.active ? "#41b6e6" : "#fff"
+                                            };
+
+                                            return (
+                                              <div {...getSuggestionItemProps(suggestion, { style })} key={`suggestion_${idx}`}>
+                                                {suggestion.description}
+                                              </div>
+                                            );
+                                          })}
+                                        </div>
+
+                                      </div>
+                                    )}
+                                  </PlacesAutocomplete>
+                                  <div className="create-listing-input-container">
+                                    <div className="label-text">Street:</div>
+                                    <input
+                                      type="text"
+                                      name="street"
+                                      className="create-listing-input"
+                                      value={this.state.form.location.street}
+                                      placeholder="5230 Newell Road"
+                                      onChange={this.handleChange}
+                                      required
+                                    />
+                                  </div>
+                                  <div className="create-listing-input-container">
+                                    <div className="label-text">City:</div>
+                                    <input
+                                      type="text"
+                                      name="city"
+                                      className="create-listing-input"
+                                      value={this.state.form.location.city}
+                                      placeholder="Palo Alto"
+                                      onChange={this.handleChange}
+                                      required
+                                    />
+                                  </div>
+
+                                  <div className="create-listing-input-container">
+                                    <div className="label-text">State:</div>
+                                    <div className="stateInputBox">
+                                      <select
+                                        onChange={this.handleChange}
+                                        name="state"
+                                        value={this.state.form.location.state}
+                                      >
+                                        {stateDropDown}
+                                      </select>
+                                    </div>
+                                  </div>
+
+                                  <div className="create-listing-input-container">
+                                    <div className="label-text">Country:</div>
+                                    <input
+                                      type="text"
+                                      name="country"
+                                      className="create-listing-input"
+                                      value={this.state.form.location.country}
+                                      placeholder="USA"
+                                      onChange={this.handleChange}
+                                      required
+                                    />
+                                  </div>
+
+                                  <div className="create-listing-input-container">
+                                    <div className="label-text">Zipcode:</div>
+                                    <input
+                                      type="text"
+                                      name="zipcode"
+                                      className="create-listing-input"
+                                      value={this.state.form.location.zipcode}
+                                      placeholder="90210"
+                                      onChange={this.handleChange}
+                                      required
+                                    />
+                                  </div>
+
+                                  <div className="create-listing-input-container">
+                                    <div className="label-text">Apartment:</div>
+                                    <input
+                                      type="text"
+                                      name="aptnum"
+                                      className="create-listing-input"
+                                      value={this.state.form.location.aptnum || ''}
+                                      placeholder="aptnum"
+                                      onChange={this.handleChange}
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <button
+                                className="create-listing-clear-address-button"
+                                onClick={() => this.setState({
                                   form: {
                                     ...this.state.form,
                                     location: {
-                                      ...this.state.form.location,
-                                      address: address
+                                      address: "",
+                                      coordinates: {
+                                        lat: null,
+                                        lng: null,
+                                      },
+                                      street: "",
+                                      city: "",
+                                      state: "",
+                                      country: "",
+                                      zipcode: ""
                                     }
                                   }
-                                })}
-                                onSelect={this.handleSelect}
-                              >
-                                {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                                  <div>
-                                    <div>
-                                      {loading ? <div>...loading</div> : null}
-                                      <input {...getInputProps({ placeholder: "Search for address" })} />
-                                      <p>Invalid addresses may cause autocomplete to fail.</p>
+                                })}>Clear</button>
 
-                                      {suggestions.map((suggestion, idx) => {
-                                        const style = {
-                                          backgroundColor: suggestion.active ? "#41b6e6" : "#fff"
-                                        };
+                            </div>
+                            <div className="spacer_m"></div>
 
-                                        return (
-                                          <div {...getSuggestionItemProps(suggestion, { style })} key={`suggestion_${idx}`}>
-                                            {suggestion.description}
-                                          </div>
-                                        );
-                                      })}
-                                    </div>
+                            { /* Description */}
+                            <div className="questionText">
+                              Description
+                        </div>
+                            <div className="spacer_xs"></div>
 
+                            <textarea
+                              type="text"
+                              name="description"
+                              className="descriptionTextInputBox"
+                              value={this.state.form.description}
+                              placeholder="Be detailed! The more information you include the greater the chance your property gets booked."
+                              onChange={this.handleChange}
+                              required
+                            ></textarea>
+                            <div className="characters-left">
+                              {this.state.form.charLeft.description} Characters Left
+                        </div>
+                            <div className="spacer_m" />
+
+                            {/* Details */}
+                            <div className="questionText">Details</div>
+                            <div className="details-wrapper">
+                              <div className="overall-details">
+                                <div className="beds">
+                                  <div className="create-listing-details-label">Beds: </div>
+                                  <input
+                                    type="number"
+                                    name="beds"
+                                    placeholder="e.g. 3"
+                                    className="input-box-details"
+                                    value={this.state.form.details.beds}
+                                    onChange={this.handleChange}
+                                    min="0"
+                                    max="99"
+                                    required
+                                  />
+                                </div>
+
+                                <div>
+                                  <div className="baths">
+                                    <div className="create-listing-details-label">Baths: </div>
+                                    <input
+                                      type="number"
+                                      name="baths"
+                                      className="input-box-details"
+                                      placeholder="e.g. 2"
+                                      value={this.state.form.details.baths}
+                                      onChange={this.handleChange}
+                                      min="0"
+                                      max="99"
+                                      required
+                                    />
+                                  </div>
+
+                                  <div className="maxppl">
+                                    <div className="create-listing-details-label">Max people: </div>
+                                    <input
+                                      type="number"
+                                      name="maxpeople"
+                                      placeholder="e.g. 5"
+                                      className="input-box-details"
+                                      value={this.state.form.details.maxpeople}
+                                      onChange={this.handleChange}
+                                      min="0"
+                                      max="99"
+                                      required
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="spacer_m" />
+
+                            {/* Price */}
+                            <div className="questionText">Price</div>
+                            <br />
+                            <input
+                              type="number"
+                              name="price"
+                              className="priceInputBox"
+                              value={this.state.form.price}
+                              placeholder="$ per night"
+                              onBlur={this.handlePriceRound}
+                              onChange={this.handleChange}
+                              min="0.01"
+                              max="999.99"
+                              required
+                            />
+                            {this.state.price ? (
+                              <div className="price-details">
+                                Note: 1% host fee is collected from every booking
+                              </div>
+                            ) : (
+                                ""
+                              )}
+                            <div className="spacer_m" />
+                            <div create-listing-amenities-container>
+                              <div className="questionText">Amenities</div>
+                              <div className="spacer_s"></div>
+                              <div className="amenities-list">
+                                {
+                                  options.map((option) => {
+                                    return (
+                                      <div className="create-listing-amenity-container" key={option}>
+                                        {this.state.form.amenityCheckboxDisabled ? (
+                                          <img
+                                            src={`${process.env.PUBLIC_URL}/images/amenities/${option.replace(
+                                              / /g,
+                                              ""
+                                            )}_.svg`}
+                                            alt={option}
+                                            className={option}
+                                            id="create-listing-amenity"
+                                            height="50px"
+                                            onClick={this.state.handleChange}
+                                            style={{
+                                              filter: this.state.form.amenities.includes(option)
+                                                ? "brightness(0) saturate(100%) invert(44%) sepia(98%) saturate(1252%) hue-rotate(131deg) brightness(92%) contrast(101%)"
+                                                : "brightness(0) saturate(100%)   invert(82%) sepia(92%) saturate(1%) hue-rotate(300deg) brightness(92%) contrast(93%)",
+                                            }}
+                                          />
+                                        ) : (
+                                            <img
+                                              src={`${process.env.PUBLIC_URL}/images/amenities/${option.replace(
+                                                / /g,
+                                                ""
+                                              )}_.svg`}
+                                              alt={option}
+                                              className={option}
+                                              id="create-listing-amenity-disabled"
+                                              height="50px"
+                                              style={{
+                                                filter:
+                                                  "brightness(0) saturate(100%)   invert(82%) sepia(92%) saturate(1%) hue-rotate(300deg) brightness(92%) contrast(93%)",
+                                              }}
+                                            />
+                                          )}
+                                      </div>
+                                    );
+                                  })
+                                }
+                              </div>
+                              <div className="spacer_xs"></div>
+                              {this.state.form.amenityCheckboxDisabled ? (
+                                <div
+                                  style={{ display: "inline-block", cursor: "pointer" }}
+                                  className="No Amenities"
+                                  onClick={this.state.handleChange}
+                                >
+                                  <CheckBoxOutlineBlankIcon className="create-listing-no-amenities" />
+                                </div>
+                              ) : (
+                                  <div
+                                    style={{ display: "inline-block", cursor: "pointer" }}
+                                    className="No Amenities"
+                                    onClick={this.state.handleChange}
+                                  >
+                                    <CheckBoxIcon className="create-listing-no-amenities active" />
                                   </div>
                                 )}
-                              </PlacesAutocomplete>
-                              <div className="gen-subsec">
-                                <div className="label-text">Street:</div>
-                                <input
-                                  type="text"
-                                  name="street"
-                                  className="inputBox streetInputbox"
-                                  value={this.state.form.location.street}
-                                  placeholder="5230 Newell Road"
-                                  onChange={this.handleChange}
-                                  required
-                                />
-                              </div>
-                              <div className="gen-subsec">
-                                <div className="label-text">City:</div>
-                                <input
-                                  type="text"
-                                  name="city"
-                                  className="inputBox cityInputBox"
-                                  value={this.state.form.location.city}
-                                  placeholder="Palo Alto"
-                                  onChange={this.handleChange}
-                                  required
-                                />
-                              </div>
-
-                              <div className="gen-subsec">
-                                <div className="label-text">State:</div>
-                                <div className="stateInputBox">
-                                  <select
-                                    onChange={this.handleChange}
-                                    name="state"
-                                    value={this.state.form.location.state}
-                                  >
-                                    {stateDropDown}
-                                  </select>
-                                </div>
-                              </div>
-
-                              <div className="gen-subsec">
-                                <div className="label-text">Country:</div>
-                                <input
-                                  type="text"
-                                  name="country"
-                                  className="inputBox countryInputBox"
-                                  value={this.state.form.location.country}
-                                  placeholder="USA"
-                                  onChange={this.handleChange}
-                                  required
-                                />
-                              </div>
-
-                              <div className="gen-subsec">
-                                <div className="label-text">Zipcode:</div>
-                                <input
-                                  type="text"
-                                  name="zipcode"
-                                  className="inputBox zipInputBox"
-                                  value={this.state.form.location.zipcode}
-                                  placeholder="90210"
-                                  onChange={this.handleChange}
-                                  required
-                                />
-                              </div>
-
-                              <div className="gen-subsec">
-                                <div className="label-text">Apartment:</div>
-                                <input
-                                  type="text"
-                                  name="aptnum"
-                                  className="inputBox aptnumInputBox"
-                                  value={this.state.form.location.aptnum || ''}
-                                  placeholder="aptnum"
-                                  onChange={this.handleChange}
-                                />
-                              </div>
                             </div>
-                          </div>
-                          <CustomButton onClick={() => this.setState({
-                            form: {
-                              ...this.state.form,
-                              location: {
-                                address: "",
-                                coordinates: {
-                                  lat: null,
-                                  lng: null,
-                                },
-                                street: "",
-                                city: "",
-                                state: "",
-                                country: "",
-                                zipcode: ""
-                              }
-                            }
-                          })}>Clear</CustomButton>
+                            <div className="spacer_m"></div>
 
-                        </div>
-                        <div className="spacer_m"></div>
-
-                        { /* Description */}
-                        <div className="questionText">
-                          Description
-                        </div>
-                        <div className="spacer_xs"></div>
-
-                        <textarea
-                          type="text"
-                          name="description"
-                          className="descriptionTextInputBox"
-                          value={this.state.form.description}
-                          placeholder="Be detailed! The more information you include the greater the chance your property gets booked."
-                          onChange={this.handleChange}
-                          required
-                        ></textarea>
-                        <div className="characters-left">
-                          {this.state.form.charLeft.description} Characters Left
-                        </div>
-                        <div className="spacer_m" />
-
-                        {/* Details */}
-                        <div className="questionText">Details</div>
-                        <div className="details-wrapper">
-                          <div className="overall-details">
-                            <div className="beds">
-                              <div className="input-label-details">Beds: </div>
-                              <input
-                                type="number"
-                                name="beds"
-                                placeholder="e.g. 3"
-                                className="input-box-details"
-                                value={this.state.form.details.beds}
-                                onChange={this.handleChange}
-                                min="0"
-                                max="99"
-                                required
-                              />
-                            </div>
-
-                            <div>
-                              <div className="baths">
-                                <div className="input-label-details">Baths: </div>
+                            {/* Pictures */}
+                            <div className="create-listing-photos-container">
+                              <div className="questionText">Pictures</div> <br />
+                              <div>
+                                {this.state.isFieldValid.invalidPhotoType ? (
+                                  <div className="bad-image">
+                                    Must be PNG, JPG, or JPEG format<div className="spacer_xxs"></div>
+                                    <div className="spacer_m" />
+                                  </div>
+                                ) : (
+                                    ""
+                                  )}
                                 <input
-                                  type="number"
-                                  name="baths"
-                                  className="input-box-details"
-                                  placeholder="e.g. 2"
-                                  value={this.state.form.details.baths}
-                                  onChange={this.handleChange}
-                                  min="0"
-                                  max="99"
-                                  required
+                                  className="upload-file"
+                                  id="upload-file"
+                                  name="upload-file"
+                                  type="file"
+                                  multiple
+                                  onChange={this.onPhotoClick}
                                 />
-                              </div>
-
-                              <div className="maxppl">
-                                <div className="input-label-details">Max people: </div>
-                                <input
-                                  type="number"
-                                  name="maxpeople"
-                                  placeholder="e.g. 5"
-                                  className="input-box-details"
-                                  value={this.state.form.details.maxpeople}
-                                  onChange={this.handleChange}
-                                  min="0"
-                                  max="99"
-                                  required
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="spacer_m" />
-
-                        {/* Price */}
-                        <div className="questionText">Price</div>
-                        <br />
-                        <input
-                          type="number"
-                          name="price"
-                          className="priceInputBox"
-                          value={this.state.form.price}
-                          placeholder="$ per night"
-                          onBlur={this.handlePriceRound}
-                          onChange={this.handleChange}
-                          min="0.01"
-                          max="999.99"
-                          required
-                        />
-                        {this.state.price ? (
-                          <div className="price-details">
-                            Note: 1% host fee is collected from every booking
-                          </div>
-                        ) : (
-                            ""
-                          )}
-                        <div className="spacer_m" />
-                        <div className="questionText">Amenities</div>
-                        <div className="spacer_s"></div>
-                        <div className="amenities-list">
-                          {
-                            options.map((option) => {
-                              return (
-                                <div className="amenity" key={option}>
-                                  <img
-                                    src={`${process.env.PUBLIC_URL}/images/amenities/${option.replace(
-                                      / /g,
-                                      ""
-                                    )}_.svg`}
-                                    alt={option}
-                                    height="50px"
-                                  />
-                                  <input
-                                    type="checkbox"
-                                    disabled={this.state.form.amenityCheckboxDisabled}
-                                    name={option}
-                                    onChange={this.handleChange}
-                                    className="amenities-checkbox"
-                                  />
-                                  <div>{option}</div>
-                                </div>
-                              );
-                            })
-                          }
-                        </div>
-                        <div className="spacer_xs"></div>
-                        <input
-                          type="checkbox"
-                          name="No Amenities"
-                          onChange={this.handleChange}
-                          className="amenities-checkbox no-amenities-check"
-                        />
-                        <div className="no-amenities-label">No Amenities</div>
-                        <div className="spacer_m"></div>
-
-                        {/* Pictures */}
-                        <div className="questionText">Pictures</div> <br />
-                        <div>
-                          {this.state.isFieldValid.invalidPhotoType ? (
-                            <div className="bad-image">
-                              Must be PNG, JPG, or JPEG format<div className="spacer_xxs"></div>
-                              <div className="spacer_m" />
-                            </div>
-                          ) : (
-                              ""
-                            )}
-                          <input
-                            className="upload-file"
-                            id="upload-file"
-                            name="upload-file"
-                            type="file"
-                            multiple
-                            onChange={this.onPhotoClick}
-                          />
-                          <label htmlFor="upload-file" className="upload-file" >
-                            Choose Files
+                                <label htmlFor="upload-file" className="upload-file" >
+                                  Choose Files
                             </label>
 
-                          <div className="spacer_m" />
-                          <div>{this.currentImagesList()}</div>
-                          <span>Tip: Hold down "ctrl" to select multiple pictures</span>
-                        </div>
-                        <div className="spacer_m"></div>
+                                <div className="spacer_m" />
+                                <div>{this.currentImagesList()}</div>
+                                <span>Tip: Hold down "ctrl" to select multiple pictures</span>
+                              </div>
+                              <div className="spacer_m"></div>
+                            </div>
 
-                        {/* Calendar */}
-                        <div className="questionText">Availability</div>
-                        {this.state.displayImport ? (
-                          <div>
-                            <form onSubmit={this.handleCalendarSubmit}>
-                              <input
-                                className="input login-input"
-                                style={{ paddingBottom: "0", marginBottom: "0", width: "100%" }}
-                                type="text"
-                                name="Calendar"
-                                placeholder="Calendar URL"
-                                value={this.state.calendarURL}
-                                onChange={this.handleChange}
-                              />
-                              <br />
-                              {this.state.importLoading ? (
-                                <div id="spinner"></div>
-                              ) : (
+                            {/* Calendar */}
+                            <div className="questionText">Availability</div>
+                            {this.state.displayImport ? (
+                              <div>
+                                <form onSubmit={this.handleCalendarSubmit}>
                                   <input
-                                    className="btn green"
-                                    style={{ width: "auto" }}
-                                    type="submit"
-                                    value="import"
+                                    className="create-listing-calendarURL"
+                                    style={{ paddingBottom: "0", marginBottom: "0", width: "100%" }}
+                                    type="text"
+                                    name="Calendar"
+                                    placeholder="Calendar URL"
+                                    value={this.state.calendarURL}
+                                    onChange={this.handleChange}
                                   />
-                                )}
-                              {this.state.importDone === true ? (
-                                <div style={{ color: "#00b183" }}>Import successful!</div>
-                              ) : null}
-                            </form>
-                            <br />
-                            <span className="import-info">
-                              <NavLink to="/how-to-import-or-export-calendar">&#9432;</NavLink>{" "}
+                                  <br />
+                                  {this.state.importLoading ? (
+                                    <div id="spinner"></div>
+                                  ) : (
+                                      <input
+                                        className="btn green"
+                                        style={{ width: "auto" }}
+                                        type="submit"
+                                        value="import"
+                                      />
+                                    )}
+                                  {this.state.importDone === true ? (
+                                    <div style={{ color: "#00b183" }}>Import successful!</div>
+                                  ) : null}
+                                </form>
+                                <br />
+                                <span className="import-info">
+                                  <NavLink to="/how-to-import-or-export-calendar">&#9432;</NavLink>{" "}
                               What's this?
                             </span>
-                            <br />
-                            <p
-                              className="import-calendar"
-                              style={{
-                                textDecoration: "underline",
-                                cursor: "pointer",
-                                paddingLeft: "3%",
-                                paddingRight: "1%",
-                              }}
-                              onClick={this.handleImportToggle}
-                            >
-                              Select
+                                <br />
+                                <p
+                                  className="import-calendar"
+                                  style={{
+                                    textDecoration: "underline",
+                                    cursor: "pointer",
+                                    paddingLeft: "3%",
+                                    paddingRight: "1%",
+                                  }}
+                                  onClick={this.handleImportToggle}
+                                >
+                                  Select
                             </p>
-                            <p className="import-calendar">dates instead</p>
-                            <br />
-                            <div className="spacer_m"></div>
-                          </div>
-                        ) : (
-                            <div>
-                              <div className="spacer_xs"></div>
-                              <div>
-                                {!from && !to && "Please select the first day."}
-                                {from && !to && "Please select the last day."}
-                                {from &&
-                                  to &&
-                                  `Selected from ${from.toLocaleDateString()} to
+                                <p className="import-calendar">dates instead</p>
+                                <br />
+                                <div className="spacer_m"></div>
+                              </div>
+                            ) : (
+                                <div>
+                                  <div className="spacer_xs"></div>
+                                  <div>
+                                    {!from && !to && "Please select the first day."}
+                                    {from && !to && "Please select the last day."}
+                                    {from &&
+                                      to &&
+                                      `Selected from ${from.toLocaleDateString()} to
                                     ${to.toLocaleDateString()}`}{" "}
-                                {/*from && to && (
+                                    {/*from && to && (
 
                                 )*/}
-                              </div>
-                              {this.state.form.dateInit.invalidDate ? (
-                                <div style={{ color: "red" }}>
-                                  First selection must be after today
-                                </div>
-                              ) : (
-                                  ""
-                                )}
-                              <DatePicker
-                                className="Selectable"
-                                numberOfMonths={2}
-                                selectedDays={[from, { from, to }]}
-                                modifiers={modifiers}
-                                onDayClick={this.handleDayClick}
-                                inputProps={{ required: true }}
-                              />
+                                  </div>
+                                  {this.state.form.dateInit.invalidDate ? (
+                                    <div style={{ color: "red" }}>
+                                      First selection must be after today
+                                    </div>
+                                  ) : (
+                                      ""
+                                    )}
+                                  <DatePicker
+                                    className="Selectable"
+                                    numberOfMonths={2}
+                                    selectedDays={[from, { from, to }]}
+                                    modifiers={modifiers}
+                                    onDayClick={this.handleDayClick}
+                                    inputProps={{ required: true }}
+                                  />
 
-                              <Helmet>
-                                <style>{`
+                                  <Helmet>
+                                    <style>{`
             .Selectable .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
               background-color: #f0f8ff !important;
               color: #4a90e2;
@@ -1020,30 +1062,30 @@ class CreateListing extends Component {
               border-bottom-right-radius: 50% !important;
             }
           `}</style>
-                              </Helmet>
-                              <br />
-                              <p
-                                className="import-calendar"
-                                style={{
-                                  textDecoration: "underline",
-                                  cursor: "pointer",
-                                  paddingLeft: "3%",
-                                  paddingRight: "1%",
-                                }}
-                                onClick={this.handleImportToggle}
-                              >
-                                Import
+                                  </Helmet>
+                                  <br />
+                                  <p
+                                    className="import-calendar"
+                                    style={{
+                                      textDecoration: "underline",
+                                      cursor: "pointer",
+                                      paddingLeft: "3%",
+                                      paddingRight: "1%",
+                                    }}
+                                    onClick={this.handleImportToggle}
+                                  >
+                                    Import
                               </p>
-                              <p className="import-calendar">your calendar instead</p>
-                              <button className="link" type='button' onClick={this.handleResetClick}>
-                                Reset
+                                  <p className="import-calendar">your calendar instead</p>
+                                  <button className="link" type='button' onClick={this.handleResetClick}>
+                                    Reset
                               </button>
-                              <br />
-                              <div className="spacer_m"></div>
-                            </div>
-                          )}
-
-
+                                  <br />
+                                  <div className="spacer_m"></div>
+                                </div>
+                              )}
+                          </div>
+                        </div>
                         { /* User hit next and form is incomplete */
                           this.state.attemptSubmit && !this.state.isCompleted ? (
                             <div>
@@ -1058,7 +1100,7 @@ class CreateListing extends Component {
                         <br />
                         <input
                           type="button"
-                          className="changebut"
+                          className="create-listing-next-button"
                           value="Next"
                           onClick={() => this.setState({ attemptSubmit: true }, () => {
                             if (this.state.isCompleted) this.setState({ isReviewingListing: true })
@@ -1070,41 +1112,74 @@ class CreateListing extends Component {
                           { /* User hit next (if else from above) and form is complete */
                             this.state.isCompleted && this.state.isReviewingListing ? (
                               <div>
-                                <h1>Review Your Listing</h1>
+                                <h1 className="confirm-listing-header">Review Your Listing</h1>
                                 <div className="spacer_s"></div>
                                 <div className="confirm-container">
-                                  <h2 className="header-text">Title</h2>
-                                  <p className="confirm-text">{this.state.form.title}</p>
+                                  <h2 className="confirm-listing-subtitle">Title</h2>
+                                  <p className="confirm-listing-text">{this.state.form.title}</p>
 
-                                  <h2 className="header-text">Address</h2>
-                                  <p className="confirm-text">
-                                    <span>Street: </span>
-                                    {this.state.form.location.street} <br />
-                                    <span>City: </span>
-                                    {this.state.form.location.city} <br />
-                                    <span>State: </span>
-                                    {this.state.form.location.state} <br />
-                                    <span>Country: </span>
-                                    {this.state.form.location.country} <br />
-                                    <span>Zipcode: </span>
-                                    {this.state.form.location.zipcode} <br />
+                                  <h2 className="confirm-listing-subtitle">Address</h2>
+                                  <p className="confirm-listing-text">
+                                    <div className="confirm-listing-text-container">
+                                      <span>Street: </span>
+                                      {this.state.form.location.street}
+                                    </div>
+                                    <div className="confirm-listing-text-container">
+                                      <span>City: </span>
+                                      {this.state.form.location.city}
+                                    </div>
+                                    <div className="confirm-listing-text-container">
+                                      <span>State: </span>
+                                      {this.state.form.location.state}
+                                    </div>
+                                    <div className="confirm-listing-text-container">
+                                      <span>Country: </span>
+                                      {this.state.form.location.country}
+                                    </div>
+                                    <div className="confirm-listing-text-container">
+                                      <span>Zipcode: </span>
+                                      {this.state.form.location.zipcode}
+                                    </div>
                                   </p>
 
-                                  <h2 className="header-text">Description</h2>
-                                  <p className="confirm-text">{this.state.form.description}</p>
+                                  <h2 className="confirm-listing-subtitle">Description</h2>
+                                  <p className="confirm-listing-text">{this.state.form.description}</p>
 
-                                  <h2 className="header-text">Details</h2>
-                                  <p className="confirm-text">
-                                    <span>Beds:</span> {this.state.form.details.beds} <br />
-                                    <span>Baths:</span> {this.state.form.details.baths} <br />
-                                    <span>Max people:</span> {this.state.form.details.maxpeople} <br />
+                                  <h2 className="confirm-listing-subtitle">Details</h2>
+                                  <p className="confirm-listing-text">
+                                    <div className="confirm-listing-text-container">
+                                      <span>Beds:</span> {this.state.form.details.beds}{" "}
+                                    </div>
+                                    <div className="confirm-listing-text-container">
+                                      <span>Baths:</span> {this.state.form.details.baths}{" "}
+                                    </div>
+                                    <div className="confirm-listing-text-container">
+                                      <span>Max people:</span> {this.state.form.details.maxpeople}{" "}
+                                    </div>
                                   </p>
 
-                                  <h2 className="header-text">Price</h2>
-                                  <p className="confirm-text">${parseFloat(this.state.form.price).toFixed(2)} per night</p>
+                                  {this.props.data.amenities.length > 0 && (
+                                    <>
+                                      <h2 className="confirm-listing-subtitle">Amenities</h2>
+                                      <p className="confirm-listing-text">
+                                        {this.props.data.amenities.map((amenity) => {
+                                          return (
+                                            <div className="confirm-listing-text-container">
+                                              {amenity}
+                                            </div>
+                                          );
+                                        })}
+                                      </p>
+                                    </>
+                                  )}
 
-                                  <h2 className="header-text">Dates</h2>
-                                  <p className="confirm-text">
+                                  <h2 className="confirm-listing-subtitle">Price</h2>
+                                  <p className="confirm-listing-text">
+                                    ${parseFloat(this.props.data.price).toFixed(2)} / night
+          </p>
+
+                                  <h2 className="confirm-listing-subtitle">Dates</h2>
+                                  <p className="confirm-listing-text dates">
                                     <span>Start date: </span>
                                     {this.state.form.dates.start_date.toLocaleDateString()} <br />
                                     <span>End date: </span>
@@ -1114,19 +1189,19 @@ class CreateListing extends Component {
 
                                 <input
                                   type="button"
-                                  className="changebut"
+                                  className="confirm-listing-button"
                                   value="Back"
                                   onClick={() => this.setState({ isReviewingListing: false })}
                                 />
                                 <input
                                   type="button"
-                                  className="changebut"
+                                  className="confirm-listing-button"
                                   onClick={this.onSubmit}
                                   value="Submit"
                                 />
                                 <input
                                   type="button"
-                                  className="changebut"
+                                  className="confirm-listing-button"
                                   onClick={() => {
                                     this.setState({ isDraft: true }, () => this.onSubmit());
                                   }}
