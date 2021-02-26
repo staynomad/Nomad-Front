@@ -142,6 +142,7 @@ class CreateListing extends Component {
       return (
         <div key={image} className="single-img-container">
           <img
+            className="create-listing-image"
             style={{ maxHeight: 200, maxwidth: 200 }}
             id="target"
             src={this.state.form.photos.pictures[image]}
@@ -917,9 +918,6 @@ class CreateListing extends Component {
                                   multiple
                                   onChange={this.onPhotoClick}
                                 />
-                                <label htmlFor="upload-file" className="upload-file" >
-                                  Choose Files
-                            </label>
 
                                 <div className="spacer_m" />
                                 <div>{this.currentImagesList()}</div>
