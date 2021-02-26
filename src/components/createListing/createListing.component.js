@@ -236,6 +236,7 @@ class CreateListing extends Component {
 
   handleChange(e) {
     const { name, value } = e.target;
+    console.log(e.target.className)
 
     /* Handle change for title */
     if (name === 'title' || name === 'description') {
@@ -311,8 +312,8 @@ class CreateListing extends Component {
 
     /* Handle amenity changes */
     let amenitySet = new Set(this.state.form.amenities)
-    if (name === "No Amenities") {
-      if (e.target.checked) {
+    if (e.target.className === "No Amenities") {
+      if (!this.state.form.amenityCheckboxDisabled) {
         this.setState({
           form: {
             ...this.state.form,
@@ -332,7 +333,7 @@ class CreateListing extends Component {
         });
       };
     } else if (options.includes(name)) {
-      if (e.target.checked) amenitySet.add(name);
+      if (!this.state.form.amenities.includes(name)) amenitySet.add(name);
       else amenitySet.delete(name);
 
       this.setState({
@@ -592,7 +593,7 @@ class CreateListing extends Component {
                 )}
             </div>
           ) : (
-              <form>
+              <form style={{ width: "100%" }}>
                 <>
                   { /* User did not hit the next button or hit back button -> Don't need to check if form is completed */
                     !this.state.isReviewingListing || !this.state.isCompleted ? (
@@ -873,7 +874,7 @@ class CreateListing extends Component {
                                   options.map((option) => {
                                     return (
                                       <div className="create-listing-amenity-container" key={option}>
-                                        {this.state.form.amenityCheckboxDisabled ? (
+                                        {!this.state.form.amenityCheckboxDisabled ? (
                                           <img
                                             src={`${process.env.PUBLIC_URL}/images/amenities/${option.replace(
                                               / /g,
@@ -881,9 +882,10 @@ class CreateListing extends Component {
                                             )}_.svg`}
                                             alt={option}
                                             className={option}
+                                            name={option}
                                             id="create-listing-amenity"
                                             height="50px"
-                                            onClick={this.state.handleChange}
+                                            onClick={this.handleChange}
                                             style={{
                                               filter: this.state.form.amenities.includes(option)
                                                 ? "brightness(0) saturate(100%) invert(44%) sepia(98%) saturate(1252%) hue-rotate(131deg) brightness(92%) contrast(101%)"
@@ -898,6 +900,7 @@ class CreateListing extends Component {
                                               )}_.svg`}
                                               alt={option}
                                               className={option}
+                                              name={option}
                                               id="create-listing-amenity-disabled"
                                               height="50px"
                                               style={{
@@ -912,11 +915,11 @@ class CreateListing extends Component {
                                 }
                               </div>
                               <div className="spacer_xs"></div>
-                              {this.state.form.amenityCheckboxDisabled ? (
+                              {!this.state.form.amenityCheckboxDisabled ? (
                                 <div
                                   style={{ display: "inline-block", cursor: "pointer" }}
                                   className="No Amenities"
-                                  onClick={this.state.handleChange}
+                                  onClick={this.handleChange}
                                 >
                                   <CheckBoxOutlineBlankIcon className="create-listing-no-amenities" />
                                 </div>
@@ -924,11 +927,13 @@ class CreateListing extends Component {
                                   <div
                                     style={{ display: "inline-block", cursor: "pointer" }}
                                     className="No Amenities"
-                                    onClick={this.state.handleChange}
+                                    onClick={this.handleChange}
                                   >
                                     <CheckBoxIcon className="create-listing-no-amenities active" />
                                   </div>
                                 )}
+                              <div className="create-listing-amenity-text">No Amenities</div>
+                              <div className="spacer_l"></div>
                             </div>
                             <div className="spacer_m"></div>
 
