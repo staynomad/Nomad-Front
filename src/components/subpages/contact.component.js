@@ -1,79 +1,84 @@
 import React, { useState } from "react";
-import { app } from '../../utils/axiosConfig.js'
+import { app } from "../../utils/axiosConfig.js";
 import "./contact.css";
 
 const Contact = () => {
-  const [contactState, setContactState] = useState({})
-  const [isLoading, setLoading] = useState(false)
+  const [contactState, setContactState] = useState({});
+  const [isLoading, setLoading] = useState(false);
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     const value = event.target.value;
-    setContactState({...contactState, [event.target.name]: value})
-  }
+    setContactState({ ...contactState, [event.target.name]: value });
+  };
 
-  const handleSubmit = event => {
-    setLoading(true)
-    event.preventDefault ();
+  const handleSubmit = (event) => {
+    setLoading(true);
+    event.preventDefault();
     const data = {
       name: contactState.name,
       email: contactState.email,
       subject: `Inquiry from ${contactState.name}`,
-      text: contactState.text
-    }
-    app.post('/contact/', data)
-    .then(() => {
-      setLoading(false)
-    })
-    .catch((err) => {
-      alert('Could not send email. Please try again.')
-      setLoading(false)
-    })
-  }
+      text: contactState.text,
+    };
+    app
+      .post("/contact/", data)
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((err) => {
+        alert("Could not send email. Please try again.");
+        setLoading(false);
+      });
+  };
 
   return (
-    <div className='content container'>
-      <div className='inner-forms'>
-        <div className='header'>
+    <div className="contact-container">
+      <div className="contact-form-container">
+        <div className="header">
           <h1>Contact Us</h1>
         </div>
-        <div className="spacer_s"></div>
-        <div className='contact-input'>
+        <div className="contact-input-container">
           <input
-            type='text'
-            name='name'
-            placeholder='your name'
+            type="text"
+            name="name"
+            placeholder="Your name"
             value={contactState.name}
             onChange={handleChange}
             required={true}
-            className='contact-input-text mb-30 radius10'
+            className="contact-input"
           />
         </div>
-        <div className='contact-input'>
+        <div className="contact-input-container">
           <input
-            type='email'
-            name='email'
-            placeholder='your email'
+            type="email"
+            name="email"
+            placeholder="Your email"
             value={contactState.email}
             onChange={handleChange}
-            required='required'
-            className='contact-input-text mb-30 radius10'
+            required="required"
+            className="contact-input"
           />
         </div>
         <textarea
-          name='message'
-          placeholder='your message'
+          name="message"
+          placeholder="Your message"
           value={contactState.text}
           onChange={handleChange}
-          className='contact-input contact_1 mb-40 w-full radius10'
+          className="contact-input contact_1 mb-40 w-full radius10"
         />
       </div>
-      {
-        isLoading ?
-        <div id="spinner"></div> :
-        <div className='rowcontact-button'>
-          <button onclick={handleSubmit} className='btn action-3 green'>send</button>
+      {isLoading ? (
+        <div id="spinner"></div>
+      ) : (
+        <div className="rowcontact-button">
+          <button
+            onclick={handleSubmit}
+            className="btn action-3 green contact-button"
+          >
+            Send
+          </button>
         </div>
-      }
+      )}
     </div>
   );
 };
