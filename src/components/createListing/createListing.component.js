@@ -751,20 +751,18 @@ class CreateListing extends Component {
                             <div className="spacer_m" />
 
                             {/* Details */}
-                            <div className="questionText">Details</div>
-                            <div className="details-wrapper">
-                              <div className="overall-details">
+                            <div>
+                              <div className="questionText">Details</div>
+                              <div className="details-wrapper">
                                 <div className="beds">
                                   <div className="create-listing-details-label">Beds: </div>
                                   <input
-                                    type="number"
+                                    type="text"
                                     name="beds"
                                     placeholder="e.g. 3"
                                     className="input-box-details"
                                     value={this.state.form.details.beds}
                                     onChange={this.handleChange}
-                                    min="0"
-                                    max="99"
                                     required
                                   />
                                 </div>
@@ -773,14 +771,12 @@ class CreateListing extends Component {
                                   <div className="baths">
                                     <div className="create-listing-details-label">Baths: </div>
                                     <input
-                                      type="number"
+                                      type="text"
                                       name="baths"
                                       className="input-box-details"
                                       placeholder="e.g. 2"
                                       value={this.state.form.details.baths}
                                       onChange={this.handleChange}
-                                      min="0"
-                                      max="99"
                                       required
                                     />
                                   </div>
@@ -788,44 +784,48 @@ class CreateListing extends Component {
                                   <div className="maxppl">
                                     <div className="create-listing-details-label">Max people: </div>
                                     <input
-                                      type="number"
+                                      type="text"
                                       name="maxpeople"
                                       placeholder="e.g. 5"
                                       className="input-box-details"
                                       value={this.state.form.details.maxpeople}
                                       onChange={this.handleChange}
-                                      min="0"
-                                      max="99"
                                       required
                                     />
                                   </div>
                                 </div>
                               </div>
+                              <div className="spacer_s"></div>
                             </div>
-                            <div className="spacer_m" />
 
                             {/* Price */}
-                            <div className="questionText">Price</div>
-                            <br />
-                            <input
-                              type="number"
-                              name="price"
-                              className="priceInputBox"
-                              value={this.state.form.price}
-                              placeholder="$ per night"
-                              onBlur={this.handlePriceRound}
-                              onChange={this.handleChange}
-                              min="0.01"
-                              max="999.99"
-                              required
-                            />
-                            {this.state.price ? (
-                              <div className="price-details">
-                                Note: 1% host fee is collected from every booking
+                            <div>
+                              <div>
+                                <div className="questionText">Price</div>
+                                <br />
+                                <input
+                                  type="number"
+                                  name="price"
+                                  className="priceInputBox"
+                                  value={this.state.form.price}
+                                  placeholder="$ per night"
+                                  onBlur={this.handlePriceRound}
+                                  onChange={this.handleChange}
+                                  min="0.01"
+                                  max="999.99"
+                                  required
+                                />
+                                {this.state.price ? (
+                                  <div className="price-details">
+                                    Note: 1% host fee is collected from every booking
+                                  </div>
+                                ) : (
+                                    ""
+                                  )}
                               </div>
-                            ) : (
-                                ""
-                              )}
+                            </div>
+
+                            {/* Amenities */}
                             <div className="spacer_m" />
                             <div create-listing-amenities-container>
                               <div className="questionText">Amenities</div>
