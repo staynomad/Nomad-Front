@@ -6,8 +6,6 @@ import { getListingById } from "../../redux/actions/searchListingActions";
 import { sendListingTranferRequest } from "../../redux/actions/transferListingActions";
 import { submitEditListing } from "../../redux/actions/editListingActions";
 import "../createListing/createListing.css";
-import "../createListing/detailsListing.css";
-import "../createListing/locationListing.css";
 import "./editListing.css";
 
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
@@ -193,11 +191,11 @@ class EditListing extends Component {
         booked: this.props.Listing.editListing.booked
       }
     })
-    .then((res) => {
-      this.setState({
-        exportURL: res.data.url
+      .then((res) => {
+        this.setState({
+          exportURL: res.data.url
+        })
       })
-    })
   }
 
   render() {
@@ -410,7 +408,7 @@ class EditListing extends Component {
                   <div className="edit-listing-export-url">
                     {this.state.exportURL ? (
                       <div>
-                        <span style={{textAlign: "right"}}>
+                        <span style={{ textAlign: "right" }}>
                           <NavLink to="/how-to-import-or-export-calendar">&#9432;</NavLink>{" "}
                           What's this?
                         </span>
@@ -449,10 +447,10 @@ class EditListing extends Component {
             </div>
           </div>
         ) : (
-          <div className="spinner-container">
-            <div id="spinner" />
-          </div>
-        )}
+            <div className="spinner-container">
+              <div id="spinner" />
+            </div>
+          )}
       </>
     );
   }
