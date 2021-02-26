@@ -140,7 +140,7 @@ const ListingCard = (props) => {
                       className="listing-card-button delete"
                       onClick={handleDeleteListing}
                     >
-                      Confirm Delete
+                      Confirm
                     </button>
                   </>
                 </>
