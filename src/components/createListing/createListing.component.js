@@ -1121,11 +1121,11 @@ class CreateListing extends Component {
                                     </div>
                                   </p>
 
-                                  {this.props.data.amenities.length > 0 && (
+                                  {this.state.form.amenities.length > 0 && (
                                     <>
                                       <h2 className="confirm-listing-subtitle">Amenities</h2>
                                       <p className="confirm-listing-text">
-                                        {this.props.data.amenities.map((amenity) => {
+                                        {this.state.form.amenities.map((amenity) => {
                                           return (
                                             <div className="confirm-listing-text-container">
                                               {amenity}
@@ -1138,7 +1138,7 @@ class CreateListing extends Component {
 
                                   <h2 className="confirm-listing-subtitle">Price</h2>
                                   <p className="confirm-listing-text">
-                                    ${parseFloat(this.props.data.price).toFixed(2)} / night
+                                    ${parseFloat(this.state.form.price).toFixed(2)} / night
           </p>
 
                                   <h2 className="confirm-listing-subtitle">Dates</h2>
