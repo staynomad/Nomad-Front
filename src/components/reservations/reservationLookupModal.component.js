@@ -34,7 +34,7 @@ const ReservationLookup = (props) => {
 
   return (
     <div id="reservationLookupModal-page">
-      <div className="modal-content reservationLookup-container">
+      <div className="reservation-modal-content reservationLookup-container">
         {lookup ? (
           <div>
             <h2>Find your reservation</h2>
@@ -45,18 +45,23 @@ const ReservationLookup = (props) => {
                 style={{ fontFamily: "Playfair Display" }}
               >
                 <input
-                  className="login_bar"
+                  className="reservation-input"
                   type="text"
                   id="reservationID"
                   name="reservationID"
-                  placeholder="reservation ID"
+                  placeholder="Reservation ID"
                   onChange={(e) => setReservationID(e.target.value)}
                   style={{ width: "100%", paddingLeft: "2%" }}
                 />
               </label>
-              <p>You'll find this in your reservation confirmation email.</p>
+              <p className="reservation-modal-p">
+                You'll find this in your reservation confirmation email.
+              </p>
               {error ? (
-                <p style={{ color: "red" }}>
+                <p
+                  className="reservation-modal-p error"
+                  style={{ color: "red" }}
+                >
                   There has been an error finding your reservation! Please make
                   sure the ID is correct.
                 </p>
@@ -67,15 +72,14 @@ const ReservationLookup = (props) => {
                   id="reservationIDSubmit"
                   className="searchbutton btn"
                 >
-                  search
+                  Search
                 </button>
               </label>
             </form>
-            <p className="botText">
+            <p className="reservation-modal-p">
               New to NomΛd?
               <a href="/SignUp" style={{ color: "#02b188", paddingLeft: "2%" }}>
-                {" "}
-                sign up
+                Sign up
               </a>
             </p>
           </div>
@@ -123,8 +127,8 @@ const ReservationLookup = (props) => {
           </div>
         )}
         <div className="spacer_s"></div>
-        <p className="exit" onClick={handleReturnHome}>
-          exit
+        <p className="reservation-modal-exit" onClick={handleReturnHome}>
+          Exit
         </p>
       </div>
     </div>
