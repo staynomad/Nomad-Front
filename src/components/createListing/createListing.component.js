@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import DatePicker, { DateUtils } from "react-day-picker";
 import { Helmet } from "react-helmet-async";
 import { NavLink, withRouter } from "react-router-dom";
+import Select from "react-select";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
@@ -17,64 +18,8 @@ import {
   setLoadingFalse,
 } from "../../redux/actions/loadingActions";
 import { createNewListing } from "../../redux/actions/createListingActions";
+import { stateStyles, stateOptions } from "./stateDropdown";
 import "./createListing.css";
-
-const stateDropDown = (
-  <>
-    <option value="N/A">state</option>
-    <option value="AL">Alabama</option>
-    <option value="AK">Alaska</option>
-    <option value="AZ">Arizona</option>
-    <option value="AR">Arkansas</option>
-    <option value="CA">California</option>
-    <option value="CO">Colorado</option>
-    <option value="CT">Connecticut</option>
-    <option value="DE">Delaware</option>
-    <option value="DC">District Of Columbia</option>
-    <option value="FL">Florida</option>
-    <option value="GA">Georgia</option>
-    <option value="HI">Hawaii</option>
-    <option value="ID">Idaho</option>
-    <option value="IL">Illinois</option>
-    <option value="IN">Indiana</option>
-    <option value="IA">Iowa</option>
-    <option value="KS">Kansas</option>
-    <option value="KY">Kentucky</option>
-    <option value="LA">Louisiana</option>
-    <option value="ME">Maine</option>
-    <option value="MD">Maryland</option>
-    <option value="MA">Massachusetts</option>
-    <option value="MI">Michigan</option>
-    <option value="MN">Minnesota</option>
-    <option value="MS">Mississippi</option>
-    <option value="MO">Missouri</option>
-    <option value="MT">Montana</option>
-    <option value="NE">Nebraska</option>
-    <option value="NV">Nevada</option>
-    <option value="NH">New Hampshire</option>
-    <option value="NJ">New Jersey</option>
-    <option value="NM">New Mexico</option>
-    <option value="NY">New York</option>
-    <option value="NC">North Carolina</option>
-    <option value="ND">North Dakota</option>
-    <option value="OH">Ohio</option>
-    <option value="OK">Oklahoma</option>
-    <option value="OR">Oregon</option>
-    <option value="PA">Pennsylvania</option>
-    <option value="RI">Rhode Island</option>
-    <option value="SC">South Carolina</option>
-    <option value="SD">South Dakota</option>
-    <option value="TN">Tennessee</option>
-    <option value="TX">Texas</option>
-    <option value="UT">Utah</option>
-    <option value="VT">Vermont</option>
-    <option value="VA">Virginia</option>
-    <option value="WA">Washington</option>
-    <option value="WV">West Virginia</option>
-    <option value="WI">Wisconsin</option>
-    <option value="WY">Wyoming</option>
-  </>
-);
 
 const options = [
   "TV",
@@ -236,7 +181,6 @@ class CreateListing extends Component {
 
   handleChange(e) {
     const { name, value } = e.target;
-    console.log(e.target.className)
 
     /* Handle change for title */
     if (name === 'title' || name === 'description') {
@@ -606,6 +550,9 @@ class CreateListing extends Component {
                             <h1 className="startText">Get Started!</h1>
                           </div>
                         </div>
+
+                        <br />
+
                         <div>
                           <div className="create-listing-content">
                             <div className="questionText">
@@ -696,15 +643,26 @@ class CreateListing extends Component {
 
                                   <div className="create-listing-input-container">
                                     <div className="label-text">State:</div>
-                                    <div className="stateInputBox">
-                                      <select
-                                        onChange={this.handleChange}
-                                        name="state"
-                                        value={this.state.form.location.state}
-                                      >
-                                        {stateDropDown}
-                                      </select>
-                                    </div>
+                                    <Select
+                                      onChange={(e) =>
+                                        this.setState({
+                                          ...this.state,
+                                          form: {
+                                            ...this.state.form,
+                                            location: {
+                                              ...this.state.form.location,
+                                              state: e.value,
+                                            }
+                                          }
+                                        })
+                                      }
+                                      value={stateOptions.find(
+                                        (option) => option.value === this.state.state
+                                      )}
+                                      placeholder="Select State..."
+                                      styles={stateStyles}
+                                      options={stateOptions}
+                                    />
                                   </div>
 
                                   <div className="create-listing-input-container">
@@ -764,7 +722,9 @@ class CreateListing extends Component {
                                       zipcode: ""
                                     }
                                   }
-                                })}>Clear</button>
+                                })}>
+                                <h4>Clear</h4>
+                              </button>
 
                             </div>
                             <div className="spacer_m"></div>
