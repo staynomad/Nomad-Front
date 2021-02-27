@@ -352,6 +352,7 @@ html {
 
 .nav-item:hover {
   color: var(--color-green);
+  cursor: pointer;
 }
 
 .navTrigger {
