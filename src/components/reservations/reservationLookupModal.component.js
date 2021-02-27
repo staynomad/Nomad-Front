@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./reservationLookupModal.css";
 import { app } from "../../utils/axiosConfig.js";
 import { getListingById } from "../../redux/actions/searchListingActions";
