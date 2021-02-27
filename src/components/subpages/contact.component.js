@@ -64,7 +64,7 @@ const Contact = () => {
           placeholder="Your message"
           value={contactState.text}
           onChange={handleChange}
-          className="contact-input contact_1 mb-40 w-full radius10"
+          className="contact-input contact-textarea contact_1 mb-40 w-full radius10"
         />
       </div>
       {isLoading ? (
@@ -72,7 +72,7 @@ const Contact = () => {
       ) : (
         <div className="rowcontact-button">
           <button
-            onclick={handleSubmit}
+            onClick={handleSubmit}
             className="btn action-3 green contact-button"
           >
             Send

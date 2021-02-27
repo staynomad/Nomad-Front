@@ -137,7 +137,7 @@ textarea {
   display: flex;
   flex-direction: column;
   width: 35rem;
-  margin: 0 auto;
+  margin: auto;
   align-items: center;
 }
 
@@ -149,4 +149,24 @@ textarea {
   display: flex;
   justify-content: center;
   margin-bottom: 2rem;
+}
+
+.contact-textarea {
+  height: 25rem;
+}
+
+@media screen and (max-width: 768px) {
+  .contact-container {
+    padding-top: 7rem;
+  }
+}
+
+@media screen and (max-width: 530px) {
+  .contact-form-container {
+    margin: 0 1rem;
+    width: auto;
+  }
+  .contact-form-container h1 {
+    font-size: 2.5rem !important;
+  }
 }
