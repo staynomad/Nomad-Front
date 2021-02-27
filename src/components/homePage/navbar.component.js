@@ -140,14 +140,14 @@ const Navbar = (props) => {
             >
               Map
             </NavLink>*/}
-            <NavLink
+            <div
               className="nav-item"
               style={{ fontSize: "1.5rem" }}
-              to="/"
+              // to="/"
               onClick={(e) => props.setReservationModal(true)}
             >
               Reservations
-            </NavLink>
+            </div>
 
             {props.userSession ? (
               <>
