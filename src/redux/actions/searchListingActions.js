@@ -50,9 +50,8 @@ export const searchFilteredListings = (filterState) => async dispatch => {
     };
 }
 
-export const searchUserListings = (token) => async dispatch => {
-    const headers = { "Authorization": `Bearer ${token}` };
-    const searchUserRes = await handleReq("/listings/byUserId", "GET", headers)
+export const searchUserListings = (userId) => async dispatch => {
+    const searchUserRes = await handleReq(`/listings/byUserId/${userId}`, "GET")
 
     if (searchUserRes.status === 200) {
         const { userListings } = await searchUserRes.data;
