@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { app } from "../../utils/axiosConfig";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import { searchUserListings } from "../../redux/actions/searchListingActions";
 import "./PublicProfile.css";
 
-import { searchUserListings } from "../../redux/actions/searchListingActions";
+import StarIcon from "@material-ui/icons/Star";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
 
 const PublicProfile = (props) => {
   const [name, setName] = useState("");
@@ -26,11 +28,37 @@ const PublicProfile = (props) => {
     };
     getInfo();
   }, []);
-  console.log(props.userListings);
+
+  const getStars = () => {
+    let totalReviews = 0;
+    let totalStars = 0;
+    const stars = [];
+    props.userListings.map((listing) => {
+      for (let props in listing.rating) {
+        totalStars = totalStars + listing.rating[props].stars;
+        totalReviews++;
+      }
+    });
+    if (totalReviews === 0) {
+      return <p>No Reviews yet</p>;
+    }
+    let average = totalStars / totalReviews;
+    for (let i = 1; i <= 5; i++) {
+      if (i <= average) {
+        stars.push(<StarIcon className="star-icon" alt={i} />);
+      } else {
+        stars.push(<StarBorderIcon className="star-icon" alt={i} />);
+      }
+    }
+    stars.push(<p className="rating-number">({totalReviews})</p>);
+
+    return stars;
+  };
 
   return (
     <div className="public-profile-screen">
       <h1>test</h1>
+      {props.userListings && getStars()}
     </div>
   );
 };
