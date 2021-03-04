@@ -278,7 +278,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(searchForListings(itemToSearch)),
     searchFilteredListings: (filter) =>
       dispatch(searchFilteredListings(filter)),
-    searchUserListings: (token) => dispatch(searchUserListings(token)),
+    searchUserListings: (userId) => dispatch(searchUserListings(userId)),
   };
 };
 

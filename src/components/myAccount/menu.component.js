@@ -224,7 +224,7 @@ class LeftMenu extends Component {
                       onClick={(e, { name, compname }) => {
                         this.handleItemClick(e, { name, compname });
                         this.props.searchUserListings(
-                          this.props.userSession.token
+                          this.props.User.userInfo._id
                         );
                       }}
                     />
@@ -309,7 +309,7 @@ class LeftMenu extends Component {
                           onClick={(e, { name, compname }) => {
                             this.handleItemClick(e, { name, compname });
                             this.props.searchUserListings(
-                              this.props.userSession.token
+                              this.props.User.userInfo._id
                             );
                           }}
                         />
@@ -377,7 +377,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(getListingTranferRequests(token)),
     rejectListingTransfer: (rejectAll, listingId) =>
       dispatch(rejectListingTransfer(rejectAll, listingId)),
-    searchUserListings: (token) => dispatch(searchUserListings(token)),
+    searchUserListings: (userId) => dispatch(searchUserListings(userId)),
     searchUserReservations: (token) => dispatch(searchUserReservations(token)),
   };
 };
