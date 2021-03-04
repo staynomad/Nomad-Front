@@ -53,7 +53,7 @@ class Listings extends Component {
     } else {
       // console.log(this.props.searchOnlyUser)
       if (this.props.searchOnlyUser)
-        this.props.searchUserListings(this.props.userSession.token);
+        this.props.searchUserListings(this.props.User.userInfo._id);
       else this.props.searchAllListings();
     }
   }
