@@ -3,3 +3,32 @@
   height: 100%;
   padding-top: 10rem;
 }
+
+.public-profile-container {
+  box-shadow: 0px 35px 60px rgba(132, 132, 132, 0.25);
+  margin: 0 2rem;
+  width: 60rem;
+  background-color: white;
+  display: inline-flex;
+  flex-direction: column;
+  border-radius: 5px;
+  margin-bottom: 5rem !important;
+  overflow: hidden;
+
+  height: 50rem;
+}
+
+.public-profile-header {
+  height: 5rem;
+  width: 100%;
+  background: var(--color-green);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.public-profile-header h2 {
+  color: white !important;
+  font-weight: 500 !important;
+  font-size: 2.5rem !important;
+}
