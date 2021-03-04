@@ -9,6 +9,7 @@ import StarIcon from "@material-ui/icons/Star";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 
 const PublicProfile = (props) => {
+  const [loading, setLoading] = useState(true);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [description, setDescription] = useState("");
@@ -23,17 +24,21 @@ const PublicProfile = (props) => {
           setName(res.data.name);
           setDescription(res.data.description);
           if (props.userSession) setEmail(res.data.email);
+          setLoading(false);
         })
-        .catch((err) => setError(true));
+        .catch((err) => {
+          setError(true);
+          setLoading(false);
+        });
     };
     getInfo();
-  }, []);
+  }, [props]);
 
   const getStars = () => {
     let totalReviews = 0;
     let totalStars = 0;
     const stars = [];
-    props.userListings.map((listing) => {
+    props.userListings.forEach((listing) => {
       for (let props in listing.rating) {
         totalStars = totalStars + listing.rating[props].stars;
         totalReviews++;
@@ -57,11 +62,24 @@ const PublicProfile = (props) => {
 
   return (
     <div className="public-profile-screen">
-      <h1>test</h1>
-      {props.userListings && getStars()}
+      {!loading && (
+        <div className="public-profile-container">
+          {!error ? (
+            <div className="public-profile-header">
+              <h2>{name}'s Profile Page</h2>
+            </div>
+          ) : (
+            <>
+              <div className="public-profile-header"></div>
+              <h2>Profile Not Found!</h2>
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 };
+/* {props.userListings && getStars()} */
 
 const mapStateToProps = (state) => {
   let stateToReturn = { ...state };
