@@ -321,10 +321,11 @@ class CreateListing extends Component {
       importLoading: true,
     });
     e.preventDefault();
-    if (this.state.calendarURL.indexOf(".ics") === -1) {
-      alert("Invalid URL. Please try again.");
-    } else {
-      await this.props.importCalendar(this.state.calendarURL, null);
+    await this.props.importCalendar(this.state.calendarURL, null);
+    if (!this.state.form.dates.start_date || !this.state.form.dates.end_date) {
+      alert("Invalid URL. Please try again!")
+    }
+    else {
       this.setState({
         form: {
           ...this.state.form,
@@ -334,9 +335,7 @@ class CreateListing extends Component {
             end_date: this.props.available[1],
           },
         },
-      });
-      this.setState({
-        importDone: true,
+        importDone: true
       });
     }
     this.setState({
@@ -394,7 +393,7 @@ class CreateListing extends Component {
     this.setState({
       displayImport: !this.state.displayImport,
     });
-    console.log(this.state.displayImport);
+    // console.log(this.state.displayImport);
   };
 
   handleResetClick() {
@@ -504,7 +503,7 @@ class CreateListing extends Component {
       available: availableDates,
       amenities: this.state.form.amenities,
       calendarURL: this.state.form.calendarURL,
-      booked: this.props.booked,
+      booked: this.props.booked ? this.props.booked : null,
     };
 
     newListingData.append('listingData', new Blob([JSON.stringify({
