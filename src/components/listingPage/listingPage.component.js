@@ -1,31 +1,31 @@
 // https://stripe.com/docs/checkout/integration-builder
 
-import React, { Component } from 'react';
-import { app } from '../../utils/axiosConfig.js';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { loadStripe } from '@stripe/stripe-js';
-import DayPicker, { DateUtils } from 'react-day-picker';
-import ImageGallery from 'react-image-gallery';
-import StarRatings from 'react-star-ratings';
-import 'react-day-picker/lib/style.css';
-import './listingPage.css';
-import handleReq from '../../utils/fetchRequest';
-import { submitReview } from '../../redux/actions/reviewActions';
+import React, { Component } from "react";
+import { app } from "../../utils/axiosConfig.js";
+import { connect } from "react-redux";
+import { withRouter, NavLink } from "react-router-dom";
+import { loadStripe } from "@stripe/stripe-js";
+import DayPicker, { DateUtils } from "react-day-picker";
+import ImageGallery from "react-image-gallery";
+import StarRatings from "react-star-ratings";
+import "react-day-picker/lib/style.css";
+import "./listingPage.css";
+import handleReq from "../../utils/fetchRequest";
+import { submitReview } from "../../redux/actions/reviewActions";
 import {
   getCalendarURL,
   importCalendar,
-} from '../../redux/actions/calendarSyncActions';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
-import StarIcon from '@material-ui/icons/Star';
-import PermIdentityIcon from '@material-ui/icons/PermIdentity';
-import defaultProfile from '../../../src/assets/img/default-profile.png';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
+} from "../../redux/actions/calendarSyncActions";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
+import StarIcon from "@material-ui/icons/Star";
+import PermIdentityIcon from "@material-ui/icons/PermIdentity";
+import defaultProfile from "../../../src/assets/img/default-profile.png";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
 
 const stripePublicKey =
-  'pk_test_51HqRrRImBKNBYsooNTOTLagbqd8QUGaK6BeGwy6k2pQAJxkFF7NRwTT3ksBwyGVmq8UqhNVvKQS7Vlb69acFFCvq00hxgBuZhh';
+  "pk_test_51HqRrRImBKNBYsooNTOTLagbqd8QUGaK6BeGwy6k2pQAJxkFF7NRwTT3ksBwyGVmq8UqhNVvKQS7Vlb69acFFCvq00hxgBuZhh";
 const stripePromise = loadStripe(stripePublicKey);
 
 class ListingPage extends Component {
@@ -43,7 +43,7 @@ class ListingPage extends Component {
       isLoading: true,
       outOfRange: false,
       rating: 0,
-      review: '',
+      review: "",
     });
   }
 
@@ -62,7 +62,7 @@ class ListingPage extends Component {
     }
     app.put(`/listings/increment/${this.props.match.params.id}`);
     await app
-      .get('/listings/byId/' + this.props.match.params.id)
+      .get("/listings/byId/" + this.props.match.params.id)
       .then((res) => {
         // If the listing is a draft and the current user is not the host, redirect to 404
         if (
@@ -70,7 +70,7 @@ class ListingPage extends Component {
           (!this.props.User.userInfo ||
             this.props.User.userInfo._id !== res.data.listing.userId)
         ) {
-          window.location = '/page-not-found';
+          window.location = "/page-not-found";
           return;
         }
         this.setState({
@@ -158,16 +158,16 @@ class ListingPage extends Component {
     });
 
     if (!this.props.userSession) {
-      alert('Please log in to create a reservation.');
-      return this.props.history.push('/login');
+      alert("Please log in to create a reservation.");
+      return this.props.history.push("/login");
     }
     const selectedStartDay = JSON.stringify(this.state.from).substring(
       1,
-      JSON.stringify(this.state.from).indexOf('T')
+      JSON.stringify(this.state.from).indexOf("T")
     );
     const selectedEndDay = JSON.stringify(this.state.to).substring(
       1,
-      JSON.stringify(this.state.to).indexOf('T')
+      JSON.stringify(this.state.to).indexOf("T")
     );
     const resDays =
       parseInt((this.state.to - this.state.from) / (1000 * 3600 * 24)) + 1;
@@ -189,8 +189,8 @@ class ListingPage extends Component {
     // Wrap calls in try-catch block.  All errors handled by catch
     try {
       const newReservation = await handleReq(
-        '/reservation/createReservation',
-        'POST',
+        "/reservation/createReservation",
+        "POST",
         {
           Authorization: `Bearer ${this.props.userSession.token}`,
         },
@@ -200,13 +200,13 @@ class ListingPage extends Component {
       // If the stripe call succeeds, create reservation
       if (newReservation.status === 201) {
         const { reservationId } = newReservation.data;
-        body['reservationId'] = reservationId;
+        body["reservationId"] = reservationId;
 
         const response = await handleReq(
-          '/payment/create-session',
-          'POST',
+          "/payment/create-session",
+          "POST",
           {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           JSON.stringify(body)
         );
@@ -318,7 +318,7 @@ class ListingPage extends Component {
       stars.push(<p className="rating-number">({n})</p>);
       return stars;
     };
-
+    console.log(this.state.listingUser);
     return (
       <div className="individual-listing-container">
         {!this.state.listingPictures ? (
@@ -332,7 +332,7 @@ class ListingPage extends Component {
               showBullets={true}
               showFullscreenButton={false}
               bulletClass="image-gallery-bullet"
-              onErrorImageURL={'/images/default_listing.jpg'}
+              onErrorImageURL={"/images/default_listing.jpg"}
               originalAlt={`${this.state.listingTitle}`}
               renderLeftNav={(onClick, disabled) => {
                 return (
@@ -386,7 +386,7 @@ class ListingPage extends Component {
                       <PermIdentityIcon className="listing-info-icon" />
                       <h2>
                         {this.state.listingMaxPeople} Guest
-                        {this.state.listingMaxPeople > 1 ? 's' : ''}
+                        {this.state.listingMaxPeople > 1 ? "s" : ""}
                       </h2>
                     </div>
                     <div className="listing-info">
@@ -397,7 +397,7 @@ class ListingPage extends Component {
                       />
                       <h2>
                         {this.state.listingBeds} Bed
-                        {this.state.listingBeds > 1 ? 's' : ''}
+                        {this.state.listingBeds > 1 ? "s" : ""}
                       </h2>
                     </div>
                     <div className="listing-info">
@@ -408,28 +408,31 @@ class ListingPage extends Component {
                       />
                       <h2>
                         {this.state.listingBaths} Bath
-                        {this.state.listingBaths > 1 ? 's' : ''}
+                        {this.state.listingBaths > 1 ? "s" : ""}
                       </h2>
                     </div>
                   </div>
                   <div className="spacer_xs"></div>
                   {this.props.userSession ? (
                     <div className="listing-contact">
-                      <div className="listing-contact-info">
+                      <NavLink
+                        to={`/profile/${this.state.listingUser}`}
+                        className="listing-contact-info"
+                      >
                         <img src={defaultProfile} alt="profile" />
                         {this.state.listingUserName && (
                           <h2>{this.state.listingUserName.name}</h2>
                         )}
-                      </div>
+                      </NavLink>
                       <a href={`mailto:${this.state.hostEmail}`}>
                         <button
                           className="listing-button btn green"
                           type="button"
                         >
-                          {' '}
-                          Contact Host{' '}
+                          {" "}
+                          Contact Host{" "}
                         </button>
-                      </a>{' '}
+                      </a>{" "}
                     </div>
                   ) : null}
                 </div>
@@ -443,7 +446,7 @@ class ListingPage extends Component {
                 <h4 className="listing-subtitle">Details</h4>
                 <p className="listing-description">
                   {this.state.listingDescription}
-                </p>{' '}
+                </p>{" "}
                 <br />
                 {this.state.listingAmenities.length > 0 && (
                   <div className="listing-amenities">
@@ -452,40 +455,40 @@ class ListingPage extends Component {
                       {this.state.listingAmenities.map((amenity) => {
                         let imagepath;
                         switch (amenity) {
-                          case 'TV': {
-                            imagepath = '/images/amenities/TV_.svg';
+                          case "TV": {
+                            imagepath = "/images/amenities/TV_.svg";
                             break;
                           }
-                          case 'Wifi': {
-                            imagepath = '/images/amenities/Wifi_.svg';
+                          case "Wifi": {
+                            imagepath = "/images/amenities/Wifi_.svg";
                             break;
                           }
-                          case 'Heating': {
-                            imagepath = '/images/amenities/Heating_.svg';
+                          case "Heating": {
+                            imagepath = "/images/amenities/Heating_.svg";
                             break;
                           }
-                          case 'Kitchen': {
-                            imagepath = '/images/amenities/Kitchen_.svg';
+                          case "Kitchen": {
+                            imagepath = "/images/amenities/Kitchen_.svg";
                             break;
                           }
-                          case 'Pool': {
-                            imagepath = '/images/amenities/Pool_.svg';
+                          case "Pool": {
+                            imagepath = "/images/amenities/Pool_.svg";
                             break;
                           }
-                          case 'Towels': {
-                            imagepath = '/images/amenities/Towels_.svg';
+                          case "Towels": {
+                            imagepath = "/images/amenities/Towels_.svg";
                             break;
                           }
-                          case 'Hair dryer': {
-                            imagepath = '/images/amenities/Hairdryer_.svg';
+                          case "Hair dryer": {
+                            imagepath = "/images/amenities/Hairdryer_.svg";
                             break;
                           }
-                          case 'Heat': {
-                            imagepath = '/images/amenities/Heating_.svg';
+                          case "Heat": {
+                            imagepath = "/images/amenities/Heating_.svg";
                             break;
                           }
-                          case 'AC': {
-                            imagepath = '/images/amenities/ac_.svg';
+                          case "AC": {
+                            imagepath = "/images/amenities/ac_.svg";
                             break;
                           }
                           default: {
@@ -507,7 +510,10 @@ class ListingPage extends Component {
                     <h4 className="listing-subtitle">Reviews</h4>
                     {Object.keys(this.state.listingRatings).map(([key]) => {
                       //Check if the review has a message
-                      if (this.state.listingRatings[key] && this.state.listingRatings[key].review) {
+                      if (
+                        this.state.listingRatings[key] &&
+                        this.state.listingRatings[key].review
+                      ) {
                         const rating = [];
                         for (let i = 1; i <= 5; i++) {
                           if (i <= this.state.listingRatings[key].stars) {
@@ -537,20 +543,20 @@ class ListingPage extends Component {
               </div>
               <div className="listing-calendar">
                 <div className="spacer_xs"></div>
-                <div style={{ alignText: 'center' }}>
+                <div style={{ alignText: "center" }}>
                   {this.state.outOfRange ? (
-                    'Selected day is not available.'
+                    "Selected day is not available."
                   ) : (
                     // lessThanFourDays ? (
                     //   "Minimum 4 days required"
                     // ) :
                     <div>
-                      {!from && !to && 'Please select the first day.'}
-                      {from && !to && 'Please select the last day.'}
+                      {!from && !to && "Please select the first day."}
+                      {from && !to && "Please select the last day."}
                       {from &&
                         to &&
                         `From ${from.toLocaleDateString()} to
-                    ${to.toLocaleDateString()}`}{' '}
+                    ${to.toLocaleDateString()}`}{" "}
                     </div>
                   )}
                 </div>
@@ -618,8 +624,8 @@ class ListingPage extends Component {
 const mapStateToProps = (state) => {
   let stateToReturn = { ...state };
   if (state.Login.userInfo)
-    stateToReturn['userSession'] = state.Login.userInfo.session;
-  stateToReturn['calendarURL'] = state.Calendar.calendarURL;
+    stateToReturn["userSession"] = state.Login.userInfo.session;
+  stateToReturn["calendarURL"] = state.Calendar.calendarURL;
   return stateToReturn;
 };
 
