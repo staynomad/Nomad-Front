@@ -62,7 +62,7 @@ const PublicProfile = (props) => {
 
   return (
     <div className="public-profile-screen">
-      {!loading && (
+      {!loading ? (
         <div className="public-profile-container">
           {!error ? (
             <div className="public-profile-header">
@@ -75,6 +75,8 @@ const PublicProfile = (props) => {
             </>
           )}
         </div>
+      ) : (
+        <div className="loader"></div>
       )}
     </div>
   );
