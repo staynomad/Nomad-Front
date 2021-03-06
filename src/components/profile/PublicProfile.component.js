@@ -74,7 +74,7 @@ const PublicProfile = (props) => {
           {!error ? (
             <>
               <div className="public-profile-header">
-                <h2>{name}'s Profile Page</h2>
+                <h2>{name}</h2>
               </div>
               <div className="public-profile-content">
                 <div className="public-profile-caption-container">
