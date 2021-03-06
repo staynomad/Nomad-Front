@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom";
 import { searchUserListings } from "../../redux/actions/searchListingActions";
 import "./PublicProfile.css";
 
+import HorizontalScrollMenu from "../matches/listing/HorizontalScrollMenu.component";
 import StarIcon from "@material-ui/icons/Star";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 
@@ -32,7 +33,7 @@ const PublicProfile = (props) => {
         });
     };
     getInfo();
-  }, [props]);
+  }, []);
 
   const getStars = () => {
     let totalReviews = 0;
@@ -65,9 +66,21 @@ const PublicProfile = (props) => {
       {!loading ? (
         <div className="public-profile-container">
           {!error ? (
-            <div className="public-profile-header">
-              <h2>{name}'s Profile Page</h2>
-            </div>
+            <>
+              <div className="public-profile-header">
+                <h2>{name}'s Profile Page</h2>
+              </div>
+              <div className="public-profile-content">
+                <div className="public-profile-caption-container">
+                  <h1 className="public-profile-caption">{name}'s Listings</h1>
+                  <div className="public-profile-caption-line"></div>
+                </div>
+                <HorizontalScrollMenu
+                  className="horizontal-scroll-container"
+                  data={props.userListings}
+                />
+              </div>
+            </>
           ) : (
             <>
               <div className="public-profile-header"></div>
