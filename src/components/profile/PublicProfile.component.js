@@ -8,6 +8,7 @@ import "./PublicProfile.css";
 import HorizontalScrollMenu from "../matches/listing/HorizontalScrollMenu.component";
 import StarIcon from "@material-ui/icons/Star";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
+import MailOutlineIcon from "@material-ui/icons/MailOutline";
 
 const PublicProfile = (props) => {
   const [loading, setLoading] = useState(true);
@@ -46,7 +47,7 @@ const PublicProfile = (props) => {
       }
     });
     if (totalReviews === 0) {
-      return <p>No Reviews yet</p>;
+      return <h3 className="public-profile-text">No reviews yet</h3>;
     }
     let average = totalStars / totalReviews;
     for (let i = 1; i <= 5; i++) {
@@ -79,6 +80,40 @@ const PublicProfile = (props) => {
                   className="horizontal-scroll-container"
                   data={props.userListings}
                 />
+                <div className="public-profile-caption-container">
+                  <h1 className="public-profile-caption">Description</h1>
+                  <div className="public-profile-caption-line"></div>
+                </div>
+                <h3 className="public-profile-text">{description}</h3>
+                {/* <h3 className="public-profile-text">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Facere et, quae quibusdam tempora vel temporibus nostrum? Nisi
+                  dolor nihil ipsa, omnis, consequatur perspiciatis impedit
+                  saepe cumque veniam quo quia, aut sapiente dolorum quas sit
+                  ipsum unde delectus sed totam inventore voluptas laborum
+                  explicabo cum. Laboriosam harum dolorem assumenda sequi enim!
+                </h3> */}
+                {/*only if user is logged in */}
+                {email && (
+                  <>
+                    <div className="public-profile-caption-container">
+                      <h1 className="public-profile-caption">Contact</h1>
+                      <div className="public-profile-caption-line"></div>
+                    </div>
+                    <div className="public-profile-contact">
+                      <MailOutlineIcon />
+                      <h3 className="public-profile-text">{email}</h3>
+                      <a href={`mailto:${email}`}>Contact Host</a>
+                    </div>
+                  </>
+                )}
+                <div className="public-profile-caption-container">
+                  <h1 className="public-profile-caption">Reviews</h1>
+                  <div className="public-profile-caption-line"></div>
+                </div>
+                <div className="public-profile-reviews-container">
+                  {props.userListings && getStars()}
+                </div>
               </div>
             </>
           ) : (

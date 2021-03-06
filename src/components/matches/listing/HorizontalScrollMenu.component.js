@@ -15,8 +15,10 @@ const HorizontalScrollMenu = ({ data }) => {
           <HorizontalListingCard listing={listing} key={listing._id} />
         ))}
         wheel={false}
-        arrowLeft={<ArrowBackIcon className="scroll-menu-arrow left" />}
-        arrowRight={<ArrowForwardIcon className="scroll-menu-arrow right" />}
+        arrowLeft={<ArrowBackIcon className="scroll-menu-arrow left profile" />}
+        arrowRight={
+          <ArrowForwardIcon className="scroll-menu-arrow right profile" />
+        }
         translate={2}
       />
     </div>

@@ -40,6 +40,10 @@
   cursor: pointer;
 }
 
+.scroll-menu-arrow.profile {
+  font-size: 50px !important;
+}
+
 .scroll-menu-arrow.left {
   position: absolute;
   top: 50%;
