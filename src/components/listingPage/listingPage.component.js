@@ -318,7 +318,6 @@ class ListingPage extends Component {
       stars.push(<p className="rating-number">({n})</p>);
       return stars;
     };
-    console.log(this.state.listingUser);
     return (
       <div className="individual-listing-container">
         {!this.state.listingPictures ? (

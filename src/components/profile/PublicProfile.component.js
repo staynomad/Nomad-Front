@@ -34,6 +34,7 @@ const PublicProfile = (props) => {
         });
     };
     getInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getStars = () => {
@@ -52,12 +53,16 @@ const PublicProfile = (props) => {
     let average = totalStars / totalReviews;
     for (let i = 1; i <= 5; i++) {
       if (i <= average) {
-        stars.push(<StarIcon className="star-icon" alt={i} />);
+        stars.push(<StarIcon className="star-icon" key={i} alt={i} />);
       } else {
-        stars.push(<StarBorderIcon className="star-icon" alt={i} />);
+        stars.push(<StarBorderIcon className="star-icon" key={i} alt={i} />);
       }
     }
-    stars.push(<p className="rating-number">({totalReviews})</p>);
+    stars.push(
+      <p className="rating-number" key={"num"}>
+        ({totalReviews})
+      </p>
+    );
 
     return stars;
   };
@@ -84,15 +89,7 @@ const PublicProfile = (props) => {
                   <h1 className="public-profile-caption">Description</h1>
                   <div className="public-profile-caption-line"></div>
                 </div>
-                {/* <h3 className="public-profile-text">{description}</h3> */}
-                <h3 className="public-profile-text">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Facere et, quae quibusdam tempora vel temporibus nostrum? Nisi
-                  dolor nihil ipsa, omnis, consequatur perspiciatis impedit
-                  saepe cumque veniam quo quia, aut sapiente dolorum quas sit
-                  ipsum unde delectus sed totam inventore voluptas laborum
-                  explicabo cum. Laboriosam harum dolorem assumenda sequi enim!
-                </h3>
+                <h3 className="public-profile-text">{description}</h3>
                 {/*only if user is logged in */}
                 {email && (
                   <>
@@ -119,7 +116,7 @@ const PublicProfile = (props) => {
           ) : (
             <>
               <div className="public-profile-header"></div>
-              <h2>Profile Not Found!</h2>
+              <h2 style={{ marginBottom: "20rem" }}>Profile Not Found!</h2>
             </>
           )}
         </div>
@@ -129,7 +126,6 @@ const PublicProfile = (props) => {
     </div>
   );
 };
-/* {props.userListings && getStars()} */
 
 const mapStateToProps = (state) => {
   let stateToReturn = { ...state };
