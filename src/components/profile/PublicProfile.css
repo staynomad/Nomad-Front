@@ -66,6 +66,7 @@
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
+  flex-wrap: wrap;
 }
 
 .public-profile-contact h3 {
@@ -105,5 +106,35 @@
 @media screen and (max-width: 769px) {
   .public-profile-screen {
     padding-top: 8rem;
+  }
+  .public-profile-header h2 {
+    font-size: 2rem !important;
+  }
+  .public-profile-caption {
+    font-size: 1.8rem !important;
+  }
+  .public-profile-text {
+    font-size: 16px !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .public-profile-caption-line {
+    width: 100%;
+  }
+  .public-profile-header h2 {
+    font-size: 1.5rem !important;
+  }
+}
+
+@media screen and (max-width: 530px) {
+  .public-profile-content {
+    padding: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .public-profile-content {
+    padding: 1rem;
   }
 }

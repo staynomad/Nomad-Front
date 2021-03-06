@@ -73,7 +73,7 @@ const PublicProfile = (props) => {
               </div>
               <div className="public-profile-content">
                 <div className="public-profile-caption-container">
-                  <h1 className="public-profile-caption">{name}'s Listings</h1>
+                  <h1 className="public-profile-caption">Listings</h1>
                   <div className="public-profile-caption-line"></div>
                 </div>
                 <HorizontalScrollMenu
@@ -84,15 +84,15 @@ const PublicProfile = (props) => {
                   <h1 className="public-profile-caption">Description</h1>
                   <div className="public-profile-caption-line"></div>
                 </div>
-                <h3 className="public-profile-text">{description}</h3>
-                {/* <h3 className="public-profile-text">
+                {/* <h3 className="public-profile-text">{description}</h3> */}
+                <h3 className="public-profile-text">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   Facere et, quae quibusdam tempora vel temporibus nostrum? Nisi
                   dolor nihil ipsa, omnis, consequatur perspiciatis impedit
                   saepe cumque veniam quo quia, aut sapiente dolorum quas sit
                   ipsum unde delectus sed totam inventore voluptas laborum
                   explicabo cum. Laboriosam harum dolorem assumenda sequi enim!
-                </h3> */}
+                </h3>
                 {/*only if user is logged in */}
                 {email && (
                   <>
