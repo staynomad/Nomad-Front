@@ -40,10 +40,6 @@
   cursor: pointer;
 }
 
-.scroll-menu-arrow.profile {
-  font-size: 50px !important;
-}
-
 .scroll-menu-arrow.left {
   position: absolute;
   top: 50%;
@@ -94,7 +90,7 @@
 }
 
 .horizontal-listing-card-content h3 {
-  font-size: 20px !important;
+  font-size: 18px !important;
   color: var(--color-green);
   margin: 0;
 }
@@ -156,7 +152,7 @@
     font-size: 14px !important;
   }
   .horizontal-listing-card-content h3 {
-    font-size: 18px !important;
+    font-size: 16px !important;
   }
   .horizontal-listing-card-details-container h4 {
     font-size: 14px !important;
@@ -185,7 +181,7 @@
     font-size: 12px !important;
   }
   .horizontal-listing-card-content h3 {
-    font-size: 16px !important;
+    font-size: 14px !important;
   }
   .horizontal-listing-card-details-container h4 {
     font-size: 12px !important;
@@ -229,7 +225,7 @@
     font-size: 12px !important;
   }
   .horizontal-listing-card-content h3 {
-    font-size: 16px !important;
+    font-size: 14px !important;
   }
   .horizontal-listing-card-details-container {
     width: 90%;
