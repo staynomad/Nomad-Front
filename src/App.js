@@ -22,6 +22,7 @@ import CalendarImportInfo from "./components/subpages/calendarImportInfo.compone
 import PageNotFound from "./components/subpages/404.component";
 import About from "./components/subpages/about.component";
 import ListingMap from "./components/map/maps.component";
+import PublicProfile from "./components/profile/PublicProfile.component";
 import "./App.css";
 
 //to add more items just copy the format and add the route path. look at navbar component to see where the path is currently set to
@@ -93,6 +94,7 @@ function App() {
             />
             <Route path="/EditProfileInfo" exact component={EditProfileInfo} />
             <Route path="/contact" exact component={Contact} />
+            <Route path="/profile/:id" exact component={PublicProfile} />
             <Route
               path="/completeReservation/:listingId/:reservationId"
               exact

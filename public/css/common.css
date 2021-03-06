@@ -1164,6 +1164,25 @@ a:checked {
   }
 }
 
+.loader {
+  border: 5px solid rgb(221, 221, 221);
+  border-top: 5px solid var(--color-green);
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  margin: 5rem auto;
+  animation: loading-spin 1s linear infinite;
+}
+
+@keyframes loading-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 @media only screen and (max-width: 600px) {
   label .menu {
     right: 5%;
