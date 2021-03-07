@@ -77,19 +77,27 @@ const PublicProfile = (props) => {
                 <h2>{name}</h2>
               </div>
               <div className="public-profile-content">
-                <div className="public-profile-caption-container">
-                  <h1 className="public-profile-caption">Listings</h1>
-                  <div className="public-profile-caption-line"></div>
-                </div>
-                <HorizontalScrollMenu
-                  className="horizontal-scroll-container"
-                  data={props.userListings}
-                />
-                <div className="public-profile-caption-container">
-                  <h1 className="public-profile-caption">Description</h1>
-                  <div className="public-profile-caption-line"></div>
-                </div>
-                <h3 className="public-profile-text">{description}</h3>
+                {props.userListings && (
+                  <>
+                    <div className="public-profile-caption-container">
+                      <h1 className="public-profile-caption">Listings</h1>
+                      <div className="public-profile-caption-line"></div>
+                    </div>
+                    <HorizontalScrollMenu
+                      className="horizontal-scroll-container"
+                      data={props.userListings}
+                    />
+                  </>
+                )}
+                {description && (
+                  <>
+                    <div className="public-profile-caption-container">
+                      <h1 className="public-profile-caption">Description</h1>
+                      <div className="public-profile-caption-line"></div>
+                    </div>
+                    <h3 className="public-profile-text">{description}</h3>
+                  </>
+                )}
                 {/*only if user is logged in */}
                 {email && (
                   <>
