@@ -663,6 +663,13 @@ span.import-info {
   margin-bottom: 20px;
 }
 
+.create-listing-confirmation-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @media screen and (max-width: 490px) {
   .create-listing-image {
     max-height: 150px !important;
