@@ -379,6 +379,11 @@ class ListingPage extends Component {
                 ) : (
                   <h2 className="rating-no-reviews">No reviews yet</h2>
                 )}
+                <div className="leave-review-container">
+                  <NavLink className="leave-review-btn" to="/">
+                    Leave a Review
+                  </NavLink>
+                </div>
                 <div className="details">
                   <div className="listing-info-container">
                     <div className="listing-info">
@@ -507,34 +512,52 @@ class ListingPage extends Component {
                 {this.state.listingRatings && (
                   <div className="listing-reviews-container">
                     <h4 className="listing-subtitle">Reviews</h4>
-                    {Object.keys(this.state.listingRatings).map(([key]) => {
+                    {Object.entries(this.state.listingRatings).map((review) => {
                       //Check if the review has a message
-                      if (
-                        this.state.listingRatings[key] &&
-                        this.state.listingRatings[key].review
-                      ) {
-                        const rating = [];
-                        for (let i = 1; i <= 5; i++) {
-                          if (i <= this.state.listingRatings[key].stars) {
-                            rating.push(
-                              <StarIcon className="star-icon" alt={i} />
-                            );
-                          } else {
-                            rating.push(
-                              <StarBorderIcon className="star-icon" alt={i} />
-                            );
-                          }
+                      console.log(review);
+                      // if (
+                      //   this.state.listingRatings[key] &&
+                      //   this.state.listingRatings[key].review
+                      // ) {
+                      const rating = [];
+                      for (let i = 1; i <= 5; i++) {
+                        if (i <= review[1].stars) {
+                          rating.push(
+                            <StarIcon className="star-icon" alt={i} />
+                          );
+                        } else {
+                          rating.push(
+                            <StarBorderIcon className="star-icon" alt={i} />
+                          );
                         }
-
-                        return (
-                          <div className="listing-review">
-                            <div> {rating}</div>
-                            {this.state.listingRatings[key].review}
-                          </div>
-                        );
-                      } else {
-                        return null;
                       }
+
+                      //   return (
+                      //     <div className="listing-review">
+                      //       <div> {rating}</div>
+                      //       {this.state.listingRatings[key].review}
+                      //     </div>
+                      //   );
+                      // } else {
+                      //   return null;
+                      // }
+                      return (
+                        <div className="listing-review">
+                          <div className="listing-review-header">
+                            <img src={defaultProfile} alt="profile" />
+                            <div className="listing-review-info">
+                              <span className="listing-review-name">Mike</span>
+                              <span className="listing-review-date">
+                                March 2021
+                              </span>
+                            </div>
+                          </div>
+                          <div className="listing-review-stars-container">
+                            {rating}
+                          </div>
+                          <div className="listing-review-content"></div>
+                        </div>
+                      );
                     })}
                   </div>
                 )}
