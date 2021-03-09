@@ -16,6 +16,7 @@ import {
   getCalendarURL,
   importCalendar,
 } from "../../redux/actions/calendarSyncActions";
+import moment from "moment";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
@@ -310,14 +311,32 @@ class ListingPage extends Component {
       }
       for (let i = 1; i <= 5; i++) {
         if (i <= average) {
-          stars.push(<StarIcon className="star-icon" alt={i} />);
+          stars.push(<StarIcon key={i} className="star-icon" alt={i} />);
         } else {
-          stars.push(<StarBorderIcon className="star-icon" alt={i} />);
+          stars.push(<StarBorderIcon key={i} className="star-icon" alt={i} />);
         }
       }
-      stars.push(<p className="rating-number">({n})</p>);
+      stars.push(
+        <p key={"num"} className="rating-number">
+          ({n})
+        </p>
+      );
       return stars;
     };
+
+    // const getName = (id) => {
+    //   app.get(`/user/getUserInfo/${id}`).then((res) => res.data.name);
+    // };
+
+    const getName = async (id) => {
+      const resp = await app.get(`/user/getUserInfo/${id}`);
+      return resp.data.name;
+    };
+
+    // console.log(await getName("5f9887f944a7c00f502601de"));
+    // (async () => {
+    //   console.log(await getName("5f9887f944a7c00f502601de"));
+    // })();
     return (
       <div className="individual-listing-container">
         {!this.state.listingPictures ? (
@@ -512,43 +531,51 @@ class ListingPage extends Component {
                 {this.state.listingRatings && (
                   <div className="listing-reviews-container">
                     <h4 className="listing-subtitle">Reviews</h4>
-                    {Object.entries(this.state.listingRatings).map((review) => {
-                      //Check if the review has a message
+                    {this.state.listingRatings.map((review) => {
                       console.log(review);
-                      // if (
-                      //   this.state.listingRatings[key] &&
-                      //   this.state.listingRatings[key].review
-                      // ) {
+
                       const rating = [];
                       for (let i = 1; i <= 5; i++) {
-                        if (i <= review[1].stars) {
+                        if (i <= review.stars) {
                           rating.push(
-                            <StarIcon className="star-icon" alt={i} />
+                            <StarIcon key={i} className="star-icon" alt={i} />
                           );
                         } else {
                           rating.push(
-                            <StarBorderIcon className="star-icon" alt={i} />
+                            <StarBorderIcon
+                              key={i}
+                              className="star-icon"
+                              alt={i}
+                            />
                           );
                         }
                       }
 
-                      //   return (
-                      //     <div className="listing-review">
-                      //       <div> {rating}</div>
-                      //       {this.state.listingRatings[key].review}
-                      //     </div>
+                      // const name = (async () => {
+                      //   return await app.get(
+                      //     `/user/getUserInfo/${review.userId}`
                       //   );
-                      // } else {
-                      //   return null;
-                      // }
+                      // })();
+
                       return (
-                        <div className="listing-review">
+                        <div key={review.userId} className="listing-review">
                           <div className="listing-review-header">
                             <img src={defaultProfile} alt="profile" />
                             <div className="listing-review-info">
-                              <span className="listing-review-name">Mike</span>
+                              <span className="listing-review-name">
+                                {getName(review.userId)}
+                              </span>
+
+                              {/* <span className="listing-review-name">
+                                {(async () => {
+                                  await app
+                                    .get(`/user/getUserInfo/${review.userId}`)
+                                    .then((res) => res.data.name);
+                                })()}
+                              </span> */}
+                              {/* <span>{name}</span> */}
                               <span className="listing-review-date">
-                                March 2021
+                                {moment(review.timestamp).format("MMMM YYYY")}
                               </span>
                             </div>
                           </div>
