@@ -77,6 +77,9 @@
     height: 35px;
     font-size: 15px;
   }
+  .listing-review-content {
+    font-size: 13px !important;
+  }
 }
 .listing-details {
   max-width: 70% !important;
@@ -358,7 +361,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  margin-top: 2rem;
+  margin: 2rem 0;
 }
 
 .listing-reviews-container h4 {
@@ -413,6 +416,12 @@
   color: #6f6f6f;
 }
 
+.listing-review-content {
+  margin-top: 10px;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+}
+
 .leave-review-btn {
   color: var(--color-green);
   text-align: left;
@@ -462,9 +471,9 @@
   .listing-location-text {
     font-size: 13px !important;
   }
-  .listing-contact-info h2 {
+  /* .listing-contact-info h2 {
     font-size: 1rem !important;
-  }
+  } */
   .individual-listing-container {
     width: 99%;
   }

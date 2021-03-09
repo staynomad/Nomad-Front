@@ -97,9 +97,11 @@ class ListingPage extends Component {
 
         // Update listingRatings to include user's name for each review
         for (let i = 0; i < this.state.listingRatings.length; i++) {
-          app.get(`/user/getUserInfo/${this.state.listingRatings[i].userId}`).then((res) =>
-            this.state.listingRatings[i].userName = res.data.name
-          );
+          app
+            .get(`/user/getUserInfo/${this.state.listingRatings[i].userId}`)
+            .then(
+              (res) => (this.state.listingRatings[i].userName = res.data.name)
+            );
         }
 
         // Update listingPictures to include original and thumbnail url
@@ -542,28 +544,22 @@ class ListingPage extends Component {
                     {this.state.listingRatings.map((review) => {
                       console.log(review);
 
-                      // const rating = [];
-                      // for (let i = 1; i <= 5; i++) {
-                      //   if (i <= review.stars) {
-                      //     rating.push(
-                      //       <StarIcon key={i} className="star-icon" alt={i} />
-                      //     );
-                      //   } else {
-                      //     rating.push(
-                      //       <StarBorderIcon
-                      //         key={i}
-                      //         className="star-icon"
-                      //         alt={i}
-                      //       />
-                      //     );
-                      //   }
-                      // }
-
-                      // const name = (async () => {
-                      //   return await app.get(
-                      //     `/user/getUserInfo/${review.userId}`
-                      //   );
-                      // })();
+                      const rating = [];
+                      for (let i = 1; i <= 5; i++) {
+                        if (i <= review.stars) {
+                          rating.push(
+                            <StarIcon key={i} className="star-icon" alt={i} />
+                          );
+                        } else {
+                          rating.push(
+                            <StarBorderIcon
+                              key={i}
+                              className="star-icon"
+                              alt={i}
+                            />
+                          );
+                        }
+                      }
 
                       return (
                         <div key={review.userId} className="listing-review">
@@ -571,26 +567,20 @@ class ListingPage extends Component {
                             <img src={defaultProfile} alt="profile" />
                             <div className="listing-review-info">
                               <span className="listing-review-name">
-                                {/*getName(review.userId)*/}
+                                {review.userName}
                               </span>
 
-                              {/* <span className="listing-review-name">
-                                {(async () => {
-                                  await app
-                                    .get(`/user/getUserInfo/${review.userId}`)
-                                    .then((res) => res.data.name);
-                                })()}
-                              </span> */}
-                              {/* <span>{name}</span> */}
                               <span className="listing-review-date">
                                 {moment(review.timestamp).format("MMMM YYYY")}
                               </span>
                             </div>
                           </div>
                           <div className="listing-review-stars-container">
-                            {/*rating*/}
+                            {rating}
                           </div>
-                          <div className="listing-review-content"></div>
+                          <div className="listing-review-content">
+                            {review.review}
+                          </div>
                         </div>
                       );
                     })}
