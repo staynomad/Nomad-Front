@@ -95,6 +95,14 @@ class ListingPage extends Component {
           isActive: res.data.listing.active,
         });
 
+        // Update listingRatings to include user's name for each review
+        for (let i = 0; i < this.state.listingRatings.length; i++) {
+          app.get(`/user/getUserInfo/${this.state.listingRatings[i].userId}`).then((res) =>
+            this.state.listingRatings[i].userName = res.data.name
+          );
+        }
+
+        // Update listingPictures to include original and thumbnail url
         let pictures = [];
         for (let i = 0; i < this.state.listingPictures.length; i++) {
           pictures.push({
@@ -102,10 +110,10 @@ class ListingPage extends Component {
             thumbnail: String(this.state.listingPictures[i]),
           });
         }
-
         this.setState({
           listingPictures: pictures,
         });
+
         // Set default disabled days based on booked days in listing object
         let startDate = new Date(this.state.listingStartDate);
         let endDate = new Date(this.state.listingEndDate);
@@ -534,22 +542,22 @@ class ListingPage extends Component {
                     {this.state.listingRatings.map((review) => {
                       console.log(review);
 
-                      const rating = [];
-                      for (let i = 1; i <= 5; i++) {
-                        if (i <= review.stars) {
-                          rating.push(
-                            <StarIcon key={i} className="star-icon" alt={i} />
-                          );
-                        } else {
-                          rating.push(
-                            <StarBorderIcon
-                              key={i}
-                              className="star-icon"
-                              alt={i}
-                            />
-                          );
-                        }
-                      }
+                      // const rating = [];
+                      // for (let i = 1; i <= 5; i++) {
+                      //   if (i <= review.stars) {
+                      //     rating.push(
+                      //       <StarIcon key={i} className="star-icon" alt={i} />
+                      //     );
+                      //   } else {
+                      //     rating.push(
+                      //       <StarBorderIcon
+                      //         key={i}
+                      //         className="star-icon"
+                      //         alt={i}
+                      //       />
+                      //     );
+                      //   }
+                      // }
 
                       // const name = (async () => {
                       //   return await app.get(
@@ -563,7 +571,7 @@ class ListingPage extends Component {
                             <img src={defaultProfile} alt="profile" />
                             <div className="listing-review-info">
                               <span className="listing-review-name">
-                                {getName(review.userId)}
+                                {/*getName(review.userId)*/}
                               </span>
 
                               {/* <span className="listing-review-name">
@@ -580,7 +588,7 @@ class ListingPage extends Component {
                             </div>
                           </div>
                           <div className="listing-review-stars-container">
-                            {rating}
+                            {/*rating*/}
                           </div>
                           <div className="listing-review-content"></div>
                         </div>
