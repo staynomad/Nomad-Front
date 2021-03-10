@@ -3,14 +3,40 @@ import "./reviewpopup.css";
 
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import StarIcon from "@material-ui/icons/Star";
+import { app } from "../../utils/axiosConfig";
+import handleReq from "../../utils/fetchRequest";
 
-const ReviewPopup = () => {
+const ReviewPopup = (props) => {
   const [rating, setRating] = useState(0);
+  const [reviewMessage, setReviewMessage] = useState("");
   const [error, setError] = useState(false);
 
   const handleSubmit = () => {
+    console.log(rating);
     if (rating === 0) return setError(true);
     setError(false);
+    app
+      .post(`/reviews/${props.listingId}`, {
+        params: {
+          rating,
+          review: reviewMessage,
+        },
+        headers: {
+          Authorization: `Bearer ${this.props.userSession.token}`,
+        },
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+    // handleReq(`/reviews/${props.listingId}`, {
+    //   params: {
+    //     rating,
+    //     review: reviewMessage,
+    //   },
+    //   headers: {
+    //     Authorization: `Bearer ${this.props.userSession.token}`,
+    //   },
+    // });
   };
 
   return (
@@ -76,7 +102,11 @@ const ReviewPopup = () => {
         )}
       </div>
       <div className="review-popup-input-container">
-        <textarea placeholder="Your experience (optional)" />
+        <textarea
+          value={reviewMessage}
+          onChange={(e) => setReviewMessage(e.target.value)}
+          placeholder="Your experience (optional)"
+        />
       </div>
       <div className="review-popup-confirm-container">
         {error && <p>Please give this listing a rating</p>}

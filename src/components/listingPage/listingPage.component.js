@@ -342,7 +342,7 @@ class ListingPage extends Component {
           open={this.state.reviewPopup}
           onClose={() => this.setState({ reviewPopup: false })}
         >
-          <ReviewPopup />
+          <ReviewPopup listingId={this.props.match.params.id} />
         </Modal>
         {!this.state.listingPictures ? (
           <div id="spinner"></div>
