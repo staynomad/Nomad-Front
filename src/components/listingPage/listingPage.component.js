@@ -25,7 +25,7 @@ import StarIcon from "@material-ui/icons/Star";
 import PermIdentityIcon from "@material-ui/icons/PermIdentity";
 import defaultProfile from "../../../src/assets/img/default-profile.png";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
-import ReviewPopup from "./ReviewPopup.component.js";
+import ReviewPopup from "../review/ReviewPopup.component";
 
 const stripePublicKey =
   "pk_test_51HqRrRImBKNBYsooNTOTLagbqd8QUGaK6BeGwy6k2pQAJxkFF7NRwTT3ksBwyGVmq8UqhNVvKQS7Vlb69acFFCvq00hxgBuZhh";
@@ -339,10 +339,15 @@ class ListingPage extends Component {
     return (
       <div className="individual-listing-container">
         <Modal
-          open={this.state.reviewPopup}
+          open={this.state.reviewPopup || false}
           onClose={() => this.setState({ reviewPopup: false })}
         >
-          <ReviewPopup listingId={this.props.match.params.id} />
+          <div>
+            <ReviewPopup
+              listingId={this.props.match.params.id}
+              userSession={this.props.userSession}
+            />
+          </div>
         </Modal>
         {!this.state.listingPictures ? (
           <div id="spinner"></div>
@@ -542,8 +547,6 @@ class ListingPage extends Component {
                   <div className="listing-reviews-container">
                     <h4 className="listing-subtitle">Reviews</h4>
                     {this.state.listingRatings.map((review) => {
-                      console.log(review);
-
                       const rating = [];
                       for (let i = 1; i <= 5; i++) {
                         if (i <= review.stars) {

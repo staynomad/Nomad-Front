@@ -4,39 +4,31 @@ import "./reviewpopup.css";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import StarIcon from "@material-ui/icons/Star";
 import { app } from "../../utils/axiosConfig";
-import handleReq from "../../utils/fetchRequest";
 
 const ReviewPopup = (props) => {
   const [rating, setRating] = useState(0);
   const [reviewMessage, setReviewMessage] = useState("");
   const [error, setError] = useState(false);
 
-  const handleSubmit = () => {
-    console.log(rating);
+  const handleSubmit = async () => {
     if (rating === 0) return setError(true);
     setError(false);
     app
-      .post(`/reviews/${props.listingId}`, {
-        params: {
+      .post(
+        `/reviews/${props.listingId}`,
+        {
           rating,
           review: reviewMessage,
         },
-        headers: {
-          Authorization: `Bearer ${this.props.userSession.token}`,
-        },
-      })
+        {
+          headers: {
+            Authorization: `Bearer ${props.userSession.token}`,
+          },
+        }
+      )
       .catch((res) => {
         console.log(res);
       });
-    // handleReq(`/reviews/${props.listingId}`, {
-    //   params: {
-    //     rating,
-    //     review: reviewMessage,
-    //   },
-    //   headers: {
-    //     Authorization: `Bearer ${this.props.userSession.token}`,
-    //   },
-    // });
   };
 
   return (
