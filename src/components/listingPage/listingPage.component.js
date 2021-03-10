@@ -17,6 +17,7 @@ import {
   importCalendar,
 } from "../../redux/actions/calendarSyncActions";
 import moment from "moment";
+import Modal from "@material-ui/core/Modal";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
@@ -24,6 +25,7 @@ import StarIcon from "@material-ui/icons/Star";
 import PermIdentityIcon from "@material-ui/icons/PermIdentity";
 import defaultProfile from "../../../src/assets/img/default-profile.png";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
+import ReviewPopup from "./ReviewPopup.component.js";
 
 const stripePublicKey =
   "pk_test_51HqRrRImBKNBYsooNTOTLagbqd8QUGaK6BeGwy6k2pQAJxkFF7NRwTT3ksBwyGVmq8UqhNVvKQS7Vlb69acFFCvq00hxgBuZhh";
@@ -45,6 +47,7 @@ class ListingPage extends Component {
       outOfRange: false,
       rating: 0,
       review: "",
+      reviewPopup: false,
     });
   }
 
@@ -333,22 +336,14 @@ class ListingPage extends Component {
       );
       return stars;
     };
-
-    // const getName = (id) => {
-    //   app.get(`/user/getUserInfo/${id}`).then((res) => res.data.name);
-    // };
-
-    const getName = async (id) => {
-      const resp = await app.get(`/user/getUserInfo/${id}`);
-      return resp.data.name;
-    };
-
-    // console.log(await getName("5f9887f944a7c00f502601de"));
-    // (async () => {
-    //   console.log(await getName("5f9887f944a7c00f502601de"));
-    // })();
     return (
       <div className="individual-listing-container">
+        <Modal
+          open={this.state.reviewPopup}
+          onClose={() => this.setState({ reviewPopup: false })}
+        >
+          <ReviewPopup />
+        </Modal>
         {!this.state.listingPictures ? (
           <div id="spinner"></div>
         ) : (
@@ -408,11 +403,16 @@ class ListingPage extends Component {
                 ) : (
                   <h2 className="rating-no-reviews">No reviews yet</h2>
                 )}
-                <div className="leave-review-container">
-                  <NavLink className="leave-review-btn" to="/">
-                    Leave a Review
-                  </NavLink>
-                </div>
+                {this.props.userSession && (
+                  <div className="leave-review-container">
+                    <div
+                      className="leave-review-btn"
+                      onClick={() => this.setState({ reviewPopup: true })}
+                    >
+                      Leave a Review
+                    </div>
+                  </div>
+                )}
                 <div className="details">
                   <div className="listing-info-container">
                     <div className="listing-info">

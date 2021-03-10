@@ -431,6 +431,7 @@
   margin: 1rem 0;
   padding: 2px 10px;
   border-radius: 7px;
+  cursor: pointer;
 }
 
 .leave-review-btn:hover {
