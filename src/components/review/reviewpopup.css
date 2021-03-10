@@ -101,3 +101,21 @@
   font-size: 1.2rem !important;
   font-weight: bold;
 }
+
+.post-review-success-container {
+  padding: 0 3rem;
+}
+
+.post-review-success-container h2 {
+  font-size: 3rem !important;
+  margin-top: 3rem;
+  font-weight: 300 !important;
+}
+
+.post-review-success-container h3 {
+  color: rgb(87, 87, 87);
+  text-align: center;
+  font-family: "Roboto", sans-serif !important;
+  font-weight: 300 !important;
+  margin-top: 2rem;
+}
