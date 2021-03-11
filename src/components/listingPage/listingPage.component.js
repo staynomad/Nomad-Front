@@ -346,6 +346,7 @@ class ListingPage extends Component {
             <ReviewPopup
               listingId={this.props.match.params.id}
               userSession={this.props.userSession}
+              closeModal={() => this.setState({ reviewPopup: false })}
             />
           </div>
         </Modal>

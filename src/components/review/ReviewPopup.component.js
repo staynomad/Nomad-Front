@@ -120,6 +120,7 @@ const ReviewPopup = (props) => {
             <div className="post-review-success-container">
               <h2>Success</h2>
               <h3>Thank you for your feedback!</h3>
+              <button onClick={props.closeModal}>Return to listing</button>
             </div>
           )}
         </div>
