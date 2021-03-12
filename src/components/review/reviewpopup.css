@@ -139,6 +139,26 @@
   transform: translateY(-3px);
 }
 
+.listing-reviews-show-more-container {
+  display: flex;
+  margin-top: 1rem;
+}
+
+.listing-reviews-show-more-container button {
+  cursor: pointer;
+  color: var(--color-green);
+  background: transparent;
+  border: 2px solid var(--color-green);
+  padding: 5px 5px;
+  border-radius: 3px;
+  outline: none;
+}
+
+.listing-reviews-show-more-container button:hover {
+  background: var(--color-green);
+  color: white;
+}
+
 @media screen and (max-width: 768px) {
   .review-popup-container {
     top: calc(50% + 35px);

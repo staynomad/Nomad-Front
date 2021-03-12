@@ -25,7 +25,8 @@ import StarIcon from "@material-ui/icons/Star";
 import PermIdentityIcon from "@material-ui/icons/PermIdentity";
 import defaultProfile from "../../../src/assets/img/default-profile.png";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
-import ReviewPopup from "../review/ReviewPopup.component";
+import PostReviewModal from "../review/PostReviewModal.component";
+import AllReviewsModal from "../review/AllReviewsModal.component";
 
 const stripePublicKey =
   "pk_test_51HqRrRImBKNBYsooNTOTLagbqd8QUGaK6BeGwy6k2pQAJxkFF7NRwTT3ksBwyGVmq8UqhNVvKQS7Vlb69acFFCvq00hxgBuZhh";
@@ -47,7 +48,8 @@ class ListingPage extends Component {
       outOfRange: false,
       rating: 0,
       review: "",
-      reviewPopup: false,
+      postReviewPopup: false,
+      allReviewsPopup: false,
     });
   }
 
@@ -344,17 +346,29 @@ class ListingPage extends Component {
       );
       return stars;
     };
+
     return (
       <div className="individual-listing-container">
         <Modal
-          open={this.state.reviewPopup || false}
-          onClose={() => this.setState({ reviewPopup: false })}
+          open={this.state.postReviewPopup || false}
+          onClose={() => this.setState({ postReviewPopup: false })}
         >
           <div>
-            <ReviewPopup
+            <PostReviewModal
               listingId={this.props.match.params.id}
               userSession={this.props.userSession}
-              closeModal={() => this.setState({ reviewPopup: false })}
+              closeModal={() => this.setState({ postReviewPopup: false })}
+            />
+          </div>
+        </Modal>
+        <Modal
+          open={this.state.allReviewsPopup || false}
+          onClose={() => this.setState({ allReviewsPopup: false })}
+        >
+          <div>
+            <AllReviewsModal
+              reviews={this.state.listingReviews}
+              closeModal={() => this.setState({ allReviewsPopup: false })}
             />
           </div>
         </Modal>
@@ -421,7 +435,7 @@ class ListingPage extends Component {
                   <div className="leave-review-container">
                     <div
                       className="leave-review-btn"
-                      onClick={() => this.setState({ reviewPopup: true })}
+                      onClick={() => this.setState({ postReviewPopup: true })}
                     >
                       Leave a Review
                     </div>
@@ -555,47 +569,57 @@ class ListingPage extends Component {
                 {this.state.listingRatings && (
                   <div className="listing-reviews-container">
                     <h4 className="listing-subtitle">Reviews</h4>
-                    {this.state.listingRatings.map((review, index) => {
-                      const rating = [];
-                      for (let i = 1; i <= 5; i++) {
-                        if (i <= review.stars) {
-                          rating.push(
-                            <StarIcon key={i} className="star-icon" alt={i} />
-                          );
-                        } else {
-                          rating.push(
-                            <StarBorderIcon
-                              key={i}
-                              className="star-icon"
-                              alt={i}
-                            />
-                          );
+                    {this.state.listingRatings
+                      .slice(0, 3)
+                      .map((review, index) => {
+                        const rating = [];
+                        for (let i = 1; i <= 5; i++) {
+                          if (i <= review.stars) {
+                            rating.push(
+                              <StarIcon key={i} className="star-icon" alt={i} />
+                            );
+                          } else {
+                            rating.push(
+                              <StarBorderIcon
+                                key={i}
+                                className="star-icon"
+                                alt={i}
+                              />
+                            );
+                          }
                         }
-                      }
+                        console.log(this.state.listingRatings);
+                        return (
+                          <div key={index} className="listing-review">
+                            <div className="listing-review-header">
+                              <img src={defaultProfile} alt="profile" />
+                              <div className="listing-review-info">
+                                <span className="listing-review-name">
+                                  {review.userName}
+                                </span>
 
-                      return (
-                        <div key={index} className="listing-review">
-                          <div className="listing-review-header">
-                            <img src={defaultProfile} alt="profile" />
-                            <div className="listing-review-info">
-                              <span className="listing-review-name">
-                                {review.userName}
-                              </span>
-
-                              <span className="listing-review-date">
-                                {moment(review.timestamp).format("MMMM YYYY")}
-                              </span>
+                                <span className="listing-review-date">
+                                  {moment(review.timestamp).format("MMMM YYYY")}
+                                </span>
+                              </div>
+                            </div>
+                            <div className="listing-review-stars-container">
+                              {rating}
+                            </div>
+                            <div className="listing-review-content">
+                              {review.review}
                             </div>
                           </div>
-                          <div className="listing-review-stars-container">
-                            {rating}
-                          </div>
-                          <div className="listing-review-content">
-                            {review.review}
-                          </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                    <div className="listing-reviews-show-more-container">
+                      <button
+                        onClick={() => this.setState({ allReviewsPopup: true })}
+                        className="listing-reviews-show-more"
+                      >
+                        Show more
+                      </button>
+                    </div>
                   </div>
                 )}
                 <div className="listing-divider"></div>
