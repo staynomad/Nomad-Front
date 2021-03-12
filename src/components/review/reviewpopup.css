@@ -218,7 +218,7 @@
 
 .all-reviews-popup-container {
   width: 60rem;
-  height: 50rem;
+  height: 60rem;
   background: white;
   position: absolute;
   top: calc(50% + 45px);
@@ -313,4 +313,17 @@
 .all-reviews-graph-star {
   color: #e5a374 !important;
   margin-right: 0.5rem;
+}
+
+.all-reviews-divider {
+  width: 95%;
+  margin: 0 auto;
+  height: 2px;
+  background: var(--color-green);
+}
+
+.all-reviews-posts-container {
+  flex: 1;
+  overflow-y: scroll;
+  padding: 0 3rem;
 }

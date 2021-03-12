@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import moment from "moment";
 
+import defaultProfile from "../../../src/assets/img/default-profile.png";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import StarIcon from "@material-ui/icons/Star";
@@ -152,6 +154,37 @@ const AllReviewsModal = ({ reviews, closeModal, openPostReview }) => {
             <p>{oneStar}</p>
           </div>
         </div>
+      </div>
+      <div className="all-reviews-divider"></div>
+      <div className="all-reviews-posts-container">
+        {reviews.map((review, index) => {
+          const rating = [];
+          for (let i = 1; i <= 5; i++) {
+            if (i <= review.stars) {
+              rating.push(<StarIcon key={i} className="star-icon" alt={i} />);
+            } else {
+              rating.push(
+                <StarBorderIcon key={i} className="star-icon" alt={i} />
+              );
+            }
+          }
+          return (
+            <div key={index} className="listing-review">
+              <div className="listing-review-header">
+                <img src={defaultProfile} alt="profile" />
+                <div className="listing-review-info">
+                  <span className="listing-review-name">{review.userName}</span>
+
+                  <span className="listing-review-date">
+                    {moment(review.timestamp).format("MMMM YYYY")}
+                  </span>
+                </div>
+              </div>
+              <div className="listing-review-stars-container">{rating}</div>
+              <div className="listing-review-content">{review.review}</div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
