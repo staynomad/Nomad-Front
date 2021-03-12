@@ -316,14 +316,22 @@ class ListingPage extends Component {
     //     : false;
 
     const getStars = () => {
-      let n = Object.keys(this.state.listingRatings).length;
-      let average = 0;
-      const stars = [];
+      let reviews = [];
       for (let props in this.state.listingRatings) {
-        average = average + this.state.listingRatings[props].stars / n;
+        reviews.push(this.state.listingRatings[props].stars);
       }
+      const max = reviews
+        .sort(
+          (a, b) =>
+            reviews.filter((v) => v === a).length -
+            reviews.filter((v) => v === b).length
+        )
+        .pop();
+
+      let stars = [];
+
       for (let i = 1; i <= 5; i++) {
-        if (i <= average) {
+        if (i <= max) {
           stars.push(<StarIcon key={i} className="star-icon" alt={i} />);
         } else {
           stars.push(<StarBorderIcon key={i} className="star-icon" alt={i} />);
@@ -331,7 +339,7 @@ class ListingPage extends Component {
       }
       stars.push(
         <p key={"num"} className="rating-number">
-          ({n})
+          ({reviews.length})
         </p>
       );
       return stars;
@@ -547,7 +555,7 @@ class ListingPage extends Component {
                 {this.state.listingRatings && (
                   <div className="listing-reviews-container">
                     <h4 className="listing-subtitle">Reviews</h4>
-                    {this.state.listingRatings.map((review) => {
+                    {this.state.listingRatings.map((review, index) => {
                       const rating = [];
                       for (let i = 1; i <= 5; i++) {
                         if (i <= review.stars) {
@@ -566,7 +574,7 @@ class ListingPage extends Component {
                       }
 
                       return (
-                        <div key={review.userId} className="listing-review">
+                        <div key={index} className="listing-review">
                           <div className="listing-review-header">
                             <img src={defaultProfile} alt="profile" />
                             <div className="listing-review-info">
