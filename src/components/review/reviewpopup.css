@@ -234,7 +234,7 @@
 .all-reviews-top-container {
   padding: 0 3rem;
   display: flex;
-  height: 25%;
+  height: 30%;
 }
 
 .all-reviews-popup-star {
@@ -248,6 +248,7 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+  flex: 1.4;
 }
 
 .all-reviews-write-container h2 {
@@ -270,4 +271,46 @@
 
 .all-reviews-write-container button:hover {
   transform: scale(1.03);
+}
+
+.all-reviews-graph-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+}
+
+.MuiLinearProgress-root {
+  height: 15px !important;
+  width: 50%;
+}
+
+.MuiLinearProgress-colorPrimary {
+  background: rgb(233, 233, 233) !important;
+}
+
+.MuiLinearProgress-barColorPrimary {
+  background: var(--color-green) !important;
+}
+
+.all-reviews-graph-row-container {
+  display: flex;
+  align-items: center;
+  margin: 0.2rem 0;
+}
+
+.all-reviews-graph-row-container svg {
+  color: var(--color-green);
+  cursor: pointer;
+  font-size: 2rem;
+}
+
+.all-reviews-graph-row-container p {
+  font-size: 1.5rem !important;
+  margin: 0 0.5rem !important;
+}
+
+.all-reviews-graph-star {
+  color: #e5a374 !important;
+  margin-right: 0.5rem;
 }
