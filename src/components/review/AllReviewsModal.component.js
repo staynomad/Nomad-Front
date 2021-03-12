@@ -21,6 +21,8 @@ const AllReviewsModal = ({ reviews, closeModal, openPostReview }) => {
   const [oneStar, setOneStar] = useState(0);
   const [oneStarAverage, setOneStarAverage] = useState(0);
 
+  const [filter, setFilter] = useState(0);
+
   console.log(reviews);
 
   useEffect(() => {
@@ -119,35 +121,55 @@ const AllReviewsModal = ({ reviews, closeModal, openPostReview }) => {
         </div>
         <div className="all-reviews-graph-container">
           <div className="all-reviews-graph-row-container">
-            <CheckBoxIcon />
+            {filter === 5 ? (
+              <CheckBoxIcon onClick={() => setFilter(0)} />
+            ) : (
+              <CheckBoxOutlineBlankIcon onClick={() => setFilter(5)} />
+            )}
             <p>5</p>
             <StarIcon className="all-reviews-graph-star" />
             <LinearProgress variant="determinate" value={fiveStarsAverage} />
             <p>{fiveStars}</p>
           </div>
           <div className="all-reviews-graph-row-container">
-            <CheckBoxIcon />
+            {filter === 4 ? (
+              <CheckBoxIcon onClick={() => setFilter(0)} />
+            ) : (
+              <CheckBoxOutlineBlankIcon onClick={() => setFilter(4)} />
+            )}
             <p>4</p>
             <StarIcon className="all-reviews-graph-star" />
             <LinearProgress variant="determinate" value={fourStarsAverage} />
             <p>{fourStars}</p>
           </div>
           <div className="all-reviews-graph-row-container">
-            <CheckBoxIcon />
+            {filter === 3 ? (
+              <CheckBoxIcon onClick={() => setFilter(0)} />
+            ) : (
+              <CheckBoxOutlineBlankIcon onClick={() => setFilter(3)} />
+            )}
             <p>3</p>
             <StarIcon className="all-reviews-graph-star" />
             <LinearProgress variant="determinate" value={threeStarsAverage} />
             <p>{threeStars}</p>
           </div>
           <div className="all-reviews-graph-row-container">
-            <CheckBoxIcon />
+            {filter === 2 ? (
+              <CheckBoxIcon onClick={() => setFilter(0)} />
+            ) : (
+              <CheckBoxOutlineBlankIcon onClick={() => setFilter(2)} />
+            )}
             <p>2</p>
             <StarIcon className="all-reviews-graph-star" />
             <LinearProgress variant="determinate" value={twoStarsAverage} />
             <p>{twoStars}</p>
           </div>
           <div className="all-reviews-graph-row-container">
-            <CheckBoxIcon />
+            {filter === 1 ? (
+              <CheckBoxIcon onClick={() => setFilter(0)} />
+            ) : (
+              <CheckBoxOutlineBlankIcon onClick={() => setFilter(1)} />
+            )}
             <p>1</p>
             <StarIcon className="all-reviews-graph-star" />
             <LinearProgress variant="determinate" value={oneStarAverage} />
@@ -157,34 +179,38 @@ const AllReviewsModal = ({ reviews, closeModal, openPostReview }) => {
       </div>
       <div className="all-reviews-divider"></div>
       <div className="all-reviews-posts-container">
-        {reviews.map((review, index) => {
-          const rating = [];
-          for (let i = 1; i <= 5; i++) {
-            if (i <= review.stars) {
-              rating.push(<StarIcon key={i} className="star-icon" alt={i} />);
-            } else {
-              rating.push(
-                <StarBorderIcon key={i} className="star-icon" alt={i} />
-              );
+        {reviews
+          .filter((review) => (filter === 0 ? review : review.stars === filter))
+          .map((review, index) => {
+            const rating = [];
+            for (let i = 1; i <= 5; i++) {
+              if (i <= review.stars) {
+                rating.push(<StarIcon key={i} className="star-icon" alt={i} />);
+              } else {
+                rating.push(
+                  <StarBorderIcon key={i} className="star-icon" alt={i} />
+                );
+              }
             }
-          }
-          return (
-            <div key={index} className="listing-review">
-              <div className="listing-review-header">
-                <img src={defaultProfile} alt="profile" />
-                <div className="listing-review-info">
-                  <span className="listing-review-name">{review.userName}</span>
+            return (
+              <div key={index} className="listing-review">
+                <div className="listing-review-header">
+                  <img src={defaultProfile} alt="profile" />
+                  <div className="listing-review-info">
+                    <span className="listing-review-name">
+                      {review.userName}
+                    </span>
 
-                  <span className="listing-review-date">
-                    {moment(review.timestamp).format("MMMM YYYY")}
-                  </span>
+                    <span className="listing-review-date">
+                      {moment(review.timestamp).format("MMMM YYYY")}
+                    </span>
+                  </div>
                 </div>
+                <div className="listing-review-stars-container">{rating}</div>
+                <div className="listing-review-content">{review.review}</div>
               </div>
-              <div className="listing-review-stars-container">{rating}</div>
-              <div className="listing-review-content">{review.review}</div>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
     </div>
   );
