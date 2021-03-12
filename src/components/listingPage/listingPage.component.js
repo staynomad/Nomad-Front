@@ -367,8 +367,9 @@ class ListingPage extends Component {
         >
           <div>
             <AllReviewsModal
-              reviews={this.state.listingReviews}
+              reviews={this.state.listingRatings}
               closeModal={() => this.setState({ allReviewsPopup: false })}
+              openPostReview={() => this.setState({ postReviewPopup: true })}
             />
           </div>
         </Modal>
@@ -588,7 +589,6 @@ class ListingPage extends Component {
                             );
                           }
                         }
-                        console.log(this.state.listingRatings);
                         return (
                           <div key={index} className="listing-review">
                             <div className="listing-review-header">

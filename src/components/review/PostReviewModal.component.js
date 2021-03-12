@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import "./reviewpopup.css";
 
+import { app } from "../../utils/axiosConfig";
+import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import StarIcon from "@material-ui/icons/Star";
-import { app } from "../../utils/axiosConfig";
 
 const ReviewPopup = (props) => {
   const [rating, setRating] = useState(0);
@@ -41,6 +42,7 @@ const ReviewPopup = (props) => {
   return (
     <div className="review-popup-container">
       <div className="review-popup-container-header">
+        <KeyboardBackspaceIcon onClick={props.closeModal} />
         <h1>Leave a review</h1>
       </div>
       {!isLoading ? (
