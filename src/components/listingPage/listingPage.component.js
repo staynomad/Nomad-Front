@@ -352,7 +352,6 @@ class ListingPage extends Component {
         <Modal
           open={this.state.postReviewPopup || false}
           onClose={() => this.setState({ postReviewPopup: false })}
-          style={{ outline: "none" }}
         >
           <div>
             <PostReviewModal
@@ -365,7 +364,6 @@ class ListingPage extends Component {
         <Modal
           open={this.state.allReviewsPopup || false}
           onClose={() => this.setState({ allReviewsPopup: false })}
-          style={{ outline: "none" }}
         >
           <div>
             <AllReviewsModal
