@@ -24,8 +24,6 @@ const AllReviewsModal = ({ reviews, closeModal, openPostReview }) => {
 
   const [filter, setFilter] = useState(0);
 
-  console.log(reviews);
-
   useEffect(() => {
     let total5 = 0;
     let total4 = 0;
