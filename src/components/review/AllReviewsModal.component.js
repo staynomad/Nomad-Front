@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import moment from "moment";
+import { NavLink } from "react-router-dom";
 
 import defaultProfile from "../../../src/assets/img/default-profile.png";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
@@ -194,18 +195,23 @@ const AllReviewsModal = ({ reviews, closeModal, openPostReview }) => {
             }
             return (
               <div key={index} className="listing-review">
-                <div className="listing-review-header">
-                  <img src={defaultProfile} alt="profile" />
-                  <div className="listing-review-info">
-                    <span className="listing-review-name">
-                      {review.userName}
-                    </span>
+                <NavLink
+                  to={`/profile/${review.userId}`}
+                  className="listing-contact-info"
+                >
+                  <div className="listing-review-header">
+                    <img src={defaultProfile} alt="profile" />
+                    <div className="listing-review-info">
+                      <span className="listing-review-name">
+                        {review.userName}
+                      </span>
 
-                    <span className="listing-review-date">
-                      {moment(review.timestamp).format("MMMM YYYY")}
-                    </span>
+                      <span className="listing-review-date">
+                        {moment(review.timestamp).format("MMMM YYYY")}
+                      </span>
+                    </div>
                   </div>
-                </div>
+                </NavLink>
                 <div className="listing-review-stars-container">{rating}</div>
                 <div className="listing-review-content">{review.review}</div>
               </div>
