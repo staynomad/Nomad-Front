@@ -42,9 +42,6 @@ const AllReviewsModal = ({ reviews, closeModal, openPostReview }) => {
         case 3:
           total3 = total3 + 1;
           break;
-        case 3:
-          total3 = total3 + 1;
-          break;
         case 2:
           total2 = total2 + 1;
           break;
@@ -66,6 +63,7 @@ const AllReviewsModal = ({ reviews, closeModal, openPostReview }) => {
       setTwoStarsAverage((total2 / reviews.length) * 100);
       setOneStarAverage((total1 / reviews.length) * 100);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getStars = () => {
