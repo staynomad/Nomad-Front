@@ -100,15 +100,6 @@ class ListingPage extends Component {
           isActive: res.data.listing.active,
         });
 
-        // Update listingRatings to include user's name for each review
-        for (let i = 0; i < this.state.listingRatings.length; i++) {
-          app
-            .get(`/user/getUserInfo/${this.state.listingRatings[i].userId}`)
-            .then(
-              (res) => (this.state.listingRatings[i].userName = res.data.name)
-            );
-        }
-
         // Update listingPictures to include original and thumbnail url
         let pictures = [];
         for (let i = 0; i < this.state.listingPictures.length; i++) {
@@ -162,6 +153,15 @@ class ListingPage extends Component {
         app.get(`/user/getUserInfo/${userId}`).then((res) => {
           this.setState({ listingUserName: res.data });
         });
+
+        // Update listingRatings to include user's name for each review
+        for (let i = 0; i < this.state.listingRatings.length; i++) {
+          app
+            .get(`/user/getUserInfo/${this.state.listingRatings[i].userId}`)
+            .then(
+              (res) => (this.state.listingRatings[i].userName = res.data.name)
+            );
+        }
       })
       .catch((err) => {
         // console.log(err.response);
@@ -352,6 +352,7 @@ class ListingPage extends Component {
         <Modal
           open={this.state.postReviewPopup || false}
           onClose={() => this.setState({ postReviewPopup: false })}
+          style={{ outline: "none" }}
         >
           <div>
             <PostReviewModal
@@ -364,6 +365,7 @@ class ListingPage extends Component {
         <Modal
           open={this.state.allReviewsPopup || false}
           onClose={() => this.setState({ allReviewsPopup: false })}
+          style={{ outline: "none" }}
         >
           <div>
             <AllReviewsModal
