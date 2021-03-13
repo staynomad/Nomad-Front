@@ -158,6 +158,10 @@
   font-size: 20px;
 }
 
+.priceInputBox:invalid {
+  box-shadow: none;
+}
+
 .priceInputBoxinput::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
