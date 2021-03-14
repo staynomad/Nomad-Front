@@ -1,45 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { withRouter, Link } from "react-router-dom";
-import Filter from "../filter.component";
-import Roommates from "../roommate/roommates.component";
-import Listings from "../listing/listings.component";
+import { connect } from "react-redux";
 import Search from "../../homePage/search.component";
 import "../allListings.css";
 import "../listing/explore.css";
-import FeaturedListings from "../../homePage/featuredListings.component";
+
+import { getPopularListings } from "../../../redux/actions/searchListingActions";
+
+import HorizontalScrollMenu from "../../homePage/HorizontalScrollMenu.component";
 
 const AllListings = (props) => {
   const { history } = props;
-  const [seen, setSeen] = useState(false);
-  var roommateView = false;
-  const [listingView, setListingView] = useState(true);
-  // const [roommateFilters, setRoommateFilters] = useState({});
-  const [listingFilterState, setListingFilterState] = useState({
-    minRating: 0,
-    minRatingClicked: false,
-    startingPrice: 0,
-    startingPriceClicked: false,
-    minGuests: 1,
-    minGuestsClicked: false,
-  });
-  // pass filter setters to filter component to update filter state
-  // pass filter state to roommate and listing components to allow filtering through roommates/listing components
-
-  const toggle = () => {
-    if (roommateView || listingView) {
-      setSeen(!seen);
-    }
-  };
-
-  const { location } = props;
-
   useEffect(() => {
     window.scrollTo(0, 0);
+    const getData = async () => {
+      await props.getPopularListings(10);
+    };
+    getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    if (location.search) setListingView(true);
-  }, [location.search]);
 
   return (
     <div id="matches-page">
@@ -66,11 +45,29 @@ const AllListings = (props) => {
           See all listings
         </Link>
         <div className="featured-listings-matches-container">
-          <FeaturedListings />
+          <HorizontalScrollMenu
+            data={props.Listing.popularListings}
+            title="Featured Listings"
+          />
         </div>
       </div>
     </div>
   );
 };
 
-export default withRouter(AllListings);
+const mapStateToProps = (state) => {
+  const stateToReturn = { ...state };
+  if (state.Listing.popularListings)
+    stateToReturn["popularListings"] = state.Listing.popularListings;
+  return stateToReturn;
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getPopularListings: (count) => dispatch(getPopularListings(count)),
+  };
+};
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(AllListings)
+);

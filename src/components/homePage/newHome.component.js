@@ -7,7 +7,7 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import Search from "./search.component";
 import Subscribe from "./subscribe.component";
-import FeaturedListings from "./featuredListings.component";
+import HorizontalScrollMenu from "./HorizontalScrollMenu.component";
 import { isMobile } from "react-device-detect";
 
 const useStyles = makeStyles((theme) => ({
@@ -103,7 +103,7 @@ const NewHome = (props) => {
               </div>
             </div>
           </div>
-          <FeaturedListings />
+          <HorizontalScrollMenu />
           <div className="spacer_xs"></div>
           <div className="container">
             <h1 className="why-title wow fadeInUp" data-wow-delay="0.5s">

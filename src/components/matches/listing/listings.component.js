@@ -13,7 +13,7 @@ import {
   searchFilteredListings,
   searchUserListings,
 } from "../../../redux/actions/searchListingActions";
-import HorizontalScrollMenu from "./HorizontalScrollMenu.component";
+import ProfileHorizontalScrollMenu from "./ProfileHorizontalScrollMenu.component";
 
 class Listings extends Component {
   constructor(props) {
@@ -230,8 +230,8 @@ class Listings extends Component {
               </p>
             </>
           ) : this.props.location.pathname === "/MyAccount" ? (
-            <div style={{ padding: "0 3rem" }}>
-              <HorizontalScrollMenu
+            <div>
+              <ProfileHorizontalScrollMenu
                 className="horizontal-scroll-container"
                 data={this.state.listings}
               />

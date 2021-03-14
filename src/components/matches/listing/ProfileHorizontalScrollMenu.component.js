@@ -7,7 +7,7 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 
 import HorizontalListingCard from "./HorizontalListingCard.component";
 
-const HorizontalScrollMenu = ({ data }) => {
+const ProfileHorizontalScrollMenu = ({ data }) => {
   return (
     <div className="horizontal-menu-container">
       <ScrollMenu
@@ -25,4 +25,4 @@ const HorizontalScrollMenu = ({ data }) => {
   );
 };
 
-export default HorizontalScrollMenu;
+export default ProfileHorizontalScrollMenu;
