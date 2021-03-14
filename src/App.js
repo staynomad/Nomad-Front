@@ -5,7 +5,8 @@ import Home from "./components/homePage/newHome.component";
 import Login from "./components/authentication/login.component";
 import Signup from "./components/authentication/signup.component";
 import Contact from "./components/subpages/contact.component.js";
-import Matches from "./components/matches/matches.component.js";
+import AllListings from "./components/matches/AllListings.component.js";
+import Explore from "./components/matches/listing/Explore.component";
 // import Questionnaire from "./components/matches/questionnaire.component";
 import EditProfileInfo from "./components/myAccount/editProfileInfo.component";
 import ReservationLookup from "./components/reservations/reservationLookupModal.component";
@@ -54,9 +55,15 @@ function App() {
             <Route path="/SignUp" exact component={Signup} />
             <Route path="/CreateListing" exact component={CreateListing} />
             <Route
-              path="/Matches"
+              path="/Listings"
               exact
-              component={Matches}
+              component={AllListings}
+              history={history}
+            />
+            <Route
+              path="/Explore"
+              exact
+              component={Explore}
               history={history}
             />
             <Route path="/Map" exact component={ListingMap} />

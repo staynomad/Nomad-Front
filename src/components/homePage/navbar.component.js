@@ -65,7 +65,7 @@ const Navbar = (props) => {
         <NavLink
           className="mobile-nav-link"
           onClick={() => setMobileNav(false)}
-          to="/matches"
+          to="/explore"
           activeClassName="mobile-nav-link-active"
         >
           <SearchIcon className="mobile-nav-icon" />
@@ -127,7 +127,7 @@ const Navbar = (props) => {
             <NavLink
               className="nav-item"
               style={{ fontSize: "1.5rem" }}
-              to="/Matches"
+              to="/explore"
               activeClassName="nav-active"
             >
               Explore

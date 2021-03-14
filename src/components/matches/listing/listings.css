@@ -151,6 +151,22 @@
   width: 100%;
 }
 
+.see-all-listings-btn {
+  background: white;
+  color: var(--color-green);
+  border: 2px solid var(--color-green);
+  margin-top: 2rem;
+  font-size: 1.3rem;
+  padding: 5px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.see-all-listings-btn:hover {
+  background: var(--color-green);
+  color: white;
+}
+
 @media screen and (max-width: 465px) {
   .reservation-card-container {
     width: 90%;
