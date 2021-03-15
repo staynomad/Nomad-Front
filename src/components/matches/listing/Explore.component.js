@@ -5,16 +5,27 @@ import Search from "../../homePage/search.component";
 import "../allListings.css";
 import "../listing/explore.css";
 
-import { getPopularListings } from "../../../redux/actions/searchListingActions";
+import {
+  getPopularListings,
+  searchFilteredListings,
+} from "../../../redux/actions/searchListingActions";
 
 import HorizontalScrollMenu from "../../homePage/HorizontalScrollMenu.component";
 
 const AllListings = (props) => {
+  console.log(props.Listing);
   const { history } = props;
   useEffect(() => {
     window.scrollTo(0, 0);
     const getData = async () => {
       await props.getPopularListings(10);
+      await props.searchFilteredListings(
+        {
+          startingPriceClicked: true,
+          startingPrice: 100,
+        },
+        true
+      );
     };
     getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -44,10 +55,22 @@ const AllListings = (props) => {
         <Link to="/listings" className="see-all-listings-btn">
           See all listings
         </Link>
-        <div className="featured-listings-matches-container">
+        <div
+          style={{ marginBottom: "3rem" }}
+          className="featured-listings-matches-container"
+        >
           <HorizontalScrollMenu
             data={props.Listing.popularListings}
             title="Featured Listings"
+          />
+        </div>
+        <div
+          style={{ marginBottom: "3rem" }}
+          className="featured-listings-matches-container"
+        >
+          <HorizontalScrollMenu
+            data={props.Listing.exploreBudget}
+            title="Best Budget"
           />
         </div>
       </div>
@@ -57,14 +80,16 @@ const AllListings = (props) => {
 
 const mapStateToProps = (state) => {
   const stateToReturn = { ...state };
-  if (state.Listing.popularListings)
-    stateToReturn["popularListings"] = state.Listing.popularListings;
+  stateToReturn["popularListings"] = state.Listing.popularListings;
+  stateToReturn["exploreBudget"] = state.Listing.exploreBudget;
   return stateToReturn;
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getPopularListings: (count) => dispatch(getPopularListings(count)),
+    searchFilteredListings: (filterState, explore) =>
+      dispatch(searchFilteredListings(filterState, explore)),
   };
 };
 
