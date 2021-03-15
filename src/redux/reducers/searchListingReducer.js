@@ -5,6 +5,8 @@ import {
     SET_EDIT_LISTING,
     SET_MAP_LISTINGS,
     SET_POPULAR_LISTINGS,
+    SET_EXPLORE_NEAR_YOU,
+    SET_EXPLORE_BUDGET,
 } from '../actions/searchListingActions';
 
 export default function reducer(state = {}, action) {
@@ -43,6 +45,18 @@ export default function reducer(state = {}, action) {
             return {
                 ...state,
                 popularListings: action.listings,
+            }
+        }
+        case SET_EXPLORE_NEAR_YOU: {
+            return {
+                ...state,
+                exploreNearYou: action.listings,
+            }
+        }
+        case SET_EXPLORE_BUDGET: {
+            return {
+                ...state,
+                exploreBudget: action.listings,
             }
         }
         default: return state;

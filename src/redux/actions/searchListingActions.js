@@ -8,6 +8,8 @@ export const SET_USER_LISTINGS = 'VHomes/listings/SET_USER_LISTINGS';
 export const DELETE_LISTING = 'VHomes/listings/DELETE_LISTING';
 export const SET_EDIT_LISTING = 'VHomes/listings/SET_EDIT_LISTING';
 export const SET_POPULAR_LISTINGS = 'VHomes/listings/SET_POPULAR_LISTINGS';
+export const SET_EXPLORE_NEAR_YOU = 'VHomes/listings/SET_EXPLORE_NEAR_YOU';
+export const SET_EXPLORE_BUDGET = 'VHomes/listings/SET_EXPLORE_BUDGET';
 
 /* Actions */
 const setSearchListings = listings => ({ type: SET_SEARCH_LISTINGS, listings });
@@ -16,6 +18,8 @@ const deleteListing = listingId => ({ type: DELETE_LISTING, listingId });
 const setEditListing = listing => ({ type: SET_EDIT_LISTING, listing });
 const setMapListings = listings => ({ type: SET_MAP_LISTINGS, listings });
 const setPopularListings = listings => ({ type: SET_POPULAR_LISTINGS, listings });
+const setExploreNearYou = listings => ({ type: SET_EXPLORE_NEAR_YOU, listings });
+const setExploreBudget = listings => ({ type: SET_EXPLORE_BUDGET, listings });
 
 /* Fetch Calls */
 export const searchForListings = (itemToSearch) => async dispatch => {
@@ -40,13 +44,18 @@ export const searchAllListings = () => async dispatch => {
     };
 };
 
-export const searchFilteredListings = (filterState) => async dispatch => {
+// if explore is true, store res in different location in redux store
+export const searchFilteredListings = (filterState, explore) => async dispatch => {
     const headers = { 'Content-Type': 'application/json' };
     const searchAllRes = await handleReq("/listings/filteredListings", "POST", headers, filterState);
 
     if (searchAllRes.status === 200) {
         const { listings } = await searchAllRes.data;
-        dispatch(setSearchListings(listings))
+        if (explore) {
+            dispatch(setExploreBudget(listings))
+        } else {
+            dispatch(setSearchListings(listings))
+        }
     };
 }
 
@@ -79,7 +88,8 @@ export const deleteListingById = (token, listingId) => async dispatch => {
     };
 };
 
-export const getListingInRadius = (lat, lng, radius) => async dispatch => {
+// if explore is true, store res in different location in redux store
+export const getListingInRadius = (lat, lng, radius, explore) => async dispatch => {
     // Radius in miles -> converting to km
     const radiusInKilometers = radius * 1.609344;
     const locationData = {
@@ -92,7 +102,11 @@ export const getListingInRadius = (lat, lng, radius) => async dispatch => {
 
     if (searchListingRes.status === 200) {
         const { listingsInRadius } = await searchListingRes.data;
-        dispatch(setMapListings(listingsInRadius));
+        if (explore) {
+            dispatch(setExploreNearYou(listingsInRadius))
+        } else {
+            dispatch(setMapListings(listingsInRadius));
+        }
     };
 }
 

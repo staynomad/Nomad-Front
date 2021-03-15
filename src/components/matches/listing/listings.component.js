@@ -50,7 +50,7 @@ class Listings extends Component {
       this.props.searchForListings(itemToSearch);
     } else if (filterClicked) {
       /* Get listing using listing filter */
-      this.props.searchFilteredListings(filter);
+      this.props.searchFilteredListings(filter, false);
     } else {
       // console.log(this.props.searchOnlyUser)
       if (this.props.searchOnlyUser)
@@ -285,7 +285,7 @@ const mapDispatchToProps = (dispatch) => {
     searchForListings: (itemToSearch) =>
       dispatch(searchForListings(itemToSearch)),
     searchFilteredListings: (filter) =>
-      dispatch(searchFilteredListings(filter)),
+      dispatch(searchFilteredListings(filter, false)),
     searchUserListings: (userId) => dispatch(searchUserListings(userId)),
   };
 };
