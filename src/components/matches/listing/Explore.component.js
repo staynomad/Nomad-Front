@@ -9,6 +9,7 @@ import {
   getPopularListings,
   searchFilteredListings,
   getListingInRadius,
+  searchAllListings,
 } from "../../../redux/actions/searchListingActions";
 
 import HorizontalScrollMenu from "../../homePage/HorizontalScrollMenu.component";
@@ -18,6 +19,7 @@ const AllListings = (props) => {
   const [lng, setLng] = useState();
 
   const { history } = props;
+
   useEffect(() => {
     window.scrollTo(0, 0);
     if (!navigator.geolocation) {
@@ -31,6 +33,7 @@ const AllListings = (props) => {
 
     const getData = async () => {
       await props.getPopularListings(10);
+      await props.searchAllListings();
       await props.searchFilteredListings(
         {
           startingPriceClicked: true,
@@ -117,6 +120,18 @@ const AllListings = (props) => {
           className="featured-listings-matches-container"
         >
           <HorizontalScrollMenu
+            data={
+              props.Listing.searchListings &&
+              props.Listing.searchListings.slice(0, 10)
+            }
+            title="Recently Posted"
+          />
+        </div>
+        <div
+          style={{ marginBottom: "3rem" }}
+          className="featured-listings-matches-container"
+        >
+          <HorizontalScrollMenu
             data={props.Listing.exploreNearYou}
             title="Near You"
           />
@@ -131,6 +146,7 @@ const mapStateToProps = (state) => {
   stateToReturn["popularListings"] = state.Listing.popularListings;
   stateToReturn["exploreBudget"] = state.Listing.exploreBudget;
   stateToReturn["exploreNearYou"] = state.Listing.exploreNearYou;
+  stateToReturn["searchListings"] = state.Listing.searchListings;
   return stateToReturn;
 };
 
@@ -141,6 +157,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(searchFilteredListings(filterState, explore)),
     getListingInRadius: (lat, lng, radius, explore) =>
       dispatch(getListingInRadius(lat, lng, radius, explore)),
+    searchAllListings: () => dispatch(searchAllListings()),
   };
 };
 
