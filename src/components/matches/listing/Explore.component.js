@@ -42,13 +42,6 @@ const AllListings = (props) => {
         },
         true
       );
-      await props.searchFilteredListings(
-        {
-          startingPriceClicked: true,
-          startingPrice: 100,
-        },
-        true
-      );
       await props.searchFamilyListings(
         {
           minGuestsClicked: true,
