@@ -225,7 +225,7 @@ class CreateListing extends Component {
             ...this.state.form,
             details: {
               ...this.state.form.details,
-              [name]: Math.round(value),
+              [name]: Math.round(parseInt(value)),
             },
           },
         });
