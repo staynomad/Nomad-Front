@@ -8,6 +8,7 @@ import "../listing/explore.css";
 import {
   getPopularListings,
   searchFilteredListings,
+  searchFamilyListings,
   getListingInRadius,
   searchAllListings,
 } from "../../../redux/actions/searchListingActions";
@@ -38,6 +39,20 @@ const AllListings = (props) => {
         {
           startingPriceClicked: true,
           startingPrice: 100,
+        },
+        true
+      );
+      await props.searchFilteredListings(
+        {
+          startingPriceClicked: true,
+          startingPrice: 100,
+        },
+        true
+      );
+      await props.searchFamilyListings(
+        {
+          minGuestsClicked: true,
+          minGuests: 5,
         },
         true
       );
@@ -145,6 +160,7 @@ const mapStateToProps = (state) => {
   const stateToReturn = { ...state };
   stateToReturn["popularListings"] = state.Listing.popularListings;
   stateToReturn["exploreBudget"] = state.Listing.exploreBudget;
+  stateToReturn["familyListings"] = state.Listing.familyListings;
   stateToReturn["exploreNearYou"] = state.Listing.exploreNearYou;
   stateToReturn["searchListings"] = state.Listing.searchListings;
   return stateToReturn;
@@ -155,6 +171,8 @@ const mapDispatchToProps = (dispatch) => {
     getPopularListings: (count) => dispatch(getPopularListings(count)),
     searchFilteredListings: (filterState, explore) =>
       dispatch(searchFilteredListings(filterState, explore)),
+    searchFamilyListings: (filterState, explore) =>
+      dispatch(searchFamilyListings(filterState, explore)),
     getListingInRadius: (lat, lng, radius, explore) =>
       dispatch(getListingInRadius(lat, lng, radius, explore)),
     searchAllListings: () => dispatch(searchAllListings()),

@@ -10,6 +10,7 @@ export const SET_EDIT_LISTING = "VHomes/listings/SET_EDIT_LISTING";
 export const SET_POPULAR_LISTINGS = "VHomes/listings/SET_POPULAR_LISTINGS";
 export const SET_EXPLORE_NEAR_YOU = "VHomes/listings/SET_EXPLORE_NEAR_YOU";
 export const SET_EXPLORE_BUDGET = "VHomes/listings/SET_EXPLORE_BUDGET";
+export const SET_FAMILY_LISTINGS = "VHomes/listings/SET_FAMILY_LISTINGS";
 
 /* Actions */
 const setSearchListings = (listings) => ({
@@ -29,6 +30,10 @@ const setExploreNearYou = (listings) => ({
   listings,
 });
 const setExploreBudget = (listings) => ({ type: SET_EXPLORE_BUDGET, listings });
+const setFamilyListings = (listings) => ({
+  type: SET_FAMILY_LISTINGS,
+  listings,
+});
 
 /* Fetch Calls */
 export const searchForListings = (itemToSearch) => async (dispatch) => {
@@ -58,6 +63,7 @@ export const searchAllListings = () => async (dispatch) => {
 export const searchFilteredListings = (filterState, explore) => async (
   dispatch
 ) => {
+  console.log(filterState, explore);
   const headers = { "Content-Type": "application/json" };
   const searchAllRes = await handleReq(
     "/listings/filteredListings",
@@ -70,6 +76,27 @@ export const searchFilteredListings = (filterState, explore) => async (
     const { listings } = await searchAllRes.data;
     if (explore) {
       dispatch(setExploreBudget(listings));
+    } else {
+      dispatch(setSearchListings(listings));
+    }
+  }
+};
+
+export const searchFamilyListings = (filterState, explore) => async (
+  dispatch
+) => {
+  const headers = { "Content-Type": "application/json" };
+  const searchAllRes = await handleReq(
+    "/listings/filteredListings",
+    "GET",
+    headers,
+    filterState
+  );
+
+  if (searchAllRes.status === 200) {
+    const { listings } = await searchAllRes.data;
+    if (explore) {
+      dispatch(setFamilyListings(listings));
     } else {
       dispatch(setSearchListings(listings));
     }
