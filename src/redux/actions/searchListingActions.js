@@ -60,10 +60,9 @@ export const searchAllListings = () => async (dispatch) => {
 };
 
 // if explore is true, store res in different location in redux store
-export const searchFilteredListings = (filterState, explore) => async (
+export const searchFilteredListings = (filterState) => async (
   dispatch
 ) => {
-  console.log(filterState, explore);
   const headers = { "Content-Type": "application/json" };
   const searchAllRes = await handleReq(
     "/listings/filteredListings",
@@ -74,32 +73,41 @@ export const searchFilteredListings = (filterState, explore) => async (
 
   if (searchAllRes.status === 200) {
     const { listings } = await searchAllRes.data;
-    if (explore) {
-      dispatch(setExploreBudget(listings));
-    } else {
-      dispatch(setSearchListings(listings));
-    }
+    dispatch(setSearchListings(listings));
   }
 };
 
-export const searchFamilyListings = (filterState, explore) => async (
+export const searchFamilyListings = (filterState) => async (
   dispatch
 ) => {
   const headers = { "Content-Type": "application/json" };
   const searchAllRes = await handleReq(
     "/listings/filteredListings",
-    "GET",
+    "POST",
     headers,
     filterState
   );
 
   if (searchAllRes.status === 200) {
     const { listings } = await searchAllRes.data;
-    if (explore) {
-      dispatch(setFamilyListings(listings));
-    } else {
-      dispatch(setSearchListings(listings));
-    }
+    dispatch(setFamilyListings(listings));
+  }
+};
+
+export const searchBudgetListings = (filterState) => async (
+  dispatch
+) => {
+  const headers = { "Content-Type": "application/json" };
+  const searchAllRes = await handleReq(
+    "/listings/filteredListings",
+    "POST",
+    headers,
+    filterState
+  );
+
+  if (searchAllRes.status === 200) {
+    const { listings } = await searchAllRes.data;
+    dispatch(setExploreBudget(listings));
   }
 };
 

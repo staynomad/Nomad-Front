@@ -7,7 +7,7 @@ import "../listing/explore.css";
 
 import {
   getPopularListings,
-  searchFilteredListings,
+  searchBudgetListings,
   searchFamilyListings,
   getListingInRadius,
   searchAllListings,
@@ -35,26 +35,17 @@ const AllListings = (props) => {
     const getData = async () => {
       await props.getPopularListings(10);
       await props.searchAllListings();
-      await props.searchFilteredListings(
+      await props.searchBudgetListings(
         {
           startingPriceClicked: true,
           startingPrice: 100,
-        },
-        true
-      );
-      await props.searchFilteredListings(
-        {
-          startingPriceClicked: true,
-          startingPrice: 100,
-        },
-        true
+        }
       );
       await props.searchFamilyListings(
         {
           minGuestsClicked: true,
           minGuests: 5,
-        },
-        true
+        }
       );
     };
     getData();
@@ -72,19 +63,22 @@ const AllListings = (props) => {
     };
     getFurtherRadius();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.Listing.exploreNearYou]);
+  }, [/*removed the listener here, was calling useEffect infinitely*/]);
+
+  const findLocationFail = async (position) => {
+    //LA Coords if the user denies location access
+    if (position.code === 1) {
+      await props.getListingInRadius(34.0522, -118.2437, 1000, true);
+    }
+  };
 
   const findLocationSuccess = async (position) => {
     const { latitude, longitude } = position.coords;
     setLat(position.coords.latitude);
     setLng(position.coords.longitude);
     await props.getListingInRadius(latitude, longitude, 100, true);
-  };
-
-  const findLocationFail = async (position) => {
-    //LA Coords if the user denies location access
-    if (position.code === 1) {
-      await props.getListingInRadius(34.0522, -118.2437, 100, true);
+    if (!props.Listing.exploreNearYou || props.Listing.exploreNearYou.length === 0) {
+      await props.getListingInRadius(34.0522, -118.2437, 1000, true);
     }
   };
 
@@ -178,10 +172,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getPopularListings: (count) => dispatch(getPopularListings(count)),
-    searchFilteredListings: (filterState, explore) =>
-      dispatch(searchFilteredListings(filterState, explore)),
-    searchFamilyListings: (filterState, explore) =>
-      dispatch(searchFamilyListings(filterState, explore)),
+    searchBudgetListings: (filterState) =>
+      dispatch(searchBudgetListings(filterState)),
+    searchFamilyListings: (filterState) =>
+      dispatch(searchFamilyListings(filterState)),
     getListingInRadius: (lat, lng, radius, explore) =>
       dispatch(getListingInRadius(lat, lng, radius, explore)),
     searchAllListings: () => dispatch(searchAllListings()),
