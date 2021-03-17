@@ -147,6 +147,15 @@ const AllListings = (props) => {
           className="featured-listings-matches-container"
         >
           <HorizontalScrollMenu
+            data={props.Listing.familyListings}
+            title="Family Size"
+          />
+        </div>
+        <div
+          style={{ marginBottom: "3rem" }}
+          className="featured-listings-matches-container"
+        >
+          <HorizontalScrollMenu
             data={props.Listing.exploreNearYou}
             title="Near You"
           />
