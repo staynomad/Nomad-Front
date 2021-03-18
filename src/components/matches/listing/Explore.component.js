@@ -49,23 +49,18 @@ const AllListings = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(
-    () => {
-      const getFurtherRadius = async () => {
-        if (
-          props.Listing.exploreNearYou &&
-          props.Listing.exploreNearYou.length === 0
-        ) {
-          await props.getListingInRadius(lat, lng, 1000, true);
-        }
-      };
-      getFurtherRadius();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    },
-    [
-      /*removed the listener here, was calling useEffect infinitely*/
-    ]
-  );
+  useEffect(() => {
+    const getFurtherRadius = async () => {
+      if (
+        props.Listing.exploreNearYou &&
+        props.Listing.exploreNearYou.length === 0
+      ) {
+        await props.getListingInRadius(lat, lng, 1000, true);
+      }
+    };
+    getFurtherRadius();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.Listing.exploreNearYou]);
 
   const findLocationFail = async (position) => {
     //LA Coords if the user denies location access
@@ -79,15 +74,7 @@ const AllListings = (props) => {
     setLat(position.coords.latitude);
     setLng(position.coords.longitude);
     await props.getListingInRadius(latitude, longitude, 100, true);
-    if (
-      !props.Listing.exploreNearYou ||
-      props.Listing.exploreNearYou.length === 0
-    ) {
-      await props.getListingInRadius(34.0522, -118.2437, 1000, true);
-    }
   };
-
-  console.log(props.Listing);
 
   return (
     <div id="matches-page">
