@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
-import Search from "../../homePage/search.component";
+import _ from "lodash";
 import "../allListings.css";
 import "../listing/explore.css";
 
+import Search from "../../homePage/search.component";
 import {
   getPopularListings,
   searchBudgetListings,
@@ -35,35 +36,36 @@ const AllListings = (props) => {
     const getData = async () => {
       await props.getPopularListings(10);
       await props.searchAllListings();
-      await props.searchBudgetListings(
-        {
-          startingPriceClicked: true,
-          startingPrice: 100,
-        }
-      );
-      await props.searchFamilyListings(
-        {
-          minGuestsClicked: true,
-          minGuests: 5,
-        }
-      );
+      await props.searchBudgetListings({
+        startingPriceClicked: true,
+        startingPrice: 100,
+      });
+      await props.searchFamilyListings({
+        minGuestsClicked: true,
+        minGuests: 5,
+      });
     };
     getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    const getFurtherRadius = async () => {
-      if (
-        props.Listing.exploreNearYou &&
-        props.Listing.exploreNearYou.length === 0
-      ) {
-        await props.getListingInRadius(lat, lng, 1000, true);
-      }
-    };
-    getFurtherRadius();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [/*removed the listener here, was calling useEffect infinitely*/]);
+  useEffect(
+    () => {
+      const getFurtherRadius = async () => {
+        if (
+          props.Listing.exploreNearYou &&
+          props.Listing.exploreNearYou.length === 0
+        ) {
+          await props.getListingInRadius(lat, lng, 1000, true);
+        }
+      };
+      getFurtherRadius();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    [
+      /*removed the listener here, was calling useEffect infinitely*/
+    ]
+  );
 
   const findLocationFail = async (position) => {
     //LA Coords if the user denies location access
@@ -77,10 +79,15 @@ const AllListings = (props) => {
     setLat(position.coords.latitude);
     setLng(position.coords.longitude);
     await props.getListingInRadius(latitude, longitude, 100, true);
-    if (!props.Listing.exploreNearYou || props.Listing.exploreNearYou.length === 0) {
+    if (
+      !props.Listing.exploreNearYou ||
+      props.Listing.exploreNearYou.length === 0
+    ) {
       await props.getListingInRadius(34.0522, -118.2437, 1000, true);
     }
   };
+
+  console.log(props.Listing);
 
   return (
     <div id="matches-page">
@@ -111,7 +118,10 @@ const AllListings = (props) => {
           className="featured-listings-matches-container"
         >
           <HorizontalScrollMenu
-            data={props.Listing.popularListings}
+            data={
+              props.Listing.popularListings &&
+              props.Listing.popularListings.slice(0, 10)
+            }
             title="Featured Listings"
           />
         </div>
@@ -120,7 +130,14 @@ const AllListings = (props) => {
           className="featured-listings-matches-container"
         >
           <HorizontalScrollMenu
-            data={props.Listing.exploreBudget}
+            data={
+              props.Listing.exploreBudget &&
+              _.orderBy(
+                props.Listing.exploreBudget.slice(0, 10),
+                ["price"],
+                ["asc"]
+              )
+            }
             title="Best Budget"
           />
         </div>
@@ -141,7 +158,14 @@ const AllListings = (props) => {
           className="featured-listings-matches-container"
         >
           <HorizontalScrollMenu
-            data={props.Listing.familyListings}
+            data={
+              props.Listing.familyListings &&
+              _.orderBy(
+                props.Listing.familyListings.slice(0, 10),
+                [(listing) => listing.details.maxpeople],
+                ["desc"]
+              )
+            }
             title="Family Size"
           />
         </div>
@@ -150,7 +174,10 @@ const AllListings = (props) => {
           className="featured-listings-matches-container"
         >
           <HorizontalScrollMenu
-            data={props.Listing.exploreNearYou}
+            data={
+              props.Listing.exploreNearYou &&
+              props.Listing.exploreNearYou.slice(0, 10)
+            }
             title="Near You"
           />
         </div>
