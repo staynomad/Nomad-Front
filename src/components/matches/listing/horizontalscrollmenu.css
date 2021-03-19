@@ -1,8 +1,25 @@
 .horizontal-menu-container {
   width: 97%;
   margin: 0 auto;
+  padding: 0 4rem;
 }
 
 .scroll-menu-arrow.profile {
   font-size: 50px !important;
+}
+
+@media screen and (max-width: 800px) {
+  .horizontal-menu-container {
+    padding: 0 3rem;
+  }
+}
+@media screen and (max-width: 570px) {
+  .horizontal-menu-container {
+    padding: 0 2rem;
+  }
+}
+@media screen and (max-width: 450px) {
+  .horizontal-menu-container {
+    padding: 0 10px;
+  }
 }

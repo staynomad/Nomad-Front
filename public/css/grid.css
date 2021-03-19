@@ -34,6 +34,13 @@
 @media screen and (max-width: 1240px) {
   .row-one {
     justify-content: center;
+    margin-bottom: 7rem;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .row-one {
+    margin-bottom: 5rem;
   }
 }
 

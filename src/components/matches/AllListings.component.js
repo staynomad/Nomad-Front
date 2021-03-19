@@ -4,11 +4,10 @@ import Filter from "./filter.component";
 import Roommates from "./roommate/roommates.component";
 import Listings from "./listing/listings.component";
 import Search from "../homePage/search.component";
-import "./matches.css";
+import "./allListings.css";
 import "./listing/explore.css";
-import FeaturedListings from "../homePage/featuredListings.component";
 
-const Matches = (props) => {
+const AllListings = (props) => {
   const { history } = props;
   const [seen, setSeen] = useState(false);
   var roommateView = false;
@@ -42,18 +41,11 @@ const Matches = (props) => {
   }, [location.search]);
 
   return (
-    <div id="matches-page">
-      <div className="spacer_l"></div>
+    <div id="all-listings-page">
       <div className="wow fadeInUp" data-wow-delay="0.4s">
         <div className="row gap large">
           <div className="col-sm-12 col-md-12 col-lg-12">
-            <div className=" wow fadeInUp" data-wow-delay="0.5s">
-              <img
-                src="images/banner.svg"
-                alt="banner"
-                className="banner center-image"
-              />
-            </div>
+            <div className=" wow fadeInUp" data-wow-delay="0.5s"></div>
           </div>
         </div>
       </div>
@@ -61,9 +53,6 @@ const Matches = (props) => {
         <Search history={history} />
         <div className="click-for-more">
           Click on a listing to see more information!
-        </div>
-        <div className="featured-listings-matches-container">
-          <FeaturedListings />
         </div>
         {/*<button className="filter btn green" onClick={() => {
           setRoommateView(!roommateView);
@@ -107,4 +96,4 @@ const Matches = (props) => {
   );
 };
 
-export default withRouter(Matches);
+export default withRouter(AllListings);

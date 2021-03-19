@@ -792,6 +792,7 @@ p {
 }
 
 .center-image {
+  max-width: 100rem;
   width: 70%;
   margin-top: 110px;
 }

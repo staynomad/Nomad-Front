@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 import { searchUserListings } from "../../redux/actions/searchListingActions";
 import "./PublicProfile.css";
 
-import HorizontalScrollMenu from "../matches/listing/HorizontalScrollMenu.component";
+import ProfileHorizontalScrollMenu from "../matches/listing/ProfileHorizontalScrollMenu.component";
 import StarIcon from "@material-ui/icons/Star";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
@@ -83,7 +83,7 @@ const PublicProfile = (props) => {
                       <h1 className="public-profile-caption">Listings</h1>
                       <div className="public-profile-caption-line"></div>
                     </div>
-                    <HorizontalScrollMenu
+                    <ProfileHorizontalScrollMenu
                       className="horizontal-scroll-container"
                       data={props.userListings}
                     />

@@ -621,14 +621,18 @@ class ListingPage extends Component {
                           </div>
                         );
                       })}
-                    <div className="listing-reviews-show-more-container">
-                      <button
-                        onClick={() => this.setState({ allReviewsPopup: true })}
-                        className="listing-reviews-show-more"
-                      >
-                        Show more
-                      </button>
-                    </div>
+                    {this.state.listingRatings.length > 3 && (
+                      <div className="listing-reviews-show-more-container">
+                        <button
+                          onClick={() =>
+                            this.setState({ allReviewsPopup: true })
+                          }
+                          className="listing-reviews-show-more"
+                        >
+                          Show more
+                        </button>
+                      </div>
+                    )}
                   </div>
                 )}
                 <div className="listing-divider"></div>
