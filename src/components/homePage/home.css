@@ -120,3 +120,27 @@
 .footer-item:hover {
   color: rgb(212, 212, 212);
 }
+
+.search-filter-btn {
+  background: var(--color-green);
+  margin-left: 1rem;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.search-filter-btn:hover {
+  background: #01c490;
+}
+
+@media screen and (max-width: 372px) {
+  .search-filter-btn {
+    padding: 0.5rem 1rem;
+  }
+  .search-filter-btn img {
+    height: 1.8rem;
+  }
+}
