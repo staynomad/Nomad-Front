@@ -1,5 +1,5 @@
 .filter-search-modal-container {
-  height: 40rem;
+  height: 35rem;
   width: 60rem;
   background: white;
   border-radius: 10px;
@@ -42,6 +42,58 @@
 
 .filter-search-modal-content {
   flex: 1;
+  display: flex;
+}
+
+.filter-searh-modal-left-container {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.filter-search-modal-input-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 2.5rem 2rem;
+  height: 50%;
+}
+
+.filter-search-modal-input-row svg {
+  color: rgb(214, 214, 214) !important;
+  font-size: 4rem;
+}
+
+.filter-search-modal-input-row h2 {
+  margin: 0 2rem;
+  font-size: 2rem !important;
+}
+
+.filter-search-modal-input-row h2.guests {
+  margin: 0 1.4rem;
+}
+
+.filter-search-modal-input-row input {
+  border: 2px solid rgb(214, 214, 214);
+  width: 4rem;
+  text-align: center;
+  color: var(--color-green);
+  font-size: 1.7rem;
+  font-family: "Playfair Display";
+  line-height: 20px;
+}
+
+.filter-search-modal-input-row input:focus {
+  border: 2px solid var(--color-green);
+}
+
+.filter-searh-modal-right-container {
+  width: 50%;
+}
+
+.filter-search-modal-button-container {
+  height: 7rem;
 }
 
 @media screen and (max-width: 870px) {
