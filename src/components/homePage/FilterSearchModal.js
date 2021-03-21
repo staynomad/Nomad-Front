@@ -4,10 +4,15 @@ import "./filtersearchmodal.css";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import MonetizationOnOutlinedIcon from "@material-ui/icons/MonetizationOnOutlined";
 import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
+import RadioButtonUncheckedOutlinedIcon from "@material-ui/icons/RadioButtonUncheckedOutlined";
+import RadioButtonCheckedOutlinedIcon from "@material-ui/icons/RadioButtonCheckedOutlined";
 
 const FilterSearchModal = (props) => {
   const [priceInput, setPriceInput] = useState("");
   const [guestsInput, setGuestsInput] = useState("");
+  //null = no sort, true = high to low, false = low to high
+  const [sortPrice, setSortPrice] = useState(null);
+  const [sortGuests, setSortGuests] = useState(null);
 
   const handlePriceChange = (e) => {
     if (!isNaN(e.target.value) && e.target.value < 1000) {
@@ -49,9 +54,64 @@ const FilterSearchModal = (props) => {
             />
           </div>
         </div>
-        <div className="filter-searh-modal-right-container"></div>
+        <div className="filter-searh-modal-right-container">
+          <div className="filter-search-modal-radio-container">
+            <div className="filter-search-modal-radio-row">
+              {sortPrice === null || sortPrice === true ? (
+                <RadioButtonUncheckedOutlinedIcon
+                  onClick={() => setSortPrice(false)}
+                />
+              ) : (
+                <RadioButtonCheckedOutlinedIcon
+                  onClick={() => setSortPrice(null)}
+                />
+              )}
+              <h3>Price: Low to High</h3>
+            </div>
+            <div className="filter-search-modal-radio-row">
+              {sortPrice === null || sortPrice === false ? (
+                <RadioButtonUncheckedOutlinedIcon
+                  onClick={() => setSortPrice(true)}
+                />
+              ) : (
+                <RadioButtonCheckedOutlinedIcon
+                  onClick={() => setSortPrice(null)}
+                />
+              )}
+              <h3>Price: High to Low</h3>
+            </div>
+          </div>
+          <div className="filter-search-modal-radio-container">
+            <div className="filter-search-modal-radio-row">
+              {sortGuests === null || sortGuests === true ? (
+                <RadioButtonUncheckedOutlinedIcon
+                  onClick={() => setSortGuests(false)}
+                />
+              ) : (
+                <RadioButtonCheckedOutlinedIcon
+                  onClick={() => setSortGuests(null)}
+                />
+              )}
+              <h3>Guests: Low to High</h3>
+            </div>
+            <div className="filter-search-modal-radio-row">
+              {sortGuests === null || sortGuests === false ? (
+                <RadioButtonUncheckedOutlinedIcon
+                  onClick={() => setSortGuests(true)}
+                />
+              ) : (
+                <RadioButtonCheckedOutlinedIcon
+                  onClick={() => setSortGuests(null)}
+                />
+              )}
+              <h3>Guests: High to Low</h3>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="filter-search-modal-button-container"></div>
+      <div className="filter-search-modal-button-container">
+        <button>Confirm</button>
+      </div>
     </div>
   );
 };

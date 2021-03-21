@@ -43,6 +43,7 @@
 .filter-search-modal-content {
   flex: 1;
   display: flex;
+  padding-top: 1rem;
 }
 
 .filter-searh-modal-left-container {
@@ -68,6 +69,7 @@
 .filter-search-modal-input-row h2 {
   margin: 0 2rem;
   font-size: 2rem !important;
+  font-weight: 500 !important;
 }
 
 .filter-search-modal-input-row h2.guests {
@@ -90,10 +92,55 @@
 
 .filter-searh-modal-right-container {
   width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-search-modal-radio-container {
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.filter-search-modal-radio-row {
+  display: flex;
+  align-items: center;
+  margin: 1rem 2rem;
+}
+
+.filter-search-modal-radio-row svg {
+  color: var(--color-green);
+  cursor: pointer;
+  font-size: 2rem;
+}
+.filter-search-modal-radio-row h3 {
+  margin: 0 1rem;
+  font-size: 1.8rem !important;
+  color: var(--color-green);
+  font-weight: 500 !important;
 }
 
 .filter-search-modal-button-container {
   height: 7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.filter-search-modal-button-container button {
+  background: var(--color-green);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 2rem;
+  font-family: "Playfair Display";
+  padding: 5px 20px;
+  cursor: pointer;
+}
+
+.filter-search-modal-button-container button:hover {
+  background: #01c490;
 }
 
 @media screen and (max-width: 870px) {
