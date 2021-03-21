@@ -86,6 +86,16 @@
   line-height: 20px;
 }
 
+.filter-search-modal-input-row input::placeholder {
+  color: rgb(170, 170, 170);
+}
+.filter-search-modal-input-row input:-ms-input-placeholder {
+  color: rgb(170, 170, 170);
+}
+.filter-search-modal-input-row input::-ms-input-placeholder {
+  color: rgb(170, 170, 170);
+}
+
 .filter-search-modal-input-row input:focus {
   border: 2px solid var(--color-green);
 }

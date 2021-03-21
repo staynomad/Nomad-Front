@@ -46,7 +46,7 @@ class Listings extends Component {
 
     if (this.props.location.search) {
       /* Get listing using search term */
-      const itemToSearch = this.props.location.search.slice(1);
+      const itemToSearch = this.props.router.location.query.search;
       this.props.searchForListings(itemToSearch);
     } else if (filterClicked) {
       /* Get listing using listing filter */
@@ -163,6 +163,9 @@ class Listings extends Component {
     const handleClose = () => {
       this.setState({ sortAnchorEl: null });
     };
+
+    console.log(this.props);
+
     return (
       <>
         {this.props.location.pathname === "/MyAccount" ? (

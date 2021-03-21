@@ -12,7 +12,7 @@ const Search = (props) => {
 
   const handleSearch = (event) => {
     event.preventDefault();
-    history.push(`/listings?${itemToSearch}`);
+    history.push(`/listings?search=${itemToSearch}`);
     setItemToSearch(itemToSearch);
   };
 
@@ -42,15 +42,18 @@ const Search = (props) => {
           onChange={(e) => setItemToSearch(e.target.value)}
           value={itemToSearch}
         />
-        <div onClick={() => setFilterOpen(true)} className="search-filter-btn">
-          <img src={Filter} alt="" />
-        </div>
         <input
           className="booknowbutton"
           style={{ marginLeft: "1rem", fontSize: "1.5rem" }}
           type="button"
           value="Search"
           onClick={handleSearch}
+        />{" "}
+        <img
+          onClick={() => setFilterOpen(true)}
+          src={Filter}
+          alt=""
+          className="search-filter-btn"
         />
       </form>
       <br />

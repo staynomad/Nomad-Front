@@ -122,18 +122,14 @@
 }
 
 .search-filter-btn {
-  background: var(--color-green);
-  margin-left: 1rem;
+  margin-left: 0.5rem;
   padding: 0.6rem 1rem;
-  border-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   cursor: pointer;
+  transition: all 0.2s;
 }
 
 .search-filter-btn:hover {
-  background: #01c490;
+  transform: scale(1.03);
 }
 
 @media screen and (max-width: 372px) {

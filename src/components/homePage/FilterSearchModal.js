@@ -38,7 +38,7 @@ const FilterSearchModal = (props) => {
             <MonetizationOnOutlinedIcon />
             <h2>Max Price:</h2>
             <input
-              placeholder="$"
+              placeholder="$100"
               type="text"
               value={priceInput}
               onChange={(e) => handlePriceChange(e)}
@@ -51,6 +51,7 @@ const FilterSearchModal = (props) => {
               type="text"
               value={guestsInput}
               onChange={(e) => handleGuestsChange(e)}
+              placeholder="3"
             />
           </div>
         </div>
