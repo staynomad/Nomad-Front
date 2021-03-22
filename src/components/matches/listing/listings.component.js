@@ -171,10 +171,6 @@ class Listings extends Component {
       this.setState({ sortAnchorEl: null });
     };
 
-    console.log(this.state.filters);
-
-    console.log(this.state);
-
     return (
       <>
         {this.props.location.pathname === "/MyAccount" ? (
@@ -259,11 +255,29 @@ class Listings extends Component {
                 }
                 data-wow-delay="0.5s"
               >
-                {_.orderBy(
-                  this.state.listings,
-                  [(listing) => listing.price],
-                  ["asc"]
-                )
+                {_.chain(this.state.listings)
+                  .orderBy(
+                    [
+                      (listing) =>
+                        this.state.filters.sortByPrice !== undefined
+                          ? listing.price
+                          : listing,
+                    ],
+                    [this.state.filters.sortByPrice === "true" ? "desc" : "asc"]
+                  )
+                  .orderBy(
+                    [
+                      (listing) =>
+                        this.state.filters.sortByGuests !== undefined
+                          ? listing.details.maxpeople
+                          : listing,
+                    ],
+                    [
+                      this.state.filters.sortByGuests === "true"
+                        ? "desc"
+                        : "asc",
+                    ]
+                  )
                   .filter((listing) =>
                     this.state.filters.maxPrice === undefined
                       ? listing
@@ -284,7 +298,8 @@ class Listings extends Component {
                         <ListingCard key={listing._id} listing={listing} />
                       );
                     else return null;
-                  })}
+                  })
+                  .value()}
               </div>
             </div>
           )
