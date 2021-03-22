@@ -8,11 +8,27 @@ import FilterSearchModal from "./FilterSearchModal";
 const Search = (props) => {
   const [itemToSearch, setItemToSearch] = React.useState("");
   const [filterOpen, setFilterOpen] = React.useState(false);
+  const [filters, setFilters] = React.useState({
+    sortByGuests: null,
+    sortByPrice: null,
+    minGuests: null,
+    maxPrice: null,
+  });
   const { history } = props;
 
   const handleSearch = (event) => {
     event.preventDefault();
-    history.push(`/listings?search=${itemToSearch}`);
+    history.push(
+      `/listings?search=${itemToSearch}${
+        filters.minGuests !== null ? "&minGuests=" + filters.minGuests : ""
+      }${filters.maxPrice !== null ? "&maxPrice=" + filters.maxPrice : ""}${
+        filters.sortByGuests !== null
+          ? "&sortGuests=" + filters.sortByGuests
+          : ""
+      }${
+        filters.sortByPrice !== null ? "&sortPrice=" + filters.sortByPrice : ""
+      }`
+    );
     setItemToSearch(itemToSearch);
   };
 
@@ -23,7 +39,10 @@ const Search = (props) => {
       data-wow-delay="0.5s"
     >
       <Modal open={filterOpen} onClose={() => setFilterOpen(false)}>
-        <FilterSearchModal closeModal={() => setFilterOpen(false)} />
+        <FilterSearchModal
+          closeModal={() => setFilterOpen(false)}
+          setFilters={setFilters}
+        />
       </Modal>
       <form
         style={{

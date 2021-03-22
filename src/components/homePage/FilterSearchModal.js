@@ -111,7 +111,19 @@ const FilterSearchModal = (props) => {
         </div>
       </div>
       <div className="filter-search-modal-button-container">
-        <button>Confirm</button>
+        <button
+          onClick={() => {
+            props.setFilters({
+              sortByGuests: sortGuests,
+              sortByPrice: sortPrice,
+              maxPrice: priceInput === "" ? null : priceInput,
+              minGuests: guestsInput === "" ? null : guestsInput,
+            });
+            props.closeModal();
+          }}
+        >
+          Confirm
+        </button>
       </div>
     </div>
   );
