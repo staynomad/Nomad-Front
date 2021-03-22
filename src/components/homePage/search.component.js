@@ -1,6 +1,8 @@
 import React from "react";
 import Modal from "@material-ui/core/Modal";
 
+import { createBrowserHistory } from "history";
+
 import "./home.css";
 import Filter from "../../assets/svg/filter.svg";
 import FilterSearchModal from "./FilterSearchModal";
@@ -14,7 +16,8 @@ const Search = (props) => {
     minGuests: null,
     maxPrice: null,
   });
-  const { history } = props;
+
+  const history = createBrowserHistory({ forceRefresh: true });
 
   const handleSearch = (event) => {
     event.preventDefault();
