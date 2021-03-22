@@ -5,6 +5,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import MaterialUIMenu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import _ from "lodash";
 import "./listings.css";
 import ListingCard from "./listingCard.component";
 import {
@@ -26,6 +27,12 @@ class Listings extends Component {
       page: 0,
       pageCount: 0,
       sorting: "newest",
+      filters: {
+        sortByPrice: this.props.router.location.query.sortPrice,
+        sortByGuests: this.props.router.location.query.sortGuests,
+        maxPrice: this.props.router.location.query.maxPrice,
+        minGuests: this.props.router.location.query.minGuests,
+      },
     };
 
     this.handleSearch = this.handleSearch.bind(this);
@@ -164,7 +171,9 @@ class Listings extends Component {
       this.setState({ sortAnchorEl: null });
     };
 
-    console.log(this.props);
+    console.log(this.state.filters);
+
+    console.log(this.state);
 
     return (
       <>
@@ -250,14 +259,32 @@ class Listings extends Component {
                 }
                 data-wow-delay="0.5s"
               >
-                {this.state.listings.map((listing, idx) => {
-                  if (
-                    idx >= this.state.itemsToDisplay[0] &&
-                    idx <= this.state.itemsToDisplay[1]
+                {_.orderBy(
+                  this.state.listings,
+                  [(listing) => listing.price],
+                  ["asc"]
+                )
+                  .filter((listing) =>
+                    this.state.filters.maxPrice === undefined
+                      ? listing
+                      : listing.price <= this.state.filters.maxPrice
                   )
-                    return <ListingCard key={listing._id} listing={listing} />;
-                  else return null;
-                })}
+                  .filter((listing) =>
+                    this.state.filters.minGuests === undefined
+                      ? listing
+                      : listing.details.maxpeople >=
+                        this.state.filters.minGuests
+                  )
+                  .map((listing, idx) => {
+                    if (
+                      idx >= this.state.itemsToDisplay[0] &&
+                      idx <= this.state.itemsToDisplay[1]
+                    )
+                      return (
+                        <ListingCard key={listing._id} listing={listing} />
+                      );
+                    else return null;
+                  })}
               </div>
             </div>
           )
