@@ -262,7 +262,7 @@
 @media screen and (max-height: 783px) {
   .filter-search-modal-container {
     overflow-y: scroll;
-    height: 80%;
+    height: 88%;
     padding-bottom: 1rem;
   }
   .filter-search-modal-header h1 {
@@ -273,5 +273,26 @@
   }
   .filter-search-modal-header {
     height: 3.5rem;
+  }
+}
+
+@media screen and (max-height: 710px) {
+  .filter-search-modal-container {
+    height: 88%;
+  }
+}
+@media screen and (max-height: 695px) {
+  .filter-search-modal-container {
+    height: 89%;
+  }
+}
+@media screen and (max-height: 600px) {
+  .filter-search-modal-container {
+    height: 85%;
+  }
+}
+@media screen and (max-height: 470px) {
+  .filter-search-modal-container {
+    height: 80%;
   }
 }
