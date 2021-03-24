@@ -24,7 +24,7 @@ class navbar extends Component {
 
             <a
               className="footer-icon-circle"
-              href="https://www.facebook.com/rentvhomes/"
+              href="https://www.facebook.com/nomadrenters/"
             >
               <img
                 className="footer-icon"
@@ -34,7 +34,7 @@ class navbar extends Component {
             </a>
             <a
               className="footer-icon-circle"
-              href="https://www.instagram.com/vhomesgroup/"
+              href="https://www.instagram.com/nomadrenters/"
             >
               <img
                 className="footer-icon"
