@@ -5,6 +5,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import MaterialUIMenu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import _ from "lodash";
 import "./listings.css";
 import ListingCard from "./listingCard.component";
 import {
@@ -13,7 +14,7 @@ import {
   searchFilteredListings,
   searchUserListings,
 } from "../../../redux/actions/searchListingActions";
-import HorizontalScrollMenu from "./HorizontalScrollMenu.component";
+import ProfileHorizontalScrollMenu from "./ProfileHorizontalScrollMenu.component";
 
 class Listings extends Component {
   constructor(props) {
@@ -26,6 +27,12 @@ class Listings extends Component {
       page: 0,
       pageCount: 0,
       sorting: "newest",
+      filters: {
+        sortByPrice: this.props.router.location.query.sortPrice,
+        sortByGuests: this.props.router.location.query.sortGuests,
+        maxPrice: this.props.router.location.query.maxPrice,
+        minGuests: this.props.router.location.query.minGuests,
+      },
     };
 
     this.handleSearch = this.handleSearch.bind(this);
@@ -46,11 +53,11 @@ class Listings extends Component {
 
     if (this.props.location.search) {
       /* Get listing using search term */
-      const itemToSearch = this.props.location.search.slice(1);
+      const itemToSearch = this.props.router.location.query.search;
       this.props.searchForListings(itemToSearch);
     } else if (filterClicked) {
       /* Get listing using listing filter */
-      this.props.searchFilteredListings(filter);
+      this.props.searchFilteredListings(filter, false);
     } else {
       // console.log(this.props.searchOnlyUser)
       if (this.props.searchOnlyUser)
@@ -163,6 +170,7 @@ class Listings extends Component {
     const handleClose = () => {
       this.setState({ sortAnchorEl: null });
     };
+
     return (
       <>
         {this.props.location.pathname === "/MyAccount" ? (
@@ -230,8 +238,8 @@ class Listings extends Component {
               </p>
             </>
           ) : this.props.location.pathname === "/MyAccount" ? (
-            <div style={{ padding: "0 3rem" }}>
-              <HorizontalScrollMenu
+            <div>
+              <ProfileHorizontalScrollMenu
                 className="horizontal-scroll-container"
                 data={this.state.listings}
               />
@@ -247,14 +255,51 @@ class Listings extends Component {
                 }
                 data-wow-delay="0.5s"
               >
-                {this.state.listings.map((listing, idx) => {
-                  if (
-                    idx >= this.state.itemsToDisplay[0] &&
-                    idx <= this.state.itemsToDisplay[1]
+                {_.chain(this.state.listings)
+                  .orderBy(
+                    [
+                      (listing) =>
+                        this.state.filters.sortByPrice !== undefined
+                          ? listing.price
+                          : listing,
+                    ],
+                    [this.state.filters.sortByPrice === "true" ? "desc" : "asc"]
                   )
-                    return <ListingCard key={listing._id} listing={listing} />;
-                  else return null;
-                })}
+                  .orderBy(
+                    [
+                      (listing) =>
+                        this.state.filters.sortByGuests !== undefined
+                          ? listing.details.maxpeople
+                          : listing,
+                    ],
+                    [
+                      this.state.filters.sortByGuests === "true"
+                        ? "desc"
+                        : "asc",
+                    ]
+                  )
+                  .filter((listing) =>
+                    this.state.filters.maxPrice === undefined
+                      ? listing
+                      : listing.price <= this.state.filters.maxPrice
+                  )
+                  .filter((listing) =>
+                    this.state.filters.minGuests === undefined
+                      ? listing
+                      : listing.details.maxpeople >=
+                        this.state.filters.minGuests
+                  )
+                  .map((listing, idx) => {
+                    if (
+                      idx >= this.state.itemsToDisplay[0] &&
+                      idx <= this.state.itemsToDisplay[1]
+                    )
+                      return (
+                        <ListingCard key={listing._id} listing={listing} />
+                      );
+                    else return null;
+                  })
+                  .value()}
               </div>
             </div>
           )
@@ -285,7 +330,7 @@ const mapDispatchToProps = (dispatch) => {
     searchForListings: (itemToSearch) =>
       dispatch(searchForListings(itemToSearch)),
     searchFilteredListings: (filter) =>
-      dispatch(searchFilteredListings(filter)),
+      dispatch(searchFilteredListings(filter, false)),
     searchUserListings: (userId) => dispatch(searchUserListings(userId)),
   };
 };

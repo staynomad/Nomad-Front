@@ -14,6 +14,8 @@
     "connected-react-router": "^6.8.0",
     "google-map-react": "^2.1.9",
     "ical": "^0.8.0",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.1",
     "react": "^16.13.1",
     "react-day-picker": "^7.4.8",
     "react-device-detect": "^1.15.0",
@@ -38,7 +40,7 @@
     "semantic-ui-react": "^2.0.0",
     "stripe": "^8.121.0"
   },
-  "proxy": "https://nvestup.com",
+  "proxy": "https://api.vhomesgroup.com",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

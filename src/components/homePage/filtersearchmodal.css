@@ -1,0 +1,298 @@
+.filter-search-modal-container {
+  height: 35rem;
+  width: 60rem;
+  background: white;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: calc(50% + 45px);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+}
+
+.filter-search-modal-header {
+  width: 100%;
+  height: 5rem;
+  background: var(--color-green);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.filter-search-modal-header svg {
+  color: white;
+  position: absolute;
+  font-size: 3rem;
+  cursor: pointer;
+  left: 10px;
+}
+
+.filter-search-modal-header svg:hover {
+  color: rgb(235, 235, 235);
+}
+
+.filter-search-modal-header h1 {
+  color: white !important;
+  font-size: 2.5rem !important;
+  margin: 0;
+}
+
+.filter-search-modal-content {
+  flex: 1;
+  display: flex;
+  padding-top: 1rem;
+}
+
+.filter-searh-modal-left-container {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.filter-search-modal-input-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 2.5rem 2rem;
+  height: 50%;
+}
+
+.filter-search-modal-input-row svg {
+  color: rgb(214, 214, 214) !important;
+  font-size: 4rem;
+}
+
+.filter-search-modal-input-row h2 {
+  margin: 0 2rem;
+  font-size: 2rem !important;
+  font-weight: 500 !important;
+}
+
+.filter-search-modal-input-row h2.guests {
+  margin: 0 1.4rem;
+}
+
+.filter-search-modal-input-row input {
+  border: 2px solid rgb(214, 214, 214);
+  width: 4rem;
+  text-align: center;
+  color: var(--color-green);
+  font-size: 1.7rem;
+  font-family: "Playfair Display";
+  line-height: 20px;
+}
+
+.filter-search-modal-input-row input::placeholder {
+  color: rgb(170, 170, 170);
+}
+.filter-search-modal-input-row input:-ms-input-placeholder {
+  color: rgb(170, 170, 170);
+}
+.filter-search-modal-input-row input::-ms-input-placeholder {
+  color: rgb(170, 170, 170);
+}
+
+.filter-search-modal-input-row input:focus {
+  border: 2px solid var(--color-green);
+}
+
+.filter-searh-modal-right-container {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-search-modal-radio-container {
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.filter-search-modal-radio-row {
+  display: flex;
+  align-items: center;
+  margin: 1rem 2rem;
+}
+
+.filter-search-modal-radio-row svg {
+  color: var(--color-green);
+  cursor: pointer;
+  font-size: 2rem;
+}
+.filter-search-modal-radio-row h3 {
+  margin: 0 1rem;
+  font-size: 1.8rem !important;
+  color: var(--color-green);
+  font-weight: 500 !important;
+}
+
+.filter-search-modal-button-container {
+  height: 7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.filter-search-modal-button-container button {
+  background: var(--color-green);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 2rem;
+  font-family: "Playfair Display";
+  padding: 5px 20px;
+  cursor: pointer;
+}
+
+.filter-search-modal-button-container button:hover {
+  background: #01c490;
+}
+
+@media screen and (max-width: 870px) {
+  .filter-search-modal-container {
+    width: 98%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .filter-search-modal-container {
+    top: calc(50% + 35px);
+  }
+  .filter-search-modal-header h1 {
+    font-size: 2rem !important;
+  }
+  .filter-search-modal-input-row {
+    justify-content: flex-start;
+    margin-left: 20px;
+  }
+  .filter-search-modal-radio-row {
+    margin-right: 0px;
+    justify-content: start;
+  }
+  .filter-searh-modal-right-container {
+    padding-left: 20px;
+  }
+}
+
+@media screen and (max-width: 719px) {
+  .filter-search-modal-input-row svg {
+    font-size: 3rem;
+  }
+  .filter-search-modal-input-row h2 {
+    font-size: 1.7rem !important;
+  }
+  .filter-search-modal-radio-row h3 {
+    font-size: 1.5rem !important;
+  }
+  .filter-search-modal-input-row {
+    margin-right: 5px;
+  }
+}
+
+@media screen and (max-width: 617px) {
+  .filter-search-modal-input-row h2 {
+    margin: 0 10px;
+  }
+  .filter-search-modal-input-row h2.guests {
+    margin-left: 5px;
+  }
+  .filter-search-modal-content {
+    flex-direction: column;
+    align-items: center;
+  }
+  .filter-search-modal-container {
+    height: 50rem;
+  }
+  .filter-searh-modal-left-container {
+    width: 100%;
+  }
+  .filter-search-modal-input-row {
+    justify-content: center;
+    margin: 1rem;
+  }
+  .filter-searh-modal-right-container {
+    width: 100%;
+    padding: 0;
+  }
+  .filter-search-modal-radio-container {
+    width: 100%;
+    margin: 2rem 0;
+    align-items: center;
+  }
+  .filter-search-modal-radio-row {
+    margin-left: 0;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .filter-search-modal-header {
+    height: 3.5rem;
+  }
+  .filter-search-modal-header h1 {
+    font-size: 1.7rem !important;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .filter-search-modal-header h1 {
+    font-size: 1.4rem !important;
+  }
+  .filter-search-modal-header svg {
+    font-size: 2.2rem;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .filter-search-modal-header h1 {
+    font-size: 1.2rem !important;
+  }
+}
+
+@media screen and (max-width: 342px) {
+  .filter-search-modal-header h1 {
+    margin-left: 2rem !important;
+  }
+}
+
+@media screen and (max-height: 783px) {
+  .filter-search-modal-container {
+    overflow-y: scroll;
+    height: 88%;
+    padding-bottom: 1rem;
+  }
+  .filter-search-modal-header h1 {
+    font-size: 1.2rem !important;
+  }
+  .filter-search-modal-header svg {
+    font-size: 2.2rem;
+  }
+  .filter-search-modal-header {
+    height: 3.5rem;
+  }
+}
+
+@media screen and (max-height: 710px) {
+  .filter-search-modal-container {
+    height: 88%;
+  }
+}
+@media screen and (max-height: 695px) {
+  .filter-search-modal-container {
+    height: 89%;
+  }
+}
+@media screen and (max-height: 600px) {
+  .filter-search-modal-container {
+    height: 85%;
+  }
+}
+@media screen and (max-height: 470px) {
+  .filter-search-modal-container {
+    height: 80%;
+  }
+}

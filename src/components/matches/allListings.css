@@ -1,8 +1,9 @@
-#matches-page {
+#all-listings-page {
   background-color: white;
   height: 100%;
   background-size: cover;
   overflow: auto;
+  margin-top: 8rem;
 }
 
 .container {
@@ -48,4 +49,10 @@
 
 .click-for-more {
   font-size: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  #all-listings-page {
+    margin-top: 5rem;
+  }
 }

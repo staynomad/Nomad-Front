@@ -16,6 +16,8 @@ import {
   getCalendarURL,
   importCalendar,
 } from "../../redux/actions/calendarSyncActions";
+import moment from "moment";
+import Modal from "@material-ui/core/Modal";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
@@ -23,6 +25,8 @@ import StarIcon from "@material-ui/icons/Star";
 import PermIdentityIcon from "@material-ui/icons/PermIdentity";
 import defaultProfile from "../../../src/assets/img/default-profile.png";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
+import PostReviewModal from "../review/PostReviewModal.component";
+import AllReviewsModal from "../review/AllReviewsModal.component";
 
 const stripePublicKey =
   "pk_test_51HqRrRImBKNBYsooNTOTLagbqd8QUGaK6BeGwy6k2pQAJxkFF7NRwTT3ksBwyGVmq8UqhNVvKQS7Vlb69acFFCvq00hxgBuZhh";
@@ -44,6 +48,8 @@ class ListingPage extends Component {
       outOfRange: false,
       rating: 0,
       review: "",
+      postReviewPopup: false,
+      allReviewsPopup: false,
     });
   }
 
@@ -94,6 +100,7 @@ class ListingPage extends Component {
           isActive: res.data.listing.active,
         });
 
+        // Update listingPictures to include original and thumbnail url
         let pictures = [];
         for (let i = 0; i < this.state.listingPictures.length; i++) {
           pictures.push({
@@ -101,10 +108,10 @@ class ListingPage extends Component {
             thumbnail: String(this.state.listingPictures[i]),
           });
         }
-
         this.setState({
           listingPictures: pictures,
         });
+
         // Set default disabled days based on booked days in listing object
         let startDate = new Date(this.state.listingStartDate);
         let endDate = new Date(this.state.listingEndDate);
@@ -146,6 +153,15 @@ class ListingPage extends Component {
         app.get(`/user/getUserInfo/${userId}`).then((res) => {
           this.setState({ listingUserName: res.data });
         });
+
+        // Update listingRatings to include user's name for each review
+        for (let i = 0; i < this.state.listingRatings.length; i++) {
+          app
+            .get(`/user/getUserInfo/${this.state.listingRatings[i].userId}`)
+            .then(
+              (res) => (this.state.listingRatings[i].userName = res.data.name)
+            );
+        }
       })
       .catch((err) => {
         // console.log(err.response);
@@ -302,24 +318,63 @@ class ListingPage extends Component {
     //     : false;
 
     const getStars = () => {
-      let n = Object.keys(this.state.listingRatings).length;
-      let average = 0;
-      const stars = [];
+      let reviews = [];
       for (let props in this.state.listingRatings) {
-        average = average + this.state.listingRatings[props].stars / n;
+        reviews.push(this.state.listingRatings[props].stars);
       }
+      const max = reviews
+        .sort(
+          (a, b) =>
+            reviews.filter((v) => v === a).length -
+            reviews.filter((v) => v === b).length
+        )
+        .pop();
+
+      let stars = [];
+
       for (let i = 1; i <= 5; i++) {
-        if (i <= average) {
-          stars.push(<StarIcon className="star-icon" alt={i} />);
+        if (i <= max) {
+          stars.push(<StarIcon key={i} className="star-icon" alt={i} />);
         } else {
-          stars.push(<StarBorderIcon className="star-icon" alt={i} />);
+          stars.push(<StarBorderIcon key={i} className="star-icon" alt={i} />);
         }
       }
-      stars.push(<p className="rating-number">({n})</p>);
+      stars.push(
+        <p key={"num"} className="rating-number">
+          ({reviews.length})
+        </p>
+      );
       return stars;
     };
+
     return (
       <div className="individual-listing-container">
+        <Modal
+          open={this.state.postReviewPopup || false}
+          onClose={() => this.setState({ postReviewPopup: false })}
+          style={{ outline: "none" }}
+        >
+          <div>
+            <PostReviewModal
+              listingId={this.props.match.params.id}
+              userSession={this.props.userSession}
+              closeModal={() => this.setState({ postReviewPopup: false })}
+            />
+          </div>
+        </Modal>
+        <Modal
+          open={this.state.allReviewsPopup || false}
+          onClose={() => this.setState({ allReviewsPopup: false })}
+          style={{ outline: "none" }}
+        >
+          <div>
+            <AllReviewsModal
+              reviews={this.state.listingRatings}
+              closeModal={() => this.setState({ allReviewsPopup: false })}
+              openPostReview={() => this.setState({ postReviewPopup: true })}
+            />
+          </div>
+        </Modal>
         {!this.state.listingPictures ? (
           <div id="spinner"></div>
         ) : (
@@ -378,6 +433,16 @@ class ListingPage extends Component {
                   <div className="rating-container">{getStars()}</div>
                 ) : (
                   <h2 className="rating-no-reviews">No reviews yet</h2>
+                )}
+                {this.props.userSession && (
+                  <div className="leave-review-container">
+                    <div
+                      className="leave-review-btn"
+                      onClick={() => this.setState({ postReviewPopup: true })}
+                    >
+                      Leave a Review
+                    </div>
+                  </div>
                 )}
                 <div className="details">
                   <div className="listing-info-container">
@@ -507,35 +572,67 @@ class ListingPage extends Component {
                 {this.state.listingRatings && (
                   <div className="listing-reviews-container">
                     <h4 className="listing-subtitle">Reviews</h4>
-                    {Object.keys(this.state.listingRatings).map(([key]) => {
-                      //Check if the review has a message
-                      if (
-                        this.state.listingRatings[key] &&
-                        this.state.listingRatings[key].review
-                      ) {
+                    {this.state.listingRatings
+                      .slice(0, 3)
+                      .map((review, index) => {
                         const rating = [];
                         for (let i = 1; i <= 5; i++) {
-                          if (i <= this.state.listingRatings[key].stars) {
+                          if (i <= review.stars) {
                             rating.push(
-                              <StarIcon className="star-icon" alt={i} />
+                              <StarIcon key={i} className="star-icon" alt={i} />
                             );
                           } else {
                             rating.push(
-                              <StarBorderIcon className="star-icon" alt={i} />
+                              <StarBorderIcon
+                                key={i}
+                                className="star-icon"
+                                alt={i}
+                              />
                             );
                           }
                         }
-
                         return (
-                          <div className="listing-review">
-                            <div> {rating}</div>
-                            {this.state.listingRatings[key].review}
+                          <div key={index} className="listing-review">
+                            <NavLink
+                              to={`/profile/${review.userId}`}
+                              className="listing-contact-info"
+                            >
+                              <div className="listing-review-header">
+                                <img src={defaultProfile} alt="profile" />
+                                <div className="listing-review-info">
+                                  <span className="listing-review-name">
+                                    {review.userName}
+                                  </span>
+
+                                  <span className="listing-review-date">
+                                    {moment(review.timestamp).format(
+                                      "MMMM YYYY"
+                                    )}
+                                  </span>
+                                </div>
+                              </div>
+                            </NavLink>
+                            <div className="listing-review-stars-container">
+                              {rating}
+                            </div>
+                            <div className="listing-review-content">
+                              {review.review}
+                            </div>
                           </div>
                         );
-                      } else {
-                        return null;
-                      }
-                    })}
+                      })}
+                    {this.state.listingRatings.length > 3 && (
+                      <div className="listing-reviews-show-more-container">
+                        <button
+                          onClick={() =>
+                            this.setState({ allReviewsPopup: true })
+                          }
+                          className="listing-reviews-show-more"
+                        >
+                          Show more
+                        </button>
+                      </div>
+                    )}
                   </div>
                 )}
                 <div className="listing-divider"></div>

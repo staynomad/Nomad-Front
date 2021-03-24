@@ -7,8 +7,9 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import Search from "./search.component";
 import Subscribe from "./subscribe.component";
-import FeaturedListings from "./featuredListings.component";
+import HorizontalScrollMenu from "./HorizontalScrollMenu.component";
 import { isMobile } from "react-device-detect";
+import { getPopularListings } from "../../redux/actions/searchListingActions";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -39,6 +40,10 @@ const NewHome = (props) => {
       }, 1000);
     }
     window.scrollTo(0, 0);
+    const getData = async () => {
+      await props.getPopularListings(10);
+    };
+    getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -103,7 +108,10 @@ const NewHome = (props) => {
               </div>
             </div>
           </div>
-          <FeaturedListings />
+          <HorizontalScrollMenu
+            data={props.Listing.popularListings}
+            title="Featured Listings"
+          />
           <div className="spacer_xs"></div>
           <div className="container">
             <h1 className="why-title wow fadeInUp" data-wow-delay="0.5s">
@@ -384,7 +392,17 @@ const mapStateToProps = (state) => {
   const stateToReturn = { ...state };
   if (state.Login.userInfo)
     stateToReturn["userSession"] = state.Login.userInfo.session;
+  if (state.Listing.popularListings)
+    stateToReturn["popularListings"] = state.Listing.popularListings;
   return stateToReturn;
 };
 
-export default withRouter(connect(mapStateToProps)(NewHome));
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getPopularListings: (count) => dispatch(getPopularListings(count)),
+  };
+};
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(NewHome)
+);

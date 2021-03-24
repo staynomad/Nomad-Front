@@ -146,6 +146,7 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
+  outline: none;
 }
 
 .nav div.main_list {
@@ -348,6 +349,10 @@ html {
 
 .dropdown-icon {
   font-size: 30px;
+}
+
+.nav-item {
+  outline: none;
 }
 
 .nav-item:hover {
@@ -787,6 +792,7 @@ p {
 }
 
 .center-image {
+  max-width: 100rem;
   width: 70%;
   margin-top: 110px;
 }

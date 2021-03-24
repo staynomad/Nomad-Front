@@ -120,3 +120,23 @@
 .footer-item:hover {
   color: rgb(212, 212, 212);
 }
+
+.search-filter-btn {
+  margin-left: 0.5rem;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.search-filter-btn:hover {
+  transform: scale(1.03);
+}
+
+@media screen and (max-width: 372px) {
+  .search-filter-btn {
+    padding: 0.5rem 1rem;
+  }
+  .search-filter-btn img {
+    height: 1.8rem;
+  }
+}

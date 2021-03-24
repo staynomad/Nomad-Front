@@ -1,0 +1,429 @@
+.review-popup-container {
+  width: 50rem;
+  height: 40rem;
+  background: white;
+  position: absolute;
+  top: calc(50% + 45px);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0px 5px 20px 1px rgba(152, 144, 144, 0.2);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.review-popup-container-header {
+  height: 5rem;
+  width: 100%;
+  background: var(--color-green);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.review-popup-container-header svg {
+  color: white;
+  position: absolute;
+  cursor: pointer;
+  left: 15px;
+  font-size: 2.5rem;
+}
+
+.review-popup-container-header svg:hover {
+  color: rgb(235, 235, 235);
+}
+
+.review-popup-container-header h1 {
+  color: white !important;
+  margin: 0 !important;
+  font-size: 2.6rem !important;
+}
+
+.review-popup-stars-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.review-popup-star {
+  color: #e5a374;
+  font-size: 4rem !important;
+  cursor: pointer;
+  transition: all 0.2s !important;
+}
+
+.review-popup-star:hover {
+  transform: scale(1.1);
+}
+
+.review-popup-input-container {
+  margin-top: 2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 4rem;
+}
+
+.review-popup-input-container textarea {
+  width: 100%;
+  border: 1px solid rgb(172, 172, 172);
+  padding: 7px;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  outline: none;
+  height: 22rem;
+}
+
+.review-popup-confirm-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 4rem;
+  margin-top: 1rem;
+  position: relative;
+}
+
+.review-popup-confirm-container button {
+  background: var(--color-green);
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.review-popup-confirm-container button:hover {
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
+  transform: translateY(-3px);
+}
+
+.review-popup-confirm-container p {
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgb(240, 79, 38) !important;
+  font-size: 1.2rem !important;
+  font-weight: bold;
+}
+
+.post-review-success-container {
+  padding: 0 3rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.post-review-success-container h2 {
+  font-size: 3rem !important;
+  margin-top: 3rem;
+  font-weight: 300 !important;
+}
+
+.post-review-success-container h3 {
+  color: rgb(87, 87, 87);
+  text-align: center;
+  font-family: "Roboto", sans-serif !important;
+  font-weight: 300 !important;
+  margin-top: 1rem;
+}
+
+.post-review-success-container button {
+  margin: 1rem auto;
+  background: var(--color-green);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 18px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.post-review-success-container button:hover {
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
+  transform: translateY(-3px);
+}
+
+.listing-reviews-show-more-container {
+  display: flex;
+  margin-top: 1rem;
+}
+
+.listing-reviews-show-more-container button {
+  cursor: pointer;
+  color: var(--color-green);
+  background: transparent;
+  border: 2px solid var(--color-green);
+  padding: 5px 5px;
+  border-radius: 3px;
+  outline: none;
+}
+
+.listing-reviews-show-more-container button:hover {
+  background: var(--color-green);
+  color: white;
+}
+
+.all-reviews-popup-container {
+  width: 60rem;
+  height: 60rem;
+  background: white;
+  position: absolute;
+  top: calc(50% + 45px);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0px 5px 20px 1px rgba(152, 144, 144, 0.2);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.all-reviews-top-container {
+  padding: 0 3rem;
+  display: flex;
+  height: 30%;
+}
+
+.all-reviews-popup-star {
+  color: #e5a374;
+  font-size: 4rem !important;
+}
+
+.all-reviews-write-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  flex: 1.4;
+}
+
+.all-reviews-write-container h2 {
+  margin: 0.5rem 0;
+  color: black !important;
+  font-weight: 300 !important;
+}
+
+.all-reviews-write-container button {
+  border: 2px solid var(--color-green);
+  background: transparent;
+  color: var(--color-green);
+  font-size: 1.5rem;
+  padding: 2px 10px;
+  border-radius: 5px;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.all-reviews-write-container button:hover {
+  transform: scale(1.03);
+}
+
+.all-reviews-graph-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+}
+
+.MuiLinearProgress-root {
+  height: 15px !important;
+  width: 50%;
+}
+
+.MuiLinearProgress-colorPrimary {
+  background: rgb(233, 233, 233) !important;
+}
+
+.MuiLinearProgress-barColorPrimary {
+  background: var(--color-green) !important;
+}
+
+.all-reviews-graph-row-container {
+  display: flex;
+  align-items: center;
+  margin: 0.2rem 0;
+}
+
+.all-reviews-graph-row-container svg {
+  color: var(--color-green);
+  cursor: pointer;
+  font-size: 2rem;
+}
+
+.all-reviews-graph-row-container p {
+  font-size: 1.5rem !important;
+  margin: 0 0.5rem !important;
+}
+
+.all-reviews-graph-star {
+  color: #e5a374 !important;
+  margin-right: 0.5rem;
+}
+
+.all-reviews-divider {
+  width: 95%;
+  margin: 0 auto;
+  height: 2px;
+  background: var(--color-green);
+}
+
+.all-reviews-posts-container {
+  flex: 1;
+  overflow-y: scroll;
+  padding: 0 3rem;
+}
+
+@media screen and (max-width: 875px) {
+  .all-reviews-popup-container {
+    width: 95%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .review-popup-container {
+    top: calc(50% + 35px);
+    width: 95%;
+  }
+  .all-reviews-popup-container {
+    top: calc(50% + 35px);
+  }
+  .review-popup-confirm-container p {
+    position: relative;
+    transform: none;
+    left: unset;
+  }
+  .review-popup-confirm-container {
+    justify-content: space-between;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .all-reviews-popup-star {
+    font-size: 3rem !important;
+  }
+  .all-reviews-write-container h2 {
+    font-size: 1.5rem !important;
+  }
+  .all-reviews-write-container button {
+    font-size: 1.3rem;
+  }
+  .all-reviews-write-container {
+    flex: 1;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .review-popup-input-container {
+    padding: 0 1rem;
+  }
+  .review-popup-confirm-container {
+    padding: 0 1rem;
+  }
+}
+
+@media screen and (max-width: 580px) {
+  .all-reviews-top-container {
+    padding: 0 1rem;
+  }
+  .all-reviews-posts-container {
+    padding: 0 1rem;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .all-reviews-top-container {
+    flex-direction: column;
+    width: 80%;
+    margin: 0 auto;
+  }
+  .all-reviews-top-container {
+    height: unset;
+    margin-bottom: 1rem;
+  }
+  .MuiLinearProgress-root {
+    width: 80%;
+  }
+  .all-reviews-write-container {
+    margin-bottom: 1rem;
+    align-self: center;
+  }
+  .all-reviews-write-container h2 {
+    margin: 0 auto;
+  }
+  .all-reviews-write-container button {
+    margin: 0.5rem auto 0 auto;
+  }
+}
+
+@media screen and (max-width: 490px) {
+  .review-popup-container-header {
+    height: 4rem;
+  }
+  .review-popup-container-header h1 {
+    font-size: 2rem !important;
+  }
+  .review-popup-container-header svg {
+    font-size: 2rem;
+  }
+  .all-reviews-top-container {
+    width: 90%;
+  }
+  .review-popup-container-header {
+    height: 3rem;
+  }
+}
+
+@media screen and (max-height: 710px) {
+  .review-popup-container {
+    height: 35rem;
+  }
+  .review-popup-input-container textarea {
+    height: 17rem;
+  }
+}
+
+@media screen and (max-height: 920px) {
+  .all-reviews-popup-container {
+    height: 50rem;
+  }
+}
+
+@media screen and (max-height: 782px) {
+  .all-reviews-popup-container {
+    height: 45rem;
+  }
+}
+
+@media screen and (max-height: 710px) {
+  .all-reviews-popup-container {
+    height: 40rem;
+  }
+  .all-reviews-graph-container {
+    display: none;
+  }
+}
+
+@media screen and (max-height: 640px) {
+  .all-reviews-top-container {
+    margin-bottom: 0;
+  }
+  .all-reviews-popup-star {
+    font-size: 2rem !important;
+  }
+  .all-reviews-write-container h2 {
+    font-size: 1rem !important;
+  }
+  .all-reviews-popup-container {
+    height: 35rem;
+  }
+}

@@ -54,7 +54,7 @@ class ListingMap extends Component {
             }
         });
 
-        this.props.getListingInRadius(latitude, longitude, this.state.radius);
+        this.props.getListingInRadius(latitude, longitude, this.state.radius, false);
     };
 
     onMapChange(e) {
