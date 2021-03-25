@@ -51,7 +51,7 @@ class ListingMap extends Component {
             center: {
                 lat: latitude,
                 lng: longitude,
-            }
+            },
         });
 
         this.props.getListingInRadius(latitude, longitude, this.state.radius, false);
@@ -65,7 +65,8 @@ class ListingMap extends Component {
                 center: {
                     lat: lat,
                     lng: lng,
-                }
+                },
+                radius: (40000 / (2 ^ e.zoom)) * 2
             }, () => this.props.getListingInRadius(lat, lng, this.state.radius))
         }
     }
