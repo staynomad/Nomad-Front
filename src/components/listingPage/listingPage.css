@@ -438,6 +438,22 @@
   color: white;
   background: var(--color-green);
 }
+.edit-listing-btn {
+  color: var(--color-green);
+  text-align: left;
+  font-weight: bold;
+  border: 2px solid var(--color-green);
+  display: inline-block;
+  margin: 1rem 0 1rem 1rem;
+  padding: 2px 10px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.edit-listing-btn:hover {
+  color: white;
+  background: var(--color-green);
+}
 
 .listing-not-viewable-text {
   text-align: left;

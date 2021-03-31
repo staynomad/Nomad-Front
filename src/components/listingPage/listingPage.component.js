@@ -424,7 +424,9 @@ class ListingPage extends Component {
                     <h2 className="listing-title">
                       [DRAFT] {this.state.listingTitle}
                     </h2>
-                    <div className="listing-not-viewable-text">This listing is not viewable to the public.</div>
+                    <div className="listing-not-viewable-text">
+                      This listing is not viewable to the public.
+                    </div>
                   </div>
                 ) : (
                   <h2 className="listing-title">{this.state.listingTitle}</h2>
@@ -442,6 +444,20 @@ class ListingPage extends Component {
                     >
                       Leave a Review
                     </div>
+                    {this.state.listingUserName &&
+                      this.state.listingUserName._id ===
+                        this.props.Login.userInfo.session.userId && (
+                        <div
+                          className="edit-listing-btn"
+                          onClick={() =>
+                            this.props.history.push(
+                              `/editListing/${this.props.match.params.id}`
+                            )
+                          }
+                        >
+                          Edit Listing
+                        </div>
+                      )}
                   </div>
                 )}
                 <div className="details">
