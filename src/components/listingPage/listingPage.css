@@ -439,6 +439,10 @@
   background: var(--color-green);
 }
 
+.listing-not-viewable-text {
+  text-align: left;
+}
+
 .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
   background-color: var(--color-green);
 }

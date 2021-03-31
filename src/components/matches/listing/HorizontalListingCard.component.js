@@ -17,7 +17,12 @@ const HorizontalListingCard = ({ listing }) => {
         alt="cover"
       />
       <div className="horizontal-listing-card-content">
-        <h3>{listing.title}</h3>
+        <h3>
+          {
+            listing.active === false ? "[DRAFT] " : null
+          }
+          {listing.title}
+        </h3>
         <div className="horizontal-listing-card-details-container">
           <div>
             <img src={guestImage} alt="guest" />

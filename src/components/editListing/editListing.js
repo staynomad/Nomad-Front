@@ -166,6 +166,22 @@ class EditListing extends Component {
       });
   };
 
+  handleDeactivate = (e) => {
+    e.preventDefault();
+    app
+      .put("/listings/deactivate/" + this.state.listingId, null, {
+        headers: {
+          Authorization: `Bearer ${this.props.userSession.token}`,
+        },
+      })
+      .then(() => {
+        this.setState({
+          active: false,
+        });
+        this.props.submitEditListing(this.props.userSession.token, this.state);
+      });
+  }
+
   handleNameValueChange = (e) => {
     const { name, value } = e.target;
 
@@ -392,7 +408,11 @@ class EditListing extends Component {
                     <button className="edit-listing-save-button" onClick={this.handlePublish}>
                       Publish
                     </button>
-                  ) : null}
+                  ) : (
+                    <button className="edit-listing-save-button" onClick={this.handleDeactivate}>
+                      Deactivate
+                    </button>
+                  )}
                   <button
                     className="edit-listing-save-button"
                     onClick={this.handleSubmit}
