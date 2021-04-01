@@ -100,6 +100,9 @@ const AllListings = (props) => {
         <Link to="/listings" className="see-all-listings-btn">
           See all listings
         </Link>
+        <Link to="/map" className="see-all-listings-btn">
+          See listing map
+        </Link>
         <div
           style={{ marginBottom: "3rem" }}
           className="featured-listings-matches-container"

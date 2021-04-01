@@ -13,6 +13,10 @@ class ListingMap extends Component {
                 lat: null,
                 lng: null,
             },
+            defaultCenter: {
+                lat: null,
+                lng: null,
+            },
             currentListing: null,
             radius: 25,
             zoom: 10
@@ -21,6 +25,7 @@ class ListingMap extends Component {
         this.findLocationFail = this.findLocationFail.bind(this);
         this.findLocationSuccess = this.findLocationSuccess.bind(this);
         this.setCurrentListing = this.setCurrentListing.bind(this);
+        this.onMapChange = this.onMapChange.bind(this);
     }
 
     componentDidMount() {
@@ -39,14 +44,32 @@ class ListingMap extends Component {
     findLocationSuccess(position) {
         const { latitude, longitude } = position.coords;
         this.setState({
+            defaultCenter: {
+                lat: latitude,
+                lng: longitude,
+            },
             center: {
                 lat: latitude,
                 lng: longitude,
-            }
+            },
         });
 
         this.props.getListingInRadius(latitude, longitude, this.state.radius, false);
     };
+
+    onMapChange(e) {
+        console.log(e);
+        const { lat, lng } = e.center;
+        if (this.state.center.lat !== e.center.lat || this.state.center.lng !== e.center.lng) {
+            this.setState({
+                center: {
+                    lat: lat,
+                    lng: lng,
+                },
+                radius: (40000 / (2 ^ e.zoom)) * 2
+            }, () => this.props.getListingInRadius(lat, lng, this.state.radius))
+        }
+    }
 
     setCurrentListing(listingId) {
         this.setState({ currentListing: listingId })
@@ -66,25 +89,29 @@ class ListingMap extends Component {
 
                 }}
             >
-                <GoogleMapReact
-                    defaultCenter={this.state.center}
-                    defaultZoom={this.state.zoom}
-                >
-                    {this.props.mapListings && this.props.mapListings.length > 0 ? (
-                        this.props.mapListings.map((listing, idx) => {
-                            return (
-                                <Marker
-                                    lat={listing.coords.listingLat['$numberDecimal']}
-                                    lng={listing.coords.listingLng['$numberDecimal']}
-                                    key={`Map_Listing_${idx}`}
-                                    listing={listing}
-                                    currentListing={this.state.currentListing}
-                                    setCurrentListing={this.setCurrentListing}
-                                />
-                            );
-                        })
-                    ) : null}
-                </GoogleMapReact>
+                { this.state.center.lat && this.state.center.lng ? (
+                    <GoogleMapReact
+                        defaultCenter={this.state.defaultCenter}
+                        defaultZoom={this.state.zoom}
+                        center={this.state.center}
+                        onChange={this.onMapChange}
+                    >
+                        {this.props.mapListings && this.props.mapListings.length > 0 ? (
+                            this.props.mapListings.map((listing, idx) => {
+                                return (
+                                    <Marker
+                                        lat={listing.coords.listingLat['$numberDecimal']}
+                                        lng={listing.coords.listingLng['$numberDecimal']}
+                                        key={`Map_Listing_${idx}`}
+                                        listing={listing}
+                                        currentListing={this.state.currentListing}
+                                        setCurrentListing={this.setCurrentListing}
+                                    />
+                                );
+                            })
+                        ) : null}
+                    </GoogleMapReact>
+                ) : null}
             </div>
         );
     }

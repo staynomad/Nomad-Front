@@ -156,6 +156,8 @@
   color: var(--color-green);
   border: 2px solid var(--color-green);
   margin-top: 2rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
   font-size: 1.3rem;
   padding: 5px 10px;
   border-radius: 10px;
