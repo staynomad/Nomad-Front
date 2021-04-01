@@ -60,7 +60,7 @@ class ListingMap extends Component {
     onMapChange(e) {
         console.log(e);
         const { lat, lng } = e.center;
-        if (this.state.center.lat != e.center.lat || this.state.center.lng != e.center.lng) {
+        if (this.state.center.lat !== e.center.lat || this.state.center.lng !== e.center.lng) {
             this.setState({
                 center: {
                     lat: lat,
