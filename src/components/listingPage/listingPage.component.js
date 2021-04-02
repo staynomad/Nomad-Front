@@ -475,6 +475,9 @@ class ListingPage extends Component {
                               `/editListing/${this.props.match.params.id}`
                             )
                           }
+                          style={{
+                            marginLeft: this.state.isReserved ? "1rem" : 0,
+                          }}
                         >
                           Edit Listing
                         </div>
