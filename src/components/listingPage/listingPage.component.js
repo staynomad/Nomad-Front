@@ -156,11 +156,12 @@ class ListingPage extends Component {
 
         // Update listingRatings to include user's name for each review
         for (let i = 0; i < this.state.listingRatings.length; i++) {
-          app
-            .get(`/user/getUserInfo/${this.state.listingRatings[i].userId}`)
-            .then(
-              (res) => (this.state.listingRatings[i].userName = res.data.name)
-            );
+          this.state.listingRatings[i].userId !== undefined &&
+            app
+              .get(`/user/getUserInfo/${this.state.listingRatings[i].userId}`)
+              .then(
+                (res) => (this.state.listingRatings[i].userName = res.data.name)
+              );
         }
         //Determine if user has reserved listing
         app
