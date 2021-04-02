@@ -162,6 +162,25 @@ class ListingPage extends Component {
               (res) => (this.state.listingRatings[i].userName = res.data.name)
             );
         }
+        //Determine if user has reserved listing
+        app
+          .get("/reservation/getByUser", {
+            headers: {
+              Authorization: `Bearer ${this.props.userSession.token}`,
+            },
+          })
+          .then(
+            (res) => {
+              res.data.reservations.forEach((reservation) => {
+                if (reservation._id === this.props.match.params.id) {
+                  this.setState({ isReserved: true });
+                } else {
+                  this.setState({ isReserved: false });
+                }
+              });
+            },
+            (err) => console.log(err)
+          );
       })
       .catch((err) => {
         // console.log(err.response);
@@ -438,12 +457,14 @@ class ListingPage extends Component {
                 )}
                 {this.props.userSession && (
                   <div className="leave-review-container">
-                    <div
-                      className="leave-review-btn"
-                      onClick={() => this.setState({ postReviewPopup: true })}
-                    >
-                      Leave a Review
-                    </div>
+                    {this.state.isReserved && (
+                      <div
+                        className="leave-review-btn"
+                        onClick={() => this.setState({ postReviewPopup: true })}
+                      >
+                        Leave a Review
+                      </div>
+                    )}
                     {this.state.listingUserName &&
                       this.state.listingUserName._id ===
                         this.props.Login.userInfo.session.userId && (
