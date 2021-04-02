@@ -172,7 +172,7 @@ class ListingPage extends Component {
           .then(
             (res) => {
               res.data.reservations.forEach((reservation) => {
-                if (reservation._id === this.props.match.params.id) {
+                if (reservation.listing === this.props.match.params.id) {
                   this.setState({ isReserved: true });
                 } else {
                   this.setState({ isReserved: false });
