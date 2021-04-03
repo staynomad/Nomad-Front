@@ -39,7 +39,6 @@ const Signup = () => {
       });
   };
 
-  console.log(userSignup.isHost);
 
   return signupSuccess ? (
     <Redirect to="/login" />

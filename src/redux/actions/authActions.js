@@ -9,11 +9,12 @@ export const SET_USER_SESSION = "VHomes/search/SET_USER_SESSION";
 export const REMOVE_USER_SESSION = "VHomes/search/REMOVE_USER_SESSION";
 
 /* Actions */
-const setUserSession = (isHost, token, userId) => ({
+const setUserSession = (isHost, token, userId, user) => ({
   type: SET_USER_SESSION,
   isHost,
   token,
   userId,
+  user,
 });
 const removeUserSession = () => ({ type: REMOVE_USER_SESSION });
 
@@ -29,7 +30,7 @@ export const submitLogin = (userLogin) => async (dispatch) => {
     const { isHost, token, userId } = loginRes.data;
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     dispatch(setLoadingFalse());
-    dispatch(setUserSession(isHost, token, userId));
+    dispatch(setUserSession(isHost, token, userId, user));
   } else {
     const { errors } = loginRes.data;
     dispatch(setLoadingFalse());
@@ -53,7 +54,7 @@ export const submitGoogleLogin = (googleData) => async (dispatch) => {
     const { isHost, token, userId } = loginRes.data;
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     dispatch(setLoadingFalse());
-    dispatch(setUserSession(isHost, token, userId));
+    dispatch(setUserSession(isHost, token, userId, user));
   } else {
     const { errors } = loginRes.data;
     dispatch(setLoadingFalse());
