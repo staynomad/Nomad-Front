@@ -27,7 +27,7 @@ export const submitLogin = (userLogin) => async (dispatch) => {
   const loginRes = await handleReq("/login", "POST", headers, userLogin);
 
   if (loginRes && loginRes.status === 200) {
-    const { isHost, token, userId } = loginRes.data;
+    const { isHost, token, userId, user } = loginRes.data;
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     dispatch(setLoadingFalse());
     dispatch(setUserSession(isHost, token, userId, user));
@@ -51,7 +51,7 @@ export const submitGoogleLogin = (googleData) => async (dispatch) => {
   );
 
   if (loginRes && loginRes.status === 200) {
-    const { isHost, token, userId } = loginRes.data;
+    const { isHost, token, userId, user } = loginRes.data;
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     dispatch(setLoadingFalse());
     dispatch(setUserSession(isHost, token, userId, user));
