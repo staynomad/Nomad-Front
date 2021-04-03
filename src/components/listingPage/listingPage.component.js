@@ -156,12 +156,32 @@ class ListingPage extends Component {
 
         // Update listingRatings to include user's name for each review
         for (let i = 0; i < this.state.listingRatings.length; i++) {
-          app
-            .get(`/user/getUserInfo/${this.state.listingRatings[i].userId}`)
-            .then(
-              (res) => (this.state.listingRatings[i].userName = res.data.name)
-            );
+          this.state.listingRatings[i].userId !== undefined &&
+            app
+              .get(`/user/getUserInfo/${this.state.listingRatings[i].userId}`)
+              .then(
+                (res) => (this.state.listingRatings[i].userName = res.data.name)
+              );
         }
+        //Determine if user has reserved listing
+        app
+          .get("/reservation/getByUser", {
+            headers: {
+              Authorization: `Bearer ${this.props.userSession.token}`,
+            },
+          })
+          .then(
+            (res) => {
+              res.data.reservations.forEach((reservation) => {
+                if (reservation.listing === this.props.match.params.id) {
+                  this.setState({ isReserved: true });
+                } else {
+                  this.setState({ isReserved: false });
+                }
+              });
+            },
+            (err) => console.log(err)
+          );
       })
       .catch((err) => {
         // console.log(err.response);
@@ -424,7 +444,9 @@ class ListingPage extends Component {
                     <h2 className="listing-title">
                       [DRAFT] {this.state.listingTitle}
                     </h2>
-                    <div className="listing-not-viewable-text">This listing is not viewable to the public.</div>
+                    <div className="listing-not-viewable-text">
+                      This listing is not viewable to the public.
+                    </div>
                   </div>
                 ) : (
                   <h2 className="listing-title">{this.state.listingTitle}</h2>
@@ -436,12 +458,31 @@ class ListingPage extends Component {
                 )}
                 {this.props.userSession && (
                   <div className="leave-review-container">
-                    <div
-                      className="leave-review-btn"
-                      onClick={() => this.setState({ postReviewPopup: true })}
-                    >
-                      Leave a Review
-                    </div>
+                    {this.state.isReserved && (
+                      <div
+                        className="leave-review-btn"
+                        onClick={() => this.setState({ postReviewPopup: true })}
+                      >
+                        Leave a Review
+                      </div>
+                    )}
+                    {this.state.listingUserName &&
+                      this.state.listingUserName._id ===
+                        this.props.Login.userInfo.session.userId && (
+                        <div
+                          className="edit-listing-btn"
+                          onClick={() =>
+                            this.props.history.push(
+                              `/editListing/${this.props.match.params.id}`
+                            )
+                          }
+                          style={{
+                            marginLeft: this.state.isReserved ? "1rem" : 0,
+                          }}
+                        >
+                          Edit Listing
+                        </div>
+                      )}
                   </div>
                 )}
                 <div className="details">
