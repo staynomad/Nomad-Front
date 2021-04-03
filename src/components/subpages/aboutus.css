@@ -1,0 +1,25 @@
+.aboutus-container {
+  max-width: 946px;
+  margin: 10rem auto;
+}
+
+@media screen and (max-width: 1000px) {
+  .aboutus-container {
+    margin: 10rem 1rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .aboutus-container {
+    margin: 7rem 1rem;
+  }
+  .aboutus-container h1 {
+    font-size: 3.2rem !important;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .aboutus-container {
+    margin: 6rem 1rem;
+  }
+}
