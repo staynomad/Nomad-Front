@@ -134,6 +134,10 @@ class CreateListing extends Component {
       alert("Please verify your account before creating a listing.");
       return this.props.history.push("/accountVerification/send");
     }
+    if (!this.props.userSession.user.stripeId) {
+      alert("You must connect a Stripe account to create a listing. Go to Payouts under Account for more.");
+      return this.props.history.push("/MyAccount");
+    }
   }
 
   currentImagesList() {
