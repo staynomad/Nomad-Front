@@ -1,17 +1,42 @@
 import React from 'react'
 import './payout.css'
 import { app } from "../../utils/axiosConfig.js";
+import handleReq from "../../utils/fetchRequest";
 
 const Payout = () => {
 
-   const stripeConnected = app.get()
+   const stripeConnected = false;
+
+   const handleClick = () => {
+      const body = {
+
+      };
+
+      const url = "/payouts/payout";
+      const data = {
+
+      };
+
+      const link = handleReq(
+            url,
+            "POST",
+            body, 
+            data
+      ); 
+
+      console.log("here");
+
+      
+   };
 
    return (
-       <>
-          <br/>
-          <br/>
-           <a href="#" class="stripe-connect"><span>Connect with</span></a>
-        </>
+         <>
+         {!stripeConnected ? 
+         <div className="container">
+         <div onClick={() => handleClick()} className="stripe-connect" ><span>Connect with</span></div>
+         </div> :
+         null}
+         </>
    ) 
 }
 

@@ -1,3 +1,9 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .stripe-connect {
     background: #635bff;
     display: inline-block;
