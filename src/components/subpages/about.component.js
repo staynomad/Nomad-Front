@@ -1,9 +1,10 @@
 import React, { Component } from "react";
+import "./aboutus.css";
 
 export default class About extends Component {
   render() {
     return (
-      <div className="container_s">
+      <div className="aboutus-container">
         <h1>About Us</h1>
         <img
           src="/images/groupphoto.png"
