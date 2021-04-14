@@ -325,8 +325,11 @@ class CreateListing extends Component {
       importLoading: true,
     });
     e.preventDefault();
-    await this.props.importCalendar(this.state.calendarURL, null);
-    if (!this.state.form.dates.start_date || !this.state.form.dates.end_date) {
+    await this.props.importCalendar(this.state.form.calendarURL, null);
+    if (!this.props.available || !this.props.available[0] || !this.props.available[1]) {
+      this.setState({
+        importLoading: false
+      })
       alert("Invalid URL. Please try again!");
     } else {
       this.setState({
@@ -1037,7 +1040,7 @@ class CreateListing extends Component {
                                     className="btn green"
                                     style={{ width: "auto" }}
                                     type="submit"
-                                    value="import"
+                                    value="Import"
                                   />
                                 )}
                                 {this.state.importDone === true ? (
