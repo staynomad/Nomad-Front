@@ -295,7 +295,6 @@ class CreateListing extends Component {
     }
 
     if (name === "Calendar") {
-      console.log(e.target.value)
       this.setState({
         form: {
           ...this.state.form,

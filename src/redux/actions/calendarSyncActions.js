@@ -37,7 +37,6 @@ export const importCalendar = (calendarURL, listingId) => async dispatch => {
   // https://www.airbnb.com/calendar/ical/47099387.ics?s=ebf2806742045a636872a57a62b9e90e
   await axios.get(calendarURL)
     .then(async (res) => {
-      console.log(res)
       const data = ical.parseICS(String(res.data))
       var availableStart = []
       var availableEnd = []
