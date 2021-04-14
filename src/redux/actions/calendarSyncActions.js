@@ -35,8 +35,9 @@ export const importCalendar = (calendarURL, listingId) => async dispatch => {
   // temporary solution: using allorigins proxy to bypass airbnb access-control-allow-origin server response header
   // https://gist.github.com/jimmywarting/ac1be6ea0297c16c477e17f8fbe51347
   // https://www.airbnb.com/calendar/ical/47099387.ics?s=ebf2806742045a636872a57a62b9e90e
-  await axios.get(`http://api.allorigins.win/get?url=${calendarURL}`)
+  await axios.get(calendarURL)
     .then(async (res) => {
+      console.log(res)
       const data = ical.parseICS(String(res.data))
       var availableStart = []
       var availableEnd = []
