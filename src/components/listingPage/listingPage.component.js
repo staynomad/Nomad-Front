@@ -8,6 +8,8 @@ import { loadStripe } from "@stripe/stripe-js";
 import DayPicker, { DateUtils } from "react-day-picker";
 import ImageGallery from "react-image-gallery";
 import StarRatings from "react-star-ratings";
+import GoogleMapReact from 'google-map-react';
+
 import "react-day-picker/lib/style.css";
 import "./listingPage.css";
 import handleReq from "../../utils/fetchRequest";
@@ -79,6 +81,7 @@ class ListingPage extends Component {
           window.location = "/page-not-found";
           return;
         }
+
         this.setState({
           listingTitle: res.data.listing.title,
           listingDescription: res.data.listing.description,
@@ -97,6 +100,7 @@ class ListingPage extends Component {
           listingAmenities: res.data.listing.amenities,
           listingRatings: res.data.listing.rating,
           listingId: res.data.listing.userId,
+          listingCoord: res.data.listing.coords,
           isActive: res.data.listing.active,
         });
 
@@ -331,6 +335,7 @@ class ListingPage extends Component {
   render() {
     const { from, to } = this.state;
     const modifiers = { start: from, end: to };
+    console.log(this.state.listingCoord)
 
     // const lessThanFourDays =
     //   parseInt((this.state.to - this.state.from) / (1000 * 3600 * 24)) + 1 < 4
@@ -468,7 +473,7 @@ class ListingPage extends Component {
                     )}
                     {this.state.listingUserName &&
                       this.state.listingUserName._id ===
-                        this.props.Login.userInfo.session.userId && (
+                      this.props.Login.userInfo.session.userId && (
                         <div
                           className="edit-listing-btn"
                           onClick={() =>
@@ -709,6 +714,19 @@ class ListingPage extends Component {
                 <h2 className="listing-price">
                   <span>${this.state.listingPrice.toFixed(2)}</span> / night
                 </h2>
+                <div style={{ height: '256px', width: '256px' }}>
+                  <GoogleMapReact
+                    center={{ lat: this.state.listingCoord.listingLat, lng: this.state.listingCoord.listingLng }}
+                    zoom={18}
+                  >
+                    <i
+                      className="fas fa-home"
+                      lat={this.state.listingCoord.listingLat}
+                      lng={this.state.listingCoord.listingLng}
+                      style={{ height: '24px', width: '24px' }}
+                    />
+                  </GoogleMapReact>
+                </div>
                 <div className="reserve-now">
                   {this.state.from && this.state.to ? (
                     // && !lessThanFourDays
