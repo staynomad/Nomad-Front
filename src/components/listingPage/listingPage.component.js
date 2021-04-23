@@ -8,7 +8,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import DayPicker, { DateUtils } from "react-day-picker";
 import ImageGallery from "react-image-gallery";
 import StarRatings from "react-star-ratings";
-import GoogleMapReact from 'google-map-react';
+import GoogleMapReact from "google-map-react";
 
 import "react-day-picker/lib/style.css";
 import "./listingPage.css";
@@ -335,7 +335,7 @@ class ListingPage extends Component {
   render() {
     const { from, to } = this.state;
     const modifiers = { start: from, end: to };
-    console.log(this.state.listingCoord)
+    console.log(this.state.listingCoord);
 
     // const lessThanFourDays =
     //   parseInt((this.state.to - this.state.from) / (1000 * 3600 * 24)) + 1 < 4
@@ -473,7 +473,7 @@ class ListingPage extends Component {
                     )}
                     {this.state.listingUserName &&
                       this.state.listingUserName._id ===
-                      this.props.Login.userInfo.session.userId && (
+                        this.props.Login.userInfo.session.userId && (
                         <div
                           className="edit-listing-btn"
                           onClick={() =>
@@ -545,13 +545,6 @@ class ListingPage extends Component {
                       </a>{" "}
                     </div>
                   ) : null}
-                </div>
-                <div className="listing-location">
-                  <h4 className="listing-subtitle">Location</h4>
-                  <h5 className="listing-location-text">
-                    <LocationOnIcon className="listing-location-icon" />
-                    {this.state.listingLocation}
-                  </h5>
                 </div>
                 <h4 className="listing-subtitle">Details</h4>
                 <p className="listing-description">
@@ -681,6 +674,29 @@ class ListingPage extends Component {
                     )}
                   </div>
                 )}
+                <div className="listing-location">
+                  <h4 className="listing-subtitle">Location</h4>
+                  <h5 className="listing-location-text">
+                    <LocationOnIcon className="listing-location-icon" />
+                    {this.state.listingLocation}
+                  </h5>
+                  <div style={{ height: "500px", width: "100%" }}>
+                    <GoogleMapReact
+                      center={{
+                        lat: this.state.listingCoord.listingLat,
+                        lng: this.state.listingCoord.listingLng,
+                      }}
+                      zoom={18}
+                    >
+                      <i
+                        className="fas fa-home"
+                        lat={this.state.listingCoord.listingLat}
+                        lng={this.state.listingCoord.listingLng}
+                        style={{ height: "24px", width: "24px" }}
+                      />
+                    </GoogleMapReact>
+                  </div>
+                </div>
                 <div className="listing-divider"></div>
               </div>
               <div className="listing-calendar">
@@ -714,19 +730,6 @@ class ListingPage extends Component {
                 <h2 className="listing-price">
                   <span>${this.state.listingPrice.toFixed(2)}</span> / night
                 </h2>
-                <div style={{ height: '256px', width: '256px' }}>
-                  <GoogleMapReact
-                    center={{ lat: this.state.listingCoord.listingLat, lng: this.state.listingCoord.listingLng }}
-                    zoom={18}
-                  >
-                    <i
-                      className="fas fa-home"
-                      lat={this.state.listingCoord.listingLat}
-                      lng={this.state.listingCoord.listingLng}
-                      style={{ height: '24px', width: '24px' }}
-                    />
-                  </GoogleMapReact>
-                </div>
                 <div className="reserve-now">
                   {this.state.from && this.state.to ? (
                     // && !lessThanFourDays
