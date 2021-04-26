@@ -17,12 +17,17 @@ const Payout = () => {
 
       };
 
-      const link = handleReq(
+      // TODO: connect stripe properly in the BE, payout.js. 
+      let link = handleReq(
             url,
             "POST",
             body, 
             data
       ); 
+ 
+      window.location.href = link;      
+
+      console.log(link);
 
       console.log("here");
 
