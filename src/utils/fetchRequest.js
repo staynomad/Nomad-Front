@@ -27,12 +27,13 @@ export default async function handleReq(endpoint, methodType, customHeaders, dat
 
     return res;
   } catch (e) {
-    console.log(e.response)
-    if (e.response === "Unauthorized" || e.response.data.title === "JWT Error") {
+    if (e.response && (e.response === "Unauthorized" || e.response.data.title === "JWT Error")) {
       alert("Login token expired. Please log in to continue.");
       store.dispatch(logoutUser());
+    } else {
+      console.log(e)
     }
-    return e.response;
+    return e.response ? e.esponse : e;
   }
 }
 
