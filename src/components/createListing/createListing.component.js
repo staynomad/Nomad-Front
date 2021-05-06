@@ -19,6 +19,7 @@ import {
 } from "../../redux/actions/loadingActions";
 import { createNewListing } from "../../redux/actions/createListingActions";
 import { stateStyles, stateOptions } from "./stateDropdown";
+import countryDropdown from './countryDropdown';
 import "./createListing.css";
 
 const options = [
@@ -714,9 +715,9 @@ class CreateListing extends Component {
                                         },
                                       })
                                     }
-                                    value={stateOptions.find(
+                                    value={stateOptions.filter(
                                       (option) =>
-                                        option.value === this.state.state
+                                        option.value === this.state.form.location.state
                                     )}
                                     placeholder="Select State..."
                                     styles={stateStyles}
@@ -726,14 +727,26 @@ class CreateListing extends Component {
 
                                 <div className="create-listing-input-container">
                                   <div className="label-text">Country:</div>
-                                  <input
-                                    type="text"
-                                    name="country"
-                                    className="create-listing-input"
-                                    value={this.state.form.location.country}
-                                    placeholder="USA"
-                                    onChange={this.handleChange}
-                                    required
+                                  <Select
+                                    onChange={(e) =>
+                                      this.setState({
+                                        ...this.state,
+                                        form: {
+                                          ...this.state.form,
+                                          location: {
+                                            ...this.state.form.location,
+                                            country: e.value,
+                                          },
+                                        },
+                                      })
+                                    }
+                                    value={countryDropdown.filter(
+                                      (option) =>
+                                        option.value === this.state.form.location.country
+                                    )}
+                                    placeholder="Select Country..."
+                                    styles={stateStyles}
+                                    options={countryDropdown}
                                   />
                                 </div>
 
@@ -908,12 +921,11 @@ class CreateListing extends Component {
                                     {!this.state.form
                                       .amenityCheckboxDisabled ? (
                                       <img
-                                        src={`${
-                                          process.env.PUBLIC_URL
-                                        }/images/amenities/${option.replace(
-                                          / /g,
-                                          ""
-                                        )}_.svg`}
+                                        src={`${process.env.PUBLIC_URL
+                                          }/images/amenities/${option.replace(
+                                            / /g,
+                                            ""
+                                          )}_.svg`}
                                         alt={option}
                                         className={option}
                                         name={option}
@@ -930,12 +942,11 @@ class CreateListing extends Component {
                                       />
                                     ) : (
                                       <img
-                                        src={`${
-                                          process.env.PUBLIC_URL
-                                        }/images/amenities/${option.replace(
-                                          / /g,
-                                          ""
-                                        )}_.svg`}
+                                        src={`${process.env.PUBLIC_URL
+                                          }/images/amenities/${option.replace(
+                                            / /g,
+                                            ""
+                                          )}_.svg`}
                                         alt={option}
                                         className={option}
                                         name={option}
@@ -1181,7 +1192,7 @@ class CreateListing extends Component {
                       {
                         /* User hit next (if else from above) and form is complete */
                         this.state.isCompleted &&
-                        this.state.isReviewingListing ? (
+                          this.state.isReviewingListing ? (
                           <div>
                             <h1 className="confirm-listing-header">
                               Review Your Listing
