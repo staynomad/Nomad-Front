@@ -5,6 +5,7 @@ import _ from "lodash";
 import "../allListings.css";
 import "../listing/explore.css";
 
+import { app } from "../../../utils/axiosConfig";
 import Search from "../../homePage/search.component";
 import {
   getPopularListings,
@@ -19,8 +20,25 @@ import HorizontalScrollMenu from "../../homePage/HorizontalScrollMenu.component"
 const AllListings = (props) => {
   const [lat, setLat] = useState();
   const [lng, setLng] = useState();
+  const [containers, setContainers] = useState([]);
 
   const { history } = props;
+
+  useEffect(() => {
+    const getContainers = async () => {
+      const resp = await app.get("/container/allContainers");
+      const data = resp.data.containers;
+      data.forEach((container, index) => {
+        container.listings.forEach((listing, i) => {
+          app.get(`/listings/byId/${listing}`).then((res) => {
+            data[index].listings[i] = res.data.listing;
+          });
+        });
+      });
+      setContainers(data);
+    };
+    getContainers();
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -171,6 +189,19 @@ const AllListings = (props) => {
             title="Near You"
           />
         </div>
+        {containers.length > 0 &&
+          containers.map((container) => (
+            <div
+              style={{ marginBottom: "3rem" }}
+              className="featured-listings-matches-container"
+              key={Math.random()}
+            >
+              <HorizontalScrollMenu
+                data={container.listings}
+                title={container.title}
+              />
+            </div>
+          ))}
       </div>
     </div>
   );

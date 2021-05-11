@@ -8,9 +8,16 @@
   font-size: 50px !important;
 }
 
+.menu-wrapper {
+  width: 100%;
+}
+
 @media screen and (max-width: 800px) {
   .horizontal-menu-container {
     padding: 0 3rem;
+  }
+  .menu-wrapper {
+    width: 85%;
   }
 }
 @media screen and (max-width: 570px) {
