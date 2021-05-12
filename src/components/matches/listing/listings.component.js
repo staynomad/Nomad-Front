@@ -27,8 +27,8 @@ class Listings extends Component {
       page: 0,
       pageCount: 0,
       sorting: "newest",
-      showDrafts: false,
       filters: {
+        showDrafts: false,
         sortByPrice: this.props.router.location.query.sortPrice,
         sortByGuests: this.props.router.location.query.sortGuests,
         maxPrice: this.props.router.location.query.maxPrice,
@@ -194,17 +194,31 @@ class Listings extends Component {
                 Show Expired
               </div>
             )}
-            {!this.state.showDrafts ? (
+            {!this.state.filters.showDrafts ? (
               <div
                 className="account-listing-button"
-                onClick={() => this.setState({ showDrafts: true })}
+                onClick={() =>
+                  this.setState((prevState) => ({
+                    filters: {
+                      ...prevState.filters,
+                      showDrafts: true,
+                    },
+                  }))
+                }
               >
                 Show Drafts
               </div>
             ) : (
               <div
                 className="account-listing-button"
-                onClick={() => this.setState({ showDrafts: false })}
+                onClick={() =>
+                  this.setState((prevState) => ({
+                    filters: {
+                      ...prevState.filters,
+                      showDrafts: false,
+                    },
+                  }))
+                }
               >
                 Show Active
               </div>
@@ -306,7 +320,9 @@ class Listings extends Component {
                         this.state.filters.minGuests
                   )
                   .filter((listing) =>
-                    this.state.showDrafts ? listing.active === false : listing
+                    this.state.filters.showDrafts
+                      ? listing.active === false
+                      : listing
                   )
                   .map((listing, idx) => {
                     if (
