@@ -322,7 +322,7 @@ class Listings extends Component {
                   .filter((listing) =>
                     this.state.filters.showDrafts
                       ? listing.active === false
-                      : listing
+                      : listing.active === true
                   )
                   .map((listing, idx) => {
                     if (
