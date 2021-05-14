@@ -37,6 +37,7 @@
   
   .stripe-connect:hover {
     background: #7a73ff;
+    cursor:pointer;
   }
   
   .stripe-connect span::after {

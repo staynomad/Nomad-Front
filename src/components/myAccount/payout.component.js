@@ -1,37 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './payout.css'
-import { app } from "../../utils/axiosConfig.js";
 import handleReq from "../../utils/fetchRequest";
 
 const Payout = () => {
+   const [stripeConnected, setConnect] = useState(false);
 
-   const stripeConnected = false;
-
-   const handleClick = () => {
+   const handleClick = async () => {
       const body = {
 
       };
 
-      const url = "/payouts/payout";
+      const url = "/payouts/setup";
       const data = {
 
       };
 
       // TODO: connect stripe properly in the BE, payout.js. 
-      let link = handleReq(
+      let res = await handleReq(
             url,
             "POST",
             body, 
             data
-      ); 
+      )
+      if(res.status === 200){
+            window.location.href = res.data.link;
+            setConnect(true);
+      }
+      else if(res.status === 500){
+            return <h1>Something went wrong. Please try again later!</h1>
+      }
  
-      window.location.href = link;      
-
-      console.log(link);
-
-      console.log("here");
-
-      
+      //             
    };
 
    return (
