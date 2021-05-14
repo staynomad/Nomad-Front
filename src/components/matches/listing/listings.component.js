@@ -268,12 +268,14 @@ class Listings extends Component {
               </p>
             </>
           ) : this.props.location.pathname === "/MyAccount" ? (
-            <div>
-              <ProfileHorizontalScrollMenu
-                className="horizontal-scroll-container"
-                data={this.state.listings}
-              />
-            </div>
+            <ProfileHorizontalScrollMenu
+              className="horizontal-scroll-container"
+              data={this.state.listings.filter((listing) =>
+                this.state.filters.showDrafts
+                  ? listing
+                  : listing.active === true
+              )}
+            />
           ) : (
             <div className="listings-container">
               <div
@@ -318,11 +320,6 @@ class Listings extends Component {
                       ? listing
                       : listing.details.maxpeople >=
                         this.state.filters.minGuests
-                  )
-                  .filter((listing) =>
-                    this.state.filters.showDrafts
-                      ? listing.active === false
-                      : listing.active === true
                   )
                   .map((listing, idx) => {
                     if (

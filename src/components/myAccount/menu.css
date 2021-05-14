@@ -15,6 +15,7 @@
   overflow-y: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  flex: 1;
 }
 
 .account-content-scroll::webkit-scrollbar {
