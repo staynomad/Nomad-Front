@@ -5,6 +5,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import MaterialUIMenu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import Switch from "@material-ui/core/Switch";
 import _ from "lodash";
 import "./listings.css";
 import ListingCard from "./listingCard.component";
@@ -179,7 +180,7 @@ class Listings extends Component {
             <div className="account-listing-button">
               <NavLink to="/CreateListing">Create Listing</NavLink>
             </div>
-            {!this.state.hideExpired ? (
+            {/* {!this.state.hideExpired ? (
               <div
                 className="account-listing-button"
                 onClick={this.handleExpiredToggle}
@@ -193,8 +194,15 @@ class Listings extends Component {
               >
                 Show Expired
               </div>
-            )}
-            {!this.state.filters.showDrafts ? (
+            )} */}
+            <div className="account-switch-container">
+              <p>Show Expired</p>
+              <Switch
+                checked={!this.state.hideExpired}
+                onChange={this.handleExpiredToggle}
+              />
+            </div>
+            {/* {!this.state.filters.showDrafts ? (
               <div
                 className="account-listing-button"
                 onClick={() =>
@@ -222,7 +230,21 @@ class Listings extends Component {
               >
                 Show Active
               </div>
-            )}
+            )} */}
+            <div className="account-switch-container">
+              <p>Show Drafts</p>
+              <Switch
+                checked={this.state.filters.showDrafts}
+                onChange={() =>
+                  this.setState((prevState) => ({
+                    filters: {
+                      ...prevState.filters,
+                      showDrafts: !this.state.filters.showDrafts,
+                    },
+                  }))
+                }
+              />
+            </div>
             <MoreVertIcon
               onClick={handleClick}
               className="vert-menu account-listing-menu-button"
