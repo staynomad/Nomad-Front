@@ -15,6 +15,7 @@
   overflow-y: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  flex: 1;
 }
 
 .account-content-scroll::webkit-scrollbar {
@@ -212,6 +213,31 @@
 
 .listing-information:hover {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.account-switch-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 1rem;
+}
+
+.account-switch-container p {
+  margin: 0 !important;
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+}
+
+.MuiSwitch-colorSecondary.Mui-checked {
+  color: var(--color-green) !important;
+}
+
+.MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track {
+  background-color: var(--color-green) !important;
+}
+
+.MuiSwitch-colorSecondary.Mui-checked:hover {
+  background-color: rgba(0, 0, 0, 0.027) !important;
 }
 
 @media screen and (max-width: 1040px) {

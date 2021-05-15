@@ -5,6 +5,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import MaterialUIMenu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import Switch from "@material-ui/core/Switch";
 import _ from "lodash";
 import "./listings.css";
 import ListingCard from "./listingCard.component";
@@ -28,6 +29,7 @@ class Listings extends Component {
       pageCount: 0,
       sorting: "newest",
       filters: {
+        showDrafts: false,
         sortByPrice: this.props.router.location.query.sortPrice,
         sortByGuests: this.props.router.location.query.sortGuests,
         maxPrice: this.props.router.location.query.maxPrice,
@@ -178,7 +180,7 @@ class Listings extends Component {
             <div className="account-listing-button">
               <NavLink to="/CreateListing">Create Listing</NavLink>
             </div>
-            {!this.state.hideExpired ? (
+            {/* {!this.state.hideExpired ? (
               <div
                 className="account-listing-button"
                 onClick={this.handleExpiredToggle}
@@ -192,7 +194,57 @@ class Listings extends Component {
               >
                 Show Expired
               </div>
-            )}
+            )} */}
+            <div className="account-switch-container">
+              <p>Show Expired</p>
+              <Switch
+                checked={!this.state.hideExpired}
+                onChange={this.handleExpiredToggle}
+              />
+            </div>
+            {/* {!this.state.filters.showDrafts ? (
+              <div
+                className="account-listing-button"
+                onClick={() =>
+                  this.setState((prevState) => ({
+                    filters: {
+                      ...prevState.filters,
+                      showDrafts: true,
+                    },
+                  }))
+                }
+              >
+                Show Drafts
+              </div>
+            ) : (
+              <div
+                className="account-listing-button"
+                onClick={() =>
+                  this.setState((prevState) => ({
+                    filters: {
+                      ...prevState.filters,
+                      showDrafts: false,
+                    },
+                  }))
+                }
+              >
+                Show Active
+              </div>
+            )} */}
+            <div className="account-switch-container">
+              <p>Show Drafts</p>
+              <Switch
+                checked={this.state.filters.showDrafts}
+                onChange={() =>
+                  this.setState((prevState) => ({
+                    filters: {
+                      ...prevState.filters,
+                      showDrafts: !this.state.filters.showDrafts,
+                    },
+                  }))
+                }
+              />
+            </div>
             <MoreVertIcon
               onClick={handleClick}
               className="vert-menu account-listing-menu-button"
@@ -238,12 +290,14 @@ class Listings extends Component {
               </p>
             </>
           ) : this.props.location.pathname === "/MyAccount" ? (
-            <div>
-              <ProfileHorizontalScrollMenu
-                className="horizontal-scroll-container"
-                data={this.state.listings}
-              />
-            </div>
+            <ProfileHorizontalScrollMenu
+              className="horizontal-scroll-container"
+              data={this.state.listings.filter((listing) =>
+                this.state.filters.showDrafts
+                  ? listing
+                  : listing.active === true
+              )}
+            />
           ) : (
             <div className="listings-container">
               <div

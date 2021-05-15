@@ -2,6 +2,7 @@
   width: 97%;
   margin: 0 auto;
   padding: 0 4rem;
+  flex: 1;
 }
 
 .scroll-menu-arrow.profile {
