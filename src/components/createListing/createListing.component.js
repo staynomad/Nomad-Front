@@ -64,11 +64,11 @@ class CreateListing extends Component {
         },
         description: "",
         details: {
-          beds: "",
-          baths: "",
-          maxpeople: "",
+          beds: null,
+          baths: null,
+          maxpeople: null,
         },
-        price: "",
+        price: null,
         photos: {
           image_files: [],
           pictures: {},
@@ -322,6 +322,9 @@ class CreateListing extends Component {
       }
       /* Check if beds, baths, and maxpeople are 0 or more and less than 99 */
       if (
+        this.state.form.details.beds === null ||
+        this.state.form.details.baths === null ||
+        this.state.form.details.maxpeople === null ||
         this.state.form.details.beds < 0 ||
         this.state.form.details.beds > 99 ||
         this.state.form.details.baths < 0 ||
@@ -333,7 +336,7 @@ class CreateListing extends Component {
         isFormValid = false;
       }
       /* Check if price is under $1000 */
-      if (this.state.form.price > 1000) {
+      if (this.state.form.price > 1000 || this.state.form.price === null) {
         this.setState({ isCompleted: false });
         isFormValid = false;
       }
