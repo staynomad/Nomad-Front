@@ -304,9 +304,10 @@ class CreateListing extends Component {
       });
     }
 
-    let isFormValid = true;
+    let isFormValid = false;
 
-    while (isFormValid) {
+    while (!isFormValid) {
+      isFormValid = true;
       /* Check if title and description are not empty */
       if (
         this.state.form.title.length === 0 ||
@@ -469,7 +470,7 @@ class CreateListing extends Component {
       results[0].formatted_address.split(", ");
     const [state, zipcode] = stateZip.split(" ");
 
-    console.log(country);
+    // console.log(country);
 
     this.setState({
       form: {
@@ -1218,6 +1219,7 @@ class CreateListing extends Component {
                         value="Next"
                         onClick={() =>
                           this.setState({ attemptSubmit: true }, () => {
+                            console.log(this.state.isCompleted)
                             if (this.state.isCompleted)
                               this.setState({ isReviewingListing: true });
                           })
