@@ -19,7 +19,7 @@ import {
 } from "../../redux/actions/loadingActions";
 import { createNewListing } from "../../redux/actions/createListingActions";
 import { stateStyles, stateOptions } from "./stateDropdown";
-import countryDropdown from './countryDropdown';
+import countryDropdown from "./countryDropdown";
 import "./createListing.css";
 
 const options = [
@@ -64,11 +64,11 @@ class CreateListing extends Component {
         },
         description: "",
         details: {
-          beds: "",
-          baths: "",
-          maxpeople: "",
+          beds: null,
+          baths: null,
+          maxpeople: null,
         },
-        price: "",
+        price: null,
         photos: {
           image_files: [],
           pictures: {},
@@ -304,17 +304,48 @@ class CreateListing extends Component {
       });
     }
 
-    let isFormValid = true;
+    let isFormValid = false;
 
-    while (isFormValid) {
+    while (!isFormValid) {
+      isFormValid = true;
       /* Check if title and description are not empty */
+      if (
+        this.state.form.title.length === 0 ||
+        this.state.form.description.length === 0
+      ) {
+        this.setState({ isCompleted: false });
+        isFormValid = false;
+      }
       /* Check if valid zipCode */
       if (!/^\d{5}(-\d{4})?$/.test(this.state.form.location.zipcode)) {
         this.setState({ isCompleted: false });
         isFormValid = false;
       }
       /* Check if beds, baths, and maxpeople are 0 or more and less than 99 */
+      if (
+        this.state.form.details.beds === null ||
+        this.state.form.details.baths === null ||
+        this.state.form.details.maxpeople === null ||
+        this.state.form.details.beds < 0 ||
+        this.state.form.details.beds > 99 ||
+        this.state.form.details.baths < 0 ||
+        this.state.form.details.baths > 99 ||
+        this.state.form.details.maxpeople < 0 ||
+        this.state.form.details.maxpeople > 99
+      ) {
+        this.setState({ isCompleted: false });
+        isFormValid = false;
+      }
       /* Check if price is under $1000 */
+      if (this.state.form.price > 1000 || this.state.form.price === null) {
+        this.setState({ isCompleted: false });
+        isFormValid = false;
+      }
+
+      if (this.state.isFieldValid.invalidDate) {
+        this.setState({ isCompleted: false });
+        isFormValid = false;
+      }
 
       /* After passing all checks, return from loop and set isCompleted to isFormValid (which should be true) */
       return this.setState({ isCompleted: isFormValid });
@@ -327,10 +358,14 @@ class CreateListing extends Component {
     });
     e.preventDefault();
     await this.props.importCalendar(this.state.form.calendarURL, null);
-    if (!this.props.available || !this.props.available[0] || !this.props.available[1]) {
+    if (
+      !this.props.available ||
+      !this.props.available[0] ||
+      !this.props.available[1]
+    ) {
       this.setState({
-        importLoading: false
-      })
+        importLoading: false,
+      });
       alert("Invalid URL. Please try again!");
     } else {
       this.setState({
@@ -431,13 +466,11 @@ class CreateListing extends Component {
   handleSelect = async (value) => {
     const results = await geocodeByAddress(value);
     const latLng = await getLatLng(results[0]);
-    const [
-      street,
-      city,
-      stateZip,
-      country,
-    ] = results[0].formatted_address.split(", ");
+    const [street, city, stateZip, country] =
+      results[0].formatted_address.split(", ");
     const [state, zipcode] = stateZip.split(" ");
+
+    // console.log(country);
 
     this.setState({
       form: {
@@ -717,7 +750,8 @@ class CreateListing extends Component {
                                     }
                                     value={stateOptions.filter(
                                       (option) =>
-                                        option.value === this.state.form.location.state
+                                        option.value ===
+                                        this.state.form.location.state
                                     )}
                                     placeholder="Select State..."
                                     styles={stateStyles}
@@ -742,7 +776,8 @@ class CreateListing extends Component {
                                     }
                                     value={countryDropdown.filter(
                                       (option) =>
-                                        option.value === this.state.form.location.country
+                                        option.value ===
+                                        this.state.form.location.country
                                     )}
                                     placeholder="Select Country..."
                                     styles={stateStyles}
@@ -921,11 +956,12 @@ class CreateListing extends Component {
                                     {!this.state.form
                                       .amenityCheckboxDisabled ? (
                                       <img
-                                        src={`${process.env.PUBLIC_URL
-                                          }/images/amenities/${option.replace(
-                                            / /g,
-                                            ""
-                                          )}_.svg`}
+                                        src={`${
+                                          process.env.PUBLIC_URL
+                                        }/images/amenities/${option.replace(
+                                          / /g,
+                                          ""
+                                        )}_.svg`}
                                         alt={option}
                                         className={option}
                                         name={option}
@@ -933,20 +969,22 @@ class CreateListing extends Component {
                                         height="50px"
                                         onClick={this.handleChange}
                                         style={{
-                                          filter: this.state.form.amenities.includes(
-                                            option
-                                          )
-                                            ? "brightness(0) saturate(100%) invert(44%) sepia(98%) saturate(1252%) hue-rotate(131deg) brightness(92%) contrast(101%)"
-                                            : "brightness(0) saturate(100%)   invert(82%) sepia(92%) saturate(1%) hue-rotate(300deg) brightness(92%) contrast(93%)",
+                                          filter:
+                                            this.state.form.amenities.includes(
+                                              option
+                                            )
+                                              ? "brightness(0) saturate(100%) invert(44%) sepia(98%) saturate(1252%) hue-rotate(131deg) brightness(92%) contrast(101%)"
+                                              : "brightness(0) saturate(100%)   invert(82%) sepia(92%) saturate(1%) hue-rotate(300deg) brightness(92%) contrast(93%)",
                                         }}
                                       />
                                     ) : (
                                       <img
-                                        src={`${process.env.PUBLIC_URL
-                                          }/images/amenities/${option.replace(
-                                            / /g,
-                                            ""
-                                          )}_.svg`}
+                                        src={`${
+                                          process.env.PUBLIC_URL
+                                        }/images/amenities/${option.replace(
+                                          / /g,
+                                          ""
+                                        )}_.svg`}
                                         alt={option}
                                         className={option}
                                         name={option}
@@ -1181,6 +1219,7 @@ class CreateListing extends Component {
                         value="Next"
                         onClick={() =>
                           this.setState({ attemptSubmit: true }, () => {
+                            console.log(this.state.isCompleted)
                             if (this.state.isCompleted)
                               this.setState({ isReviewingListing: true });
                           })
@@ -1192,7 +1231,7 @@ class CreateListing extends Component {
                       {
                         /* User hit next (if else from above) and form is complete */
                         this.state.isCompleted &&
-                          this.state.isReviewingListing ? (
+                        this.state.isReviewingListing ? (
                           <div>
                             <h1 className="confirm-listing-header">
                               Review Your Listing
