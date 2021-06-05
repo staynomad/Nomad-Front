@@ -79,6 +79,16 @@ const Contact = () => {
           </button>
         </div>
       )}
+      <span className="alt-contact">
+        Or email
+        <a
+          href="mailto:contact@visitnomad.com"
+          className="email-link"
+        >
+          contact@visitnomad.com
+        </a>
+        directly
+      </span>
     </div>
   );
 };

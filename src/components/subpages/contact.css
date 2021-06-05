@@ -170,3 +170,19 @@ textarea {
     font-size: 2.5rem !important;
   }
 }
+
+.alt-contact {
+  color: #4d4842;
+  font-size: 18px;
+  font-weight: 500;
+  display: block;
+  margin: 2.5rem 0
+}
+
+.email-link {
+  color: #02b188;
+  font-size: inherit;
+  font-weight: inherit;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
