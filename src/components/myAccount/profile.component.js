@@ -1,8 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";import { useSelector, useDispatch } from "react-redux";
+import Modal from "@material-ui/core/Modal";
+import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import { connect, useSelector, useDispatch } from "react-redux";
+
 import { setUserInfo } from "../../redux/actions/userActions";
 import { app } from "../../utils/axiosConfig.js";
-import MailOutlineIcon from "@material-ui/icons/MailOutline";
+import FriendsModal from "./friendsModal.component";
+
+const Profile = () => {
+  const [friendsModalOpen, setFriendsModalOpen] = useState(false);
 
 import ImageCrop from "./imageCrop.component";
 import "./profile.css";
@@ -115,6 +121,9 @@ const Profile = (props) => {
 
   return (
     <div className="account-content">
+      <Modal open={friendsModalOpen} onClose={() => setFriendsModalOpen(false)}>
+        <FriendsModal handleClose={() => setFriendsModalOpen(false)} />
+      </Modal>
       <div className="profile-content">
         <div className="profile-header">
           <Greeting />
@@ -122,10 +131,17 @@ const Profile = (props) => {
         </div>
 
         <Information />
-
-        <form action="/EditProfileInfo">
-          <button className="btn green edit-profile-btn"> Edit Profile </button>
-        </form>
+        <div className="profile-buttons-container">
+          <form action="/EditProfileInfo">
+            <button className="btn green edit-profile-btn">Edit Profile</button>
+          </form>
+          <button
+            className="btn green profile-friends-btn"
+            onClick={() => setFriendsModalOpen(true)}
+          >
+            Friends
+          </button>
+        </div>
         {/* <NavLink className="profile-roommate-form" to="/Questionnaire">
           <p>Roommate Preference Form</p>
         </NavLink> */}

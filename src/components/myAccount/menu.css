@@ -178,10 +178,17 @@
   margin-right: 10px;
 }
 
-.edit-profile-btn {
+.edit-profile-btn,
+.profile-friends-btn {
   margin: 0rem;
   margin-top: 1rem;
   font-family: "Playfair Display", sans-serif !important;
+  width: 10rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  margin: 0 0.5rem;
 }
 
 .profile-roommate-form p {
@@ -238,6 +245,10 @@
 
 .MuiSwitch-colorSecondary.Mui-checked:hover {
   background-color: rgba(0, 0, 0, 0.027) !important;
+}
+
+.profile-buttons-container {
+  display: flex;
 }
 
 @media screen and (max-width: 1040px) {
@@ -315,12 +326,12 @@
   .profile-desc-container {
     padding: 0rem 1rem;
   }
-  .edit-profile-btn {
-    display: flex;
-    align-items: center;
+  .edit-profile-btn,
+  .profile-friends-btn {
     font-size: 14px;
     padding: 0 20px;
     height: 40px;
+    width: 7rem;
   }
   .profile-roommate-form p {
     font-size: 13px !important;
