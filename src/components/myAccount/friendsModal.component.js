@@ -14,6 +14,7 @@ const friendsModal = (props) => {
           />
           <h1>Friends</h1>
         </div>
+        <div className="friends-modal-content"></div>
       </div>
     </div>
   );
