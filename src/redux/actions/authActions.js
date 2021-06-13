@@ -32,9 +32,8 @@ export const submitLogin = (userLogin) => async (dispatch) => {
     dispatch(setLoadingFalse());
     dispatch(setUserSession(isHost, token, userId, user));
   } else {
-    const { errors } = loginRes.data;
     dispatch(setLoadingFalse());
-    dispatch(setAuthError(errors));
+    dispatch(setAuthError(["Error logging in. Please try again."]));
   }
 };
 
