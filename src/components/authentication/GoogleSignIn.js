@@ -15,6 +15,7 @@ const GoogleSignIn = (props) => {
     <>
       <GoogleLogin
         clientId={clientID}
+        data-auto_select="false"
         buttonText="Log in with Google"
         onSuccess={handleLogin}
         onFailure={handleLogin}

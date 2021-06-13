@@ -55,9 +55,8 @@ export const submitGoogleLogin = (googleData) => async (dispatch) => {
     dispatch(setLoadingFalse());
     dispatch(setUserSession(isHost, token, userId, user));
   } else {
-    const { errors } = loginRes.data;
     dispatch(setLoadingFalse());
-    dispatch(setAuthError(errors));
+    dispatch(setAuthError(["Could not automatically sign in with Google."]));
   }
 };
 
