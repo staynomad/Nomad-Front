@@ -1,14 +1,31 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { connect, useSelector, useDispatch } from "react-redux";
 import { setUserInfo } from "../../redux/actions/userActions";
 import { app } from "../../utils/axiosConfig.js";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
 
-const Profile = () => {
+import { submitImageChange } from "../../redux/actions/userActions";
+
+const Profile = (props) => {
   const loginInfo = useSelector((state) => state.Login);
   const user = useSelector((state) => state.User);
   const dispatch = useDispatch();
   const isEmpty = Object.keys(user).length === 0;
+  const [newProfileImg, setNewProfileImg] = useState(null);
+
+  const handleImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setNewProfileImg(e.target.files[0]);
+    }
+  };
+
+  const submitImageChange = () => {
+    let profileImg = new FormData();
+    profileImg.append("image", newProfileImg);
+
+    props.submitImageChange(props.userInfo._id, profileImg);
+    setNewProfileImg(null);
+  };
 
   useEffect(() => {
     const userId = loginInfo.userInfo.session.userId;
@@ -33,6 +50,34 @@ const Profile = () => {
     if (!isEmpty) {
       return (
         <>
+          {props.loading ? (
+            <h1>Loading</h1>
+          ) : (
+            <>
+              <div
+                style={{ height: "10rem", marginTop: "1rem", width: "10rem" }}
+              >
+                <img
+                  src={
+                    newProfileImg
+                      ? URL.createObjectURL(newProfileImg)
+                      : user.userInfo.profileImg
+                  }
+                  alt="Profile Img"
+                  style={{ height: "inherit", width: "inherit" }}
+                />
+              </div>
+              <div>
+                <input
+                  type="file"
+                  name="profileImg"
+                  onChange={handleImageChange}
+                />
+                <button onClick={() => setNewProfileImg(null)}>Clear</button>
+                <button onClick={submitImageChange}>Save</button>
+              </div>
+            </>
+          )}
           <div className="profile-email">
             <MailOutlineIcon /> {user.userInfo.email}
           </div>
@@ -73,4 +118,15 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+const mapStateToProps = (state) => {
+  let stateToReturn = { ...state };
+  if (state.User.userInfo) stateToReturn.userInfo = state.User.userInfo;
+  if (state.Loading.loading) stateToReturn.loading = state.Loading.loading;
+  return stateToReturn;
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    submitImageChange: (...args) => dispatch(submitImageChange(...args)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
