@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
 import { setUserInfo } from "../../redux/actions/userActions";
 import { app } from "../../utils/axiosConfig.js";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
 
-import { submitImageChange } from "../../redux/actions/userActions";
+import ImageCrop from "./imageCrop.component";
+import "./profile.css";
+import "react-image-crop/dist/ReactCrop.css";
 
 const Profile = (props) => {
   const loginInfo = useSelector((state) => state.Login);
@@ -12,20 +14,6 @@ const Profile = (props) => {
   const dispatch = useDispatch();
   const isEmpty = Object.keys(user).length === 0;
   const [newProfileImg, setNewProfileImg] = useState(null);
-
-  const handleImageChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      setNewProfileImg(e.target.files[0]);
-    }
-  };
-
-  const submitImageChange = () => {
-    let profileImg = new FormData();
-    profileImg.append("image", newProfileImg);
-
-    props.submitImageChange(props.userInfo._id, profileImg);
-    setNewProfileImg(null);
-  };
 
   useEffect(() => {
     const userId = loginInfo.userInfo.session.userId;
@@ -53,30 +41,46 @@ const Profile = (props) => {
           {props.loading ? (
             <h1>Loading</h1>
           ) : (
-            <>
-              <div
-                style={{ height: "10rem", marginTop: "1rem", width: "10rem" }}
-              >
-                <img
-                  src={
-                    newProfileImg
-                      ? URL.createObjectURL(newProfileImg)
-                      : user.userInfo.profileImg
+            <div className="profile-image-container">
+              <input
+                type="file"
+                id="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const fileTypes = ["jpg", "jpeg", "png"];
+                  if (
+                    !fileTypes.includes(
+                      e.target.files[0].name.split(".").pop().toLowerCase()
+                    )
+                  )
+                    return alert("File must be a jpg, jpeg, or png.");
+                  if (e.target.files && e.target.files.length > 0) {
+                    const reader = new FileReader();
+                    reader.addEventListener("load", () =>
+                      setNewProfileImg(reader.result)
+                    );
+                    reader.readAsDataURL(e.target.files[0]);
                   }
-                  alt="Profile Img"
-                  style={{ height: "inherit", width: "inherit" }}
-                />
-              </div>
-              <div>
-                <input
-                  type="file"
-                  name="profileImg"
-                  onChange={handleImageChange}
-                />
-                <button onClick={() => setNewProfileImg(null)}>Clear</button>
-                <button onClick={submitImageChange}>Save</button>
-              </div>
-            </>
+                }}
+              />
+              <>
+                <label
+                  htmlFor="file"
+                  className="profile-select-img"
+                  style={{ display: "block" }}
+                >
+                  <img
+                    className="profile-image"
+                    src={user.userInfo.profileImg}
+                    alt="Profile Pic"
+                  />
+                  <div className="profile-upload-container">
+                    {/* <i className="far fa-file-image" /> */}
+                    <span className="profile-upload-text">Upload</span>
+                  </div>
+                </label>
+              </>
+            </div>
           )}
           <div className="profile-email">
             <MailOutlineIcon /> {user.userInfo.email}
@@ -90,6 +94,12 @@ const Profile = (props) => {
               <h4>Add your description to get started!</h4>
             )}
           </div>
+          {newProfileImg ? (
+            <ImageCrop
+              newProfileImg={newProfileImg}
+              setNewProfileImg={setNewProfileImg}
+            />
+          ) : null}
         </>
       );
     } else {
@@ -124,9 +134,9 @@ const mapStateToProps = (state) => {
   if (state.Loading.loading) stateToReturn.loading = state.Loading.loading;
   return stateToReturn;
 };
+
 const mapDispatchToProps = (dispatch) => {
-  return {
-    submitImageChange: (...args) => dispatch(submitImageChange(...args)),
-  };
+  return {};
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
