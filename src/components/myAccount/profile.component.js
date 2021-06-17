@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
 import { setUserInfo } from "../../redux/actions/userActions";
 import { app } from "../../utils/axiosConfig.js";
@@ -14,6 +14,7 @@ const Profile = (props) => {
   const dispatch = useDispatch();
   const isEmpty = Object.keys(user).length === 0;
   const [newProfileImg, setNewProfileImg] = useState(null);
+  const [imgName, setImgName] = useState(null);
 
   useEffect(() => {
     const userId = loginInfo.userInfo.session.userId;
@@ -55,6 +56,7 @@ const Profile = (props) => {
                   )
                     return alert("File must be a jpg, jpeg, or png.");
                   if (e.target.files && e.target.files.length > 0) {
+                    setImgName(e.target.files[0].name);
                     const reader = new FileReader();
                     reader.addEventListener("load", () =>
                       setNewProfileImg(reader.result)
@@ -98,6 +100,7 @@ const Profile = (props) => {
             <ImageCrop
               newProfileImg={newProfileImg}
               setNewProfileImg={setNewProfileImg}
+              imgName={imgName}
             />
           ) : null}
         </>

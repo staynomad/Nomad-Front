@@ -6,6 +6,7 @@ import { submitImageChange } from "../../redux/actions/userActions";
 import "./imageCrop.css";
 
 const ImageCrop = ({
+  imgName,
   newProfileImg,
   setNewProfileImg,
   submitImageChange,
@@ -18,7 +19,11 @@ const ImageCrop = ({
 
   const submitPFPChange = () => {
     let profileImg = new FormData();
-    profileImg.append("image", croppedImage.current);
+    const imageToUpload = new File(
+      [croppedImage.current],
+      croppedImage.current.name
+    );
+    profileImg.append("image", imageToUpload);
 
     submitImageChange(userInfo._id, profileImg);
     setNewProfileImg(null);
@@ -26,11 +31,7 @@ const ImageCrop = ({
 
   const makeClientCrop = async (crop) => {
     if (imgRef.current && crop.width && crop.height) {
-      croppedImage.current = await getCroppedImg(
-        imgRef.current,
-        crop,
-        "newFile.jpeg"
-      );
+      croppedImage.current = await getCroppedImg(imgRef.current, crop, imgName);
     }
   };
 

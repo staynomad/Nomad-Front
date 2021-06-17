@@ -21,6 +21,7 @@
 }
 
 .profile-image {
+  border: solid 3px #029e77;
   border-radius: inherit;
   height: inherit;
   transition: all 250ms ease;

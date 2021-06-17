@@ -36,7 +36,8 @@
 
 .profile-image-crop-image-container div img {
   height: 40rem;
-  object-fit: cover;
+  object-fit: fill;
+  width: 40rem;
 }
 
 .profile-image-crop-preview-column {
