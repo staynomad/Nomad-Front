@@ -75,6 +75,9 @@ const Profile = (props) => {
                     className="profile-image"
                     src={user.userInfo.profileImg}
                     alt="Profile Pic"
+                    onError={(e) =>
+                      (e.target.src = "/images/abstract-user-flat-4.svg")
+                    }
                   />
                   <div className="profile-upload-container">
                     {/* <i className="far fa-file-image" /> */}

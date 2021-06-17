@@ -23,6 +23,8 @@
 .profile-image {
   border: solid 3px #029e77;
   border-radius: inherit;
+  color: #029e77;
+  font-family: "Font Awesome 5 Free";
   height: inherit;
   transition: all 250ms ease;
   width: inherit;
