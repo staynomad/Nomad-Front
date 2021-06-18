@@ -23,8 +23,8 @@ const Payout = () => {
       )
       if(res.status === 200){
             setConnect(true);
-            id = "hi" // res.data.id;
-            // window.location.href = res.data.link;
+            id = res.data.id;
+            window.location.href = res.data.link;
       }
       else if(res.status === 500){
             return <h1>Something went wrong. Please try again later!</h1>
@@ -33,16 +33,18 @@ const Payout = () => {
 
    // Give users a link to their Express Dashboards
    const handleDashboardClick = async () => {
-      const body = {};
       const url = "/payouts/express";
-      const data = {
+      const body = {};
+      const data = {};
+      const params = {
             userId: id,
-      };
+      }
       let res = await handleReq(
             url,
             "POST",
             body, 
-            data
+            data,
+            params
       )
       if(res.status === 200){
             window.location.href = res.data.link;
