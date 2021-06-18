@@ -1,19 +1,22 @@
 import React, { useState } from 'react'
-// import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import './payout.css'
 import handleReq from "../../utils/fetchRequest";
 
 const Payout = () => {
-   const [stripeConnected, setConnect] = useState(false);
-//    const user = useSelector((state) => state.User);
-//    const email = user.userInfo.email;
-   let id = ""; 
+   
+   const user = useSelector((state) => state.User);
+   const isConnect = user.userInfo.stripeId !== null; 
+   const [stripeConnected, setConnect] = useState(isConnect);
+   const email = user.userInfo.email;
 
    // Put users into the workflow to connect their stripe accounts. 
    const handleStripeClick = async () => {
       const body = {};
       const url = "/payouts/setup";
-      const data = {};
+      const data = {
+            email: email, 
+      };
  
       let res = await handleReq(
             url,
@@ -23,7 +26,6 @@ const Payout = () => {
       )
       if(res.status === 200){
             setConnect(true);
-            id = res.data.id;
             window.location.href = res.data.link;
       }
       else if(res.status === 500){
@@ -35,16 +37,14 @@ const Payout = () => {
    const handleDashboardClick = async () => {
       const url = "/payouts/express";
       const body = {};
-      const data = {};
-      const params = {
-            userId: id,
-      }
+      const data = {
+            email: email, 
+      };
       let res = await handleReq(
             url,
             "POST",
             body, 
             data,
-            params
       )
       if(res.status === 200){
             window.location.href = res.data.link;
@@ -63,7 +63,7 @@ const Payout = () => {
          <div> 
             <div> You're connected to stripe!  </div> 
             <div onClick={()=> handleDashboardClick()}>Click here to view your dashboard</div>
-         </div>} {/* Click <a href={}>here</a> */}
+         </div>}
          </>
    ) 
 }
