@@ -1,0 +1,51 @@
+[type="file"] {
+  display: none;
+  height: 0;
+  overflow: hidden;
+  width: 0;
+  visibility: hidden;
+}
+
+.profile-image-container {
+  margin-top: 1rem;
+}
+
+.profile-image-container,
+.profile-select-img,
+.profile-upload-container {
+  border-radius: 50%;
+  color: #029e77;
+  height: 10rem;
+  width: 10rem;
+  position: relative;
+}
+
+.profile-image {
+  border: solid 3px #029e77;
+  border-radius: inherit;
+  color: #029e77;
+  font-family: "Font Awesome 5 Free";
+  height: inherit;
+  transition: all 250ms ease;
+  width: inherit;
+}
+
+.profile-upload-container {
+  background-color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  line-height: 10rem;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  transition: all 250ms ease;
+  visibility: hidden;
+}
+
+.profile-image-container:hover .profile-image {
+  cursor: pointer;
+}
+
+.profile-image-container:hover .profile-upload-container {
+  opacity: 1 !important;
+  visibility: visible;
+}
