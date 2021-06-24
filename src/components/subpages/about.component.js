@@ -27,7 +27,7 @@ export default class About extends Component {
           something there, and that we should make affordable housing options
           available to all traveling workers on a budget for when they need it
           the most. Why just limit it to our own properties? This is when the
-          NomΛd platform was born.
+          Nomad platform was born.
         </p>
       </div>
     );
