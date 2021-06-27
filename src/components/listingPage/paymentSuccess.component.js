@@ -11,7 +11,7 @@ export default class PaymentSuccess extends Component {
   render() {
     return (
       <div className="container">
-        <h1>Thanks for reserving with NomΛd!</h1>
+        <h1>Thanks for reserving with Nomad!</h1>
         <br />
         You will be redirected shortly.
         <br />

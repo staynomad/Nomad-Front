@@ -599,7 +599,7 @@ class CreateListing extends Component {
                   </div>
                 ) : (
                   <div className="spacer_s">
-                    Your listing is being submitted. Thanks for choosing NomΛd!
+                    Your listing is being submitted. Thanks for choosing Nomad!
                   </div>
                 )}
               </div>

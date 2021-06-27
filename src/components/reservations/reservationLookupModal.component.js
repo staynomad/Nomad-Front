@@ -74,7 +74,7 @@ const ReservationLookup = (props) => {
                 </label>
               </form>
               <p className="reservation-modal-p">
-                New to NomΛd?
+                New to Nomad?
                 <a
                   href="/SignUp"
                   style={{ color: "#02b188", paddingLeft: "2%" }}

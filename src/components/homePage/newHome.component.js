@@ -94,7 +94,7 @@ const NewHome = (props) => {
 
             <div className="search-container">
               <div className="search-header wow fadeInUp" data-wow-delay="0.5s">
-                <h1 className="search-logo">NomΛd</h1>
+                <h1 className="search-logo">Nomad</h1>
                 <div className="intro_text">
                   The future of flexible rentals.
                 </div>
@@ -115,7 +115,7 @@ const NewHome = (props) => {
           <div className="spacer_xs"></div>
           <div className="container">
             <h1 className="why-title wow fadeInUp" data-wow-delay="0.5s">
-              Why NomΛd?
+              Why Nomad?
             </h1>
 
             <div className="why-container row gap large">
@@ -131,7 +131,7 @@ const NewHome = (props) => {
                   <div className=" wow fadeInUp" data-wow-delay="0.5s">
                     <div className="subtitle">No more overpaying</div>
                     <p className="why-caption">
-                      We are committed to finding you the best deal. With NomΛd
+                      We are committed to finding you the best deal. With Nomad
                       you'll find the best stay possible for less than $60 per
                       room per night.{" "}
                     </p>
