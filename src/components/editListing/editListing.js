@@ -180,7 +180,7 @@ class EditListing extends Component {
         });
         this.props.submitEditListing(this.props.userSession.token, this.state);
       });
-  }
+  };
 
   handleNameValueChange = (e) => {
     const { name, value } = e.target;
@@ -198,21 +198,22 @@ class EditListing extends Component {
 
   handleExport = (e) => {
     e.preventDefault();
-    this.props.getListingById(this.state.listingId)
-    app.post("/listings/exportListing", {
-      userId: this.props.Listing.editListing.userId,
-      listingId: this.state.listingId,
-      listingCalendar: {
-        available: this.props.Listing.editListing.available,
-        booked: this.props.Listing.editListing.booked
-      }
-    })
+    this.props.getListingById(this.state.listingId);
+    app
+      .post("/listings/exportListing", {
+        userId: this.props.Listing.editListing.userId,
+        listingId: this.state.listingId,
+        listingCalendar: {
+          available: this.props.Listing.editListing.available,
+          booked: this.props.Listing.editListing.booked,
+        },
+      })
       .then((res) => {
         this.setState({
-          exportURL: res.data.url
-        })
-      })
-  }
+          exportURL: res.data.url,
+        });
+      });
+  };
 
   render() {
     return (
@@ -405,11 +406,17 @@ class EditListing extends Component {
                   </div>
                   <div className="spacer_s"></div>
                   {!this.state.active ? (
-                    <button className="edit-listing-save-button" onClick={this.handlePublish}>
+                    <button
+                      className="edit-listing-save-button"
+                      onClick={this.handlePublish}
+                    >
                       Publish
                     </button>
                   ) : (
-                    <button className="edit-listing-save-button" onClick={this.handleDeactivate}>
+                    <button
+                      className="edit-listing-save-button"
+                      onClick={this.handleDeactivate}
+                    >
                       Deactivate
                     </button>
                   )}
@@ -429,11 +436,15 @@ class EditListing extends Component {
                     {this.state.exportURL ? (
                       <div>
                         <span style={{ textAlign: "right" }}>
-                          <NavLink to="/how-to-import-or-export-calendar">&#9432;</NavLink>{" "}
+                          <NavLink to="/how-to-import-or-export-calendar">
+                            &#9432;
+                          </NavLink>{" "}
                           What's this?
                         </span>
                         <div className="spacer_xs" />
-                        <a href={this.state.exportURL} download>{this.state.exportURL}</a>
+                        <a href={this.state.exportURL} download>
+                          {this.state.exportURL}
+                        </a>
                       </div>
                     ) : null}
                   </div>
@@ -467,10 +478,10 @@ class EditListing extends Component {
             </div>
           </div>
         ) : (
-            <div className="spinner-container">
-              <div id="spinner" />
-            </div>
-          )}
+          <div className="spinner-container">
+            <div id="spinner" />
+          </div>
+        )}
       </>
     );
   }

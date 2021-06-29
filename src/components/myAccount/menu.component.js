@@ -148,7 +148,7 @@ class LeftMenu extends Component {
             )}
           </div>
         );
-      case "payouts": 
+      case "payouts":
         return <Payout />;
       case "settings":
         return <Settings />;
@@ -242,14 +242,14 @@ class LeftMenu extends Component {
                       }}
                     />
                     <Menu.Item
-                          className="account-nav-tab"
-                          name="payouts"
-                          active={activeItem === "payouts"}
-                          compname="payouts"
-                          onClick={(e, { name, compname }) => {
-                            this.handleItemClick(e, { name, compname });
-                          }}
-                        />
+                      className="account-nav-tab"
+                      name="payouts"
+                      active={activeItem === "payouts"}
+                      compname="payouts"
+                      onClick={(e, { name, compname }) => {
+                        this.handleItemClick(e, { name, compname });
+                      }}
+                    />
                   </>
                 ) : null
               ) : null}

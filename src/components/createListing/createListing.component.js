@@ -1219,7 +1219,7 @@ class CreateListing extends Component {
                         value="Next"
                         onClick={() =>
                           this.setState({ attemptSubmit: true }, () => {
-                            console.log(this.state.isCompleted)
+                            console.log(this.state.isCompleted);
                             if (this.state.isCompleted)
                               this.setState({ isReviewingListing: true });
                           })

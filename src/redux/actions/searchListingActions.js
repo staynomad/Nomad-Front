@@ -60,9 +60,7 @@ export const searchAllListings = () => async (dispatch) => {
 };
 
 // if explore is true, store res in different location in redux store
-export const searchFilteredListings = (filterState) => async (
-  dispatch
-) => {
+export const searchFilteredListings = (filterState) => async (dispatch) => {
   const headers = { "Content-Type": "application/json" };
   const searchAllRes = await handleReq(
     "/listings/filteredListings",
@@ -77,9 +75,7 @@ export const searchFilteredListings = (filterState) => async (
   }
 };
 
-export const searchFamilyListings = (filterState) => async (
-  dispatch
-) => {
+export const searchFamilyListings = (filterState) => async (dispatch) => {
   const headers = { "Content-Type": "application/json" };
   const searchAllRes = await handleReq(
     "/listings/filteredListings",
@@ -94,9 +90,7 @@ export const searchFamilyListings = (filterState) => async (
   }
 };
 
-export const searchBudgetListings = (filterState) => async (
-  dispatch
-) => {
+export const searchBudgetListings = (filterState) => async (dispatch) => {
   const headers = { "Content-Type": "application/json" };
   const searchAllRes = await handleReq(
     "/listings/filteredListings",
@@ -148,34 +142,33 @@ export const deleteListingById = (token, listingId) => async (dispatch) => {
 };
 
 // if explore is true, store res in different location in redux store
-export const getListingInRadius = (lat, lng, radius, explore) => async (
-  dispatch
-) => {
-  // Radius in miles -> converting to km
-  const radiusInKilometers = radius * 1.609344;
-  const locationData = {
-    lat,
-    lng,
-    radiusInKilometers,
-  };
+export const getListingInRadius =
+  (lat, lng, radius, explore) => async (dispatch) => {
+    // Radius in miles -> converting to km
+    const radiusInKilometers = radius * 1.609344;
+    const locationData = {
+      lat,
+      lng,
+      radiusInKilometers,
+    };
 
-  const searchListingRes = await handleReq(
-    `/listings/byRadius`,
-    "GET",
-    undefined,
-    undefined,
-    locationData
-  );
+    const searchListingRes = await handleReq(
+      `/listings/byRadius`,
+      "GET",
+      undefined,
+      undefined,
+      locationData
+    );
 
-  if (searchListingRes.status === 200) {
-    const { listingsInRadius } = await searchListingRes.data;
-    if (explore) {
-      dispatch(setExploreNearYou(listingsInRadius));
-    } else {
-      dispatch(setMapListings(listingsInRadius));
+    if (searchListingRes.status === 200) {
+      const { listingsInRadius } = await searchListingRes.data;
+      if (explore) {
+        dispatch(setExploreNearYou(listingsInRadius));
+      } else {
+        dispatch(setMapListings(listingsInRadius));
+      }
     }
-  }
-};
+  };
 
 export const getPopularListings = (count) => async (dispatch) => {
   // Return count listings sorted by popularity

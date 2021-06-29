@@ -81,10 +81,7 @@ const Contact = () => {
       )}
       <span className="alt-contact">
         Or email
-        <a
-          href="mailto:contact@visitnomad.com"
-          className="email-link"
-        >
+        <a href="mailto:contact@visitnomad.com" className="email-link">
           contact@visitnomad.com
         </a>
         directly
