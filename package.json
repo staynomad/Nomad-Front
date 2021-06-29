@@ -12,8 +12,6 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.21.1",
     "connected-react-router": "^6.8.0",
-    "eslint-plugin-flowtype": "^5.7.2",
-    "eslint-plugin-import": "^2.23.4",
     "google-map-react": "^2.1.9",
     "ical": "^0.8.0",
     "lodash": "^4.17.21",
@@ -50,6 +48,9 @@
     "eject": "react-scripts eject",
     "prepare": "husky install",
     "format": "prettier-eslint \"src/**/*.{js,json}\" --write"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
   },
   "browserslist": {
     "production": [
