@@ -1,31 +1,27 @@
 import React from "react";
-import NumericInput from 'react-numeric-input';
+import NumericInput from "react-numeric-input";
 import "./filter.css";
 
 // export default class Filter extends Component {
-const Filter = ({ toggle, roommateView, listingView, listingFilterState, setListingFilterState }) => {
-
+const Filter = ({
+  toggle,
+  roommateView,
+  listingView,
+  listingFilterState,
+  setListingFilterState,
+}) => {
   const roommateFilters = (
     <div>
       <label>
-        <input
-          className="filter-choices"
-          type="checkbox"
-        />
+        <input className="filter-choices" type="checkbox" />
         Roommate Checkbox 1
       </label>
       <label>
-        <input
-          className="filter-choices"
-          type="checkbox"
-        />
+        <input className="filter-choices" type="checkbox" />
         Roommate Checkbox 2
       </label>
       <label>
-        <input
-          className="filter-choices"
-          type="checkbox"
-        />
+        <input className="filter-choices" type="checkbox" />
         Roommate Checkbox 3
       </label>
     </div>
@@ -37,7 +33,12 @@ const Filter = ({ toggle, roommateView, listingView, listingFilterState, setList
         <input
           className="filter-choices"
           type="checkbox"
-          onClick={() => setListingFilterState({...listingFilterState, minRatingClicked: !listingFilterState.minRatingClicked})}
+          onClick={() =>
+            setListingFilterState({
+              ...listingFilterState,
+              minRatingClicked: !listingFilterState.minRatingClicked,
+            })
+          }
         />
         Minimum Rating
       </label>
@@ -47,13 +48,23 @@ const Filter = ({ toggle, roommateView, listingView, listingFilterState, setList
         max={5}
         value={listingFilterState.minRating}
         step={0.1}
-        onChange={valueAsNumber => setListingFilterState({...listingFilterState, minRating: valueAsNumber})}
+        onChange={(valueAsNumber) =>
+          setListingFilterState({
+            ...listingFilterState,
+            minRating: valueAsNumber,
+          })
+        }
       />
       <label>
         <input
           className="filter-choices"
           type="checkbox"
-          onClick={() => setListingFilterState({...listingFilterState, startingPriceClicked: !listingFilterState.startingPriceClicked})}
+          onClick={() =>
+            setListingFilterState({
+              ...listingFilterState,
+              startingPriceClicked: !listingFilterState.startingPriceClicked,
+            })
+          }
         />
         Starting Price
       </label>
@@ -63,13 +74,23 @@ const Filter = ({ toggle, roommateView, listingView, listingFilterState, setList
         max={100}
         value={listingFilterState.startingPrice}
         step={5}
-        onChange={valueAsNumber => setListingFilterState({...listingFilterState, startingPrice: valueAsNumber})}
+        onChange={(valueAsNumber) =>
+          setListingFilterState({
+            ...listingFilterState,
+            startingPrice: valueAsNumber,
+          })
+        }
       />
       <label>
         <input
           className="filter-choices"
           type="checkbox"
-          onClick={() => setListingFilterState({...listingFilterState, minGuestsClicked: !listingFilterState.minGuestsClicked})}
+          onClick={() =>
+            setListingFilterState({
+              ...listingFilterState,
+              minGuestsClicked: !listingFilterState.minGuestsClicked,
+            })
+          }
         />
         Minimum Guests
       </label>
@@ -78,20 +99,25 @@ const Filter = ({ toggle, roommateView, listingView, listingFilterState, setList
         min={1}
         max={10}
         value={listingFilterState.minGuests}
-        step={1} 
-        onChange={valueAsNumber => setListingFilterState({...listingFilterState, minGuests: valueAsNumber})}
+        step={1}
+        onChange={(valueAsNumber) =>
+          setListingFilterState({
+            ...listingFilterState,
+            minGuests: valueAsNumber,
+          })
+        }
       />
       <br />
     </div>
-  )
+  );
 
   return (
-    <div id='filter-page'>
-      <div className='modal-content filter-container'>
-        <span className='close' onClick={toggle}>
+    <div id="filter-page">
+      <div className="modal-content filter-container">
+        <span className="close" onClick={toggle}>
           &times;{" "}
         </span>
-        <div className='filter-choices'>
+        <div className="filter-choices">
           {roommateView ? roommateFilters : null}
           {listingView ? listingFilters : null}
         </div>

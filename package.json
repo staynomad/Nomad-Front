@@ -15,7 +15,6 @@
     "eslint-plugin-flowtype": "^5.7.2",
     "eslint-plugin-import": "^2.23.4",
     "google-map-react": "^2.1.9",
-    "husky": "^6.0.0",
     "ical": "^0.8.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
@@ -49,12 +48,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "prepare": "husky install",
     "format": "prettier-eslint \"src/**/*.{js,json}\" --write"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run format && git add ."
-    }
   },
   "browserslist": {
     "production": [
@@ -69,6 +64,7 @@
     ]
   },
   "devDependencies": {
+    "husky": "^6.0.0",
     "nodemon": "^2.0.7",
     "prettier": "^2.3.2",
     "prettier-eslint-cli": "^5.0.1"

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./roommate.css";
 import handleReq from "../../../utils/fetchRequest";
-import RoommateCard from './roommateCard.component'
+import RoommateCard from "./roommateCard.component";
 
 const Roommates = () => {
   const [roommates, setRoommates] = useState([]);
@@ -23,9 +23,9 @@ const Roommates = () => {
   }, []);
 
   return (
-    <div id='roommates-content'>
+    <div id="roommates-content">
       {roommates.map((roommate) => (
-        <RoommateCard roommate={roommate}/>
+        <RoommateCard roommate={roommate} />
       ))}
     </div>
   );

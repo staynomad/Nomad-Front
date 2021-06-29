@@ -39,7 +39,6 @@ const Signup = () => {
       });
   };
 
-
   return signupSuccess ? (
     <Redirect to="/login" />
   ) : (

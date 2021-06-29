@@ -33,40 +33,38 @@ export const searchUserReservations = (token) => async (dispatch) => {
 };
 
 /* Check in to a reservation */
-export const checkInToReservation = (token, reservationId) => async (
-  dispatch
-) => {
-  dispatch(setLoadingTrue());
-  const headers = { Authorization: `Bearer ${token}` };
-  const checkInRes = await handleReq(
-    `/reservation/activate/${reservationId}`,
-    "POST",
-    headers
-  );
+export const checkInToReservation =
+  (token, reservationId) => async (dispatch) => {
+    dispatch(setLoadingTrue());
+    const headers = { Authorization: `Bearer ${token}` };
+    const checkInRes = await handleReq(
+      `/reservation/activate/${reservationId}`,
+      "POST",
+      headers
+    );
 
-  if (checkInRes.statusText === "OK") {
-    const { message, reservation } = await checkInRes.data;
-    console.log(message);
-    dispatch(setLoadingFalse());
-    dispatch(updateUserReservations(reservation));
-  }
-};
+    if (checkInRes.statusText === "OK") {
+      const { message, reservation } = await checkInRes.data;
+      console.log(message);
+      dispatch(setLoadingFalse());
+      dispatch(updateUserReservations(reservation));
+    }
+  };
 
 /* Check out of a reservation */
-export const checkOutOfReservation = (token, reservationId) => async (
-  dispatch
-) => {
-  dispatch(setLoadingTrue());
-  const headers = { Authorization: `Bearer ${token}` };
-  const checkOutRes = await handleReq(
-    `/reservation/deactivate/${reservationId}`,
-    "POST",
-    headers
-  );
+export const checkOutOfReservation =
+  (token, reservationId) => async (dispatch) => {
+    dispatch(setLoadingTrue());
+    const headers = { Authorization: `Bearer ${token}` };
+    const checkOutRes = await handleReq(
+      `/reservation/deactivate/${reservationId}`,
+      "POST",
+      headers
+    );
 
-  if (checkOutRes.statusText === "OK") {
-    const { reservation } = await checkOutRes.data;
-    dispatch(setLoadingFalse());
-    dispatch(updateUserReservations(reservation));
-  }
-};
+    if (checkOutRes.statusText === "OK") {
+      const { reservation } = await checkOutRes.data;
+      dispatch(setLoadingFalse());
+      dispatch(updateUserReservations(reservation));
+    }
+  };
