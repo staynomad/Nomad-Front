@@ -12,7 +12,10 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.21.1",
     "connected-react-router": "^6.8.0",
+    "eslint-plugin-flowtype": "^5.7.2",
+    "eslint-plugin-import": "^2.23.4",
     "google-map-react": "^2.1.9",
+    "husky": "^6.0.0",
     "ical": "^0.8.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
@@ -41,17 +44,17 @@
     "semantic-ui-react": "^2.0.0",
     "stripe": "^8.121.0"
   },
-  "proxy": "https://api.vhomesgroup.com",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "format": "prettier-eslint \"src/**/*.{js,json}\" --write"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run format && git add ."
+    }
   },
   "browserslist": {
     "production": [
@@ -64,5 +67,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7",
+    "prettier": "^2.3.2",
+    "prettier-eslint-cli": "^5.0.1"
   }
 }
