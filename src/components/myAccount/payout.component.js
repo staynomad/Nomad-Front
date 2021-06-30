@@ -44,7 +44,7 @@ const Payout = () => {
   return (
     <>
       {!stripeConnected ? (
-        <div className="container">
+        <div className="stripe-container">
           <div onClick={() => handleStripeClick()} className="stripe-connect">
             <span>Connect with</span>
           </div>
