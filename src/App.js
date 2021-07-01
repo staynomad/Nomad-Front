@@ -91,7 +91,7 @@ function App() {
             <Route
               path="/EditListing/:listingId"
               exact
-              component={EditListing}
+              render={() => <CreateListing isEditing={true} />}
             />
             <Route path="/PaymentSuccess" exact component={PaymentSuccess} />
             <Route

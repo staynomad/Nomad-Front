@@ -17,9 +17,13 @@ import {
   setLoadingTrue,
   setLoadingFalse,
 } from "../../redux/actions/loadingActions";
+import { app } from "../../utils/axiosConfig.js";
 import { createNewListing } from "../../redux/actions/createListingActions";
 import { stateStyles, stateOptions } from "./stateDropdown";
 import countryDropdown from "./countryDropdown";
+import { getListingById } from "../../redux/actions/searchListingActions";
+import { sendListingTranferRequest } from "../../redux/actions/transferListingActions";
+import { submitEditListing } from "../../redux/actions/editListingActions";
 import "./createListing.css";
 
 const options = [
@@ -35,80 +39,149 @@ const options = [
 class CreateListing extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      attemptSubmit: false,
-      importDone: false,
-      importLoading: false,
-      isCompleted: false,
-      isDraft: false,
-      isReviewingListing: false,
-      form: {
-        test: false,
-        charLeft: {
-          description: 5000,
-          title: 100,
-        },
-        title: "",
-        location: {
-          address: "",
-          street: "",
-          city: "",
-          state: "",
-          country: "",
-          zipcode: "",
-          aptnum: "",
-          coordinates: {
-            lat: null,
-            lng: null,
+    this.state = props.isEditing
+      ? {
+          isActive: null,
+          form: {
+            charLeft: {
+              description: 5000,
+              title: 100,
+            },
+            title: "",
+            location: {
+              address: "",
+              street: "",
+              city: "",
+              state: "",
+              country: "",
+              zipcode: "",
+              aptnum: "",
+              coordinates: {
+                lat: null,
+                lng: null,
+              },
+            },
+            description: "",
+            details: {
+              beds: 0,
+              baths: 0,
+              maxpeople: 0,
+            },
+            price: 0,
+            photos: {
+              image_files: [],
+              pictures: {},
+            },
+            rules: "",
+            calendarURL: "",
+            dateInit: {
+              date_range: {
+                from: null,
+                to: null,
+              },
+              today: new Date(),
+            },
+            dates: {
+              start_date: null,
+              end_date: null,
+              today: new Date(),
+            },
+            displayImport: false,
+            amenityCheckboxDisabled: false,
+            amenities: [],
+            prevAmenities: [],
           },
-        },
-        description: "",
-        details: {
-          beds: null,
-          baths: null,
-          maxpeople: null,
-        },
-        price: null,
-        photos: {
-          image_files: [],
-          pictures: {},
-        },
-        rules: "",
-        calendarURL: "",
-        dateInit: {
-          date_range: {
-            from: null,
-            to: null,
+          isFieldValid: {
+            title: false,
+            street: false,
+            city: false,
+            country: false,
+            zipcode: false,
+            aptnum: false,
+            description: false,
+            beds: false,
+            baths: false,
+            maxpeople: false,
+            price: false,
+            rules: false,
+            invalidPhotoType: false,
+            invalidDate: false,
           },
-          today: new Date(),
-        },
-        dates: {
-          start_date: null,
-          end_date: null,
-          today: new Date(),
-        },
-        displayImport: false,
-        amenityCheckboxDisabled: false,
-        amenities: [],
-        prevAmenities: [],
-      },
-      isFieldValid: {
-        title: false,
-        street: false,
-        city: false,
-        country: false,
-        zipcode: false,
-        aptnum: false,
-        description: false,
-        beds: false,
-        baths: false,
-        maxpeople: false,
-        price: false,
-        rules: false,
-        invalidPhotoType: false,
-        invalidDate: false,
-      },
-    };
+        }
+      : {
+          attemptSubmit: false,
+          importDone: false,
+          importLoading: false,
+          isCompleted: false,
+          isDraft: false,
+          isReviewingListing: false,
+          form: {
+            test: false,
+            charLeft: {
+              description: 5000,
+              title: 100,
+            },
+            title: "",
+            location: {
+              address: "",
+              street: "",
+              city: "",
+              state: "",
+              country: "",
+              zipcode: "",
+              aptnum: "",
+              coordinates: {
+                lat: null,
+                lng: null,
+              },
+            },
+            description: "",
+            details: {
+              beds: 0,
+              baths: 0,
+              maxpeople: 0,
+            },
+            price: 0,
+            photos: {
+              image_files: [],
+              pictures: {},
+            },
+            rules: "",
+            calendarURL: "",
+            dateInit: {
+              date_range: {
+                from: null,
+                to: null,
+              },
+              today: new Date(),
+            },
+            dates: {
+              start_date: null,
+              end_date: null,
+              today: new Date(),
+            },
+            displayImport: false,
+            amenityCheckboxDisabled: false,
+            amenities: [],
+            prevAmenities: [],
+          },
+          isFieldValid: {
+            title: false,
+            street: false,
+            city: false,
+            country: false,
+            zipcode: false,
+            aptnum: false,
+            description: false,
+            beds: false,
+            baths: false,
+            maxpeople: false,
+            price: false,
+            rules: false,
+            invalidPhotoType: false,
+            invalidDate: false,
+          },
+        };
 
     this.deletePhoto = this.deletePhoto.bind(this);
     this.handleCalendarSubmit = this.handleCalendarSubmit.bind(this);
@@ -121,7 +194,7 @@ class CreateListing extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     window.scrollTo(0, 0);
     if (!this.props.userSession) {
       alert("Please log in to create a listing.");
@@ -140,6 +213,51 @@ class CreateListing extends Component {
     //   alert("You must connect a Stripe account to create a listing. Go to Payouts under Account for more.");
     //   return this.props.history.push("/MyAccount");
     // }
+
+    if (this.props.isEditing) {
+      await this.props.getListingById(this.props.match.params.listingId);
+      this.setState({
+        active: this.props.editListing.active,
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const currentListing = this.props.editListing;
+    if (currentListing !== prevProps.editListing) {
+      console.log(currentListing);
+      this.setState({
+        ...this.state,
+        form: {
+          ...this.state.form,
+          title: currentListing.title,
+          location: {
+            ...this.state.form.location,
+            street: currentListing.location.street,
+            city: currentListing.location.city,
+            state: currentListing.location.state,
+            country: currentListing.location.country,
+            zipcode: currentListing.location.zipcode,
+            apartment: currentListing.location.apartment,
+          },
+          description: currentListing.description,
+          details: {
+            beds: currentListing.details.beds,
+            baths: currentListing.details.baths,
+            maxpeople: currentListing.details.maxpeople,
+          },
+          price: parseFloat(currentListing.price).toFixed(2),
+          rules: currentListing.rules,
+          dateInit: {
+            date_range: {
+              ...this.state.form.dateInit.date_range,
+              to: new Date(currentListing.available[1]),
+              from: new Date(currentListing.available[0]),
+            },
+          },
+        },
+      });
+    }
   }
 
   currentImagesList() {
@@ -486,6 +604,62 @@ class CreateListing extends Component {
         },
       },
     });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.submitEditListing(this.props.userSession.token, this.state);
+  };
+
+  handleExport = (e) => {
+    e.preventDefault();
+    this.props.getListingById(this.state.listingId);
+    app
+      .post("/listings/exportListing", {
+        userId: this.props.Listing.editListing.userId,
+        listingId: this.state.listingId,
+        listingCalendar: {
+          available: this.props.Listing.editListing.available,
+          booked: this.props.Listing.editListing.booked,
+        },
+      })
+      .then((res) => {
+        this.setState({
+          exportURL: res.data.url,
+        });
+      });
+  };
+
+  handlePublish = (e) => {
+    e.preventDefault();
+    app
+      .put("/listings/activateListing/" + this.state.listingId, null, {
+        headers: {
+          Authorization: `Bearer ${this.props.userSession.token}`,
+        },
+      })
+      .then(() => {
+        this.setState({
+          active: true,
+        });
+        this.props.submitEditListing(this.props.userSession.token, this.state);
+      });
+  };
+
+  handleDeactivate = (e) => {
+    e.preventDefault();
+    app
+      .put("/listings/deactivate/" + this.state.listingId, null, {
+        headers: {
+          Authorization: `Bearer ${this.props.userSession.token}`,
+        },
+      })
+      .then(() => {
+        this.setState({
+          active: false,
+        });
+        this.props.submitEditListing(this.props.userSession.token, this.state);
+      });
   };
 
   onPhotoClick(e) {
@@ -928,6 +1102,7 @@ class CreateListing extends Component {
                                 onChange={this.handleChange}
                                 min="0.01"
                                 max="999.99"
+                                step=".01"
                                 required
                               />
                               {this.state.price ? (
@@ -943,7 +1118,7 @@ class CreateListing extends Component {
 
                           {/* Amenities */}
                           <div className="spacer_m" />
-                          <div create-listing-amenities-container>
+                          <div className="create-listing-amenities-container">
                             <div className="questionText">Amenities</div>
                             <div className="spacer_s"></div>
                             <div className="amenities-list">
@@ -1199,7 +1374,33 @@ class CreateListing extends Component {
                             </div>
                           )}
                         </div>
+                        <div className="edit-listing-transfer-container">
+                          <label htmlFor="transferEmail">
+                            Email to Transfer to
+                          </label>
+                          <input
+                            type="text"
+                            name="transferEmail"
+                            id="transferEmail"
+                            placeholder="test@test.com"
+                            className="input-box-details"
+                            value={this.state.transferEmail}
+                            onChange={this.handleNameValueChange}
+                            required
+                          />
+                          <button
+                            onClick={() => {
+                              this.props.sendListingTranferRequest(
+                                this.state.transferEmail,
+                                this.state.listingId
+                              );
+                            }}
+                          >
+                            Transfer
+                          </button>
+                        </div>
                       </div>
+                      <div className="spacer_m"></div>
                       {
                         /* User hit next and form is incomplete */
                         this.state.attemptSubmit && !this.state.isCompleted ? (
@@ -1211,20 +1412,75 @@ class CreateListing extends Component {
                           </div>
                         ) : null
                       }
+                      {this.props.isEditing ? (
+                        <>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                            }}
+                          >
+                            {!this.state.active ? (
+                              <button
+                                className="edit-listing-save-button"
+                                onClick={this.handlePublish}
+                              >
+                                Publish
+                              </button>
+                            ) : (
+                              <button
+                                className="edit-listing-save-button"
+                                onClick={this.handleDeactivate}
+                              >
+                                Deactivate
+                              </button>
+                            )}
+                            <button
+                              className="edit-listing-save-button"
+                              onClick={this.handleSubmit}
+                            >
+                              Save
+                            </button>
+                            <button
+                              className="edit-listing-save-button"
+                              onClick={this.handleExport}
+                            >
+                              Export
+                            </button>
+                          </div>
+                          <div className="edit-listing-export-url">
+                            {this.state.exportURL ? (
+                              <div>
+                                <span style={{ textAlign: "right" }}>
+                                  <NavLink to="/how-to-import-or-export-calendar">
+                                    &#9432;
+                                  </NavLink>{" "}
+                                  What's this?
+                                </span>
+                                <div className="spacer_xs" />
+                                <a href={this.state.exportURL} download>
+                                  {this.state.exportURL}
+                                </a>
+                              </div>
+                            ) : null}
+                          </div>
 
-                      <br />
-                      <input
-                        type="button"
-                        className="create-listing-next-button"
-                        value="Next"
-                        onClick={() =>
-                          this.setState({ attemptSubmit: true }, () => {
-                            console.log(this.state.isCompleted);
-                            if (this.state.isCompleted)
-                              this.setState({ isReviewingListing: true });
-                          })
-                        }
-                      />
+                          <br />
+                        </>
+                      ) : (
+                        <input
+                          type="button"
+                          className="create-listing-next-button"
+                          value="Next"
+                          onClick={() =>
+                            this.setState({ attemptSubmit: true }, () => {
+                              console.log(this.state.isCompleted);
+                              if (this.state.isCompleted)
+                                this.setState({ isReviewingListing: true });
+                            })
+                          }
+                        />
+                      )}
                     </>
                   ) : (
                     <>
@@ -1385,11 +1641,19 @@ const mapStateToProps = (state) => {
   if (state.Calendar.calendarURL)
     stateToReturn["calendarURL"] = state.Calendar.calendarURL;
   if (state.Calendar.booked) stateToReturn["booked"] = state.Calendar.booked;
+  if (state.Listing.editListing)
+    stateToReturn.editListing = state.Listing.editListing;
   return stateToReturn;
 };
+
 const mapDispatchToProps = (dispatch) => {
   return {
     createNewListing: (...args) => dispatch(createNewListing(...args)),
+    getListingById: (listingId) => dispatch(getListingById(listingId)),
+    sendListingTranferRequest: (email, listingId) =>
+      dispatch(sendListingTranferRequest(email, listingId)),
+    submitEditListing: (token, editedListing) =>
+      dispatch(submitEditListing(token, editedListing)),
     importCalendar: (calendarURL, listingId) =>
       dispatch(importCalendar(calendarURL, listingId)),
     setLoadingFalse: () => dispatch(setLoadingFalse()),

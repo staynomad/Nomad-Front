@@ -52,6 +52,7 @@ class EditListing extends Component {
   componentDidUpdate(prevProps) {
     const currentListing = this.props.editListing;
     if (currentListing !== prevProps.editListing) {
+      console.log(currentListing)
       this.setState({
         ...this.state,
         title: currentListing.title,
