@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { app } from "../../utils/axiosConfig.js";
 import "./signup.css";
-
+import GoogleSignIn from "./GoogleSignIn";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 
@@ -110,9 +110,14 @@ const Signup = () => {
           {loading ? (
             <div id="spinner"></div>
           ) : (
-            <button type="submit" className="btn green signup-button">
-              <p>Create your account</p>
-            </button>
+            <>
+              <button type="submit" className="btn green signup-button">
+                <p>Create your account</p>
+              </button>
+              <div className="google-sign-in-container">
+                <GoogleSignIn />
+              </div>
+            </>
           )}
         </form>
         <div className="botText">
