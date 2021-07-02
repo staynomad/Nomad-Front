@@ -37,7 +37,7 @@ export const submitLogin = (userLogin) => async (dispatch) => {
   }
 };
 
-export const submitGoogleLogin = (googleData) => async (dispatch) => {
+export const submitGoogleLogin = (googleData, isHost) => async (dispatch) => {
   dispatch(setLoadingTrue());
   const headers = {
     "Content-Type": "application/json",
@@ -46,7 +46,7 @@ export const submitGoogleLogin = (googleData) => async (dispatch) => {
     "/googleLogin",
     "POST",
     headers,
-    JSON.stringify({ token: googleData.tokenId })
+    JSON.stringify({ token: googleData.tokenId, isHost })
   );
 
   if (loginRes && loginRes.status === 200) {
@@ -54,9 +54,10 @@ export const submitGoogleLogin = (googleData) => async (dispatch) => {
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     dispatch(setLoadingFalse());
     dispatch(setUserSession(isHost, token, userId, user));
+    dispatch(push(`/`));
   } else {
     dispatch(setLoadingFalse());
-    dispatch(setAuthError(["Could not automatically sign in with Google."]));
+    dispatch(setAuthError(["Please sign up with Google first."]));
   }
 };
 

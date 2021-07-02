@@ -115,7 +115,7 @@ const Signup = () => {
                 <p>Create your account</p>
               </button>
               <div className="google-sign-in-container">
-                <GoogleSignIn />
+                <GoogleSignIn isHost={userSignup.isHost} />
               </div>
             </>
           )}
