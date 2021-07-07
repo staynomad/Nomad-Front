@@ -1364,6 +1364,13 @@ class CreateListing extends Component {
                               ) : (
                                 ""
                               )}
+                              <label
+                                htmlFor="upload-file"
+                                className="select-img"
+                                style={{ display: "block" }}
+                              >
+                                Select Photos
+                              </label>
                               <input
                                 className="upload-file"
                                 id="upload-file"

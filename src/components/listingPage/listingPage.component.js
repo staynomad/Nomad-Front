@@ -25,7 +25,7 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import StarIcon from "@material-ui/icons/Star";
 import PermIdentityIcon from "@material-ui/icons/PermIdentity";
-import defaultProfile from "../../../src/assets/img/default-profile.png";
+import defaultProfile from "../../../src/assets/img/man.png";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import PostReviewModal from "../review/PostReviewModal.component";
 import AllReviewsModal from "../review/AllReviewsModal.component";
