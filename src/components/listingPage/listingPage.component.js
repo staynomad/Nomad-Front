@@ -119,8 +119,8 @@ class ListingPage extends Component {
         // Set default disabled days based on booked days in listing object
         let startDate = new Date(this.state.listingStartDate);
         let endDate = new Date(this.state.listingEndDate);
-        endDate.setDate(endDate.getDate() + 1);
-        startDate.setDate(startDate.getDate() + 1);
+        // endDate.setDate(endDate.getDate() + 1);
+        // startDate.setDate(startDate.getDate() + 1);
         let bookedDays = [
           {
             after: endDate,
@@ -281,8 +281,15 @@ class ListingPage extends Component {
   }
 
   handleDayClick(day) {
+    let day_time_set = new Date(day);
+    day_time_set.setHours(0, 0, 0, 1);
+    const day_utc = new Date(day_time_set.toISOString()).getTime();
+
     // Check listing availability dates separately
-    if (day < this.state.today) {
+    if (
+      day_utc < this.state.listingStartDate ||
+      day_utc > this.state.listingEndDate
+    ) {
       this.setState({
         outOfRange: true,
       });
@@ -291,7 +298,7 @@ class ListingPage extends Component {
     for (let i = 0; i < this.state.listingBookedDays.length; i++) {
       // Have to subtract one from end date of reservation because of offset
       const endDate = new Date(this.state.listingBookedDays[i].before);
-      endDate.setDate(endDate.getDate() - 1);
+      // endDate.setDate(endDate.getDate() - 1);
       // Check if selected day falls within any of the disabled days
       if (day < endDate && day > this.state.listingBookedDays[i].after) {
         this.setState({

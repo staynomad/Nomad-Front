@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter, NavLink } from "react-router-dom";
-import { app } from "../../utils/axiosConfig.js";
+
 import { getListingById } from "../../redux/actions/searchListingActions";
 import { sendListingTranferRequest } from "../../redux/actions/transferListingActions";
 import { submitEditListing } from "../../redux/actions/editListingActions";
@@ -52,7 +52,7 @@ class EditListing extends Component {
   componentDidUpdate(prevProps) {
     const currentListing = this.props.editListing;
     if (currentListing !== prevProps.editListing) {
-      console.log(currentListing)
+      console.log(currentListing);
       this.setState({
         ...this.state,
         title: currentListing.title,
@@ -151,38 +151,6 @@ class EditListing extends Component {
     if (value === "") this.setState({ ...this.state, [name]: 0 });
   };
 
-  handlePublish = (e) => {
-    e.preventDefault();
-    app
-      .put("/listings/activateListing/" + this.state.listingId, null, {
-        headers: {
-          Authorization: `Bearer ${this.props.userSession.token}`,
-        },
-      })
-      .then(() => {
-        this.setState({
-          active: true,
-        });
-        this.props.submitEditListing(this.props.userSession.token, this.state);
-      });
-  };
-
-  handleDeactivate = (e) => {
-    e.preventDefault();
-    app
-      .put("/listings/deactivate/" + this.state.listingId, null, {
-        headers: {
-          Authorization: `Bearer ${this.props.userSession.token}`,
-        },
-      })
-      .then(() => {
-        this.setState({
-          active: false,
-        });
-        this.props.submitEditListing(this.props.userSession.token, this.state);
-      });
-  };
-
   handleNameValueChange = (e) => {
     const { name, value } = e.target;
 
@@ -190,30 +158,6 @@ class EditListing extends Component {
       ...this.state,
       [name]: value,
     });
-  };
-
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.submitEditListing(this.props.userSession.token, this.state);
-  };
-
-  handleExport = (e) => {
-    e.preventDefault();
-    this.props.getListingById(this.state.listingId);
-    app
-      .post("/listings/exportListing", {
-        userId: this.props.Listing.editListing.userId,
-        listingId: this.state.listingId,
-        listingCalendar: {
-          available: this.props.Listing.editListing.available,
-          booked: this.props.Listing.editListing.booked,
-        },
-      })
-      .then((res) => {
-        this.setState({
-          exportURL: res.data.url,
-        });
-      });
   };
 
   render() {

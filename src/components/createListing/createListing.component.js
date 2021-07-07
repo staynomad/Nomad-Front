@@ -25,6 +25,7 @@ import { getListingById } from "../../redux/actions/searchListingActions";
 import { sendListingTranferRequest } from "../../redux/actions/transferListingActions";
 import { submitEditListing } from "../../redux/actions/editListingActions";
 import "./createListing.css";
+import "./editListing.css";
 
 const options = [
   "TV",
@@ -71,6 +72,7 @@ class CreateListing extends Component {
             photos: {
               image_files: [],
               pictures: {},
+              existing_pictures: [],
             },
             rules: "",
             calendarURL: "",
@@ -184,6 +186,7 @@ class CreateListing extends Component {
         };
 
     this.deletePhoto = this.deletePhoto.bind(this);
+    this.deleteS3Photo = this.deleteS3Photo.bind(this);
     this.handleCalendarSubmit = this.handleCalendarSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleDayClick = this.handleDayClick.bind(this);
@@ -224,8 +227,8 @@ class CreateListing extends Component {
 
   componentDidUpdate(prevProps) {
     const currentListing = this.props.editListing;
+    console.log(currentListing);
     if (currentListing !== prevProps.editListing) {
-      console.log(currentListing);
       this.setState({
         ...this.state,
         form: {
@@ -241,6 +244,11 @@ class CreateListing extends Component {
             apartment: currentListing.location.apartment,
           },
           description: currentListing.description,
+          dates: {
+            ...this.state.form.dates,
+            end_date: new Date(currentListing.available[1]),
+            start_date: new Date(currentListing.available[0]),
+          },
           details: {
             beds: currentListing.details.beds,
             baths: currentListing.details.baths,
@@ -255,14 +263,72 @@ class CreateListing extends Component {
               from: new Date(currentListing.available[0]),
             },
           },
+          photos: {
+            ...this.state.form.photos,
+            existing_pictures: currentListing.pictures,
+          },
+          amenities: currentListing.amenities,
         },
       });
     }
   }
 
   currentImagesList() {
-    const photoList = Object.keys(this.state.form.photos.pictures);
-    return photoList.map((image) => {
+    if (this.props.isEditing) {
+      if (!this.state.form.photos.existing_pictures)
+        return <React.Fragment></React.Fragment>;
+      return (
+        <React.Fragment>
+          {/* Existing images on the listing */}
+          {this.state.form.photos.existing_pictures.map(
+            (listingPhotoURL, idx) => (
+              <div
+                key={`${listingPhotoURL}-${idx}`}
+                className="single-img-container"
+              >
+                <img
+                  className="create-listing-image"
+                  style={{ maxHeight: 200, maxwidth: 200 }}
+                  id="target"
+                  src={listingPhotoURL}
+                  alt=" "
+                />
+                <input
+                  type="button"
+                  value="X"
+                  onClick={this.deleteS3Photo}
+                  className="delete-btn"
+                  title={listingPhotoURL}
+                />
+              </div>
+            )
+          )}
+          {/* New images on the listing */}
+          {Object.keys(this.state.form.photos.pictures).map((image) => {
+            return (
+              <div key={image} className="single-img-container">
+                <img
+                  className="create-listing-image"
+                  style={{ maxHeight: 200, maxwidth: 200 }}
+                  id="target"
+                  src={this.state.form.photos.pictures[image]}
+                  alt=" "
+                />
+                <input
+                  type="button"
+                  value="X"
+                  onClick={this.deletePhoto}
+                  className="delete-btn"
+                  title={image}
+                />
+              </div>
+            );
+          })}
+        </React.Fragment>
+      );
+    }
+
+    return Object.keys(this.state.form.photos.pictures).map((image) => {
       return (
         <div key={image} className="single-img-container">
           <img
@@ -302,6 +368,37 @@ class CreateListing extends Component {
         },
       },
     });
+  }
+
+  async deleteS3Photo(e) {
+    const imageURL = e.target.title;
+    const token = this.props.userSession.token;
+
+    const deletionRes = await app.put(
+      `/listings/editListingImages/${this.props.match.params.listingId}`,
+      { imageURLs: [imageURL] },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const deletionSuccess = deletionRes.data.success;
+    if (deletionSuccess) {
+      this.setState({
+        ...this.state,
+        form: {
+          ...this.state.form,
+          photos: {
+            ...this.state.form.photos,
+            existing_pictures: this.state.form.photos.existing_pictures.filter(
+              (existingImageURL) => existingImageURL !== imageURL
+            ),
+          },
+        },
+      });
+    }
   }
 
   handleChange(e) {
@@ -608,12 +705,62 @@ class CreateListing extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.submitEditListing(this.props.userSession.token, this.state);
+    let editedListingData = new FormData();
+    for (let i = 0; i < this.state.form.photos.image_files.length; i++) {
+      editedListingData.append("image", this.state.form.photos.image_files[i]);
+    }
+
+    let end_date = new Date(this.state.form.dates.end_date);
+    let start_date = new Date(this.state.form.dates.start_date);
+
+    start_date.setHours(0, 0, 0, 0);
+    end_date.setHours(23, 59, 59, 999);
+
+    let end_date_adjusted = new Date(end_date.toISOString());
+    let start_date_adjusted = new Date(start_date.toISOString());
+    const availableDates = [
+      start_date_adjusted.getTime(),
+      end_date_adjusted.getTime(),
+    ];
+
+    const editedListing = {
+      title: this.state.form.title,
+      location: this.state.form.location,
+      description: this.state.form.description,
+      details: this.state.form.details,
+      price: parseFloat(this.state.form.price).toFixed(2),
+      available: availableDates,
+      amenities: this.state.form.amenities,
+      calendarURL: this.state.form.calendarURL,
+      booked: this.props.editListing.booked,
+    };
+
+    console.log(editedListing);
+
+    editedListingData.append(
+      "listingData",
+      new Blob(
+        [
+          JSON.stringify({
+            editedListing,
+          }),
+        ],
+        {
+          type: "application/json",
+        }
+      )
+    );
+
+    this.props.submitEditListing(
+      this.props.userSession.token,
+      editedListingData,
+      this.props.match.params.listingId
+    );
   };
 
   handleExport = (e) => {
     e.preventDefault();
-    this.props.getListingById(this.state.listingId);
+    this.props.getListingById(this.props.match.params.listingId);
     app
       .post("/listings/exportListing", {
         userId: this.props.Listing.editListing.userId,
@@ -711,19 +858,17 @@ class CreateListing extends Component {
       newListingData.append("image", this.state.form.photos.image_files[i]);
     }
 
+    let end_date = new Date(this.state.form.dates.end_date);
+    let start_date = new Date(this.state.form.dates.start_date);
+
+    start_date.setHours(0, 0, 0, 0);
+    end_date.setHours(23, 59, 59, 999);
+
+    let end_date_adjusted = new Date(end_date.toISOString());
+    let start_date_adjusted = new Date(start_date.toISOString());
     const availableDates = [
-      this.state.form.dates.start_date
-        .toISOString()
-        .substring(
-          0,
-          this.state.form.dates.start_date.toISOString().indexOf("T")
-        ),
-      this.state.form.dates.end_date
-        .toISOString()
-        .substring(
-          0,
-          this.state.form.dates.end_date.toISOString().indexOf("T")
-        ),
+      start_date_adjusted.getTime(),
+      end_date_adjusted.getTime(),
     ];
 
     const newListing = {
@@ -1652,8 +1797,7 @@ const mapDispatchToProps = (dispatch) => {
     getListingById: (listingId) => dispatch(getListingById(listingId)),
     sendListingTranferRequest: (email, listingId) =>
       dispatch(sendListingTranferRequest(email, listingId)),
-    submitEditListing: (token, editedListing) =>
-      dispatch(submitEditListing(token, editedListing)),
+    submitEditListing: (...args) => dispatch(submitEditListing(...args)),
     importCalendar: (calendarURL, listingId) =>
       dispatch(importCalendar(calendarURL, listingId)),
     setLoadingFalse: () => dispatch(setLoadingFalse()),
