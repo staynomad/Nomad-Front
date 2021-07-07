@@ -8,6 +8,9 @@ import ImageCrop from "./imageCrop.component";
 import "./profile.css";
 import "react-image-crop/dist/ReactCrop.css";
 
+import FriendsModal from "./friendsModal.component";
+import Modal from "@material-ui/core/Modal";
+
 const Profile = (props) => {
   const loginInfo = useSelector((state) => state.Login);
   const user = useSelector((state) => state.User);
@@ -15,6 +18,7 @@ const Profile = (props) => {
   const isEmpty = Object.keys(user).length === 0;
   const [newProfileImg, setNewProfileImg] = useState(null);
   const [imgName, setImgName] = useState(null);
+  const [friendsModalOpen, setFriendsModalOpen] = useState(false);
 
   useEffect(() => {
     const userId = loginInfo.userInfo.session.userId;
@@ -115,6 +119,9 @@ const Profile = (props) => {
 
   return (
     <div className="account-content">
+      <Modal open={friendsModalOpen} onClose={() => setFriendsModalOpen(false)}>
+        <FriendsModal handleClose={() => setFriendsModalOpen(false)} />
+      </Modal>
       <div className="profile-content">
         <div className="profile-header">
           <Greeting />
@@ -123,9 +130,17 @@ const Profile = (props) => {
 
         <Information />
 
-        <form action="/EditProfileInfo">
-          <button className="btn green edit-profile-btn"> Edit Profile </button>
-        </form>
+        <div className="profile-buttons-container">
+          <form action="/EditProfileInfo">
+            <button className="btn green edit-profile-btn">Edit Profile</button>
+          </form>
+          <button
+            className="btn green profile-friends-btn"
+            onClick={() => setFriendsModalOpen(true)}
+          >
+            Friends
+          </button>
+        </div>
         {/* <NavLink className="profile-roommate-form" to="/Questionnaire">
           <p>Roommate Preference Form</p>
         </NavLink> */}
