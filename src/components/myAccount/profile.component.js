@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from "react";import { useSelector, useDispatch } from "react-redux";
-import Modal from "@material-ui/core/Modal";
-import MailOutlineIcon from "@material-ui/icons/MailOutline";
+import React, { useEffect, useState } from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
-
 import { setUserInfo } from "../../redux/actions/userActions";
 import { app } from "../../utils/axiosConfig.js";
-import FriendsModal from "./friendsModal.component";
-
-const Profile = () => {
-  const [friendsModalOpen, setFriendsModalOpen] = useState(false);
+import MailOutlineIcon from "@material-ui/icons/MailOutline";
 
 import ImageCrop from "./imageCrop.component";
 import "./profile.css";
 import "react-image-crop/dist/ReactCrop.css";
+
+import FriendsModal from "./friendsModal.component";
+import Modal from "@material-ui/core/Modal";
 
 const Profile = (props) => {
   const loginInfo = useSelector((state) => state.Login);
@@ -21,6 +18,7 @@ const Profile = (props) => {
   const isEmpty = Object.keys(user).length === 0;
   const [newProfileImg, setNewProfileImg] = useState(null);
   const [imgName, setImgName] = useState(null);
+  const [friendsModalOpen, setFriendsModalOpen] = useState(false);
 
   useEffect(() => {
     const userId = loginInfo.userInfo.session.userId;
@@ -131,6 +129,7 @@ const Profile = (props) => {
         </div>
 
         <Information />
+
         <div className="profile-buttons-container">
           <form action="/EditProfileInfo">
             <button className="btn green edit-profile-btn">Edit Profile</button>
