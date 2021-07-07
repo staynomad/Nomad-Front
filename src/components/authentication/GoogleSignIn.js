@@ -9,14 +9,20 @@ const clientID =
   "799198545666-1s1bu2dvg1n4hj9hgpbjsecjhrbkbhc8.apps.googleusercontent.com";
 
 const GoogleSignIn = (props) => {
-  const handleLogin = (googleData) => props.submitGoogleLogin(googleData);
+  const isHost = props.isHost;
+  const buttonText =
+    typeof props.isHost !== "undefined"
+      ? "Sign up with Google"
+      : "Log in with Google";
+  const handleLogin = (googleData) =>
+    props.submitGoogleLogin(googleData, isHost);
 
   return (
     <>
       <GoogleLogin
         clientId={clientID}
         data-auto_select="false"
-        buttonText="Log in with Google"
+        buttonText={buttonText}
         onSuccess={handleLogin}
         onFailure={handleLogin}
         cookiePolicy={"single_host_origin"}
@@ -36,7 +42,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    submitGoogleLogin: (googleData) => dispatch(submitGoogleLogin(googleData)),
+    submitGoogleLogin: (googleData, isHost) =>
+      dispatch(submitGoogleLogin(googleData, isHost)),
   };
 };
 
