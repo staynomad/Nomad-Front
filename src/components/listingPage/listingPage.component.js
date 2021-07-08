@@ -116,6 +116,15 @@ class ListingPage extends Component {
           listingPictures: pictures,
         });
 
+        //get host's name from their userId
+        const userId = this.state.listingUser;
+        app.get(`/user/getUserInfo/${userId}`).then((res) => {
+          this.setState({
+            listingUserName: res.data,
+            hostEmail: res.data.email,
+          });
+        });
+
         // Set default disabled days based on booked days in listing object
         let startDate = new Date(this.state.listingStartDate);
         let endDate = new Date(this.state.listingEndDate);
@@ -144,18 +153,6 @@ class ListingPage extends Component {
         this.setState({
           listingBookedDays: bookedDays,
           today: today.setUTCHours(0, 0, 0, 0),
-        });
-        // Get host's email from their userId
-        app.get(`/user/getUserInfo/${this.state.listingUser}`).then((res) =>
-          this.setState({
-            hostEmail: res.data.email,
-            isLoading: false,
-          })
-        );
-        //get host's name from their userId
-        const userId = this.state.listingId;
-        app.get(`/user/getUserInfo/${userId}`).then((res) => {
-          this.setState({ listingUserName: res.data });
         });
 
         // Update listingRatings to include user's name for each review
@@ -342,13 +339,13 @@ class ListingPage extends Component {
   render() {
     const { from, to } = this.state;
     const modifiers = { start: from, end: to };
-    console.log(this.state.listingCoord);
+    // console.log(this.state.listingCoord);
 
     // const lessThanFourDays =
     //   parseInt((this.state.to - this.state.from) / (1000 * 3600 * 24)) + 1 < 4
     //     ? true
     //     : false;
-
+    // console.log(this.state.listingUserName)
     const getStars = () => {
       let reviews = [];
       for (let props in this.state.listingRatings) {
@@ -407,7 +404,7 @@ class ListingPage extends Component {
             />
           </div>
         </Modal>
-        {!this.state.listingPictures ? (
+        {!this.state.listingPictures || !this.state.listingUserName ? (
           <div id="spinner"></div>
         ) : (
           <div>
