@@ -82,19 +82,16 @@ class LeftMenu extends Component {
 
         if (this.props.userReservations) {
           userReservations.forEach((reservation) => {
-            // Split string to Year (idx 0), Month (idx 1), Day (idx 2) then convert to num
-            const expireDate = reservation.days[1].split("-").map((date) => {
-              return Number.parseInt(date, 10);
-            });
-            // Convert using to milliseconds
-            const expireDateConverted = new Date(
-              expireDate[0],
-              expireDate[1] - 1,
-              expireDate[2]
-            ).getTime();
+            // Create new local date using utc date in db
+            const expireDate = new Date(reservation.days[1]).getTime();
             const curDate = new Date().getTime();
             // Compare to check if curDate is past expired
-            let isExpired = curDate > expireDateConverted;
+            let isExpired = curDate > expireDate;
+            /* Use below to see if dates are printing as expected -> should be a string of a timestamp */
+            // if (!isExpired)
+            //   console.log(
+            //     "expire date: " + expireDate + " | current date: " + curDate
+            //   );
             if (!reservation.active) isExpired = true;
 
             if (isExpired) reservations.expired.push(reservation);

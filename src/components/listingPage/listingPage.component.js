@@ -198,20 +198,21 @@ class ListingPage extends Component {
       alert("Please log in to create a reservation.");
       return this.props.history.push("/login");
     }
-    const selectedStartDay = JSON.stringify(this.state.from).substring(
-      1,
-      JSON.stringify(this.state.from).indexOf("T")
-    );
-    const selectedEndDay = JSON.stringify(this.state.to).substring(
-      1,
-      JSON.stringify(this.state.to).indexOf("T")
-    );
+    let end_date = new Date(this.state.to);
+    let start_date = new Date(this.state.from);
+
+    start_date.setHours(0, 0, 0, 0);
+    end_date.setHours(23, 59, 59, 999);
+
+    const end_date_adjusted = new Date(end_date.toISOString()).getTime();
+    const start_date_adjusted = new Date(start_date.toISOString()).getTime();
+
     const resDays =
       parseInt((this.state.to - this.state.from) / (1000 * 3600 * 24)) + 1;
     const data = {
       user: this.props.userSession.userId, // get userId from redux store
       listing: this.props.match.params.id,
-      days: [selectedStartDay, selectedEndDay],
+      days: [start_date_adjusted, end_date_adjusted],
       numDays: resDays,
     };
 
@@ -220,7 +221,7 @@ class ListingPage extends Component {
     let body = {
       listingId: listingId,
       days: resDays,
-      dates: [this.state.from, this.state.to],
+      dates: [start_date_adjusted, end_date_adjusted],
     };
 
     // Wrap calls in try-catch block.  All errors handled by catch
@@ -266,7 +267,8 @@ class ListingPage extends Component {
       this.setState({
         isLoading: false,
       });
-      alert(e.response.data.errors); //response.data
+      // This needs to be fixed v
+      // alert(e.response.data.errors); //response.data
     }
   }
 
@@ -283,7 +285,7 @@ class ListingPage extends Component {
     const day_utc = new Date(day_time_set.toISOString()).getTime();
 
     let current_day = new Date();
-    current_day.setHours(0,0,0,1);
+    current_day.setHours(0, 0, 0, 1);
     const current_day_utc = new Date(current_day.toISOString()).getTime();
 
     // Check listing availability dates separately
