@@ -52,8 +52,8 @@ const Payout = () => {
       ) : (
         <div>
           <div> You're connected to stripe! </div>
-          <div onClick={() => handleDashboardClick()}>
-            Click here to view your dashboard
+          <div onClick={() => handleDashboardClick()} className="stripe-dash">
+            <span>dashboard</span>
           </div>
         </div>
       )}

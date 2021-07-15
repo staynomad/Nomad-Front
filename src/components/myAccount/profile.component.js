@@ -3,7 +3,7 @@ import { connect, useSelector, useDispatch } from "react-redux";
 import { setUserInfo } from "../../redux/actions/userActions";
 import { app } from "../../utils/axiosConfig.js";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
-import Payout from './payout.component'
+import Payout from "./payout.component";
 
 import ImageCrop from "./imageCrop.component";
 import "./profile.css";
