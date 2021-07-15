@@ -148,8 +148,6 @@ class LeftMenu extends Component {
             )}
           </div>
         );
-      case "payouts":
-        return <Payout />;
       case "settings":
         return <Settings />;
       case "my transfers":
@@ -239,15 +237,6 @@ class LeftMenu extends Component {
                       onClick={(e, { name, compname }) => {
                         this.handleItemClick(e, { name, compname });
                         this.props.getListingTranferRequests();
-                      }}
-                    />
-                    <Menu.Item
-                      className="account-nav-tab"
-                      name="payouts"
-                      active={activeItem === "payouts"}
-                      compname="payouts"
-                      onClick={(e, { name, compname }) => {
-                        this.handleItemClick(e, { name, compname });
                       }}
                     />
                   </>
