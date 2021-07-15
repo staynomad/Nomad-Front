@@ -6,7 +6,8 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 const clientID =
-  "799198545666-1s1bu2dvg1n4hj9hgpbjsecjhrbkbhc8.apps.googleusercontent.com";
+  // "799198545666-1s1bu2dvg1n4hj9hgpbjsecjhrbkbhc8.apps.googleusercontent.com";
+  "1053363012819-ip4rpc2rcql4l13c0doar03338tsji5p.apps.googleusercontent.com"; // provisioned from staynomadhomes@gmail.com email
 
 const GoogleSignIn = (props) => {
   const isHost = props.isHost;
