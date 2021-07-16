@@ -56,8 +56,9 @@ export const submitGoogleLogin = (googleData, isHost) => async (dispatch) => {
     dispatch(setUserSession(isHost, token, userId, user));
     dispatch(push(`/`));
   } else {
+    const err = loginRes ? loginRes.error : "Error logging in with Google.";
     dispatch(setLoadingFalse());
-    dispatch(setAuthError(["Please sign up with Google first."]));
+    dispatch(setAuthError([err]));
   }
 };
 
