@@ -10,7 +10,6 @@ import ListingsComponent from "../matches/listing/listings.component";
 import Profile from "./profile.component";
 import ReservationCard from "../reservations/reservationCard.component";
 import Settings from "./settings.component";
-import Payout from "./payout.component";
 import {
   acceptListingTransfer,
   rejectListingTransfer,
