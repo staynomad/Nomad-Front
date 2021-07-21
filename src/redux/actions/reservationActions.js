@@ -36,7 +36,6 @@ export const searchUserReservations = (token) => async (dispatch) => {
 export const checkInToReservation =
   (token, reservationId) => async (dispatch) => {
     dispatch(setLoadingTrue());
-    console.log("in");
     const headers = { Authorization: `Bearer ${token}` };
     const checkInRes = await handleReq(
       `/reservation/activate/${reservationId}`,
