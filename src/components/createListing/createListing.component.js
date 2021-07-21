@@ -57,10 +57,10 @@ class CreateListing extends Component {
               country: "",
               zipcode: "",
               aptnum: "",
-              coordinates: {
-                lat: null,
-                lng: null,
-              },
+            },
+            coordinates: {
+              lat: null,
+              lng: null,
             },
             description: "",
             details: {
@@ -132,10 +132,10 @@ class CreateListing extends Component {
               country: "",
               zipcode: "",
               aptnum: "",
-              coordinates: {
-                lat: null,
-                lng: null,
-              },
+            },
+            coordinates: {
+              lat: null,
+              lng: null,
             },
             description: "",
             details: {
@@ -691,13 +691,13 @@ class CreateListing extends Component {
         ...this.state.form,
         location: {
           address: value,
-          coordinates: latLng,
           street: street ? street : "",
           city: city ? city : "",
           state: state ? state : "",
           country: country ? country : "",
           zipcode: zipcode ? zipcode : "",
         },
+        coordinates: latLng,
       },
     });
   };
@@ -878,7 +878,7 @@ class CreateListing extends Component {
       amenities: this.state.form.amenities,
       calendarURL: this.state.form.calendarURL,
       booked: this.props.booked ? this.props.booked : [],
-      coordinates: this.state.form.location.coordinates,
+      coordinates: this.state.form.coordinates,
     };
 
     newListingData.append(
@@ -1138,15 +1138,15 @@ class CreateListing extends Component {
                                     ...this.state.form,
                                     location: {
                                       address: "",
-                                      coordinates: {
-                                        lat: null,
-                                        lng: null,
-                                      },
                                       street: "",
                                       city: "",
                                       state: "",
                                       country: "",
                                       zipcode: "",
+                                    },
+                                    coordinates: {
+                                      lat: null,
+                                      lng: null,
                                     },
                                   },
                                 })
