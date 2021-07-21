@@ -227,7 +227,6 @@ class CreateListing extends Component {
 
   componentDidUpdate(prevProps) {
     const currentListing = this.props.editListing;
-    console.log(currentListing);
     if (currentListing !== prevProps.editListing) {
       this.setState({
         ...this.state,
@@ -735,8 +734,6 @@ class CreateListing extends Component {
       booked: this.props.editListing.booked,
     };
 
-    console.log(editedListing);
-
     editedListingData.append(
       "listingData",
       new Blob(
@@ -880,7 +877,8 @@ class CreateListing extends Component {
       available: availableDates,
       amenities: this.state.form.amenities,
       calendarURL: this.state.form.calendarURL,
-      booked: this.props.booked ? this.props.booked : null,
+      booked: this.props.booked ? this.props.booked : [],
+      coordinates: this.state.form.location.coordinates,
     };
 
     newListingData.append(
@@ -1626,7 +1624,6 @@ class CreateListing extends Component {
                           value="Next"
                           onClick={() =>
                             this.setState({ attemptSubmit: true }, () => {
-                              console.log(this.state.isCompleted);
                               if (this.state.isCompleted)
                                 this.setState({ isReviewingListing: true });
                             })

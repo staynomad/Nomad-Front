@@ -128,14 +128,15 @@ class ListingPage extends Component {
         // Set default disabled days based on booked days in listing object
         let startDate = new Date(this.state.listingStartDate);
         let endDate = new Date(this.state.listingEndDate);
-        // endDate.setDate(endDate.getDate() + 1);
-        // startDate.setDate(startDate.getDate() + 1);
+
+        // console.log(this.state);
         let bookedDays = [
           {
             after: endDate,
             before: startDate,
           },
         ];
+
         // Append days from booked field in listing object
         for (let i = 0; i < res.data.listing.booked.length; i++) {
           let reserveStart = new Date(res.data.listing.booked[i].start);
@@ -147,9 +148,11 @@ class ListingPage extends Component {
             before: reserveEnd,
           });
         }
+
         bookedDays.push({
           before: new Date(today),
         });
+
         this.setState({
           listingBookedDays: bookedDays,
           today: today.setUTCHours(0, 0, 0, 0),
@@ -211,15 +214,15 @@ class ListingPage extends Component {
       parseInt((this.state.to - this.state.from) / (1000 * 3600 * 24)) + 1;
     const data = {
       user: this.props.userSession.userId, // get userId from redux store
-      listing: this.props.match.params.id,
+      listingId: this.props.match.params.id,
       days: [start_date_adjusted, end_date_adjusted],
       numDays: resDays,
     };
 
     const stripe = await stripePromise;
-    const listingId = data.listing;
+    const listingId = data.listingId;
     let body = {
-      listingId: listingId,
+      listingId,
       days: resDays,
       dates: [start_date_adjusted, end_date_adjusted],
     };
@@ -566,7 +569,7 @@ class ListingPage extends Component {
                   <div className="listing-amenities">
                     <h4 className="listing-subtitle">Amenities</h4>
                     <div className="listing-amenities-container">
-                      {this.state.listingAmenities.map((amenity) => {
+                      {this.state.listingAmenities.map((amenity, index) => {
                         let imagepath;
                         switch (amenity) {
                           case "TV": {
@@ -610,7 +613,10 @@ class ListingPage extends Component {
                           }
                         }
                         return (
-                          <div className="amenities-div">
+                          <div
+                            className="amenities-div"
+                            key={`${this.props.match.params.id}-amenity-${index}`}
+                          >
                             <img alt="amenity" src={imagepath} />
                             <h1 className="amenities-title">{amenity}</h1>
                           </div>
@@ -629,12 +635,16 @@ class ListingPage extends Component {
                         for (let i = 1; i <= 5; i++) {
                           if (i <= review.stars) {
                             rating.push(
-                              <StarIcon key={i} className="star-icon" alt={i} />
+                              <StarIcon
+                                key={`${this.props.match.params.id}-review-${index}`}
+                                className="star-icon"
+                                alt={i}
+                              />
                             );
                           } else {
                             rating.push(
                               <StarBorderIcon
-                                key={i}
+                                key={`${this.props.match.params.id}-review-${index}`}
                                 className="star-icon"
                                 alt={i}
                               />
@@ -692,20 +702,24 @@ class ListingPage extends Component {
                     {this.state.listingLocation}
                   </h5>
                   <div style={{ height: "500px", width: "100%" }}>
-                    <GoogleMapReact
-                      center={{
-                        lat: this.state.listingCoord.listingLat,
-                        lng: this.state.listingCoord.listingLng,
-                      }}
-                      zoom={18}
-                    >
-                      <i
-                        className="fas fa-home"
-                        lat={this.state.listingCoord.listingLat}
-                        lng={this.state.listingCoord.listingLng}
-                        style={{ height: "24px", width: "24px" }}
-                      />
-                    </GoogleMapReact>
+                    {this.state.listingCoord &&
+                    this.state.listingCoord.listingLng !== null &&
+                    this.state.listingCoord.listingLat !== null ? (
+                      <GoogleMapReact
+                        center={{
+                          lat: this.state.listingCoord.listingLat,
+                          lng: this.state.listingCoord.listingLng,
+                        }}
+                        zoom={18}
+                      >
+                        <i
+                          className="fas fa-home"
+                          lat={this.state.listingCoord.listingLat}
+                          lng={this.state.listingCoord.listingLng}
+                          style={{ height: "24px", width: "24px" }}
+                        />
+                      </GoogleMapReact>
+                    ) : null}
                   </div>
                 </div>
                 <div className="listing-divider"></div>
