@@ -67,3 +67,8 @@ export const logoutUser = () => (dispatch) => {
   dispatch(removeUserSession());
   dispatch(push(`/`));
 };
+
+export const setHost = (isHost, token, userId, user) => async (dispatch) => {
+  dispatch(setLoadingTrue());
+  dispatch(setUserSession(isHost, token, userId, user));
+};

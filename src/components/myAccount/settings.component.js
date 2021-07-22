@@ -2,12 +2,12 @@ import React from "react";
 import Switch from "@material-ui/core/Switch";
 import { connect } from "react-redux";
 import handleReq from "../../utils/fetchRequest";
-
+import {setHost} from "../../redux/actions/authActions";
+import './settings.css'
 
 const Settings = (props) => {
   let localIsHost = props.User.userInfo.isHost;
   const userId= props.User.userInfo._id;
-  console.log(localIsHost)
   
   
   const changeHostStatus = async () => {
@@ -15,11 +15,11 @@ const Settings = (props) => {
     const url = '/user/setUserInfo/' + userId;
     const body = {};
     const data = {isHost: localIsHost};
-    console.log(data)
 
     let res = await handleReq(url, "POST", body, data);
     if (res.status === 200) {
-      window.location = "/MyAccount";
+      props.setHost(localIsHost, props.User.userInfo.token, userId, props.User.userInfo.user);
+      console.log(props.User.userInfo.isHost);
       window.location.reload();
     }
   };
@@ -41,4 +41,11 @@ const mapStateToProps = (state) => {
   return stateToReturn;
 };
 
-export default connect(mapStateToProps)(Settings);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setHost:(isHost, token, userId, user) =>
+      dispatch(setHost(isHost, token, userId, user)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);
