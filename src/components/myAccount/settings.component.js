@@ -27,15 +27,27 @@ class Settings extends Component{
   };
 
   render(){
-    return (
-      <div className='host-toggle-container'>
-        <p>Switch to Host</p>
-        <Switch
-          checked={this.state.localIsHost}
-          onChange={this.changeHostStatus}
-        />
-      </div>
-    );
+    if (this.state.localIsHost === false){
+      return (
+        <div className='host-toggle-container'>
+          <p>Switch to Host</p>
+          <Switch
+            checked={this.state.localIsHost}
+            onChange={this.changeHostStatus}
+          />
+        </div>
+      );
+    } else {
+      return (
+        <div className='host-toggle-container'>
+          <p>Switch to Non-Host</p>
+          <Switch
+            checked={this.state.localIsHost}
+            onChange={this.changeHostStatus}
+          />
+        </div>
+      );
+    }
   };
 }
 
