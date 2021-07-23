@@ -29,7 +29,7 @@ import "./App.css";
 
 const useToken = () => {
   const getToken = () => {
-    const tokenString = localStorage.getItem("token");
+    const tokenString = localStorage.getItem("staging-pass");
     const userToken = JSON.parse(tokenString);
     return userToken;
   };
@@ -37,7 +37,7 @@ const useToken = () => {
   const [token, setToken] = useState(getToken());
 
   const saveToken = (userToken) => {
-    localStorage.setItem("token", JSON.stringify(userToken));
+    localStorage.setItem("staging-pass", JSON.stringify(userToken));
     setToken(userToken);
   };
 
