@@ -29,7 +29,7 @@ class Settings extends Component{
   render(){
     return (
       <div className='host-toggle-container'>
-        <p>Switch to host</p>
+        <p>Switch to Host</p>
         <Switch
           checked={this.state.localIsHost}
           onChange={this.changeHostStatus}
