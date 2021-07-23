@@ -24,7 +24,28 @@ import PageNotFound from "./components/subpages/404.component";
 import About from "./components/subpages/about.component";
 import ListingMap from "./components/map/maps.component";
 import PublicProfile from "./components/profile/PublicProfile.component";
+import PasswordPage from "./components/authentication/passwordPage.component";
 import "./App.css";
+
+const useToken = () => {
+  const getToken = () => {
+    const tokenString = localStorage.getItem("token");
+    const userToken = JSON.parse(tokenString);
+    return userToken;
+  };
+
+  const [token, setToken] = useState(getToken());
+
+  const saveToken = (userToken) => {
+    localStorage.setItem("token", JSON.stringify(userToken));
+    setToken(userToken);
+  };
+
+  return {
+    setToken: saveToken,
+    token,
+  };
+};
 
 //to add more items just copy the format and add the route path. look at navbar component to see where the path is currently set to
 function App() {
@@ -32,6 +53,12 @@ function App() {
   const [reservationModal, setReservationModal] = useState(false);
   const [reviewModal, setReviewModal] = useState(false);
   const [reviewListingId, setReviewListingId] = useState("");
+
+  const { token, setToken } = useToken();
+
+  if (!token) {
+    return <PasswordPage setToken={setToken} />;
+  }
 
   return (
     <>
