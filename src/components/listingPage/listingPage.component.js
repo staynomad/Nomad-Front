@@ -283,7 +283,7 @@ class ListingPage extends Component {
     const day_utc = new Date(day_time_set.toISOString()).getTime();
 
     let current_day = new Date();
-    current_day.setHours(0,0,0,1);
+    current_day.setHours(0, 0, 0, 1);
     const current_day_utc = new Date(current_day.toISOString()).getTime();
 
     // Check listing availability dates separately
