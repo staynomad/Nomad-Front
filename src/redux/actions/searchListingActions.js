@@ -184,7 +184,7 @@ export const getPopularListings = (count) => async (dispatch) => {
         `/listings/byId/${searchListingRes.data.listings[i].listingId}`,
         "GET"
       );
-      if (listingData.status === 200) {
+      if (listingData && listingData.status === 200) {
         popularListings.push(listingData.data.listing);
       }
     }

@@ -36,9 +36,13 @@ class ReservationCard extends React.Component {
   }
 
   componentDidMount() {
+    /* Converted listing to listingId in db for readability -> tempt fix */
+    const varToUse = this.reservation.listingId
+      ? this.reservation.listingId
+      : this.reservation.listing;
     if (this.reservation.active) {
       app
-        .get("/listings/byId/" + this.reservation.listing)
+        .get("/listings/byId/" + varToUse)
         .then((res) => {
           this.setState({ listing: res.data.listing });
         })
@@ -51,17 +55,16 @@ class ReservationCard extends React.Component {
   handleCheckConfirm = (e) => {
     e.stopPropagation();
     e.preventDefault();
-    this.setState({ confirmCheck: false });
-    if (this.checkState === "out") {
-      this.props.setReviewListingId(this.reservation.listing);
-      this.props.setReviewModal(true);
-      this.props.checkOutOfReservation(
+    this.setState({ ...this.state, confirmCheck: false });
+    if (this.state.checkState === "out") {
+      // this.props.setReviewListingId(this.reservation.listing);
+      // this.props.setReviewModal(true);
+      return this.props.checkOutOfReservation(
         this.props.userSession.token,
         this.reservation._id
       );
-      return;
     }
-    if (this.checkState === "in")
+    if (this.state.checkState === "in")
       return this.props.checkInToReservation(
         this.props.userSession.token,
         this.reservation._id
@@ -69,6 +72,15 @@ class ReservationCard extends React.Component {
   };
 
   render() {
+    const checkInDate = new Date(this.reservation.days[0]),
+      checkInMonth = "" + (checkInDate.getMonth() + 1),
+      checkInDay = "" + checkInDate.getDate(),
+      checkInYear = checkInDate.getFullYear();
+    const checkOutDate = new Date(this.reservation.days[1]),
+      checkOutMonth = "" + (checkOutDate.getMonth() + 1),
+      checkOutDay = "" + checkOutDate.getDate(),
+      checkOutYear = checkOutDate.getFullYear();
+
     return (
       <>
         {this.reservation.active ? (
@@ -77,77 +89,96 @@ class ReservationCard extends React.Component {
           ) : (
             <div className="reservation-card-container">
               <NavLink to={"/listing/" + this.state.listing._id}>
-                {this.confirmCheck ? (
-                  <>
-                    <div>Confirm check in / out?</div>
-                    <>
-                      <CustomButton
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          e.preventDefault();
-                          this.setState({ confirmCheck: false });
-                        }}
-                      >
-                        Cancel
-                      </CustomButton>
-                      <CustomButton onClick={this.handleCheckConfirm}>
-                        Confirm
-                      </CustomButton>
-                    </>
-                  </>
-                ) : (
-                  <div className="reservation-card-information">
-                    <img
-                      className="reservation-card-image"
-                      src={this.state.listing.pictures[0]}
-                      alt={this.state.listing.title}
-                    />
-                    <h2>{this.state.listing.title}</h2>
-                    {this.state.listing.location.street},{" "}
-                    {this.state.listing.location.city},{" "}
-                    {this.state.listing.location.state},{" "}
-                    {this.state.listing.location.zipcode}
-                    <div>
-                      <b>Check-In: </b> {this.reservation.days[0].substring(5)}{" "}
-                      <br />
-                      <b>Check-Out: </b> {this.reservation.days[1].substring(5)}
-                    </div>
-                    <div className="spacer_xxs" />
-                    {this.props.userSession &&
-                    this.props.userSession.userId === this.reservation.user &&
-                    !this.props.reservation.checkedIn &&
-                    new Date() >= new Date(this.reservation.days[0]) ? (
-                      <button
-                        className="listing-card-button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          e.preventDefault();
-                          this.setState({ confirmCheck: true });
-                          this.setState({ checkState: "in" });
-                        }}
-                      >
-                        {!this.loading ? "Check-in" : <div id="spinner" />}
-                      </button>
-                    ) : (
-                      <>{/* Render an unclickable button */}</>
-                    )}
-                    {this.props.userSession &&
-                    this.props.userSession.userId === this.reservation.user &&
-                    this.props.reservation.checkedIn ? (
-                      <button
-                        className="listing-card-button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          e.preventDefault();
-                          this.setState({ confirmCheck: true });
-                          this.setState({ checkState: "out" });
-                        }}
-                      >
-                        {!this.loading ? "Check-Out" : <div id="spinner" />}
-                      </button>
-                    ) : null}
+                <div className="reservation-card-information">
+                  <img
+                    className="reservation-card-image"
+                    src={this.state.listing.pictures[0]}
+                    alt={this.state.listing.title}
+                  />
+                  <h2>{this.state.listing.title}</h2>
+                  {this.state.listing.location.street},{" "}
+                  {this.state.listing.location.city},{" "}
+                  {this.state.listing.location.state},{" "}
+                  {this.state.listing.location.zipcode}
+                  <div>
+                    <b>Check-In: </b>{" "}
+                    {`${checkInMonth}-${checkInDay}-${checkInYear}`} <br />
+                    <b>Check-Out: </b>{" "}
+                    {`${checkOutMonth}-${checkOutDay}-${checkOutYear}`}
                   </div>
-                )}
+                  <div className="spacer_xxs" />
+                  {this.state.confirmCheck ? (
+                    <React.Fragment>
+                      <div>Confirm check in / out?</div>
+                      <React.Fragment>
+                        <CustomButton
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            this.setState({ confirmCheck: false });
+                          }}
+                        >
+                          Cancel
+                        </CustomButton>
+                        <CustomButton onClick={this.handleCheckConfirm}>
+                          Confirm
+                        </CustomButton>
+                      </React.Fragment>
+                    </React.Fragment>
+                  ) : (
+                    <React.Fragment>
+                      {checkOutDate > new Date().getTime() ||
+                      this.props.reservation.checkedIn ? (
+                        <React.Fragment>
+                          {this.props.userSession &&
+                          this.props.userSession.userId ===
+                            this.reservation.user &&
+                          !this.props.reservation.checkedIn ? (
+                            <button
+                              className="listing-card-button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                e.preventDefault();
+                                this.setState({ confirmCheck: true });
+                                this.setState({ checkState: "in" });
+                              }}
+                            >
+                              {!this.loading ? (
+                                "Check-in"
+                              ) : (
+                                <div id="spinner" />
+                              )}
+                            </button>
+                          ) : (
+                            <>{/* Render an unclickable button */}</>
+                          )}
+                          {this.props.userSession &&
+                          this.props.userSession.userId ===
+                            this.reservation.user &&
+                          this.props.reservation.checkedIn ? (
+                            <button
+                              className="listing-card-button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                e.preventDefault();
+                                this.setState({ confirmCheck: true });
+                                this.setState({ checkState: "out" });
+                              }}
+                            >
+                              {!this.loading ? (
+                                "Check-Out"
+                              ) : (
+                                <div id="spinner" />
+                              )}
+                            </button>
+                          ) : null}
+                        </React.Fragment>
+                      ) : (
+                        <p>Expired</p>
+                      )}
+                    </React.Fragment>
+                  )}
+                </div>
               </NavLink>
             </div>
           )

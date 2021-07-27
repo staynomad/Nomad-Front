@@ -57,10 +57,10 @@ class CreateListing extends Component {
               country: "",
               zipcode: "",
               aptnum: "",
-              coordinates: {
-                lat: null,
-                lng: null,
-              },
+            },
+            coordinates: {
+              lat: null,
+              lng: null,
             },
             description: "",
             details: {
@@ -132,10 +132,10 @@ class CreateListing extends Component {
               country: "",
               zipcode: "",
               aptnum: "",
-              coordinates: {
-                lat: null,
-                lng: null,
-              },
+            },
+            coordinates: {
+              lat: null,
+              lng: null,
             },
             description: "",
             details: {
@@ -227,7 +227,6 @@ class CreateListing extends Component {
 
   componentDidUpdate(prevProps) {
     const currentListing = this.props.editListing;
-    console.log(currentListing);
     if (currentListing !== prevProps.editListing) {
       this.setState({
         ...this.state,
@@ -692,13 +691,13 @@ class CreateListing extends Component {
         ...this.state.form,
         location: {
           address: value,
-          coordinates: latLng,
           street: street ? street : "",
           city: city ? city : "",
           state: state ? state : "",
           country: country ? country : "",
           zipcode: zipcode ? zipcode : "",
         },
+        coordinates: latLng,
       },
     });
   };
@@ -734,8 +733,6 @@ class CreateListing extends Component {
       calendarURL: this.state.form.calendarURL,
       booked: this.props.editListing.booked,
     };
-
-    console.log(editedListing);
 
     editedListingData.append(
       "listingData",
@@ -880,7 +877,8 @@ class CreateListing extends Component {
       available: availableDates,
       amenities: this.state.form.amenities,
       calendarURL: this.state.form.calendarURL,
-      booked: this.props.booked ? this.props.booked : null,
+      booked: this.props.booked ? this.props.booked : [],
+      coordinates: this.state.form.coordinates,
     };
 
     newListingData.append(
@@ -1140,15 +1138,15 @@ class CreateListing extends Component {
                                     ...this.state.form,
                                     location: {
                                       address: "",
-                                      coordinates: {
-                                        lat: null,
-                                        lng: null,
-                                      },
                                       street: "",
                                       city: "",
                                       state: "",
                                       country: "",
                                       zipcode: "",
+                                    },
+                                    coordinates: {
+                                      lat: null,
+                                      lng: null,
                                     },
                                   },
                                 })
@@ -1626,7 +1624,6 @@ class CreateListing extends Component {
                           value="Next"
                           onClick={() =>
                             this.setState({ attemptSubmit: true }, () => {
-                              console.log(this.state.isCompleted);
                               if (this.state.isCompleted)
                                 this.setState({ isReviewingListing: true });
                             })
