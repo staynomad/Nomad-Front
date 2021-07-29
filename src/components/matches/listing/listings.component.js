@@ -173,57 +173,7 @@ class Listings extends Component {
             <div className="account-listing-button">
               <NavLink to="/CreateListing">Create Listing</NavLink>
             </div>
-            {/* {!this.state.hideExpired ? (
-              <div
-                className="account-listing-button"
-                onClick={this.handleExpiredToggle}
-              >
-                Hide Expired
-              </div>
-            ) : (
-              <div
-                className="account-listing-button"
-                onClick={this.handleExpiredToggle}
-              >
-                Show Expired
-              </div>
-            )} */}
-            <div className="account-switch-container">
-              <p>Show Expired</p>
-              <Switch
-                checked={!this.state.hideExpired}
-                onChange={this.handleExpiredToggle}
-              />
-            </div>
-            {/* {!this.state.filters.showDrafts ? (
-              <div
-                className="account-listing-button"
-                onClick={() =>
-                  this.setState((prevState) => ({
-                    filters: {
-                      ...prevState.filters,
-                      showDrafts: true,
-                    },
-                  }))
-                }
-              >
-                Show Drafts
-              </div>
-            ) : (
-              <div
-                className="account-listing-button"
-                onClick={() =>
-                  this.setState((prevState) => ({
-                    filters: {
-                      ...prevState.filters,
-                      showDrafts: false,
-                    },
-                  }))
-                }
-              >
-                Show Active
-              </div>
-            )} */}
+            {/* show drafts */}
             <div className="account-switch-container">
               <p>Show Drafts</p>
               <Switch
