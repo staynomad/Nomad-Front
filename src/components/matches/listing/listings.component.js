@@ -45,6 +45,7 @@ class Listings extends Component {
   handleSearch() {
     let filter;
     let filterClicked;
+    console.log(filter);
     if (this.props.listingFilterState) {
       filter = this.props.listingFilterState;
       filterClicked =

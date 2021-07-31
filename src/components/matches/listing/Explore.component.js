@@ -78,7 +78,7 @@ const AllListings = (props) => {
     };
     getFurtherRadius();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.Listing.exploreNearYou]);
+  }, []);
 
   const findLocationFail = async (position) => {
     //LA Coords if the user denies location access

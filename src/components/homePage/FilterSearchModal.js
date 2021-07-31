@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Select from "react-select";
 import "./filtersearchmodal.css";
 
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
@@ -7,12 +8,17 @@ import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined"
 import RadioButtonUncheckedOutlinedIcon from "@material-ui/icons/RadioButtonUncheckedOutlined";
 import RadioButtonCheckedOutlinedIcon from "@material-ui/icons/RadioButtonCheckedOutlined";
 
+import { stateStyles, stateOptions } from "../createListing/stateDropdown";
+import countryDropdown from "../createListing/countryDropdown";
+
 const FilterSearchModal = (props) => {
   const [priceInput, setPriceInput] = useState("");
   const [guestsInput, setGuestsInput] = useState("");
   //null = no sort, true = high to low, false = low to high
   const [sortPrice, setSortPrice] = useState(null);
   const [sortGuests, setSortGuests] = useState(null);
+  const [stateFilter, setStateFilter] = useState("");
+  const [countryFilter, setCountryFilter] = useState("");
 
   const handlePriceChange = (e) => {
     if (!isNaN(e.target.value) && e.target.value < 1000) {
@@ -109,6 +115,44 @@ const FilterSearchModal = (props) => {
             </div>
           </div>
         </div>
+        <div className="filter-searh-modal-top-container">
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              padding: "0 2rem",
+            }}
+          >
+            <h2 style={{ width: "10rem" }}>Country:</h2>
+            <Select
+              onChange={(e) => setCountryFilter(e.value)}
+              value={countryDropdown.filter(
+                (option) => option.value === countryFilter
+              )}
+              placeholder="Select Country..."
+              styles={stateStyles}
+              options={countryDropdown}
+            />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              padding: "0 2rem",
+            }}
+          >
+            <h2 style={{ width: "10rem" }}>State:</h2>
+            <Select
+              onChange={(e) => setStateFilter(e.value)}
+              value={stateOptions.filter(
+                (option) => option.value === stateFilter
+              )}
+              placeholder="Select State..."
+              styles={stateStyles}
+              options={stateOptions}
+            />
+          </div>
+        </div>
       </div>
       <div className="filter-search-modal-button-container">
         <button
@@ -118,6 +162,8 @@ const FilterSearchModal = (props) => {
               sortByPrice: sortPrice,
               maxPrice: priceInput === "" ? null : priceInput,
               minGuests: guestsInput === "" ? null : guestsInput,
+              countryFilter: countryFilter === "" ? null : countryFilter,
+              stateFilter: stateFilter === "" ? null : stateFilter,
             });
             props.closeModal();
           }}
