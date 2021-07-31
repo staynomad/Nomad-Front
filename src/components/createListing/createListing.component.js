@@ -1055,7 +1055,7 @@ class CreateListing extends Component {
                                 </div>
 
                                 <div className="create-listing-input-container">
-                                  <div className="label-text">State:</div>
+                                  <div className="label-text required">State:</div>
                                   <Select
                                     onChange={(e) =>
                                       this.setState({
@@ -1077,11 +1077,12 @@ class CreateListing extends Component {
                                     placeholder="Select State..."
                                     styles={stateStyles}
                                     options={stateOptions}
+                                    required
                                   />
                                 </div>
 
                                 <div className="create-listing-input-container">
-                                  <div className="label-text">Country:</div>
+                                  <div className="label-text required">Country:</div>
                                   <Select
                                     onChange={(e) =>
                                       this.setState({
@@ -1103,6 +1104,7 @@ class CreateListing extends Component {
                                     placeholder="Select Country..."
                                     styles={stateStyles}
                                     options={countryDropdown}
+                                    required
                                   />
                                 </div>
 
@@ -1538,7 +1540,7 @@ class CreateListing extends Component {
                           )}
                         </div>
                         <div className="edit-listing-transfer-container">
-                          <div className="transferEmailLabel required">
+                          <div className="transferEmailLabel">
                             Email to Transfer to
                           </div>
                           <input
@@ -1549,7 +1551,6 @@ class CreateListing extends Component {
                             className="input-box-details required"
                             value={this.state.transferEmail}
                             onChange={this.handleNameValueChange}
-                            required
                           />
                           <button
                             onClick={() => {
