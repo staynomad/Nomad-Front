@@ -252,7 +252,7 @@ class ListingPage extends Component {
           JSON.stringify(body)
         );
         // Redirect to stripe session after inactive reservation is made
-        if (response.status === 201) {
+        if (response && response.status === 201) {
           const session = response.data; //json();
           // Redirect to stripe checkout session
           const result = await stripe.redirectToCheckout({
@@ -262,16 +262,18 @@ class ListingPage extends Component {
           this.setState({
             isLoading: false,
           });
+        } else {
+          alert(response.data.error);
+          this.setState({
+            isLoading: false,
+          });
         }
       }
     } catch (e) {
-      // console.log(e.response.data.errors);
-      console.log(e);
       this.setState({
         isLoading: false,
       });
-      // This needs to be fixed v
-      // alert(e.response.data.errors); //response.data
+      alert("Unable to reserve listing.");
     }
   }
 
