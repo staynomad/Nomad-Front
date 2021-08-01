@@ -439,16 +439,18 @@ class CreateListing extends Component {
 
     /* Handle changes for details */
     if (Object.keys(this.state.form.details).includes(name)) {
-      if (!isNaN(value) && value < 100 && value >= 0) {
-        this.setState({
-          form: {
-            ...this.state.form,
-            details: {
-              ...this.state.form.details,
-              [name]: Math.round(parseInt(value)),
+      if (!isNaN(value) && value < 100 && value >= 0 && value % 0.5 === 0 ) {
+        if (name !== "maxpeople" || value % 1 === 0 ) {
+          this.setState({
+            form: {
+              ...this.state.form,
+              details: {
+                ...this.state.form.details,
+                [name]: value,
+              },
             },
-          },
-        });
+          });
+        }
       } else {
         /* Clear input if it is not valid */
         this.setState({
@@ -545,7 +547,7 @@ class CreateListing extends Component {
         this.state.form.details.baths < 0 ||
         this.state.form.details.baths > 99 ||
         this.state.form.details.maxpeople < 0 ||
-        this.state.form.details.maxpeople > 99
+        this.state.form.details.maxpeople > 99 
       ) {
         this.setState({ isCompleted: false });
         isFormValid = false;
@@ -944,7 +946,7 @@ class CreateListing extends Component {
 
                       <div>
                         <div className="create-listing-content">
-                          <div className="questionText">Title</div>
+                          <div className="questionText required">Title</div>
                           <div className="spacer_m"></div>
                           <input
                             type="text"
@@ -1026,7 +1028,7 @@ class CreateListing extends Component {
                                   )}
                                 </PlacesAutocomplete>
                                 <div className="create-listing-input-container">
-                                  <div className="label-text">Street:</div>
+                                  <div className="label-text required">Street:</div>
                                   <input
                                     type="text"
                                     name="street"
@@ -1038,7 +1040,7 @@ class CreateListing extends Component {
                                   />
                                 </div>
                                 <div className="create-listing-input-container">
-                                  <div className="label-text">City:</div>
+                                  <div className="label-text required">City:</div>
                                   <input
                                     type="text"
                                     name="city"
@@ -1051,7 +1053,7 @@ class CreateListing extends Component {
                                 </div>
 
                                 <div className="create-listing-input-container">
-                                  <div className="label-text">State:</div>
+                                  <div className="label-text required">State:</div>
                                   <Select
                                     onChange={(e) =>
                                       this.setState({
@@ -1073,11 +1075,12 @@ class CreateListing extends Component {
                                     placeholder="Select State..."
                                     styles={stateStyles}
                                     options={stateOptions}
+                                    required
                                   />
                                 </div>
 
                                 <div className="create-listing-input-container">
-                                  <div className="label-text">Country:</div>
+                                  <div className="label-text required">Country:</div>
                                   <Select
                                     onChange={(e) =>
                                       this.setState({
@@ -1099,11 +1102,12 @@ class CreateListing extends Component {
                                     placeholder="Select Country..."
                                     styles={stateStyles}
                                     options={countryDropdown}
+                                    required
                                   />
                                 </div>
 
                                 <div className="create-listing-input-container">
-                                  <div className="label-text">Zipcode:</div>
+                                  <div className="label-text required">Zipcode:</div>
                                   <input
                                     type="text"
                                     name="zipcode"
@@ -1158,7 +1162,7 @@ class CreateListing extends Component {
                           <div className="spacer_m"></div>
 
                           {/* Description */}
-                          <div className="questionText">Description</div>
+                          <div className="questionText required">Description</div>
                           <div className="spacer_xs"></div>
 
                           <textarea
@@ -1181,11 +1185,14 @@ class CreateListing extends Component {
                             <div className="questionText">Details</div>
                             <div className="details-wrapper">
                               <div className="beds">
-                                <div className="create-listing-details-label">
+                                <div className="create-listing-details-label required">
                                   Beds:{" "}
                                 </div>
                                 <input
-                                  type="text"
+                                  type="number"
+                                  min="0"
+                                  max="99"
+                                  step="0.5"
                                   name="beds"
                                   placeholder="e.g. 3"
                                   className="input-box-details"
@@ -1197,12 +1204,15 @@ class CreateListing extends Component {
 
                               <div>
                                 <div className="baths">
-                                  <div className="create-listing-details-label">
+                                  <div className="create-listing-details-label required">
                                     Baths:{" "}
                                   </div>
                                   <input
-                                    type="text"
+                                    type="number"
                                     name="baths"
+                                    min="0"
+                                    max="99"
+                                    step="0.5"
                                     className="input-box-details"
                                     placeholder="e.g. 2"
                                     value={this.state.form.details.baths}
@@ -1212,11 +1222,14 @@ class CreateListing extends Component {
                                 </div>
 
                                 <div className="maxppl">
-                                  <div className="create-listing-details-label">
+                                  <div className="create-listing-details-label required">
                                     Max people:{" "}
                                   </div>
                                   <input
-                                    type="text"
+                                    type="number"
+                                    min="0"
+                                    max="99"
+                                    step="1"
                                     name="maxpeople"
                                     placeholder="e.g. 5"
                                     className="input-box-details"
@@ -1233,7 +1246,7 @@ class CreateListing extends Component {
                           {/* Price */}
                           <div>
                             <div>
-                              <div className="questionText">Price</div>
+                              <div className="questionText required">Price</div>
                               <br />
                               <input
                                 type="number"
@@ -1262,7 +1275,7 @@ class CreateListing extends Component {
                           {/* Amenities */}
                           <div className="spacer_m" />
                           <div className="create-listing-amenities-container">
-                            <div className="questionText">Amenities</div>
+                            <div className="questionText required">Amenities</div>
                             <div className="spacer_s"></div>
                             <div className="amenities-list">
                               {options.map((option) => {
@@ -1351,7 +1364,7 @@ class CreateListing extends Component {
 
                           {/* Pictures */}
                           <div className="create-listing-photos-container">
-                            <div className="questionText">Pictures</div> <br />
+                            <div className="questionText required">Pictures</div> <br />
                             <div>
                               {this.state.isFieldValid.invalidPhotoType ? (
                                 <div className="bad-image">
@@ -1389,7 +1402,7 @@ class CreateListing extends Component {
                           </div>
 
                           {/* Calendar */}
-                          <div className="questionText">Availability</div>
+                          <div className="questionText required">Availability</div>
                           {this.state.displayImport ? (
                             <div>
                               <form onSubmit={this.handleCalendarSubmit}>
@@ -1525,18 +1538,17 @@ class CreateListing extends Component {
                           )}
                         </div>
                         <div className="edit-listing-transfer-container">
-                          <label htmlFor="transferEmail">
+                          <div className="transferEmailLabel">
                             Email to Transfer to
-                          </label>
+                          </div>
                           <input
                             type="text"
                             name="transferEmail"
                             id="transferEmail"
                             placeholder="test@test.com"
-                            className="input-box-details"
+                            className="input-box-details required"
                             value={this.state.transferEmail}
                             onChange={this.handleNameValueChange}
-                            required
                           />
                           <button
                             onClick={() => {
