@@ -86,11 +86,13 @@ class verifyAccount extends Component {
             <h1>Verify your account</h1> <br />
             Click the button below to resend a verification link <br />
             <br />
-            <input
+            <button
               type="button"
+              className="btn green edit-profile-btn"
               onClick={this.resendVerifyEmail}
-              value="Send Now"
-            />{" "}
+            >
+              Send Verification Email
+            </button>
             <br />
             <br />
             <br />
