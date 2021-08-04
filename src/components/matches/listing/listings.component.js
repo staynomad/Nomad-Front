@@ -168,7 +168,7 @@ class Listings extends Component {
     };
 
     const user = this.props.userInfo;
-    if (user.isVerified === false) {
+    if (!user.isVerified) {
       return (
         <div className="my-listings-access-denied">
           <p>
