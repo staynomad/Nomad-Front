@@ -16,6 +16,7 @@ import {
   searchUserListings,
 } from "../../../redux/actions/searchListingActions";
 import ProfileHorizontalScrollMenu from "./ProfileHorizontalScrollMenu.component";
+import VerifyAccountButton from "../../authentication/verifyAccountButton.component";
 
 class Listings extends Component {
   constructor(props) {
@@ -166,154 +167,174 @@ class Listings extends Component {
       this.setState({ sortAnchorEl: null });
     };
 
-    return (
-      <>
-        {this.props.location.pathname === "/MyAccount" ? (
-          <div className="account-listing-buttons-container">
-            <div className="account-listing-button">
-              <NavLink to="/CreateListing">Create Listing</NavLink>
-            </div>
-            {/* show drafts */}
-            <div className="account-switch-container">
-              <p>Show Drafts</p>
-              <Switch
-                checked={this.state.filters.showDrafts}
-                onChange={() =>
-                  this.setState((prevState) => ({
-                    filters: {
-                      ...prevState.filters,
-                      showDrafts: !this.state.filters.showDrafts,
-                    },
-                  }))
-                }
-              />
-            </div>
-            <MoreVertIcon
-              onClick={handleClick}
-              className="vert-menu account-listing-menu-button"
-            />
-            <MaterialUIMenu
-              id="long-menu"
-              anchorEl={this.state.sortAnchorEl}
-              keepMounted
-              open={open}
-              onClose={handleClose}
-            >
-              <MenuItem
-                onClick={() => {
-                  handleClose();
-                  this.setState({ sorting: "newest" });
-                }}
-              >
-                Sort by Created Date (Newest First)
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  handleClose();
-                  this.setState({ sorting: "oldest" });
-                }}
-              >
-                Sort by Created Date (Oldest First)
-              </MenuItem>
-            </MaterialUIMenu>
-          </div>
-        ) : null}
-        {this.state.listings ? (
-          listings.length <= 0 ? (
-            <>
-              <p
-                className="account-listing-no-listing"
-                ref={(el) => {
-                  if (el) {
-                    el.style.setProperty("text-align", "center", "important");
-                  }
-                }}
-              >
-                No listings yet!
-              </p>
-            </>
-          ) : this.props.location.pathname === "/MyAccount" ? (
-            <ProfileHorizontalScrollMenu
-              className="horizontal-scroll-container"
-              data={this.state.listings.filter((listing) =>
-                this.state.filters.showDrafts
-                  ? listing
-                  : listing.active === true
-              )}
-            />
-          ) : (
-            <div className="listings-container">
-              <div
-                id="listing-content"
-                className={
-                  this.props.location.pathname === "/MyAccount"
-                    ? ""
-                    : "wow fadeInUp"
-                }
-                data-wow-delay="0.5s"
-              >
-                {_.chain(this.state.listings)
-                  .orderBy(
-                    [
-                      (listing) =>
-                        this.state.filters.sortByPrice !== undefined
-                          ? listing.price
-                          : listing,
-                    ],
-                    [this.state.filters.sortByPrice === "true" ? "desc" : "asc"]
-                  )
-                  .orderBy(
-                    [
-                      (listing) =>
-                        this.state.filters.sortByGuests !== undefined
-                          ? listing.details.maxpeople
-                          : listing,
-                    ],
-                    [
-                      this.state.filters.sortByGuests === "true"
-                        ? "desc"
-                        : "asc",
-                    ]
-                  )
-                  .filter((listing) =>
-                    this.state.filters.maxPrice === undefined
-                      ? listing
-                      : listing.price <= this.state.filters.maxPrice
-                  )
-                  .filter((listing) =>
-                    this.state.filters.minGuests === undefined
-                      ? listing
-                      : listing.details.maxpeople >=
-                        this.state.filters.minGuests
-                  )
-                  .map((listing, idx) => {
-                    if (
-                      idx >= this.state.itemsToDisplay[0] &&
-                      idx <= this.state.itemsToDisplay[1]
-                    )
-                      return (
-                        <ListingCard key={listing._id} listing={listing} />
-                      );
-                    else return null;
-                  })
-                  .value()}
+    const user = this.props.userInfo;
+    if (!user.isVerified) {
+      return (
+        <div className="my-listings-access-denied">
+          <p>
+            In order to view and create listings, please verify your account by
+            following the instructions in the verification email.
+          </p>
+          <br />
+          <br />
+          <br />
+          <br />
+          <VerifyAccountButton />
+        </div>
+      );
+    } else {
+      return (
+        <>
+          {this.props.location.pathname === "/MyAccount" ? (
+            <div className="account-listing-buttons-container">
+              <div className="account-listing-button">
+                <NavLink to="/CreateListing">Create Listing</NavLink>
               </div>
+              {/* show drafts */}
+              <div className="account-switch-container">
+                <p>Show Drafts</p>
+                <Switch
+                  checked={this.state.filters.showDrafts}
+                  onChange={() =>
+                    this.setState((prevState) => ({
+                      filters: {
+                        ...prevState.filters,
+                        showDrafts: !this.state.filters.showDrafts,
+                      },
+                    }))
+                  }
+                />
+              </div>
+              <MoreVertIcon
+                onClick={handleClick}
+                className="vert-menu account-listing-menu-button"
+              />
+              <MaterialUIMenu
+                id="long-menu"
+                anchorEl={this.state.sortAnchorEl}
+                keepMounted
+                open={open}
+                onClose={handleClose}
+              >
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    this.setState({ sorting: "newest" });
+                  }}
+                >
+                  Sort by Created Date (Newest First)
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    this.setState({ sorting: "oldest" });
+                  }}
+                >
+                  Sort by Created Date (Oldest First)
+                </MenuItem>
+              </MaterialUIMenu>
             </div>
-          )
-        ) : null}
-        <Pagination
-          count={this.state.pageCount}
-          onChange={this.handlePageChange}
-        />
-      </>
-    );
+          ) : null}
+          {this.state.listings ? (
+            listings.length <= 0 ? (
+              <>
+                <p
+                  className="account-listing-no-listing"
+                  ref={(el) => {
+                    if (el) {
+                      el.style.setProperty("text-align", "center", "important");
+                    }
+                  }}
+                >
+                  No listings yet!
+                </p>
+              </>
+            ) : this.props.location.pathname === "/MyAccount" ? (
+              <ProfileHorizontalScrollMenu
+                className="horizontal-scroll-container"
+                data={this.state.listings.filter((listing) =>
+                  this.state.filters.showDrafts
+                    ? listing
+                    : listing.active === true
+                )}
+              />
+            ) : (
+              <div className="listings-container">
+                <div
+                  id="listing-content"
+                  className={
+                    this.props.location.pathname === "/MyAccount"
+                      ? ""
+                      : "wow fadeInUp"
+                  }
+                  data-wow-delay="0.5s"
+                >
+                  {_.chain(this.state.listings)
+                    .orderBy(
+                      [
+                        (listing) =>
+                          this.state.filters.sortByPrice !== undefined
+                            ? listing.price
+                            : listing,
+                      ],
+                      [
+                        this.state.filters.sortByPrice === "true"
+                          ? "desc"
+                          : "asc",
+                      ]
+                    )
+                    .orderBy(
+                      [
+                        (listing) =>
+                          this.state.filters.sortByGuests !== undefined
+                            ? listing.details.maxpeople
+                            : listing,
+                      ],
+                      [
+                        this.state.filters.sortByGuests === "true"
+                          ? "desc"
+                          : "asc",
+                      ]
+                    )
+                    .filter((listing) =>
+                      this.state.filters.maxPrice === undefined
+                        ? listing
+                        : listing.price <= this.state.filters.maxPrice
+                    )
+                    .filter((listing) =>
+                      this.state.filters.minGuests === undefined
+                        ? listing
+                        : listing.details.maxpeople >=
+                          this.state.filters.minGuests
+                    )
+                    .map((listing, idx) => {
+                      if (
+                        idx >= this.state.itemsToDisplay[0] &&
+                        idx <= this.state.itemsToDisplay[1]
+                      )
+                        return (
+                          <ListingCard key={listing._id} listing={listing} />
+                        );
+                      else return null;
+                    })
+                    .value()}
+                </div>
+              </div>
+            )
+          ) : null}
+          <Pagination
+            count={this.state.pageCount}
+            onChange={this.handlePageChange}
+          />
+        </>
+      );
+    }
   }
 }
 
 const mapStateToProps = (state) => {
   const stateToReturn = { ...state };
-  if (state.Login.userInfo)
-    stateToReturn["userSession"] = state.Login.userInfo.session;
+  if (state.Login.userInfo) stateToReturn["userInfo"] = state.User.userInfo;
   if (state.Listing.userListings)
     stateToReturn["userListings"] = state.Listing.userListings;
   if (state.Listing.searchListings)
