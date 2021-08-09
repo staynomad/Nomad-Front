@@ -41,25 +41,25 @@ const Signup = (props) => {
       .then((res) => {
         window.sessionStorage.accessToken = res.token;
         setValidationError("");
-        props.submitLogin({
-          email: userSignup.email,
-          password: userSignup.password,
-        });
-        window.location = "/";
-        setLoading(false);
+        props
+          .submitLogin({
+            email: userSignup.email,
+            password: userSignup.password,
+          })
+          .then(() => {
+            window.location = "/";
+            setLoading(false);
+          })
+          .catch((err) => {
+            setValidationError(`${err}`);
+            setLoading(false);
+          });
       })
       .catch((err) => {
-        let errorMessage;
-        if (err?.response?.data) {
-          const error = err.response.data[0];
-          const errorField = error.param;
-          errorMessage = error.msg;
-          setUserSignup({ ...userSignup, [errorField]: "" });
-        } else {
-          console.log(err);
-          errorMessage = err;
-        }
-
+        const error = err.response.data[0];
+        const errorField = error.param;
+        const errorMessage = error.msg;
+        setUserSignup({ ...userSignup, [errorField]: "" });
         setValidationError(`${errorMessage}`);
         setLoading(false);
       });
