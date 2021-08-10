@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import { app } from "../../utils/axiosConfig.js";
 import "./signup.css";
 import { makeStyles } from "@material-ui/core/styles";
@@ -7,6 +8,7 @@ import Alert from "@material-ui/lab/Alert";
 import GoogleSignIn from "./GoogleSignIn";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
+import { submitLogin } from "../../redux/actions/authActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,7 +30,6 @@ const Signup = (props) => {
 
   const classes = useStyles();
 
-  const [signupSuccess, setSignupSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [validationError, setValidationError] = useState("");
 
@@ -40,7 +41,19 @@ const Signup = (props) => {
       .then((res) => {
         window.sessionStorage.accessToken = res.token;
         setValidationError("");
-        setSignupSuccess(true);
+        props
+          .submitLogin({
+            email: userSignup.email,
+            password: userSignup.password,
+          })
+          .then(() => {
+            window.location = "/";
+            setLoading(false);
+          })
+          .catch((err) => {
+            setValidationError(`${err}`);
+            setLoading(false);
+          });
       })
       .catch((err) => {
         const error = err.response.data[0];
@@ -52,9 +65,7 @@ const Signup = (props) => {
       });
   };
 
-  return signupSuccess ? (
-    <Redirect to="/login" />
-  ) : (
+  return (
     <div id="signup-content">
       <div className="signup-form-container">
         <h1 style={{ color: "#31473b", fontSize: "48px" }}>Sign Up</h1>
@@ -157,4 +168,10 @@ const Signup = (props) => {
   );
 };
 
-export default Signup;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    submitLogin: (userLogin) => dispatch(submitLogin(userLogin)),
+  };
+};
+
+export default withRouter(connect(null, mapDispatchToProps)(Signup));
