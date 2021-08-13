@@ -18,7 +18,11 @@ class verifyAccount extends Component {
   componentDidMount() {
     if (this.props.match.params.userId !== "send") {
       app
-        .post("/user/verify/" + this.props.match.params.userId)
+        .post("/user/verify/" + this.props.match.params.userId, {
+          headers: {
+            Authorization: `Bearer ${this.props.userSession.token}`,
+          },
+        })
         .then(() => {
           this.setState({
             verified: true,
