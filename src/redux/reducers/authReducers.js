@@ -11,6 +11,7 @@ export default function reducer(state = {}, action) {
             isHost: action.isHost,
             token: action.token,
             userId: action.userId,
+            isVerified: action.isVerified,
           },
         },
       };

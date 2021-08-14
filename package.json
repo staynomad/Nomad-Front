@@ -16,6 +16,7 @@
     "ical": "^0.8.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
+    "query-string": "^4.3.4",
     "react": "^17.0.2",
     "react-day-picker": "^7.4.10",
     "react-device-detect": "^1.17.0",
@@ -69,5 +70,8 @@
     "husky": "^7.0.1",
     "nodemon": "^2.0.12",
     "prettier": "^2.3.2"
+  },
+  "lint-staged": {
+    "*.{js,css,json,md}": "prettier --write"
   }
 }

@@ -9,12 +9,13 @@ export const SET_USER_SESSION = "VHomes/search/SET_USER_SESSION";
 export const REMOVE_USER_SESSION = "VHomes/search/REMOVE_USER_SESSION";
 
 /* Actions */
-const setUserSession = (isHost, token, userId, user) => ({
+const setUserSession = (isHost, token, userId, user, isVerified) => ({
   type: SET_USER_SESSION,
   isHost,
   token,
   userId,
   user,
+  isVerified,
 });
 const removeUserSession = () => ({ type: REMOVE_USER_SESSION });
 
@@ -27,10 +28,10 @@ export const submitLogin = (userLogin) => async (dispatch) => {
   const loginRes = await handleReq("/login", "POST", headers, userLogin);
 
   if (loginRes && loginRes.status === 200) {
-    const { isHost, token, userId, user } = loginRes.data;
+    const { isHost, token, userId, user, isVerified } = loginRes.data;
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     dispatch(setLoadingFalse());
-    dispatch(setUserSession(isHost, token, userId, user));
+    dispatch(setUserSession(isHost, token, userId, user, isVerified));
   } else {
     dispatch(setLoadingFalse());
     dispatch(setAuthError(["Error logging in. Please try again."]));
@@ -50,10 +51,10 @@ export const submitGoogleLogin = (googleData, isHost) => async (dispatch) => {
   );
 
   if (loginRes && loginRes.status === 200) {
-    const { isHost, token, userId, user } = loginRes.data;
+    const { isHost, token, userId, user, isVerified } = loginRes.data;
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     dispatch(setLoadingFalse());
-    dispatch(setUserSession(isHost, token, userId, user));
+    dispatch(setUserSession(isHost, token, userId, user, isVerified));
     dispatch(push(`/`));
   } else {
     const err = loginRes ? loginRes.error : "Error logging in with Google.";
