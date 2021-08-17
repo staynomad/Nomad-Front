@@ -40,10 +40,11 @@ const NewHome = (props) => {
       }, 1000);
     }
     window.scrollTo(0, 0);
-    const getData = async () => {
-      await props.getPopularListings(10);
-    };
-    getData();
+    // const getData = async () => {
+    //   await props.getPopularListings(10);
+    // };
+    // getData();
+    props.getPopularListings(10);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -109,7 +110,7 @@ const NewHome = (props) => {
             </div>
           </div>
           <HorizontalScrollMenu
-            data={props.Listing.popularListings}
+            data={props.popularListings}
             title="Featured Listings"
           />
           <div className="spacer_xs"></div>
