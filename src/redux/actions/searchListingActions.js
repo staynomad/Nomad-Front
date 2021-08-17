@@ -42,7 +42,7 @@ export const searchForListings = (itemToSearch) => async (dispatch) => {
     itemToSearch,
   });
 
-  if (searchRes.status === 200) {
+  if (searchRes && searchRes.status === 200) {
     const { filteredListings } = await searchRes.data;
     dispatch(setSearchListings(filteredListings));
   } else {
@@ -62,15 +62,15 @@ export const searchAllListings = () => async (dispatch) => {
 // if explore is true, store res in different location in redux store
 export const searchFilteredListings = (filterState) => async (dispatch) => {
   const headers = { "Content-Type": "application/json" };
-  const searchAllRes = await handleReq(
+  const searchRes = await handleReq(
     "/listings/filteredListings",
-    "GET",
+    "POST",
     headers,
     filterState
   );
 
-  if (searchAllRes.status === 200) {
-    const { listings } = await searchAllRes.data;
+  if (searchRes && searchRes.status === 200) {
+    const listings = await searchRes.data;
     dispatch(setSearchListings(listings));
   }
 };

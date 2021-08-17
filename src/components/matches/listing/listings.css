@@ -116,7 +116,7 @@
   background: rgb(233, 89, 89);
 }
 
-.my-listings-access-denied{
+.my-listings-access-denied {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -124,7 +124,7 @@
   padding-top: 4rem;
 }
 
-.my-listings-access-denied p{
+.my-listings-access-denied p {
   margin: 0 !important;
   font-size: 16px !important;
   font-weight: normal;

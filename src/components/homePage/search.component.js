@@ -15,6 +15,8 @@ const Search = (props) => {
     sortByPrice: null,
     minGuests: null,
     maxPrice: null,
+    stateFilter: null,
+    countryFilter: null,
   });
 
   const history = createBrowserHistory({ forceRefresh: true });
@@ -30,7 +32,11 @@ const Search = (props) => {
           : ""
       }${
         filters.sortByPrice !== null ? "&sortPrice=" + filters.sortByPrice : ""
-      }`
+      }${
+        filters.countryFilter !== null
+          ? "&country=" + filters.countryFilter
+          : ""
+      }${filters.stateFilter !== null ? "&state=" + filters.stateFilter : ""}`
     );
     setItemToSearch(itemToSearch);
   };

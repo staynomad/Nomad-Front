@@ -708,12 +708,11 @@ span.import-info {
   }
 }
 .required:after {
-  content:" *";
+  content: " *";
   color: red;
 }
 
-.transferEmailLabel{
-
+.transferEmailLabel {
   color: #575759;
   font-size: 150%;
   padding-bottom: 2%;

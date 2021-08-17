@@ -10,13 +10,12 @@ import _ from "lodash";
 import "./listings.css";
 import ListingCard from "./listingCard.component";
 import {
-  searchAllListings,
-  searchForListings,
   searchFilteredListings,
   searchUserListings,
 } from "../../../redux/actions/searchListingActions";
 import ProfileHorizontalScrollMenu from "./ProfileHorizontalScrollMenu.component";
 import VerifyAccountButton from "../../authentication/verifyAccountButton.component";
+import queryString from "query-string";
 
 class Listings extends Component {
   constructor(props) {
@@ -44,29 +43,12 @@ class Listings extends Component {
   }
 
   handleSearch() {
-    let filter;
-    let filterClicked;
-    if (this.props.listingFilterState) {
-      filter = this.props.listingFilterState;
-      filterClicked =
-        filter.minGuestsClicked ||
-        filter.minRatingClicked ||
-        filter.startingPriceClicked;
-    }
+    /* Uses the url parameters to send the search query */
+    const filterParams = queryString.parse(this.props.location.search);
 
-    if (this.props.location.search) {
-      /* Get listing using search term */
-      const itemToSearch = this.props.router.location.query.search;
-      this.props.searchForListings(itemToSearch);
-    } else if (filterClicked) {
-      /* Get listing using listing filter */
-      this.props.searchFilteredListings(filter, false);
-    } else {
-      // console.log(this.props.searchOnlyUser)
-      if (this.props.searchOnlyUser)
-        this.props.searchUserListings(this.props.User.userInfo._id);
-      else this.props.searchAllListings();
-    }
+    if (this.props.searchOnlyUser)
+      this.props.searchUserListings(this.props.User.userInfo._id);
+    else this.props.searchFilteredListings(filterParams);
   }
 
   componentDidMount() {
@@ -168,7 +150,7 @@ class Listings extends Component {
     };
 
     const user = this.props.userInfo;
-    if (!user.isVerified) {
+    if (!user || !user.isVerified) {
       return (
         <div className="my-listings-access-denied">
           <p>
@@ -334,7 +316,8 @@ class Listings extends Component {
 
 const mapStateToProps = (state) => {
   const stateToReturn = { ...state };
-  if (state.Login.userInfo) stateToReturn["userInfo"] = state.User.userInfo;
+  if (state.Login.userInfo)
+    stateToReturn["userInfo"] = state.Login.userInfo.session;
   if (state.Listing.userListings)
     stateToReturn["userListings"] = state.Listing.userListings;
   if (state.Listing.searchListings)
@@ -344,11 +327,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    searchAllListings: () => dispatch(searchAllListings()),
-    searchForListings: (itemToSearch) =>
-      dispatch(searchForListings(itemToSearch)),
     searchFilteredListings: (filter) =>
-      dispatch(searchFilteredListings(filter, false)),
+      dispatch(searchFilteredListings(filter)),
     searchUserListings: (userId) => dispatch(searchUserListings(userId)),
   };
 };

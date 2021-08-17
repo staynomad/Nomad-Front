@@ -439,8 +439,8 @@ class CreateListing extends Component {
 
     /* Handle changes for details */
     if (Object.keys(this.state.form.details).includes(name)) {
-      if (!isNaN(value) && value < 100 && value >= 0 && value % 0.5 === 0 ) {
-        if (name !== "maxpeople" || value % 1 === 0 ) {
+      if (!isNaN(value) && value < 100 && value >= 0 && value % 0.5 === 0) {
+        if (name !== "maxpeople" || value % 1 === 0) {
           this.setState({
             form: {
               ...this.state.form,
@@ -547,7 +547,7 @@ class CreateListing extends Component {
         this.state.form.details.baths < 0 ||
         this.state.form.details.baths > 99 ||
         this.state.form.details.maxpeople < 0 ||
-        this.state.form.details.maxpeople > 99 
+        this.state.form.details.maxpeople > 99
       ) {
         this.setState({ isCompleted: false });
         isFormValid = false;
@@ -1028,7 +1028,9 @@ class CreateListing extends Component {
                                   )}
                                 </PlacesAutocomplete>
                                 <div className="create-listing-input-container">
-                                  <div className="label-text required">Street:</div>
+                                  <div className="label-text required">
+                                    Street:
+                                  </div>
                                   <input
                                     type="text"
                                     name="street"
@@ -1040,7 +1042,9 @@ class CreateListing extends Component {
                                   />
                                 </div>
                                 <div className="create-listing-input-container">
-                                  <div className="label-text required">City:</div>
+                                  <div className="label-text required">
+                                    City:
+                                  </div>
                                   <input
                                     type="text"
                                     name="city"
@@ -1053,7 +1057,9 @@ class CreateListing extends Component {
                                 </div>
 
                                 <div className="create-listing-input-container">
-                                  <div className="label-text required">State:</div>
+                                  <div className="label-text required">
+                                    State:
+                                  </div>
                                   <Select
                                     onChange={(e) =>
                                       this.setState({
@@ -1080,7 +1086,9 @@ class CreateListing extends Component {
                                 </div>
 
                                 <div className="create-listing-input-container">
-                                  <div className="label-text required">Country:</div>
+                                  <div className="label-text required">
+                                    Country:
+                                  </div>
                                   <Select
                                     onChange={(e) =>
                                       this.setState({
@@ -1107,7 +1115,9 @@ class CreateListing extends Component {
                                 </div>
 
                                 <div className="create-listing-input-container">
-                                  <div className="label-text required">Zipcode:</div>
+                                  <div className="label-text required">
+                                    Zipcode:
+                                  </div>
                                   <input
                                     type="text"
                                     name="zipcode"
@@ -1162,7 +1172,9 @@ class CreateListing extends Component {
                           <div className="spacer_m"></div>
 
                           {/* Description */}
-                          <div className="questionText required">Description</div>
+                          <div className="questionText required">
+                            Description
+                          </div>
                           <div className="spacer_xs"></div>
 
                           <textarea
@@ -1275,7 +1287,9 @@ class CreateListing extends Component {
                           {/* Amenities */}
                           <div className="spacer_m" />
                           <div className="create-listing-amenities-container">
-                            <div className="questionText required">Amenities</div>
+                            <div className="questionText required">
+                              Amenities
+                            </div>
                             <div className="spacer_s"></div>
                             <div className="amenities-list">
                               {options.map((option) => {
@@ -1364,7 +1378,10 @@ class CreateListing extends Component {
 
                           {/* Pictures */}
                           <div className="create-listing-photos-container">
-                            <div className="questionText required">Pictures</div> <br />
+                            <div className="questionText required">
+                              Pictures
+                            </div>{" "}
+                            <br />
                             <div>
                               {this.state.isFieldValid.invalidPhotoType ? (
                                 <div className="bad-image">
@@ -1402,7 +1419,9 @@ class CreateListing extends Component {
                           </div>
 
                           {/* Calendar */}
-                          <div className="questionText required">Availability</div>
+                          <div className="questionText required">
+                            Availability
+                          </div>
                           {this.state.displayImport ? (
                             <div>
                               <form onSubmit={this.handleCalendarSubmit}>

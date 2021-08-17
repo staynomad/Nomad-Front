@@ -45,7 +45,7 @@ export default async function handleReq(
     } else {
       console.log(e);
     }
-    return e.response ? e.esponse : e;
+    return e.response ? e.response : e;
   }
 }
 
