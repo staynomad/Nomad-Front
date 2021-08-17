@@ -760,20 +760,23 @@ class CreateListing extends Component {
   handleExport = (e) => {
     e.preventDefault();
     this.props.getListingById(this.props.match.params.listingId);
-    app
-      .post("/listings/exportListing", {
-        userId: this.props.Listing.editListing.userId,
-        listingId: this.state.listingId,
-        listingCalendar: {
-          available: this.props.Listing.editListing.available,
-          booked: this.props.Listing.editListing.booked,
-        },
-      })
-      .then((res) => {
-        this.setState({
-          exportURL: res.data.url,
-        });
+    const headers = {
+      headers: {
+        Authorization: `Bearer ${this.props.userSession.token}`,
+      },
+    };
+    const data = {
+      listingId: this.props.match.params.listingId,
+      listingCalendar: {
+        available: this.props.Listing.editListing.available,
+        booked: this.props.Listing.editListing.booked,
+      },
+    };
+    app.post("/listings/exportListing", data, headers).then((res) => {
+      this.setState({
+        exportURL: res.data.url,
       });
+    });
   };
 
   handlePublish = (e) => {
