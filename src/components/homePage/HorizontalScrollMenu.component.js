@@ -8,7 +8,6 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import HorizontalListingCard from "../matches/listing/HorizontalListingCard.component";
 
 const HorizontalScrollMenu = (props) => {
-  console.log(props);
   return (
     <div
       className="featured-listings-container wow fadeInUp"
