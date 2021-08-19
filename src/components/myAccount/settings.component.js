@@ -29,7 +29,7 @@ class Settings extends Component {
       .then((res) => {
         this.props.setHost(
           this.state.localIsHost,
-          this.props.User.userInfo.token,
+          this.props.Login.userInfo.session.token,
           userId,
           this.props.User.userInfo.user
         );
