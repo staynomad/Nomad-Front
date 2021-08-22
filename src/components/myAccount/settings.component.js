@@ -18,7 +18,6 @@ class Settings extends Component {
   changeHostStatus = async () => {
     this.state.localIsHost = !this.state.localIsHost;
     const userId = this.props.User.userInfo._id;
-    console.log(this.state.token);
     const url = "/user/setUserInfo/" + userId;
     const data = { isHost: this.state.localIsHost };
     const headers = {
