@@ -4,14 +4,12 @@ import { connect } from "react-redux";
 import handleReq from "../../utils/fetchRequest";
 import { setHost } from "../../redux/actions/authActions";
 import "./settings.css";
-import { app } from "../../utils/axiosConfig.js";
 
 class Settings extends Component {
   constructor(props) {
     super(props);
     this.state = {
       localIsHost: props.User.userInfo.isHost,
-      token: props.Login.userInfo.session.token,
     };
   }
 
@@ -19,25 +17,18 @@ class Settings extends Component {
     this.state.localIsHost = !this.state.localIsHost;
     const userId = this.props.User.userInfo._id;
     const url = "/user/setUserInfo/" + userId;
+    const body = {};
     const data = { isHost: this.state.localIsHost };
-    const headers = {
-      headers: { Authorization: `Bearer ${this.state.token}` },
-    };
-    app
-      .post(url, data, headers)
-      .then((res) => {
-        this.props.setHost(
-          this.state.localIsHost,
-          this.props.Login.userInfo.session.token,
-          userId,
-          this.props.User.userInfo.user
-        );
-        console.log(this.props.User.userInfo.isHost);
-      })
-      .catch((res) => {
-        alert("Unable to edit profile.");
-        console.log(res);
-      });
+    let res = await handleReq(url, "POST", body, data);
+    if (res.status === 200) {
+      this.props.setHost(
+        this.state.localIsHost,
+        this.props.User.userInfo.token,
+        userId,
+        this.props.User.userInfo.user
+      );
+      console.log(this.props.User.userInfo.isHost);
+    }
   };
 
   render() {
