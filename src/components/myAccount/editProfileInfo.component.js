@@ -33,10 +33,13 @@ const EditProfileInfo = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const userId = loginInfo.userInfo.session.userId;
+    const headers = {
+      headers: { Authorization: `Bearer ${loginInfo.userInfo.session.token}` },
+    };
     loginInfo.userInfo.session.isHost = profileState.isHost;
     // route to update user information
     app
-      .post(`/user/setUserInfo/${userId}`, profileState)
+      .post(`/user/setUserInfo/${userId}`, profileState, headers)
       .then((res) => {
         // updates redux store
         dispatch(setUserInfo(res.data));
