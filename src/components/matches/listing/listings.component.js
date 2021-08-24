@@ -150,7 +150,10 @@ class Listings extends Component {
     };
 
     const user = this.props.userInfo;
-    if (!user || !user.isVerified) {
+    if (
+      (!user || !user.isVerified) &&
+      this.props.location.pathname == "/MyAccount"
+    ) {
       return (
         <div className="my-listings-access-denied">
           <p>

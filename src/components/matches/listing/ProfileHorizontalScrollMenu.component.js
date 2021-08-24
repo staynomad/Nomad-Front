@@ -1,5 +1,5 @@
 import React from "react";
-import ScrollMenu from "react-horizontal-scrolling-menu";
+import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import "./horizontalscrollmenu.css";
 
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";

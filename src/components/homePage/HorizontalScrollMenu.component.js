@@ -1,6 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import ScrollMenu from "react-horizontal-scrolling-menu";
+import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import "./categorizedListing.css";
 
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
@@ -19,14 +19,15 @@ const HorizontalScrollMenu = (props) => {
       </div>
       {props.data !== undefined && (
         <ScrollMenu
-          data={props.data.map((listing) => (
-            <HorizontalListingCard listing={listing} key={listing._id} />
-          ))}
           wheel={false}
           arrowLeft={<ArrowBackIcon className="scroll-menu-arrow left" />}
           arrowRight={<ArrowForwardIcon className="scroll-menu-arrow right" />}
           translate={2}
-        />
+        >
+          {props.data.map((listing) => (
+            <HorizontalListingCard listing={listing} key={listing._id} />
+          ))}
+        </ScrollMenu>
       )}
     </div>
   );
