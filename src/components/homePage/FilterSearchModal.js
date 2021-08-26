@@ -149,7 +149,7 @@ const FilterSearchModal = (props) => {
               )}
               placeholder="Select State..."
               styles={stateStyles}
-              options={stateOptions}
+              options={countryFilter === "USA" ? stateOptions : []}
             />
           </div>
         </div>
