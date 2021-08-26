@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Switch from "@material-ui/core/Switch";
 import { connect } from "react-redux";
-import handleReq from "../../utils/fetchRequest";
+// import handleReq from "../../utils/fetchRequest";
 import { setHost } from "../../redux/actions/authActions";
 import "./settings.css";
 import { app } from "../../utils/axiosConfig.js";
