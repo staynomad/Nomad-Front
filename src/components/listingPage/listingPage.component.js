@@ -351,7 +351,6 @@ class ListingPage extends Component {
 
   render() {
     const { from, to } = this.state;
-    console.log(from, to);
     const modifiers = { start: from, end: to };
     // console.log(this.state.listingCoord);
 
