@@ -144,9 +144,13 @@ const FilterSearchModal = (props) => {
             <h2 style={{ width: "10rem" }}>State:</h2>
             <Select
               onChange={(e) => setStateFilter(e.value)}
-              value={stateOptions.filter(
-                (option) => option.value === stateFilter
-              )}
+              value={
+                countryFilter === "USA"
+                  ? stateOptions.filter(
+                      (option) => option.value === stateFilter
+                    )
+                  : ""
+              }
               placeholder="Select State..."
               styles={stateStyles}
               options={countryFilter === "USA" ? stateOptions : []}
