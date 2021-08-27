@@ -51,6 +51,7 @@ const Search = (props) => {
         <FilterSearchModal
           closeModal={() => setFilterOpen(false)}
           setFilters={setFilters}
+          itemToSearch={itemToSearch}
         />
       </Modal>
       <form
