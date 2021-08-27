@@ -205,6 +205,20 @@ const FilterSearchModal = (props) => {
       </div>
       <div className="filter-search-modal-button-container">
         <button
+          id="clear"
+          onClick={() => {
+            setCountryFilter("");
+            setStateFilter("");
+            setPriceInput("");
+            setGuestsInput("");
+            setSortPrice(null);
+            setSortGuests(null);
+          }}
+        >
+          Clear
+        </button>
+        <button
+          id="confirm"
           onClick={() => {
             handleConfirm();
           }}
