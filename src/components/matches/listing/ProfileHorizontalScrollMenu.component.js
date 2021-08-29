@@ -7,20 +7,25 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 
 import HorizontalListingCard from "./HorizontalListingCard.component";
 
-const ProfileHorizontalScrollMenu = ({ data }) => {
+const ProfileHorizontalScrollMenu = (props) => {
   return (
     <div className="horizontal-menu-container">
-      <ScrollMenu
-        data={data.map((listing) => (
-          <HorizontalListingCard listing={listing} key={listing._id} />
-        ))}
-        wheel={false}
-        arrowLeft={<ArrowBackIcon className="scroll-menu-arrow left profile" />}
-        arrowRight={
-          <ArrowForwardIcon className="scroll-menu-arrow right profile" />
-        }
-        translate={2}
-      />
+      {props.data !== undefined && (
+        <ScrollMenu
+          wheel={false}
+          arrowLeft={
+            <ArrowBackIcon className="scroll-menu-arrow left profile" />
+          }
+          arrowRight={
+            <ArrowForwardIcon className="scroll-menu-arrow right profile" />
+          }
+          translate={2}
+        >
+          {props.data.map((listing) => (
+            <HorizontalListingCard listing={listing} key={listing._id} />
+          ))}
+        </ScrollMenu>
+      )}
     </div>
   );
 };
