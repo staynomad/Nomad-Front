@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Select from "react-select";
 import "./filtersearchmodal.css";
 
+import { createBrowserHistory } from "history";
+
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import MonetizationOnOutlinedIcon from "@material-ui/icons/MonetizationOnOutlined";
 import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
@@ -20,6 +22,8 @@ const FilterSearchModal = (props) => {
   const [stateFilter, setStateFilter] = useState("");
   const [countryFilter, setCountryFilter] = useState("");
 
+  const history = createBrowserHistory({ forceRefresh: true });
+
   const handlePriceChange = (e) => {
     if (!isNaN(e.target.value) && e.target.value < 1000) {
       setPriceInput(e.target.value);
@@ -32,6 +36,37 @@ const FilterSearchModal = (props) => {
     }
   };
 
+  const handleConfirm = () => {
+    const options = {
+      sortByGuests: sortGuests,
+      sortByPrice: sortPrice,
+      maxPrice: priceInput === "" ? null : priceInput,
+      minGuests: guestsInput === "" ? null : guestsInput,
+      countryFilter: countryFilter === "" ? null : countryFilter,
+      stateFilter: stateFilter === "" ? null : stateFilter,
+    };
+
+    history.push(
+      `/listings?search=${props.itemToSearch}${
+        options.minGuests !== null ? "&minGuests=" + options.minGuests : ""
+      }${options.maxPrice !== null ? "&maxPrice=" + options.maxPrice : ""}${
+        options.sortByGuests !== null
+          ? "&sortGuests=" + options.sortByGuests
+          : ""
+      }${
+        options.sortByPrice !== null ? "&sortPrice=" + options.sortByPrice : ""
+      }${
+        options.countryFilter !== null
+          ? "&country=" + options.countryFilter
+          : ""
+      }${options.stateFilter !== null ? "&state=" + options.stateFilter : ""}`
+    );
+
+    props.setFilters({
+      options,
+    });
+    props.closeModal();
+  };
   return (
     <div className="filter-search-modal-container">
       <div className="filter-search-modal-header">
@@ -144,12 +179,16 @@ const FilterSearchModal = (props) => {
             <h2 style={{ width: "10rem" }}>State:</h2>
             <Select
               onChange={(e) => setStateFilter(e.value)}
-              value={stateOptions.filter(
-                (option) => option.value === stateFilter
-              )}
+              value={
+                countryFilter === "USA"
+                  ? stateOptions.filter(
+                      (option) => option.value === stateFilter
+                    )
+                  : ""
+              }
               placeholder="Select State..."
               styles={stateStyles}
-              options={stateOptions}
+              options={countryFilter === "USA" ? stateOptions : []}
             />
           </div>
         </div>
@@ -157,15 +196,7 @@ const FilterSearchModal = (props) => {
       <div className="filter-search-modal-button-container">
         <button
           onClick={() => {
-            props.setFilters({
-              sortByGuests: sortGuests,
-              sortByPrice: sortPrice,
-              maxPrice: priceInput === "" ? null : priceInput,
-              minGuests: guestsInput === "" ? null : guestsInput,
-              countryFilter: countryFilter === "" ? null : countryFilter,
-              stateFilter: stateFilter === "" ? null : stateFilter,
-            });
-            props.closeModal();
+            handleConfirm();
           }}
         >
           Confirm
