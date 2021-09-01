@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Select from "react-select";
+import { useLocation } from "react-router-dom";
 import "./filtersearchmodal.css";
 
 import { createBrowserHistory } from "history";
@@ -14,13 +15,22 @@ import { stateStyles, stateOptions } from "../createListing/stateDropdown";
 import countryDropdown from "../createListing/countryDropdown";
 
 const FilterSearchModal = (props) => {
-  const [priceInput, setPriceInput] = useState("");
-  const [guestsInput, setGuestsInput] = useState("");
+  const useQuery = () => {
+    return new URLSearchParams(useLocation().search);
+  };
+
+  const q = useQuery();
+  const [priceInput, setPriceInput] = useState(q.get("maxPrice") || "");
+  const [guestsInput, setGuestsInput] = useState(q.get("minGuests") || "");
   //null = no sort, true = high to low, false = low to high
-  const [sortPrice, setSortPrice] = useState(null);
-  const [sortGuests, setSortGuests] = useState(null);
-  const [stateFilter, setStateFilter] = useState("");
-  const [countryFilter, setCountryFilter] = useState("");
+  const [sortPrice, setSortPrice] = useState(
+    q.get("sortPrice") ? q.get("sortPrice") === "true" : null
+  );
+  const [sortGuests, setSortGuests] = useState(
+    q.get("sortGuests") ? q.get("sortGuests") === "true" : null
+  );
+  const [stateFilter, setStateFilter] = useState(q.get("state") || "");
+  const [countryFilter, setCountryFilter] = useState(q.get("country") || "");
 
   const history = createBrowserHistory({ forceRefresh: true });
 
@@ -195,6 +205,20 @@ const FilterSearchModal = (props) => {
       </div>
       <div className="filter-search-modal-button-container">
         <button
+          id="clear"
+          onClick={() => {
+            setCountryFilter("");
+            setStateFilter("");
+            setPriceInput("");
+            setGuestsInput("");
+            setSortPrice(null);
+            setSortGuests(null);
+          }}
+        >
+          Clear
+        </button>
+        <button
+          id="confirm"
           onClick={() => {
             handleConfirm();
           }}
