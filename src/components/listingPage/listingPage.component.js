@@ -5,11 +5,12 @@ import { app } from "../../utils/axiosConfig.js";
 import { connect } from "react-redux";
 import { withRouter, NavLink } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
-import DayPicker, { DateUtils } from "react-day-picker";
+import { DateUtils } from "react-day-picker";
 import ImageGallery from "react-image-gallery";
 import StarRatings from "react-star-ratings";
 import GoogleMapReact from "google-map-react";
 
+import Calendar from "../calendar/calendar.component.tsx";
 import "react-day-picker/lib/style.css";
 import "./listingPage.css";
 import handleReq from "../../utils/fetchRequest";
@@ -728,30 +729,13 @@ class ListingPage extends Component {
               </div>
               <div className="listing-calendar">
                 <div className="spacer_xs"></div>
-                <div style={{ alignText: "center" }}>
-                  {this.state.outOfRange ? (
-                    "Selected day is not available."
-                  ) : (
-                    // lessThanFourDays ? (
-                    //   "Minimum 4 days required"
-                    // ) :
-                    <div>
-                      {!from && !to && "Please select the first day."}
-                      {from && !to && "Please select the last day."}
-                      {from &&
-                        to &&
-                        `From ${from.toLocaleDateString()} to
-                    ${to.toLocaleDateString()}`}{" "}
-                    </div>
-                  )}
-                </div>
-                <DayPicker
-                  className="Selectable"
-                  selectedDays={[from, { from, to }]}
+                <Calendar
+                  from={this.state.from}
+                  handleDayClick={this.handleDayClick}
+                  listingBookedDays={this.state.listingBookedDays}
                   modifiers={modifiers}
-                  onDayClick={this.handleDayClick}
-                  disabledDays={this.state.listingBookedDays}
-                  inputProps={{ required: true }}
+                  outOfRange={this.state.outOfRange}
+                  to={this.state.to}
                 />
                 <div className="spacer_xs"></div>
                 <h2 className="listing-price">

@@ -4,7 +4,7 @@ import PlacesAutocomplete, {
 } from "react-places-autocomplete";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import DatePicker, { DateUtils } from "react-day-picker";
+import { DateUtils } from "react-day-picker";
 import { Helmet } from "react-helmet-async";
 import { NavLink, withRouter } from "react-router-dom";
 import Select from "react-select";
@@ -12,6 +12,7 @@ import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 
+import Calendar from "../calendar/calendar.component.tsx";
 import { importCalendar } from "../../redux/actions/calendarSyncActions";
 import {
   setLoadingTrue,
@@ -1485,24 +1486,6 @@ class CreateListing extends Component {
                           ) : (
                             <div>
                               <div className="spacer_xs"></div>
-                              <div>
-                                {!from && !to && "Please select the first day."}
-                                {from && !to && "Please select the last day."}
-                                {from &&
-                                  to &&
-                                  `Selected from ${from.toLocaleDateString()} to
-                                    ${to.toLocaleDateString()}`}{" "}
-                                {/*from && to && (
-
-                                )*/}
-                                <button
-                                  className="link"
-                                  type="button"
-                                  onClick={this.handleResetClick}
-                                >
-                                  Reset
-                                </button>
-                              </div>
                               {this.state.form.dateInit.invalidDate ? (
                                 <div style={{ color: "red" }}>
                                   First selection must be after today
@@ -1510,13 +1493,13 @@ class CreateListing extends Component {
                               ) : (
                                 ""
                               )}
-                              <DatePicker
-                                className="Selectable"
-                                numberOfMonths={2}
-                                selectedDays={[from, { from, to }]}
+                              <Calendar
+                                from={this.state.form.dateInit.date_range.from}
+                                handleDayClick={this.handleDayClick}
                                 modifiers={modifiers}
-                                onDayClick={this.handleDayClick}
-                                inputProps={{ required: true }}
+                                numberOfMonths={2}
+                                outOfRange={this.state.outOfRange}
+                                to={this.state.form.dateInit.date_range.to}
                               />
 
                               <Helmet>
@@ -1539,21 +1522,28 @@ class CreateListing extends Component {
           `}</style>
                               </Helmet>
                               <br />
-                              <p
-                                className="import-calendar"
+                              <div
                                 style={{
-                                  textDecoration: "underline",
-                                  cursor: "pointer",
-                                  paddingLeft: "3%",
-                                  paddingRight: "1%",
+                                  display: "flex",
+                                  justifyContent: "center",
                                 }}
-                                onClick={this.handleImportToggle}
                               >
-                                Import
-                              </p>
-                              <p className="import-calendar">
-                                your calendar instead
-                              </p>
+                                <p
+                                  className="import-calendar"
+                                  style={{
+                                    textDecoration: "underline",
+                                    cursor: "pointer",
+                                    paddingLeft: "3%",
+                                    paddingRight: "1%",
+                                  }}
+                                  onClick={this.handleImportToggle}
+                                >
+                                  Import
+                                </p>
+                                <p className="import-calendar">
+                                  your calendar instead
+                                </p>
+                              </div>
                               <br />
                               <div className="spacer_m"></div>
                             </div>

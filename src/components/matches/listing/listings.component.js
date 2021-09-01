@@ -152,7 +152,7 @@ class Listings extends Component {
     const user = this.props.userInfo;
     if (
       (!user || !user.isVerified) &&
-      this.props.location.pathname == "/MyAccount"
+      this.props.location.pathname.toLowerCase() === "/myaccount"
     ) {
       return (
         <div className="my-listings-access-denied">
@@ -170,7 +170,7 @@ class Listings extends Component {
     } else {
       return (
         <>
-          {this.props.location.pathname === "/MyAccount" ? (
+          {this.props.location.pathname.toLowerCase() === "/myaccount" ? (
             <div className="account-listing-buttons-container">
               <div className="account-listing-button">
                 <NavLink to="/CreateListing">Create Listing</NavLink>
