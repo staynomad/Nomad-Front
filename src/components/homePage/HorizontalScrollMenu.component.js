@@ -1,6 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import { ScrollMenu } from "react-horizontal-scrolling-menu";
+import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
 import "./categorizedListing.css";
 
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
@@ -18,20 +18,33 @@ const HorizontalScrollMenu = (props) => {
         <div className="featured-listings-line"></div>
       </div>
       {props.data !== undefined && (
-        <ScrollMenu
-          wheel={false}
-          arrowLeft={<ArrowBackIcon className="scroll-menu-arrow left" />}
-          arrowRight={<ArrowForwardIcon className="scroll-menu-arrow right" />}
-          translate={2}
-        >
-          {props.data
-            .filter((listing) => listing.active)
-            .map((listing) => (
-              <HorizontalListingCard listing={listing} key={listing._id} />
-            ))}
+        <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
+          {props.data.map((listing) => (
+            <HorizontalListingCard listing={listing} key={listing._id} />
+          ))}
         </ScrollMenu>
       )}
     </div>
+  );
+};
+
+const LeftArrow = () => {
+  const { scrollPrev } = React.useContext(VisibilityContext);
+  return (
+    <ArrowBackIcon
+      className="scroll-menu-arrow left"
+      onClick={() => scrollPrev()}
+    />
+  );
+};
+
+const RightArrow = () => {
+  const { scrollNext } = React.useContext(VisibilityContext);
+  return (
+    <ArrowForwardIcon
+      className="scroll-menu-arrow right"
+      onClick={() => scrollNext()}
+    />
   );
 };
 
