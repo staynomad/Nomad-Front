@@ -24,9 +24,11 @@ const HorizontalScrollMenu = (props) => {
           arrowRight={<ArrowForwardIcon className="scroll-menu-arrow right" />}
           translate={2}
         >
-          {props.data.map((listing) => (
-            <HorizontalListingCard listing={listing} key={listing._id} />
-          ))}
+          {props.data
+            .filter((listing) => listing.active)
+            .map((listing) => (
+              <HorizontalListingCard listing={listing} key={listing._id} />
+            ))}
         </ScrollMenu>
       )}
     </div>

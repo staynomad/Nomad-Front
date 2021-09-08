@@ -22,7 +22,7 @@ class Listings extends Component {
     super(props);
 
     this.state = {
-      hideExpired: true,
+      hideExpired: false,
       itemsToDisplay: [],
       listings: [],
       page: 0,
@@ -124,8 +124,8 @@ class Listings extends Component {
       page * 10 - 1 > this.state.listings.length - 1
         ? this.state.listings.length - 1
         : this.state.page * 10 - 1;
-    console.log(endIdx);
-    console.log(this.state.listings.length);
+    // console.log(endIdx);
+    // console.log(this.state.listings.length);
     this.setState({ itemsToDisplay: [startIdx, endIdx] });
   }
 
