@@ -241,7 +241,7 @@ class CreateListing extends Component {
             state: currentListing.location.state,
             country: currentListing.location.country,
             zipcode: currentListing.location.zipcode,
-            apartment: currentListing.location.apartment,
+            aptnum: currentListing.location.aptnum,
           },
           description: currentListing.description,
           dates: {
@@ -688,11 +688,11 @@ class CreateListing extends Component {
     const [state, zipcode] = stateZip.split(" ");
 
     // console.log(country);
-
     this.setState({
       form: {
         ...this.state.form,
         location: {
+          ...this.state.form.location,
           address: value,
           street: street ? street : "",
           city: city ? city : "",
