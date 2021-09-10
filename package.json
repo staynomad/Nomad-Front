@@ -50,7 +50,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build-staging": "npm i && git fetch origin && git checkout staging && git pull && react-scripts build",
+    "build-deploy": "npm i && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prepare": "husky install",
