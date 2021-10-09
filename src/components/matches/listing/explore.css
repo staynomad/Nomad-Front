@@ -126,9 +126,6 @@
   height: 10%;
   letter-spacing: normal;
   color: #00b183;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
 }
 
 .list-img {

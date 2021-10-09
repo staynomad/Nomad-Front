@@ -93,6 +93,10 @@
   font-size: 18px !important;
   color: var(--color-green);
   margin: 0;
+  width: 330px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .horizontal-listing-card-content h2 {
