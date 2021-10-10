@@ -21,9 +21,11 @@
 .list-card {
   padding: 0px;
   padding-bottom: 5px;
-  height: auto;
+  height: 200px;
   box-shadow: 0px 35px 60px rgba(187, 187, 187, 0.25);
   border-radius: 10px;
+  transition: 0.3s;
+  width: 100%;
 }
 
 .list-card:hover {
@@ -84,11 +86,6 @@
   }
 }
 
-.list-card {
-  transition: 0.3s;
-  width: 100%;
-}
-
 .list-icon {
   vertical-align: middle;
   width: 30px;
@@ -126,9 +123,9 @@
   font-size: 1.4rem;
   font-weight: 600;
   line-height: 1.5rem;
+  height: 10%;
   letter-spacing: normal;
   color: #00b183;
-  margin: 10px 0;
 }
 
 .list-img {
