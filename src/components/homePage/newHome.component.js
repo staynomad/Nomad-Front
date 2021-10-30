@@ -103,7 +103,7 @@ const NewHome = (props) => {
 
               <div className=" wow fadeInUp" data-wow-delay="0.5s">
                 <Search history={history} />
-                <div className="intro_text">
+                <div className="intro_text introtext2">
                   Find your dream stay without breaking the bank.{" "}
                 </div>
               </div>
