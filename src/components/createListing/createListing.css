@@ -483,7 +483,8 @@ span.import-info {
     width: 65%;
   }
   .css-18ozde5-container {
-    width: 65% !important;
+    /* width: 65% !important; */
+    width: 65%;
   }
 }
 
@@ -530,7 +531,8 @@ span.import-info {
     width: 60%;
   }
   .css-18ozde5-container {
-    width: 60% !important;
+    /* width: 60% !important; */
+    width: 60%;
   }
   .confirm-listing-button {
     width: 90px;

@@ -28,9 +28,15 @@ body {
   display: inline;
 }
 
+@media screen and (max-width: 428px) {
+  .introtext2 {
+    visibility: hidden;
+    color: red;
+  }
+}
 @media screen and (max-width: 374px) {
   .intro_text {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
   }
 }
 

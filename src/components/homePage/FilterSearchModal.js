@@ -74,11 +74,14 @@ const FilterSearchModal = (props) => {
         <h1>Looking For Something Specific?</h1>
       </div>
       <div className="filter-search-modal-content">
-        <div className="filter-searh-modal-left-container">
+        <div className="filter-search-modal-left-container">
           <div className="filter-search-modal-input-row">
-            <MonetizationOnOutlinedIcon />
-            <h2>Max Price:</h2>
+            <div className="price-label">
+              <MonetizationOnOutlinedIcon />
+              <h2>Max Price:</h2>
+            </div>
             <input
+              className="price-input"
               placeholder="$100"
               type="text"
               value={priceInput}
@@ -86,9 +89,12 @@ const FilterSearchModal = (props) => {
             />
           </div>
           <div className="filter-search-modal-input-row">
-            <PersonOutlineOutlinedIcon />
-            <h2 className="guests">Min Guests:</h2>
+            <div className="guest-label">
+              <PersonOutlineOutlinedIcon />
+              <h2 className="guests">Min Guests:</h2>
+            </div>
             <input
+              className="guest-input"
               type="text"
               value={guestsInput}
               onChange={(e) => handleGuestsChange(e)}
@@ -96,7 +102,7 @@ const FilterSearchModal = (props) => {
             />
           </div>
         </div>
-        <div className="filter-searh-modal-right-container">
+        <div className="filter-search-modal-right-container">
           <div className="filter-search-modal-radio-container">
             <div className="filter-search-modal-radio-row">
               {sortPrice === null || sortPrice === true ? (
@@ -150,8 +156,9 @@ const FilterSearchModal = (props) => {
             </div>
           </div>
         </div>
-        <div className="filter-searh-modal-top-container">
+        <div className="filter-search-modal-top-container">
           <div
+            className="country-container"
             style={{
               display: "flex",
               justifyContent: "space-between",
@@ -160,6 +167,7 @@ const FilterSearchModal = (props) => {
           >
             <h2 style={{ width: "10rem" }}>Country:</h2>
             <Select
+              className="country-selection"
               onChange={(e) => setCountryFilter(e.value)}
               value={countryDropdown.filter(
                 (option) => option.value === countryFilter
@@ -170,6 +178,7 @@ const FilterSearchModal = (props) => {
             />
           </div>
           <div
+            className="state-container"
             style={{
               display: "flex",
               justifyContent: "space-between",
@@ -178,6 +187,7 @@ const FilterSearchModal = (props) => {
           >
             <h2 style={{ width: "10rem" }}>State:</h2>
             <Select
+              className="state-selection"
               onChange={(e) => setStateFilter(e.value)}
               value={
                 countryFilter === "USA"
@@ -194,6 +204,8 @@ const FilterSearchModal = (props) => {
         </div>
       </div>
       <div className="filter-search-modal-button-container">
+        {/* <div className="blur"></div> */}
+
         <button
           onClick={() => {
             handleConfirm();
