@@ -1,0 +1,14 @@
+.horizontalscrollmenu {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  max-width: 100%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  &::-webkit-scrollbar {
+    background: transparent; /* make scrollbar transparent */
+    -webkit-appearance: none;
+    width: 0;
+    height: 0;
+  }
+}
