@@ -85,7 +85,7 @@ export const searchFamilyListings = (filterState) => async (dispatch) => {
   );
 
   if (searchAllRes.status === 200) {
-    const { listings } = await searchAllRes.data;
+    const listings = await searchAllRes.data;
     dispatch(setFamilyListings(listings));
   }
 };
@@ -100,7 +100,7 @@ export const searchBudgetListings = (filterState) => async (dispatch) => {
   );
 
   if (searchAllRes.status === 200) {
-    const { listings } = await searchAllRes.data;
+    const listings = await searchAllRes.data;
     dispatch(setExploreBudget(listings));
   }
 };
